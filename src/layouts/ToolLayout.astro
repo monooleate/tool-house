@@ -1,0 +1,541 @@
+---
+// ============================================================
+// ToolLayout.astro
+// Tool oldalak layoutja: breadcrumb, tool UI, FAQ, kapcsolódó
+// ============================================================
+import BaseLayout from "./BaseLayout.astro";
+import ToolContentSection from "../components/sections/ToolContentSection.astro";
+import type { Tool } from "../lib/tool-registry.ts";
+import {
+  getCategoryInfo,
+  getRelatedTools,
+} from "../lib/tool-registry.ts";
+import {
+  toolSoftwareSchema,
+  faqSchema,
+  howToSchema,
+  techArticleSchema,
+  useCaseListSchema,
+  breadcrumbSchema,
+  toolBreadcrumbs,
+} from "../lib/seo.ts";
+
+export interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+const category = getCategoryInfo(tool.category)!;
+const related = getRelatedTools(tool);
+const breadcrumbs = toolBreadcrumbs(tool, category.label);
+
+// JSON-LD schemas
+const schemas: string[] = [
+  toolSoftwareSchema(tool),
+  breadcrumbSchema(breadcrumbs),
+];
+if (tool.faq.length > 0) {
+  const faq = faqSchema(tool.faq);
+  if (faq) schemas.push(faq);
+}
+const howTo = howToSchema(tool);
+if (howTo) schemas.push(howTo);
+const techArticle = techArticleSchema(tool);
+if (techArticle) schemas.push(techArticle);
+const useCaseList = useCaseListSchema(tool);
+if (useCaseList) schemas.push(useCaseList);
+---
+
+<BaseLayout
+  title={tool.title}
+  description={tool.description}
+  canonical={`/${tool.category}/${tool.slug}`}
+  ogImage={`/og/${tool.category}/${tool.slug}.png`}
+  ogImageWidth={1200}
+  ogImageHeight={630}
+  ogType="website"
+  modifiedAt={(tool as { updatedAt?: string }).updatedAt}
+  schemaScripts={schemas}
+>
+
+  <div class="tool-page container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb__list" role="list">
+        {breadcrumbs.map((item, i) => (
+          <li class="breadcrumb__item">
+            {i < breadcrumbs.length - 1 ? (
+              <>
+                <a href={item.href} class="breadcrumb__link">{item.name}</a>
+                <span class="breadcrumb__sep" aria-hidden="true">/</span>
+              </>
+            ) : (
+              <span class="breadcrumb__current" aria-current="page">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Tool header -->
+    <header class="tool-header">
+      <div class="tool-header__meta">
+        <a
+          href={`/${tool.category}`}
+          class="tool-cat-badge"
+          style={`--cat-color: ${category.color}`}
+        >
+          <span aria-hidden="true">{category.icon}</span>
+          {category.label}
+        </a>
+        {tool.status === "active" ? (
+          <span class="badge badge--active">Aktív</span>
+        ) : (
+          <span class="badge badge--coming-soon">Hamarosan</span>
+        )}
+      </div>
+      <h1 class="tool-header__h1">{tool.h1}</h1>
+      <p class="tool-header__desc">{tool.description}</p>
+
+      {tool.status === "active" && (
+        <div class="tool-header__trust">
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Szervermentes
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Azonnali
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Privát
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Ingyenes
+          </span>
+        </div>
+      )}
+    </header>
+
+    <!-- Tool UI (Svelte island) -->
+    <section class="tool-ui" aria-label="Eszköz kezelőfelület">
+      {tool.status === "active" ? (
+        <slot />
+      ) : (
+        <!-- Coming Soon fallback -->
+        <div class="coming-soon-card">
+          <div class="coming-soon-card__icon" aria-hidden="true">🚧</div>
+          <h2 class="coming-soon-card__title">Hamarosan elérhető</h2>
+          <p class="coming-soon-card__text">
+            Ez az eszköz jelenleg fejlesztés alatt áll. Add meg az e-mail-ed,
+            és értesítünk, amint elérhetővé válik.
+          </p>
+          <form class="coming-soon-form" action="/api/notify" method="post">
+            <input type="hidden" name="tool" value={`${tool.category}/${tool.slug}`} />
+            <input
+              type="email"
+              name="email"
+              placeholder="email@pelda.hu"
+              class="input coming-soon-form__input"
+              required
+              aria-label="E-mail cím értesítéshez"
+            />
+            <button type="submit" class="btn btn--primary">Értesíts</button>
+          </form>
+          <!-- Kapcsolódó aktív eszközök -->
+          {related.filter(r => r.status === "active").length > 0 && (
+            <div class="coming-soon-active">
+              <p class="coming-soon-active__label">Eközben próbáld ki:</p>
+              <div class="coming-soon-active__list">
+                {related.filter(r => r.status === "active").map((t) => (
+                  <a href={`/${t.category}/${t.slug}`} class="btn btn--outline btn--sm">{t.h1}</a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+
+    <!-- Bevezető szöveg -->
+    {tool.introText && (
+      <section class="intro-section" aria-labelledby="intro-title">
+        <h2 id="intro-title" class="section-title">Miről szól ez az eszköz?</h2>
+        <div class="intro-text">
+          <p>{tool.introText}</p>
+        </div>
+      </section>
+    )}
+
+    <!-- SEO Content szekciók (ToolContent) -->
+    {tool.content && (
+      <ToolContentSection content={tool.content} toolName={tool.h1} />
+    )}
+
+    <!-- FAQ -->
+    {tool.faq.length > 0 && (
+      <section class="faq-section" aria-labelledby="faq-title">
+        <h2 id="faq-title" class="section-title">Gyakran ismételt kérdések</h2>
+        <dl class="faq-list">
+          {tool.faq.map((item, i) => (
+            <div class="faq-item">
+              <dt class="faq-item__q">
+                <button
+                  class="faq-toggle"
+                  aria-expanded="false"
+                  aria-controls={`faq-answer-${i}`}
+                  id={`faq-btn-${i}`}
+                >
+                  <span>{item.q}</span>
+                  <svg class="faq-toggle__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+              </dt>
+              <dd class="faq-item__a" id={`faq-answer-${i}`} hidden>
+                {item.a}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    <!-- Related tools -->
+    {related.length > 0 && (
+      <section class="related-section" aria-labelledby="related-title">
+        <h2 id="related-title" class="section-title">Kapcsolódó eszközök</h2>
+        <ul class="related-grid" role="list">
+          {related.map((t) => (
+            <li>
+              <a href={`/${t.category}/${t.slug}`} class={`related-card ${t.status === "coming-soon" ? "related-card--dim" : ""}`}>
+                <div class="related-card__header">
+                  <span class="related-card__icon" aria-hidden="true">
+                    {getCategoryInfo(t.category)?.icon}
+                  </span>
+                  {t.status === "coming-soon" && (
+                    <span class="badge badge--coming-soon">Soon</span>
+                  )}
+                </div>
+                <div class="related-card__title">{t.h1}</div>
+                <p class="related-card__desc">{t.description}</p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+  </div>
+
+</BaseLayout>
+
+<style>
+.tool-page {
+  padding-top: var(--sp-6);
+  padding-bottom: var(--sp-16);
+  max-width: 860px;
+}
+
+/* ─── Breadcrumb ─────────────────────────────────────────────── */
+.breadcrumb { margin-bottom: var(--sp-5); }
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+.breadcrumb__link {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.breadcrumb__link:hover { color: var(--accent); }
+.breadcrumb__sep { color: var(--text-subtle); }
+.breadcrumb__current { color: var(--text); font-weight: 700; }
+
+/* ─── Tool Header ────────────────────────────────────────────── */
+.tool-header {
+  margin-bottom: var(--sp-8);
+}
+
+.tool-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.tool-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cat-color, var(--accent));
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.tool-cat-badge:hover { text-decoration: underline; }
+
+.tool-header__h1 {
+  margin-bottom: var(--sp-3);
+}
+
+.tool-header__desc {
+  font-size: 1.0625rem;
+  max-width: 60ch;
+  margin-bottom: var(--sp-4);
+}
+
+.tool-header__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Tool UI ────────────────────────────────────────────────── */
+.tool-ui {
+  margin-bottom: var(--sp-12);
+}
+
+/* ─── Coming soon ────────────────────────────────────────────── */
+.coming-soon-card {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-12) var(--sp-8);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.coming-soon-card__icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.coming-soon-card__title {
+  font-size: 1.5rem;
+}
+
+.coming-soon-card__text {
+  max-width: 42ch;
+  text-align: center;
+}
+
+.coming-soon-form {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: var(--sp-2);
+}
+
+.coming-soon-form__input {
+  width: 260px;
+}
+
+.coming-soon-active {
+  margin-top: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.coming-soon-active__label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.coming-soon-active__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  justify-content: center;
+}
+
+/* ─── Section title ──────────────────────────────────────────── */
+.section-title {
+  font-size: 1.25rem;
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── Intro section ─────────────────────────────────────────── */
+.intro-section { margin-bottom: var(--sp-10); }
+
+.intro-text {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5) var(--sp-6);
+}
+
+.intro-text p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  max-width: 65ch;
+  margin: 0;
+}
+
+/* ─── FAQ ────────────────────────────────────────────────────── */
+.faq-section { margin-bottom: var(--sp-12); }
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  transition: border-color var(--t-fast);
+}
+
+.faq-item:focus-within { border-color: var(--accent); }
+
+.faq-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--sp-4) var(--sp-5);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: var(--sp-4);
+}
+
+.faq-toggle:hover { color: var(--accent); }
+
+.faq-toggle__icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform var(--t-fast);
+}
+
+.faq-toggle[aria-expanded="true"] .faq-toggle__icon {
+  transform: rotate(180deg);
+}
+
+.faq-item__a {
+  padding: 0 var(--sp-5) var(--sp-4);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  border-top: 1px solid var(--border);
+}
+
+.faq-item__a:not([hidden]) {
+  display: block;
+  padding-top: var(--sp-4);
+}
+
+/* ─── Related tools ──────────────────────────────────────────── */
+.related-section { margin-bottom: var(--sp-12); }
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.related-card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+
+.related-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.related-card--dim { opacity: 0.6; }
+.related-card--dim:hover { opacity: 0.8; }
+
+.related-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-2);
+}
+
+.related-card__icon { font-size: 1.25rem; }
+
+.related-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--sp-2);
+}
+
+.related-card__desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-width: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
+
+<script>
+// ─── FAQ accordion ────────────────────────────────────────────
+document.querySelectorAll<HTMLButtonElement>(".faq-toggle").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const expanded = btn.getAttribute("aria-expanded") === "true";
+    const answerId = btn.getAttribute("aria-controls");
+    const answer = answerId ? document.getElementById(answerId) : null;
+
+    btn.setAttribute("aria-expanded", String(!expanded));
+    if (answer) answer.hidden = expanded;
+  });
+});
+</script>

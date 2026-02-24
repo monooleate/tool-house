@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import CsvJsonTool from "../../components/tools/adat/CsvJsonTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("adat", "csv-json")!;
+---
+
+<ToolLayout tool={tool}>
+  <CsvJsonTool client:visible />
+</ToolLayout>

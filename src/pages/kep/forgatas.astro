@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ForgatoTool from "../../components/tools/kep/ForgatoTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("kep", "forgatas")!;
+---
+
+<ToolLayout tool={tool}>
+  <ForgatoTool client:visible />
+</ToolLayout>

@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ZipKibontoTool from "../../components/tools/fajl/ZipKibontoTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("fajl", "zip-kibonto")!;
+---
+<ToolLayout tool={tool}>
+  <ZipKibontoTool client:visible />
+</ToolLayout>

@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import XlsxJsonTool from "../../components/tools/excel/XlsxJsonTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("excel", "xlsx-json")!;
+---
+
+<ToolLayout tool={tool}>
+  <XlsxJsonTool client:visible />
+</ToolLayout>

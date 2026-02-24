@@ -1,0 +1,156 @@
+<script lang="ts">
+  import Dropzone from "../../ui/Dropzone.svelte";
+  import ProgressQueue from "../../ui/ProgressQueue.svelte";
+  import type { QueueItem } from "../../ui/ProgressQueue.svelte";
+  import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
+
+  let quality = 72;
+  let queue: QueueItem[] = [];
+  let worker: Worker | null = null;
+  let isProcessing = false;
+
+  function mimeForFile(filename: string): "image/webp" | "image/jpeg" | "image/png" {
+    const ext = filename.toLowerCase().split(".").pop();
+    if (ext === "png") return "image/png";
+    if (ext === "webp") return "image/webp";
+    return "image/jpeg";
+  }
+
+  function getWorker(): Worker {
+    if (!worker) {
+      worker = new Worker(
+        new URL("../../../workers/image.worker.ts", import.meta.url),
+        { type: "module" },
+      );
+      worker.addEventListener("message", (e) => {
+        const msg = e.data;
+        if (msg.type === "result") {
+          const item = queue.find((i) => i.id === msg.id);
+          const mime = item ? mimeForFile(item.filename) : "image/jpeg";
+          const blob = new Blob([msg.buffer], { type: mime });
+          queue = queue.map((i) =>
+            i.id === msg.id
+              ? { ...i, status: "done", outputBlob: blob, outputFilename: msg.outputFilename, originalSize: msg.originalSize, outputSize: msg.outputSize, elapsedMs: msg.elapsedMs }
+              : i,
+          );
+          processNext();
+        } else if (msg.type === "error") {
+          queue = queue.map((i) =>
+            i.id === msg.id ? { ...i, status: "error", error: msg.error } : i,
+          );
+          processNext();
+        }
+      });
+    }
+    return worker;
+  }
+
+  const fileMap = new Map<string, File>();
+
+  function processNext() {
+    const pending = queue.find((i) => i.status === "pending");
+    if (!pending) { isProcessing = false; return; }
+    queue = queue.map((i) => i.id === pending.id ? { ...i, status: "processing" } : i);
+    const file = fileMap.get(pending.id);
+    if (!file) return;
+    const outputFormat = mimeForFile(file.name);
+    file.arrayBuffer().then((buffer) => {
+      getWorker().postMessage(
+        { type: "convert", id: pending.id, buffer, filename: pending.filename, outputFormat, quality: quality / 100 },
+        [buffer],
+      );
+    });
+  }
+
+  function handleFiles(event: CustomEvent<File[]>) {
+    const files = event.detail;
+    const newItems: QueueItem[] = files.map((f) => {
+      const id = crypto.randomUUID();
+      fileMap.set(id, f);
+      return { id, filename: f.name, status: "pending", originalSize: f.size };
+    });
+    queue = [...queue, ...newItems];
+    if (!isProcessing) { isProcessing = true; processNext(); }
+  }
+
+  function handleDownload(item: QueueItem) {
+    if (item.outputBlob && item.outputFilename) downloadBlob(item.outputBlob, item.outputFilename);
+  }
+
+  async function handleDownloadAll() {
+    const done = queue.filter((i) => i.status === "done" && i.outputBlob && i.outputFilename);
+    if (!done.length) return;
+    if (done.length === 1) { handleDownload(done[0]); return; }
+    const entries = await Promise.all(
+      done.map(async (item) => ({ filename: item.outputFilename!, data: new Uint8Array(await item.outputBlob!.arrayBuffer()) })),
+    );
+    await downloadZip(entries, "tomorított-kepek.zip");
+  }
+
+  function handleReset() { queue = []; fileMap.clear(); isProcessing = false; }
+
+  $: doneCount = queue.filter((i) => i.status === "done").length;
+  $: hasResults = doneCount > 0;
+</script>
+
+<div class="tool-settings card">
+  <h2 class="tool-settings__title">Beallitasok</h2>
+
+  <div class="settings-row">
+    <label class="label" for="quality-slider">Minoseg: {quality}%</label>
+    <input id="quality-slider" type="range" min="10" max="100" step="1" bind:value={quality} class="slider" />
+    <div class="settings-hint">
+      {#if quality < 50}Eros tomorites -- kisebb fajl, lathato minosegvesztes
+      {:else if quality < 75}Kozepes -- jo kompromisszum
+      {:else if quality < 90}Jo minoseg -- ajanlott webhez
+      {:else}Nagyon magas -- alig tomorit{/if}
+    </div>
+  </div>
+
+  <p class="info-hint">Az eredeti formatum megmarad (JPG -&gt; JPG, PNG -&gt; PNG, WebP -&gt; WebP). A tomorites a minoseg csokkentesevel tortenik.</p>
+</div>
+
+{#if !isProcessing && queue.length === 0}
+  <Dropzone
+    accept="image/*"
+    multiple={true}
+    maxSizeMB={50}
+    label="Huzd ide a kepeket a tomeges tomoriteshez"
+    sublabel="JPG, PNG, WebP -- Max. 50 MB fajlonkent"
+    on:files={handleFiles}
+  />
+{:else}
+  <div class="add-more">
+    <Dropzone
+      accept="image/*"
+      multiple={true}
+      maxSizeMB={50}
+      label="+ Ujabb kepek hozzaadasa"
+      sublabel=""
+      on:files={handleFiles}
+    />
+  </div>
+{/if}
+
+<ProgressQueue items={queue} onDownload={handleDownload} onReset={handleReset} />
+
+{#if hasResults && doneCount > 1}
+  <div class="batch-download">
+    <button class="btn btn--primary btn--lg" on:click={handleDownloadAll}>
+      ZIP letoltes ({doneCount} fajl)
+    </button>
+  </div>
+{/if}
+
+<style>
+.tool-settings { margin-bottom: var(--sp-5); }
+.tool-settings__title { font-size: 1rem; margin-bottom: var(--sp-5); }
+.settings-row { margin-bottom: var(--sp-4); }
+.settings-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: var(--sp-2); }
+.info-hint { font-size: 0.78rem; color: var(--text-subtle); margin-top: var(--sp-3); line-height: 1.5; }
+.add-more { margin-bottom: var(--sp-5); opacity: 0.7; }
+.add-more :global(.dropzone) { padding: var(--sp-5); }
+.batch-download { display: flex; justify-content: center; margin-top: var(--sp-5); }
+.slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: var(--r-full); background: var(--border); outline: none; cursor: pointer; margin-top: var(--sp-2); }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--bg-card); box-shadow: 0 0 0 2px var(--accent); }
+</style>

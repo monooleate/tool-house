@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ZipKeszitoTool from "../../components/tools/fajl/ZipKeszitoTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("fajl", "zip-keszito")!;
+---
+<ToolLayout tool={tool}>
+  <ZipKeszitoTool client:visible />
+</ToolLayout>

@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TomegesKonvertalasZipTool from "../../components/tools/adat/TomegesKonvertalasZipTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("adat", "tomeges-konvertalas-zip")!;
+---
+
+<ToolLayout tool={tool}>
+  <TomegesKonvertalasZipTool client:visible />
+</ToolLayout>

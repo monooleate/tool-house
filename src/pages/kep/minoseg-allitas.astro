@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ImageConvertTool from "../../components/tools/shared/ImageConvertTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("kep", "minoseg-allitas")!;
+---
+<ToolLayout tool={tool}>
+  <ImageConvertTool client:visible acceptFormats="image/jpeg,image/webp,.jpg,.jpeg,.webp" acceptLabel="JPG, WebP" outputFormat="image/jpeg" outputExt="jpg" showQuality={true} defaultQuality={80} zipName="minoseg-kepek.zip" toolSlug="minoseg-allitas" convertLabel="Konvertálás" downloadLabel="Kép letöltése" />
+</ToolLayout>

@@ -1,0 +1,14 @@
+---
+import CategoryLayout from "../../layouts/CategoryLayout.astro";
+import { getCategoryInfo, getToolsByCategory } from "../../lib/tool-registry.ts";
+
+const category = getCategoryInfo("html")!;
+const tools = getToolsByCategory("html");
+---
+
+<CategoryLayout
+  category={category}
+  tools={tools}
+  title={`${category.label} eszközök online | Konvertalo.hu`}
+  description={category.description}
+/>

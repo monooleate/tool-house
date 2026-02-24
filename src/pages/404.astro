@@ -1,0 +1,135 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getActiveTools, CATEGORIES } from "../lib/tool-registry.ts";
+
+const suggestions = getActiveTools().slice(0, 4);
+---
+
+<BaseLayout
+  title="404 – Az oldal nem található | Konvertalo.hu"
+  description="A keresett oldal nem létezik. Keresd meg a megfelelő eszközt a Konvertalo.hu-n!"
+  noIndex={true}
+>
+  <div class="not-found container">
+    <div class="not-found__code" aria-hidden="true">404</div>
+    <h1 class="not-found__title">Az oldal nem található</h1>
+    <p class="not-found__desc">
+      A keresett URL nem létezik, vagy megváltozott.<br />
+      Lehet, hogy az alábbi eszközök valamelyike kellene?
+    </p>
+
+    {suggestions.length > 0 && (
+      <div class="suggestions">
+        <p class="suggestions__label">Aktív eszközök:</p>
+        <ul class="suggestions__list" role="list">
+          {suggestions.map((t) => {
+            const cat = CATEGORIES.find(c => c.id === t.category);
+            return (
+              <li>
+                <a href={`/${t.category}/${t.slug}`} class="suggestion-card">
+                  <span class="suggestion-card__icon" aria-hidden="true">{cat?.icon}</span>
+                  <span class="suggestion-card__title">{t.h1}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )}
+
+    <div class="not-found__actions">
+      <a href="/" class="btn btn--primary btn--lg">← Vissza a főoldalra</a>
+      <a href="/kep" class="btn btn--outline">Képeszközök</a>
+      <a href="/adat" class="btn btn--outline">Adateszközök</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.not-found {
+  padding: var(--sp-16) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-6);
+  max-width: 640px;
+}
+
+.not-found__code {
+  font-family: var(--font-mono);
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 700;
+  color: var(--border);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  user-select: none;
+}
+
+.not-found__title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  margin-top: calc(-1 * var(--sp-4));
+}
+
+.not-found__desc {
+  font-size: 1.0625rem;
+  max-width: 44ch;
+  text-align: center;
+}
+
+/* Suggestions */
+.suggestions { width: 100%; }
+
+.suggestions__label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-3);
+}
+
+.suggestions__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-3);
+  list-style: none;
+  padding: 0; margin: 0;
+}
+
+.suggestion-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+
+.suggestion-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.suggestion-card__icon { font-size: 1.25rem; }
+
+.suggestion-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+
+/* Actions */
+.not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  justify-content: center;
+  margin-top: var(--sp-2);
+}
+</style>

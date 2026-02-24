@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import CodeFormatterTool from "../../components/tools/shared/CodeFormatterTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("fejleszto", "yaml-ellenorzes")!;
+---
+
+<ToolLayout tool={tool}>
+  <CodeFormatterTool client:visible mode="validate" language="yaml" placeholder="Illeszd be a YAML kódot..." />
+</ToolLayout>

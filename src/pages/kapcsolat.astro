@@ -1,0 +1,402 @@
+---
+// ============================================================
+// kapcsolat.astro – Kapcsolat oldal (Netlify Forms)
+// ============================================================
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_NAME, breadcrumbSchema } from "../lib/seo.ts";
+
+const schemas = [
+  breadcrumbSchema([
+    { name: "Főoldal", href: "/" },
+    { name: "Kapcsolat", href: "/kapcsolat" },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Kapcsolat | Konvertalo.hu"
+  description="Lépj velünk kapcsolatba! Kérdésed, ötleted vagy hibajelentésed van? Írj nekünk a Konvertalo.hu kapcsolati űrlapon."
+  canonical="/kapcsolat"
+  schemaScripts={schemas}
+>
+
+  <div class="contact-page container">
+    <header class="contact-header">
+      <nav class="contact-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Főoldal</a>
+        <span aria-hidden="true">›</span>
+        <span>Kapcsolat</span>
+      </nav>
+      <h1 class="contact-title">Kapcsolat</h1>
+      <p class="contact-desc">
+        Kérdésed van, hibát találtál, vagy új eszközre lenne szükséged?
+        Írj nekünk – igyekszünk 24 órán belül válaszolni.
+      </p>
+    </header>
+
+    <div class="contact-grid">
+
+      <!-- Kapcsolati űrlap -->
+      <div class="contact-form-wrap">
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="contact-form"
+          id="contact-form"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+
+          <!-- Honeypot (spam védelem – rejtett mező) -->
+          <p class="hp-field" aria-hidden="true">
+            <label>Ne töltsd ki: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="form-group">
+            <label for="name" class="form-label">Név <span class="form-required">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Kovács Péter"
+              class="form-input"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">E-mail cím <span class="form-required">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="pelda@email.hu"
+              class="form-input"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="form-label">Tárgy <span class="form-required">*</span></label>
+            <select id="subject" name="subject" required class="form-input form-select">
+              <option value="" disabled selected>Válassz kategóriát...</option>
+              <option value="kerdes">Általános kérdés</option>
+              <option value="hiba">Hibajelentés</option>
+              <option value="eszkoz-otlet">Új eszköz ötlet</option>
+              <option value="egyuttmukodes">Együttműködés</option>
+              <option value="egyeb">Egyéb</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Üzenet <span class="form-required">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="6"
+              placeholder="Írd le részletesen, miben segíthetünk..."
+              class="form-input form-textarea"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg contact-submit" id="contact-submit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2"/>
+            </svg>
+            Üzenet küldése
+          </button>
+        </form>
+
+        <!-- Sikeres küldés üzenet -->
+        <div class="contact-success" id="contact-success" hidden>
+          <div class="contact-success__icon" aria-hidden="true">✅</div>
+          <h2 class="contact-success__title">Üzenet elküldve!</h2>
+          <p class="contact-success__desc">Köszönjük megkeresésedet! Igyekszünk 24 órán belül válaszolni az e-mail címedre.</p>
+          <a href="/" class="btn btn--outline">← Vissza a főoldalra</a>
+        </div>
+      </div>
+
+      <!-- Oldalsáv infók -->
+      <aside class="contact-sidebar">
+        <div class="contact-info-card">
+          <div class="contact-info-card__icon" aria-hidden="true">📧</div>
+          <h3 class="contact-info-card__title">E-mail</h3>
+          <a href="mailto:info@konvertalo.hu" class="contact-info-card__link">info@konvertalo.hu</a>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-info-card__icon" aria-hidden="true">🌐</div>
+          <h3 class="contact-info-card__title">Weboldal</h3>
+          <a href="https://jmeszaros.dev" target="_blank" rel="noopener" class="contact-info-card__link">jmeszaros.dev</a>
+        </div>
+
+        <div class="contact-info-card">
+          <div class="contact-info-card__icon" aria-hidden="true">⚡</div>
+          <h3 class="contact-info-card__title">Válaszidő</h3>
+          <p class="contact-info-card__text">Általában 24 órán belül</p>
+        </div>
+
+        <div class="contact-info-card contact-info-card--highlight">
+          <div class="contact-info-card__icon" aria-hidden="true">💡</div>
+          <h3 class="contact-info-card__title">Hibajelentéshez</h3>
+          <p class="contact-info-card__text">Kérjük, írd le melyik eszköznél és milyen böngészővel/rendszerrel találkoztál a hibával – ez sokat segít a javításban.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+</BaseLayout>
+
+<style>
+/* ─── Contact page ───────────────────────────────────────── */
+.contact-page {
+  padding: var(--sp-12) 0 var(--sp-16);
+  max-width: 1000px;
+}
+
+.contact-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-6);
+}
+.contact-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.contact-breadcrumb a:hover { color: var(--accent); }
+
+.contact-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-3);
+}
+
+.contact-desc {
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+/* Grid */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-8);
+  margin-top: var(--sp-10);
+}
+
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr 280px;
+  }
+}
+
+/* Form wrapper */
+.contact-form-wrap {
+  position: relative;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* Honeypot – hidden */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+/* Form fields */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.form-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.form-required {
+  color: var(--error);
+}
+
+.form-input {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  outline: none;
+  width: 100%;
+}
+
+.form-input::placeholder {
+  color: var(--text-subtle);
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3e%3cpath d='M3 5l3 3 3-3' fill='none' stroke='%236b6b5e' stroke-width='1.5' stroke-linecap='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: var(--sp-8);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Submit button */
+.contact-submit {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  align-self: flex-start;
+}
+
+.contact-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success */
+.contact-success {
+  text-align: center;
+  padding: var(--sp-12) var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.contact-success__icon { font-size: 3rem; }
+.contact-success__title { font-size: 1.5rem; }
+.contact-success__desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 40ch;
+  line-height: 1.6;
+}
+
+/* Sidebar */
+.contact-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.contact-info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.contact-info-card--highlight {
+  border-color: var(--accent)40;
+  background: var(--accent-subtle);
+}
+
+.contact-info-card__icon { font-size: 1.5rem; }
+
+.contact-info-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.contact-info-card__link {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+.contact-info-card__link:hover { text-decoration: underline; }
+
+.contact-info-card__text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+</style>
+
+<script>
+// ─── Form submit handler (Netlify Forms + UX) ──────────────
+const form = document.getElementById("contact-form") as HTMLFormElement | null;
+const successEl = document.getElementById("contact-success");
+
+if (form && successEl) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement | null;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Küldés...";
+    }
+
+    try {
+      const formData = new FormData(form);
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      if (res.ok) {
+        form.hidden = true;
+        successEl.hidden = false;
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (err) {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Üzenet küldése";
+      }
+      alert("Hiba történt a küldés során. Kérjük, próbáld újra, vagy írj a info@konvertalo.hu címre.");
+    }
+  });
+}
+</script>

@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import PngWebpTool from "../../components/tools/kep/PngWebpTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("kep", "png-webp")!;
+---
+<ToolLayout tool={tool}>
+  <PngWebpTool client:visible />
+</ToolLayout>

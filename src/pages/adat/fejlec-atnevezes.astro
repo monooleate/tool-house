@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import FejlecAtnevezesTool from "../../components/tools/adat/FejlecAtnevezesTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("adat", "fejlec-atnevezes")!;
+---
+
+<ToolLayout tool={tool}>
+  <FejlecAtnevezesTool client:visible />
+</ToolLayout>

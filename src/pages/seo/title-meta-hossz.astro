@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TitleMetaHosszTool from "../../components/tools/seo/TitleMetaHosszTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("seo", "title-meta-hossz")!;
+---
+<ToolLayout tool={tool}>
+  <TitleMetaHosszTool client:visible />
+</ToolLayout>

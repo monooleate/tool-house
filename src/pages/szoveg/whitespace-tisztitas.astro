@@ -1,0 +1,16 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TextTransformTool from "../../components/tools/shared/TextTransformTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("szoveg", "whitespace-tisztitas")!;
+---
+
+<ToolLayout tool={tool}>
+  <TextTransformTool
+    client:visible
+    operation="trim-whitespace"
+    operationLabel="Whitespace tisztítás"
+    placeholder="Illeszd be a szöveget – a felesleges szóközök normalizálásra kerülnek..."
+  />
+</ToolLayout>

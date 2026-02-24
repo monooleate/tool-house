@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import PdfInfoTool from "../../components/tools/pdf/PdfInfoTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("pdf", "pdf-informacio")!;
+---
+
+<ToolLayout tool={tool}>
+  <PdfInfoTool client:visible />
+</ToolLayout>

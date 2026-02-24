@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import CodeFormatterTool from "../../components/tools/shared/CodeFormatterTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("fejleszto", "html-minimalas")!;
+---
+
+<ToolLayout tool={tool}>
+  <CodeFormatterTool client:visible mode="minify" language="html" placeholder="Illeszd be a HTML kódot..." />
+</ToolLayout>

@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import SlugGeneratorTool from "../../components/tools/szoveg/SlugGeneratorTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("szoveg", "slug-generator")!;
+---
+
+<ToolLayout tool={tool}>
+  <SlugGeneratorTool client:visible />
+</ToolLayout>

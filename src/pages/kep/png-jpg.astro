@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ImageConvertTool from "../../components/tools/shared/ImageConvertTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("kep", "png-jpg")!;
+---
+<ToolLayout tool={tool}>
+  <ImageConvertTool client:visible acceptFormats="image/png,.png" acceptLabel="PNG" outputFormat="image/jpeg" outputExt="jpg" showQuality={true} defaultQuality={90} zipName="jpg-kepek.zip" toolSlug="png-jpg" convertLabel="JPG konvertálás" downloadLabel="JPG letöltése" />
+</ToolLayout>

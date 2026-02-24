@@ -1,0 +1,425 @@
+---
+// ============================================================
+// index.astro – Főoldal
+// Tabbed tool directory + SEO content (~1000 szó)
+// ============================================================
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ToolTabs from "../components/home/ToolTabs.svelte";
+import {
+  CATEGORIES, getAllTools, getActiveToolsCount, getTotalToolsCount
+} from "../lib/tool-registry.ts";
+import {
+  websiteSchema, organizationSchema, toolListSchema, SITE_NAME, SITE_DESCRIPTION
+} from "../lib/seo.ts";
+
+const allTools    = getAllTools();
+const activeTools = allTools.filter(t => t.status === "active");
+const catCount    = CATEGORIES.filter(c => allTools.some(t => t.category === c.id && t.status === "active")).length;
+const schemas     = [websiteSchema(), organizationSchema(), toolListSchema(activeTools, "Összes aktív eszköz")];
+
+// Tab-hoz szükséges serializable adat
+const tabCategories = CATEGORIES.map(c => ({ id: c.id, label: c.label, icon: c.icon, color: c.color }));
+const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.h1, description: t.description, status: t.status }));
+---
+
+<BaseLayout
+  title="Konvertalo.hu – Ingyenes online konvertáló eszközök"
+  description="Ingyenes online konvertáló: képek, PDF-ek, adatok és szövegek feldolgozása böngészőben – szerverfeltöltés nélkül, privát."
+  canonical="/"
+  schemaScripts={schemas}
+>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════ -->
+  <section class="hero container">
+    <div class="hero__badge">
+      <span class="hero__badge-dot"></span>
+      100% böngészőben · szerver nélkül · privát
+    </div>
+    <h1 class="hero__title">
+      Ingyenes online<br/>
+      <span class="hero__accent">konvertáló</span>
+    </h1>
+    <p class="hero__desc">
+      Képek, PDF-ek, adatfájlok és szövegek feldolgozása pillanatok alatt.
+      Minden a <strong>böngésződben</strong> fut – a fájljaid nem kerülnek szerverre.
+    </p>
+    <div class="hero__stats">
+      <div class="hero-stat">
+        <span class="hero-stat__num">{getActiveToolsCount()}</span>
+        <span class="hero-stat__label">aktív eszköz</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat__num">{catCount}</span>
+        <span class="hero-stat__label">kategória</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat__num">0</span>
+        <span class="hero-stat__label">szerverfeltöltés</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TABBED TOOLS ═══════════════════════════════════════ -->
+  <section class="tools-section container" aria-labelledby="tools-title">
+    <h2 id="tools-title" class="section-heading">
+      <span class="section-heading__icon">🔧</span>
+      Elérhető eszközök
+    </h2>
+    <ToolTabs
+      client:visible
+      categories={tabCategories}
+      tools={tabTools}
+    />
+  </section>
+
+  <!-- ═══ TRUST / FEATURES ═══════════════════════════════════ -->
+  <section class="trust container" aria-labelledby="trust-title">
+    <h2 id="trust-title" class="section-heading">
+      <span class="section-heading__icon">✨</span>
+      Miért a Konvertalo.hu?
+    </h2>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-card__icon">🔒</div>
+        <h3 class="trust-card__title">Teljesen privát</h3>
+        <p class="trust-card__desc">A fájljaid nem hagyják el a böngésződet. Nincs szerverfeltöltés, nincs adatgyűjtés, nincs nyomkövetés. A feldolgozás kizárólag a te gépeden történik.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card__icon">⚡</div>
+        <h3 class="trust-card__title">Villámgyors feldolgozás</h3>
+        <p class="trust-card__desc">Web Worker technológia gondoskodik arról, hogy a böngésző ne fagyjon le még nagy fájloknál sem. Az eredmény másodpercek alatt elkészül.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card__icon">🆓</div>
+        <h3 class="trust-card__title">Ingyenes, örökre</h3>
+        <p class="trust-card__desc">Regisztráció, előfizetés és API-kulcs nélkül használható. Nincs rejtett limit, nincs napi kvóta. Minden eszköz korlátlanul elérhető.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card__icon">🌍</div>
+        <h3 class="trust-card__title">Offline is működik</h3>
+        <p class="trust-card__desc">Egyszer betöltve internet nélkül is használható. Tökéletes repülőúton, rossz WiFi esetén vagy bármikor, amikor nincs stabil hálózat.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SEO CONTENT ════════════════════════════════════════ -->
+  <section class="seo-content container" aria-labelledby="about-title">
+    <div class="seo-content__inner">
+
+      <article class="seo-block">
+        <h2 id="about-title" class="seo-block__title">Mi a Konvertalo.hu?</h2>
+        <p>A Konvertalo.hu egy magyar nyelvű, ingyenes online konvertáló és eszközgyűjtemény, amely a leggyakoribb fájlkezelési és adatfeldolgozási feladatokat oldja meg közvetlenül a böngészőben. Képek konvertálása és tömörítése, PDF dokumentumok kezelése, CSV és JSON adatok átalakítása, szövegek tisztítása és fejlesztői segédeszközök – mindezt szerverfeltöltés nélkül, teljes adatvédelemmel.</p>
+        <p>Jelenleg {getActiveToolsCount()} aktív eszköz érhető el {catCount} kategóriában: Képek, PDF, Adat, Szöveg, Fejlesztő, Markdown, HTML, Excel, Fájl és SEO. Az oldalt folyamatosan bővítjük – összesen {getTotalToolsCount()} eszközt tervezünk.</p>
+      </article>
+
+      <article class="seo-block">
+        <h2 class="seo-block__title">Hogyan működik?</h2>
+        <p>A Konvertalo.hu minden eszköze a modern böngészők beépített technológiáira épít. A fájlok feldolgozása Web Worker szálakban történik, így az oldal reszponzív marad még nagyobb fájlok esetén is. A képkonvertálás a Canvas API-t és az OffscreenCanvas-t használja, a PDF-kezelés a pdf-lib és pdfjs-dist könyvtárakra épül, az adatkonverzió pedig natív JavaScript parserekkel dolgozik.</p>
+        <p>A folyamat egyszerű: válaszd ki az eszközt, töltsd fel vagy illeszd be a fájlt, állítsd be a paramétereket (ha szükséges), majd töltsd le az eredményt. A fájlok egyetlen bájtja sem hagyja el a böngésződet – nincs szerverfeltöltés, nincs várakozás hálózati válaszra, és nincs adatvédelmi kockázat.</p>
+        <p>Minden eszköz statikus HTML-ként töltődik be (Astro SSG), a kliens oldali logika Svelte 5 komponensekben fut. Ez biztosítja a gyors első betöltést és a kiváló Core Web Vitals értékeket.</p>
+      </article>
+
+      <article class="seo-block">
+        <h2 class="seo-block__title">Kinek ajánljuk?</h2>
+        <p><strong>Webfejlesztőknek és designereknek:</strong> Képek optimalizálása WebP formátumra, SVG és CSS minifikálás, JSON/YAML formázás és validálás, Base64 kódolás, slug generálás – a mindennapi fejlesztői feladatok egy helyen.</p>
+        <p><strong>Tartalomkészítőknek és bloggereknek:</strong> Képek tömörítése és átméretezése a gyorsabb oldalbetöltésért, szövegek tisztítása és formázása, SEO meta adatok ellenőrzése, Markdown konvertálás HTML-lé.</p>
+        <p><strong>Irodai munkához és adminisztrációhoz:</strong> PDF-ek összefűzése és szétbontása, Excel fájlok CSV-vé konvertálása, CSV és TSV adatok átalakítása, fájl hash ellenőrzés a dokumentumok integritásának biztosítására.</p>
+        <p><strong>Mindenkinek, aki értékeli a privacyt:</strong> Mivel a fájlok soha nem hagyják el a gépedet, a Konvertalo.hu különösen hasznos bizalmas dokumentumok, személyes fotók és üzleti adatok feldolgozásánál. GDPR-kompatibilis, mert egyszerűen nincs adatfeldolgozás a szerveren.</p>
+      </article>
+
+      <article class="seo-block">
+        <h2 class="seo-block__title">Gyakran ismételt kérdések</h2>
+        <dl class="faq-list">
+          <div class="faq-item">
+            <dt class="faq-item__q">Feltöltődnek a fájljaim valamilyen szerverre?</dt>
+            <dd class="faq-item__a">Nem. Az összes feldolgozás a böngésződben történik JavaScript és Web Worker technológiával. A fájljaid nem hagyják el a gépedet.</dd>
+          </div>
+          <div class="faq-item">
+            <dt class="faq-item__q">Tényleg ingyenes minden eszköz?</dt>
+            <dd class="faq-item__a">Igen. Nincs regisztráció, nincs fizetős csomag, nincs napi limit. Minden eszköz korlátlanul használható.</dd>
+          </div>
+          <div class="faq-item">
+            <dt class="faq-item__q">Milyen böngészők támogatottak?</dt>
+            <dd class="faq-item__a">Minden modern böngésző: Chrome, Firefox, Safari, Edge. A legjobb teljesítmény Chrome és Edge böngészőkben érhető el a legfrissebb Web API támogatásnak köszönhetően.</dd>
+          </div>
+          <div class="faq-item">
+            <dt class="faq-item__q">Használhatom mobilon is?</dt>
+            <dd class="faq-item__a">Igen. Az eszközök reszponzív dizájnnal készültek és mobilon, tableten is működnek. A fájlfeltöltés a telefon galériájából vagy fájlkezelőjéből is lehetséges.</dd>
+          </div>
+          <div class="faq-item">
+            <dt class="faq-item__q">Hány fájlt dolgozhatok fel egyszerre?</dt>
+            <dd class="faq-item__a">A legtöbb képeszköz támogatja a batch (tömeges) feldolgozást – akár több tucat fájlt is feltölthetsz egyszerre, és az eredményt ZIP-ben töltheted le.</dd>
+          </div>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ═══ CTA ZÁRÓ ═══════════════════════════════════════════ -->
+  <section class="cta-section container">
+    <div class="cta-box">
+      <h2 class="cta-box__title">Próbáld ki most, regisztráció nélkül</h2>
+      <p class="cta-box__desc">Válassz a {getActiveToolsCount()} elérhető eszközből és kezdj el dolgozni azonnal.</p>
+      <a href="#tools-title" class="btn btn--primary btn--lg cta-box__btn">Eszközök böngészése ↑</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+/* ═══ HERO ════════════════════════════════════════════════════ */
+.hero {
+  padding: var(--sp-16) 0 var(--sp-12);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent)40;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-full);
+}
+
+.hero__badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero__title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.hero__accent {
+  color: var(--accent);
+  position: relative;
+}
+
+.hero__desc {
+  font-size: 1.125rem;
+  max-width: 54ch;
+  text-align: center;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hero__stats {
+  display: flex;
+  gap: var(--sp-8);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--sp-4);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-stat__num {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.hero-stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+
+/* ═══ SECTION HEADING ════════════════════════════════════════ */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-6);
+}
+
+.section-heading__icon {
+  font-size: 1.25rem;
+}
+
+/* ═══ TOOLS SECTION ══════════════════════════════════════════ */
+.tools-section {
+  margin-bottom: var(--sp-16);
+}
+
+/* ═══ TRUST GRID ═════════════════════════════════════════════ */
+.trust {
+  margin-bottom: var(--sp-16);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-4);
+}
+
+.trust-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  transition: all 180ms ease;
+}
+
+.trust-card:hover {
+  border-color: var(--accent)60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.trust-card__icon { font-size: 2rem; }
+.trust-card__title { font-size: 1rem; }
+.trust-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: none;
+}
+
+/* ═══ SEO CONTENT ════════════════════════════════════════════ */
+.seo-content {
+  margin-bottom: var(--sp-16);
+}
+
+.seo-content__inner {
+  max-width: 75ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-10);
+}
+
+.seo-block__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.seo-block p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+.seo-block p + p {
+  margin-top: var(--sp-3);
+}
+
+.seo-block strong {
+  color: var(--text);
+}
+
+/* FAQ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+}
+
+.faq-item__q {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--sp-2);
+}
+
+.faq-item__a {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ═══ CTA ZÁRÓ ═══════════════════════════════════════════════ */
+.cta-section {
+  margin-bottom: var(--sp-16);
+}
+
+.cta-box {
+  text-align: center;
+  padding: var(--sp-10) var(--sp-8);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), #3b82f6, #8b5cf6, var(--accent));
+  background-size: 200% 100%;
+  animation: gradient-slide 4s linear infinite;
+}
+
+@keyframes gradient-slide {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.cta-box__title {
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-3);
+}
+
+.cta-box__desc {
+  color: var(--text-muted);
+  margin-bottom: var(--sp-5);
+  max-width: none;
+}
+
+.cta-box__btn {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+</style>

@@ -1,0 +1,34 @@
+[build]
+  command       = "pnpm build"
+  publish       = "dist"
+
+[build.environment]
+  NODE_VERSION  = "20"
+  PNPM_VERSION  = "9"
+
+# ─── Redirects ──────────────────────────────────────────────
+[[redirects]]
+  from   = "/jpg-to-webp"
+  to     = "/kep/jpg-webp"
+  status = 301
+
+[[redirects]]
+  from   = "/csv-to-json"
+  to     = "/adat/csv-json"
+  status = 301
+
+# SPA fallback – Astro SSG-nél nem kell, de biztonság kedvéért
+# [[redirects]]
+#   from   = "/*"
+#   to     = "/404"
+#   status = 404
+
+# ─── Edge Functions (ha SSR-t akarsz) ────────────────────────
+# [functions]
+#   node_bundler = "esbuild"
+
+# ─── Dev server ─────────────────────────────────────────────
+[dev]
+  command = "pnpm dev"
+  port    = 4321
+  autoLaunch = false

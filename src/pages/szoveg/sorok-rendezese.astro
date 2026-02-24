@@ -1,0 +1,21 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TextTransformTool from "../../components/tools/shared/TextTransformTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("szoveg", "sorok-rendezese")!;
+---
+
+<ToolLayout tool={tool}>
+  <TextTransformTool
+    client:visible
+    operation="sort-lines"
+    operationLabel="Rendezés"
+    placeholder="Illeszd be a szöveget – minden sor külön elemként rendeződik..."
+    modeKey="direction"
+    modes={[
+      { value: "asc", label: "Növekvő (A→Z)" },
+      { value: "desc", label: "Csökkenő (Z→A)" },
+    ]}
+  />
+</ToolLayout>

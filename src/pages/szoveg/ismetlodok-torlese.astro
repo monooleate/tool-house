@@ -1,0 +1,16 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TextTransformTool from "../../components/tools/shared/TextTransformTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("szoveg", "ismetlodok-torlese")!;
+---
+
+<ToolLayout tool={tool}>
+  <TextTransformTool
+    client:visible
+    operation="dedupe-lines"
+    operationLabel="Duplikátumok törlése"
+    placeholder="Illeszd be a szöveget – az ismétlődő sorok eltávolításra kerülnek..."
+  />
+</ToolLayout>

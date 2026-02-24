@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import OszlopKivalasztasTool from "../../components/tools/adat/OszlopKivalasztasTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("adat", "oszlopok-kivalasztasa")!;
+---
+
+<ToolLayout tool={tool}>
+  <OszlopKivalasztasTool client:visible />
+</ToolLayout>

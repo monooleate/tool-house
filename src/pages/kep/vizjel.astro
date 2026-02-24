@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import VizjelTool from "../../components/tools/kep/VizjelTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("kep", "vizjel")!;
+---
+
+<ToolLayout tool={tool}>
+  <VizjelTool client:visible />
+</ToolLayout>

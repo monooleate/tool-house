@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import CsvXlsxTool from "../../components/tools/excel/CsvXlsxTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("excel", "csv-xlsx")!;
+---
+
+<ToolLayout tool={tool}>
+  <CsvXlsxTool client:visible />
+</ToolLayout>

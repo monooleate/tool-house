@@ -1,0 +1,9 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import MarkdownHtmlTool from "../../components/tools/markdown/MarkdownHtmlTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+const tool = getToolBySlug("markdown", "markdown-html")!;
+---
+<ToolLayout tool={tool}>
+  <MarkdownHtmlTool client:visible />
+</ToolLayout>

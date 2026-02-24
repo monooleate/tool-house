@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import PdfSplitTool from "../../components/tools/pdf/PdfSplitTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("pdf", "szetbontas")!;
+---
+
+<ToolLayout tool={tool}>
+  <PdfSplitTool client:visible />
+</ToolLayout>

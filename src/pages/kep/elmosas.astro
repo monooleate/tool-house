@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import ElmosasTool from "../../components/tools/kep/ElmosasTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("kep", "elmosas")!;
+---
+
+<ToolLayout tool={tool}>
+  <ElmosasTool client:visible />
+</ToolLayout>

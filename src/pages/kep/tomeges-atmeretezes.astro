@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import TomegesAtmererezesTool from "../../components/tools/kep/TomegesAtmererezesTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("kep", "tomeges-atmeretezes")!;
+---
+
+<ToolLayout tool={tool}>
+  <TomegesAtmererezesTool client:visible />
+</ToolLayout>

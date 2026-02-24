@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import KontrasztFenyeroTool from "../../components/tools/kep/KontrasztFenyeroTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("kep", "kontraszt-fenyero")!;
+---
+
+<ToolLayout tool={tool}>
+  <KontrasztFenyeroTool client:visible />
+</ToolLayout>

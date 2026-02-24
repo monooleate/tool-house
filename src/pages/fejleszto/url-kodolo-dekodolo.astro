@@ -1,0 +1,11 @@
+---
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import UrlKodoloTool from "../../components/tools/fejleszto/UrlKodoloTool.svelte";
+import { getToolBySlug } from "../../lib/tool-registry.ts";
+
+const tool = getToolBySlug("fejleszto", "url-kodolo-dekodolo")!;
+---
+
+<ToolLayout tool={tool}>
+  <UrlKodoloTool client:visible />
+</ToolLayout>

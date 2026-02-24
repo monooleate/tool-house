@@ -1,0 +1,14 @@
+---
+import CategoryLayout from "../../layouts/CategoryLayout.astro";
+import { getCategoryInfo, getToolsByCategory } from "../../lib/tool-registry.ts";
+
+const category = getCategoryInfo("szoveg")!;
+const tools = getToolsByCategory("szoveg");
+---
+
+<CategoryLayout
+  category={category}
+  tools={tools}
+  title="Szöveg eszközök online | Rendezés, tisztítás, konverzió"
+  description="Sorok rendezése, duplikátumok törlése, slug generátor, case konverter – szövegszerkesztő eszközök böngészőben."
+/>
