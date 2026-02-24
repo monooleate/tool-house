@@ -11,7 +11,7 @@
 
 // ─── Google Analytics 4 (gtag.js) ────────────────────────────
 // Formátum: "G-XXXXXXXXXX"  |  "" = kikapcsolva
-export const GOOGLE_TAG_ID = "";
+export const GOOGLE_TAG_ID = "G-GGJNWNYZ5G";
 
 // ─── Google Tag Manager ──────────────────────────────────────
 // Formátum: "GTM-XXXXXXX"  |  "" = kikapcsolva
