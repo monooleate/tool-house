@@ -143,7 +143,7 @@
         <div class="file-info__row">
           <span class="file-info__name">{file.name}</span>
           <span class="file-info__meta">{formatFileSize(file.size)}</span>
-          <button class="btn btn--ghost btn--sm" on:click={reset}>Uj fajl</button>
+          <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
         </div>
       </div>
     {/if}

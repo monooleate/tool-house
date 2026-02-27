@@ -1,7 +1,7 @@
 {
-  "name": "EszközTár",
-  "short_name": "EszközTár",
-  "description": "Ingyenes online eszközök fájlokhoz – szerverfeltöltés nélkül",
+  "name": "Konvertalo.hu",
+  "short_name": "Konvertalo",
+  "description": "Ingyenes online konvertáló és fájlkezelő eszközök – böngészőben, privát",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f5f5f0",

@@ -14,6 +14,13 @@ export function buildCanonical(path: string): string {
   return `${SITE_URL}${path.startsWith("/") ? path : "/" + path}`;
 }
 
+// ─── ISO 8601 dátum időzónával (Google Rich Results) ─────────
+// "2025-06-15" → "2025-06-15T00:00:00+02:00"
+function toISOWithTZ(dateStr: string): string {
+  if (dateStr.includes("T")) return dateStr; // már teljes ISO
+  return `${dateStr}T00:00:00+02:00`;
+}
+
 // ─── Breadcrumb Schema ────────────────────────────────────────
 export interface BreadcrumbItem {
   name: string;
@@ -100,9 +107,9 @@ export function toolSoftwareSchema(tool: Tool): string {
     image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
   };
 
-  // Opcionális mezők ha a registry-ben megadják
-  if (toolExt.updatedAt)  schema["dateModified"]  = toolExt.updatedAt;
-  if (toolExt.launchedAt) schema["datePublished"]  = toolExt.launchedAt;
+  // Opcionális mezők ha a registry-ben megadják (ISO 8601 + időzóna)
+  if (toolExt.updatedAt)  schema["dateModified"]  = toISOWithTZ(toolExt.updatedAt);
+  if (toolExt.launchedAt) schema["datePublished"]  = toISOWithTZ(toolExt.launchedAt);
 
   return JSON.stringify(schema);
 }
@@ -192,8 +199,9 @@ export function techArticleSchema(tool: Tool): string | null {
     },
     author: { "@type": "Organization", name: "Konvertalo.hu", url: SITE_URL },
     publisher: { "@type": "Organization", name: "Konvertalo.hu", url: SITE_URL },
-    dateModified:  toolExt.updatedAt  ?? new Date().toISOString().split("T")[0],
-    datePublished: toolExt.launchedAt ?? new Date().toISOString().split("T")[0],
+    image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
+    dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
+    datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
     articleBody: about.paragraphs.join(" "),
     proficiencyLevel: "Beginner",
     keywords: tool.keywords.join(", "),
@@ -266,7 +274,7 @@ export function organizationSchema(): string {
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    foundingDate: "2025",
+    foundingDate: "2025-01-01",
     founder: {
       "@type": "Person",
       name: "Mészáros János",

@@ -325,7 +325,7 @@
           CSV letoltese
         </button>
         <button class="btn btn--ghost btn--sm" on:click={backToConfig}>Vissza</button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Uj fajl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
       </div>
     </div>
 

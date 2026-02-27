@@ -169,7 +169,7 @@
     <div class="edit-panel__actions">
       <button class="btn btn--primary" on:click={applyAndDownload}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Letoltes uj fejlecekkel
+        Letöltés új fejlécekkel
       </button>
       <button class="btn btn--ghost btn--sm" on:click={reset}>Megse</button>
     </div>
@@ -180,10 +180,10 @@
 {#if status === "done"}
   <div class="done-card">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="done-icon"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    <p>A fajl sikeresen letoltve uj fejlecekkel.</p>
+    <p>A fájl sikeresen letöltve új fejlécekkel.</p>
     <div class="done-card__actions">
       <button class="btn btn--ghost btn--sm" on:click={backToEdit}>Vissza szerkesztesre</button>
-      <button class="btn btn--ghost btn--sm" on:click={reset}>Uj fajl</button>
+      <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
     </div>
   </div>
 {/if}

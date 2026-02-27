@@ -205,7 +205,7 @@
     <p>A fajl sikeresen letoltve {selectedCount} oszloppal.</p>
     <div class="done-card__actions">
       <button class="btn btn--ghost btn--sm" on:click={backToSelect}>Vissza valasztasra</button>
-      <button class="btn btn--ghost btn--sm" on:click={reset}>Uj fajl</button>
+      <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
     </div>
   </div>
 {/if}
