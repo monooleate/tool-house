@@ -5,12 +5,17 @@ import svelte from "@astrojs/svelte";
 // a src/pages/sitemap.xml.ts önmagában is elég)
 // import sitemap from "@astrojs/sitemap";
 
+// PUBLIC_SITE_LANG env változó határozza meg a nyelvet
+// Alapértelmezett: "hu"
+const SITE_LANG = process.env.PUBLIC_SITE_LANG ?? "hu";
+const SITE_URL = process.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu";
+
 export default defineConfig({
   // Static Site Generation (SSG) – minden oldal pre-rendelt HTML
   output: "static",
 
-  // Állítsd be a végleges domain-t!
-  site: "https://konvertalo.hu",
+  // Nyelv-specifikus site URL
+  site: SITE_URL,
 
   integrations: [
     svelte(),

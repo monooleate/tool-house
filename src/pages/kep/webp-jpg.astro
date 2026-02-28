@@ -1,9 +1,0 @@
----
-import ToolLayout from "../../layouts/ToolLayout.astro";
-import ImageConvertTool from "../../components/tools/shared/ImageConvertTool.svelte";
-import { getToolBySlug } from "../../lib/tool-registry.ts";
-const tool = getToolBySlug("kep", "webp-jpg")!;
----
-<ToolLayout tool={tool}>
-  <ImageConvertTool client:visible acceptFormats="image/webp,.webp" acceptLabel="WebP" outputFormat="image/jpeg" outputExt="jpg" showQuality={true} defaultQuality={90} zipName="jpg-kepek.zip" toolSlug="webp-jpg" convertLabel="JPG konvertálás" downloadLabel="JPG letöltése" />
-</ToolLayout>

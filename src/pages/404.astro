@@ -1,34 +1,36 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getActiveTools, CATEGORIES } from "../lib/tool-registry.ts";
+import { getVisibleActiveTools, CATEGORIES, getLocalizedCategory, getLocalizedTool, getVisibleCategories } from "../lib/tool-registry.ts";
+import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
 
-const suggestions = getActiveTools().slice(0, 4);
+const suggestions = getVisibleActiveTools(CURRENT_LANG).slice(0, 4).map(tool => getLocalizedTool(tool, CURRENT_LANG));
+const visibleCats = getVisibleCategories(CURRENT_LANG).slice(0, 2);
 ---
 
 <BaseLayout
-  title="404 – Az oldal nem található | Konvertalo.hu"
-  description="A keresett oldal nem létezik. Keresd meg a megfelelő eszközt a Konvertalo.hu-n!"
+  title={tpl("404.meta_title", { siteName: CURRENT_CONFIG.siteName })}
+  description={t("404.meta_desc")}
   noIndex={true}
 >
   <div class="not-found container">
     <div class="not-found__code" aria-hidden="true">404</div>
-    <h1 class="not-found__title">Az oldal nem található</h1>
+    <h1 class="not-found__title">{t("404.title")}</h1>
     <p class="not-found__desc">
-      A keresett URL nem létezik, vagy megváltozott.<br />
-      Lehet, hogy az alábbi eszközök valamelyike kellene?
+      {t("404.subtitle")}
     </p>
 
     {suggestions.length > 0 && (
       <div class="suggestions">
-        <p class="suggestions__label">Aktív eszközök:</p>
+        <p class="suggestions__label">{t("404.active_tools")}</p>
         <ul class="suggestions__list" role="list">
-          {suggestions.map((t) => {
-            const cat = CATEGORIES.find(c => c.id === t.category);
+          {suggestions.map((tool) => {
+            const cat = CATEGORIES.find(c => c.id === tool.category);
             return (
               <li>
-                <a href={`/${t.category}/${t.slug}`} class="suggestion-card">
+                <a href={toolUrl(tool)} class="suggestion-card">
                   <span class="suggestion-card__icon" aria-hidden="true">{cat?.icon}</span>
-                  <span class="suggestion-card__title">{t.h1}</span>
+                  <span class="suggestion-card__title">{tool.h1}</span>
                 </a>
               </li>
             );
@@ -38,9 +40,10 @@ const suggestions = getActiveTools().slice(0, 4);
     )}
 
     <div class="not-found__actions">
-      <a href="/" class="btn btn--primary btn--lg">← Vissza a főoldalra</a>
-      <a href="/kep" class="btn btn--outline">Képeszközök</a>
-      <a href="/adat" class="btn btn--outline">Adateszközök</a>
+      <a href="/" class="btn btn--primary btn--lg">← {t("404.back_home")}</a>
+      {visibleCats.map(cat => (
+        <a href={categoryUrl(cat.id)} class="btn btn--outline">{cat.label}</a>
+      ))}
     </div>
   </div>
 </BaseLayout>

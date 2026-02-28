@@ -1,10 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { ui } from "../../lib/ui-labels.ts";
 
   export let accept: string = "*/*";
   export let multiple: boolean = false;
   export let maxSizeMB: number = 100;
-  export let label: string = "Húzd ide a fájlokat, vagy kattints a böngészéshez";
+  export let label: string = ui.dropzoneDefault;
   export let sublabel: string = "";
   export let disabled: boolean = false;
 
@@ -16,7 +17,7 @@
 
   function validateFile(file: File): string | null {
     if (file.size > maxSizeMB * 1024 * 1024) {
-      return `"${file.name}" túl nagy (max ${maxSizeMB} MB)`;
+      return `"${file.name}" ${ui.fileTooLarge.replace("{n}", String(maxSizeMB))}`;
     }
     if (accept !== "*/*") {
       const types = accept.split(",").map((t) => t.trim());
@@ -25,7 +26,7 @@
         if (t.endsWith("/*")) return file.type.startsWith(t.slice(0, -2));
         return file.type === t;
       });
-      if (!valid) return `"${file.name}" formátuma nem támogatott`;
+      if (!valid) return `"${file.name}" ${ui.unsupportedFormat}`;
     }
     return null;
   }
@@ -130,7 +131,7 @@
     {/if}
 
     <span class="btn btn--outline btn--sm dropzone__btn">
-      Fájl kiválasztása
+      {ui.selectFile}
     </span>
   </div>
 </div>

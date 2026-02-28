@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── State ────────────────────────────────────────────────
   let delimiter = ",";
@@ -65,7 +66,7 @@
 
   function handlePasteConvert() {
     if (!jsonInput.trim()) {
-      error = "Írd be vagy illeszd be a JSON-t.";
+      error = ui.pasteJson;
       status = "error";
       return;
     }
@@ -110,17 +111,17 @@
     : "";
 
   const DELIMITERS = [
-    { value: ",",  label: "Vessző (,)" },
-    { value: ";",  label: "Pontosvessző (;)" },
-    { value: "\t", label: "Tabulátor" },
+    { value: ",",  label: ui.comma },
+    { value: ";",  label: ui.semicolon },
+    { value: "\t", label: ui.tabChar },
   ];
 </script>
 
 <!-- Settings -->
-<div class="card settings" aria-label="Beállítások">
+<div class="card settings" aria-label={ui.settings}>
   <div class="settings__grid">
     <div>
-      <label class="label" for="delimiter-select">Elválasztó</label>
+      <label class="label" for="delimiter-select">{ui.delimiter}</label>
       <select
         id="delimiter-select"
         class="select"
@@ -134,7 +135,7 @@
     </div>
 
     <div>
-      <span class="label">Opciók</span>
+      <span class="label">{ui.optionsLabel}</span>
       <div class="checkboxes">
         <label class="checkbox-label">
           <input
@@ -143,7 +144,7 @@
             on:change={reprocess}
             class="checkbox"
           />
-          Fejlécsor hozzáadása
+          {ui.addHeaderRow}
         </label>
       </div>
     </div>
@@ -158,24 +159,24 @@
       class:active={inputMode === "paste"}
       on:click={() => inputMode = "paste"}
     >
-      Beillesztés
+      {ui.paste}
     </button>
     <button
       class="tab-btn"
       class:active={inputMode === "file"}
       on:click={() => inputMode = "file"}
     >
-      Fájl feltöltés
+      {ui.uploadFile}
     </button>
   </div>
 
   {#if inputMode === "paste"}
     <div class="paste-area">
-      <label class="label" for="json-input">JSON bevitel</label>
+      <label class="label" for="json-input">{ui.jsonInput}</label>
       <textarea
         id="json-input"
         class="textarea"
-        placeholder={'[\n  { "nev": "Béla", "kor": 30 },\n  { "nev": "Anna", "kor": 25 }\n]'}
+        placeholder={'[\n  { "name": "John", "age": 30 },\n  { "name": "Anna", "age": 25 }\n]'}
         bind:value={jsonInput}
         rows="10"
       ></textarea>
@@ -184,7 +185,7 @@
         on:click={handlePasteConvert}
         disabled={!jsonInput.trim()}
       >
-        Konvertálás CSV-vé
+        {ui.convertToCsv}
       </button>
     </div>
   {:else}
@@ -192,7 +193,7 @@
       accept=".json,application/json"
       multiple={false}
       maxSizeMB={20}
-      label="Húzd ide a JSON fájlt"
+      label={ui.dragHere}
       sublabel="JSON · Max. 20 MB"
       on:files={handleFiles}
     />
@@ -202,8 +203,8 @@
 <!-- Processing -->
 {#if status === "processing"}
   <div class="state-card" aria-live="polite">
-    <div class="spinner" aria-label="Feldolgozás folyamatban"></div>
-    <p>Konvertálás...</p>
+    <div class="spinner" aria-label={ui.processing}></div>
+    <p>{ui.convertToCsvDots}</p>
   </div>
 {/if}
 
@@ -212,8 +213,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Újra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -225,37 +226,37 @@
     <!-- Stats bar -->
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat__num">{result.rowCount.toLocaleString("hu")}</span>
-        <span class="stat__label">sor</span>
+        <span class="stat__num">{result.rowCount.toLocaleString(ui.locale)}</span>
+        <span class="stat__label">{ui.row}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.colCount}</span>
-        <span class="stat__label">oszlop</span>
+        <span class="stat__label">{ui.column}</span>
       </div>
       <div class="stat">
         <span class="stat__num">
           {delimiter === "\t" ? "TAB" : `"${delimiter}"`}
         </span>
-        <span class="stat__label">elválasztó</span>
+        <span class="stat__label">{ui.delimiter}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.elapsedMs}ms</span>
-        <span class="stat__label">feldolgozás</span>
+        <span class="stat__label">{ui.processingTime}</span>
       </div>
 
       <div class="stats-bar__actions">
         <button class="btn btn--primary" on:click={downloadCsv}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          CSV letöltése
+          {ui.downloadCsv}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új JSON</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     <!-- Column headers -->
     {#if result.headers.length > 0}
       <div class="headers-row">
-        <span class="headers-label">Oszlopok:</span>
+        <span class="headers-label">{ui.columnsColon}</span>
         {#each result.headers as h}
           <span class="header-chip">{h}</span>
         {/each}
@@ -265,9 +266,9 @@
     <!-- CSV preview -->
     <div class="preview-block">
       <div class="preview-block__header">
-        <span class="preview-block__title">CSV előnézet</span>
+        <span class="preview-block__title">{ui.csvPreview}</span>
         <label class="preview-rows-label">
-          Sorok:
+          {ui.rowsColon}
           <select bind:value={previewRows} class="select select--sm">
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -279,7 +280,7 @@
       <pre class="csv-preview"><code>{previewCsv}</code></pre>
       {#if result.rowCount > previewRows}
         <div class="preview-more">
-          … és még {(result.rowCount - previewRows).toLocaleString("hu")} sor a letöltött fájlban
+          {ui.andMoreRows.replace("{n}", (result.rowCount - previewRows).toLocaleString(ui.locale))}
         </div>
       {/if}
     </div>

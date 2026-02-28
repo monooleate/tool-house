@@ -11,6 +11,35 @@ import { FEJLESZTO_CONTENT } from "./content/fejleszto-content.ts";
 import { PDF_CONTENT, EXCEL_CONTENT, MARKDOWN_CONTENT, HTML_CONTENT, FAJL_CONTENT, SEO_TOOL_CONTENT } from "./content/pdf-excel-other-content.ts";
 import type { ContentMap } from "./content/types.ts";
 
+// ─── Romanian Content Data Imports ───────────────────────────
+import { KEP_RO_CONTENT } from "./content/ro/kep-content.ts";
+import { ADAT_RO_CONTENT } from "./content/ro/adat-content.ts";
+import { SZOVEG_RO_CONTENT } from "./content/ro/szoveg-content.ts";
+import { FEJLESZTO_RO_CONTENT } from "./content/ro/fejleszto-content.ts";
+import { PDF_RO_CONTENT, EXCEL_RO_CONTENT, MARKDOWN_RO_CONTENT, HTML_RO_CONTENT, FAJL_RO_CONTENT, SEO_TOOL_RO_CONTENT } from "./content/ro/pdf-excel-other-content.ts";
+
+// ─── i18n Imports ────────────────────────────────────────────
+import { ui } from "./ui-labels.ts";
+import { CURRENT_LANG } from "../i18n/index.ts";
+import type { SupportedLang } from "../i18n/index.ts";
+
+// ─── Romanian Tool Translations ──────────────────────────────
+import { KEP_RO } from "./i18n/ro-tools-kep.ts";
+import { PDF_RO } from "./i18n/ro-tools-pdf.ts";
+import { ADAT_RO } from "./i18n/ro-tools-adat.ts";
+import { SZOVEG_RO } from "./i18n/ro-tools-szoveg.ts";
+import { FEJLESZTO_RO } from "./i18n/ro-tools-fejleszto.ts";
+import { MARKDOWN_RO } from "./i18n/ro-tools-markdown.ts";
+import { HTML_RO } from "./i18n/ro-tools-html.ts";
+import { EXCEL_RO } from "./i18n/ro-tools-excel.ts";
+import { FAJL_RO, SEO_RO } from "./i18n/ro-tools-fajl-seo.ts";
+
+const RO_TRANSLATIONS: Record<string, Record<string, { slug: string; title: string; h1: string; description: string; keywords: string[] }>> = {
+  kep: KEP_RO, pdf: PDF_RO, adat: ADAT_RO, szoveg: SZOVEG_RO,
+  fejleszto: FEJLESZTO_RO, markdown: MARKDOWN_RO, html: HTML_RO,
+  excel: EXCEL_RO, fajl: FAJL_RO, seo: SEO_RO,
+};
+
 export type ToolStatus = "active" | "coming-soon";
 export type CategoryId =
   | "kep" | "pdf" | "adat" | "szoveg"
@@ -20,6 +49,18 @@ export type CategoryId =
 export interface ToolFAQ {
   q: string;
   a: string;
+}
+
+export interface ToolI18n {
+  slug?: string;        // Localized URL slug (e.g., "convertor-jpg-webp" for RO)
+  title: string;
+  h1: string;
+  description: string;
+  keywords: string[];
+  faq?: ToolFAQ[];
+  introText?: string;
+  guide?: string[];
+  content?: ToolContent;
 }
 
 export interface Tool {
@@ -33,6 +74,7 @@ export interface Tool {
   related: string[];       // más tool slug-ok
   faq: ToolFAQ[];
   component?: string;
+  componentProps?: Record<string, unknown>;  // Props for shared components (e.g., ImageConvertTool)
   inputFormats?: string[];
   outputFormat?: string;
   acceptMultiple?: boolean;
@@ -43,6 +85,13 @@ export interface Tool {
   introText?: string;      // Bevezető szöveg az eszköz után, FAQ előtt
   guide?: string[];        // Használati útmutató lépések (sorszámozott)
   content?: ToolContent;   // Részletes SEO tartalom szekciók
+  /** Nyelvenkénti fordítások. Ha nincs megadva az adott nyelvhez,
+   *  fallback a hu (alapértelmezett) mezőkre. */
+  i18n?: Partial<Record<SupportedLang, Partial<ToolI18n>>>;
+  /** Melyik nyelveken jelenjen meg ez a tool.
+   *  Ha nincs megadva = örökli a szülő kategória beállítását.
+   *  Ha a kategória sincs korlátozva = minden nyelven megjelenik. */
+  languages?: SupportedLang[];
 }
 
 export interface ToolContent {
@@ -67,12 +116,22 @@ export interface Category {
   description: string;
   color: string;
   intro?: string[];
+  /** Kategória label, description és intro fordítások */
+  i18n?: Partial<Record<SupportedLang, { label: string; description: string; intro?: string[] }>>;
+  /** Melyik nyelveken jelenjen meg ez a kategória (landing + összes tool).
+   *  Ha nincs megadva = minden támogatott nyelven megjelenik. */
+  languages?: SupportedLang[];
 }
 
 export const CATEGORIES: Category[] = [
   {
     id: "kep", label: "Képek", icon: "🖼️", color: "var(--cat-kep)",
     description: "Képkonvertálás, átméretezés, tömörítés és szerkesztés böngészőben.",
+    i18n: { ro: { label: "Imagini", description: "Conversie, redimensionare, comprimare și editare imagini în browser.", intro: [
+      "Instrumentele de imagine InstrumenteOnline acoperă cele mai frecvente sarcini de procesare a imaginilor: conversie de format (JPG, PNG, WebP), compresie, redimensionare, rotire, decupare, filtre și filigran. Toate instrumentele rulează în browserul tău – nici un byte din imaginile tale nu ajunge pe server.",
+      "Procesarea în lot este suportată: încarcă zeci de imagini deodată și descarcă rezultatul într-un singur fișier ZIP. Tehnologia Web Worker asigură că browserul nu se blochează în timpul conversiei.",
+      "Ideal pentru dezvoltatori web, bloggeri, comercianți e-commerce și oricine are nevoie să optimizeze rapid imagini fără a instala software suplimentar.",
+    ] } },
     intro: [
       "A Konvertalo.hu képeszközei a leggyakoribb képfeldolgozási feladatokat fedik le: formátumváltás (JPG, PNG, WebP), tömörítés, átméretezés, forgatás, vágás, szűrők és vízjel. Minden eszköz a böngésződben fut – a képeid egyetlen bájtja sem kerül szerverre.",
       "Batch feldolgozás támogatott: tölts fel akár több tucat képet egyszerre, és az eredményt egyetlen ZIP fájlban töltsd le. A Web Worker technológia gondoskodik arról, hogy a böngésző ne fagyjon le a konvertálás közben.",
@@ -82,6 +141,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "pdf", label: "PDF", icon: "📄", color: "var(--cat-pdf)",
     description: "PDF összefűzés, szétbontás, oldalkezelés szerverfeltöltés nélkül.",
+    i18n: { ro: { label: "PDF", description: "Combinare, separare și gestionare pagini PDF fără încărcare pe server.", intro: [
+      "Cu instrumentele noastre PDF poți gestiona documentele fără încărcare pe server: combini mai multe PDF-uri, citești numărul de pagini sau separi paginile individuale. Procesarea se face în întregime în browserul tău cu ajutorul bibliotecilor pdf-lib și pdfjs-dist.",
+      "Sigur și pentru documente confidențiale: deoarece nimic nu părăsește dispozitivul tău, nu trebuie să îți faci griji pentru GDPR sau politicile interne de protecție a datelor. Deosebit de util în mediul de birou și juridic.",
+    ] } },
     intro: [
       "A PDF eszközeinkkel szerverfeltöltés nélkül kezelheted a dokumentumaidat: összefűzhetsz több PDF-et, kiolvashatod az oldalszámot, vagy szétbonthatod az egyes oldalakat. A feldolgozás teljes egészében a böngésződben történik a pdf-lib és pdfjs-dist könyvtárak segítségével.",
       "Bizalmas dokumentumokhoz is biztonságos: mivel semmi nem hagyja el a gépedet, nem kell aggódnod a GDPR vagy belső adatvédelmi szabályzatok miatt. Különösen hasznos irodai és jogi környezetben.",
@@ -90,6 +153,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "adat", label: "Adat", icon: "📊", color: "var(--cat-adat)",
     description: "CSV, JSON, TSV konvertálás és adattisztítás online.",
+    i18n: { ro: { label: "Date", description: "Conversie CSV, JSON, TSV și curățare date online.", intro: [
+      "Instrumentele noastre de date asigură conversia și vizualizarea între cele mai frecvente formate de date: CSV, JSON, TSV și alte formate de date text. Fie că transformi fișiere de export sau examinezi răspunsuri API, aici rezolvi totul.",
+      "Deosebit de util pentru analiști, dezvoltatori și marketeri care lucrează zilnic cu date tabulare. Conversia este rapidă, privată și nu necesită nici Python, nici Excel.",
+    ] } },
     intro: [
       "Adateszközeink a leggyakoribb adatformátumok közötti konvertálást és megtekintést biztosítják: CSV, JSON, TSV és egyéb szöveges adatformátumok. Legyen szó export fájlok átalakításáról vagy API válaszok vizsgálatáról, itt mindent megoldasz.",
       "Különösen hasznos elemzőknek, fejlesztőknek és marketingeseknek, akik napi szinten dolgoznak táblázatos adatokkal. A konverzió gyors, privát, és nem kell hozzá sem Python, sem Excel.",
@@ -98,6 +165,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "szoveg", label: "Szöveg", icon: "📝", color: "var(--cat-szoveg)",
     description: "Szövegszerkesztő eszközök: rendezés, tisztítás, konverzió.",
+    i18n: { ro: { label: "Text", description: "Instrumente de editare text: sortare, curățare, conversie.", intro: [
+      "Instrumentele de text oferă ajutor pentru sarcinile zilnice de procesare a textului: sortarea și filtrarea rândurilor, eliminarea duplicatelor, conversia majuscule/minuscule, curățarea spațiilor, eliminarea diacriticelor și generarea slug-urilor URL.",
+      "Nu este nevoie de instalare sau înregistrare – doar lipește textul, alege operația și primești rezultatul imediat. Util pentru creatori de conținut, traducători și dezvoltatori deopotrivă.",
+    ] } },
     intro: [
       "A szövegeszközök a mindennapi szövegfeldolgozási feladatokhoz nyújtanak segítséget: sorok rendezése és szűrése, duplikátumok eltávolítása, kis- és nagybetű konverzió, whitespace tisztítás, ékezetek eltávolítása és URL-barát slug generálás.",
       "Nincs szükség telepítésre vagy regisztrációra – csak illeszd be a szöveget, válaszd ki a műveletet, és azonnal megkapod az eredményt. Tartalomkészítőknek, fordítóknak és fejlesztőknek egyaránt hasznos.",
@@ -106,6 +177,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "fejleszto", label: "Fejlesztő", icon: "⚙️", color: "var(--cat-fejleszto)",
     description: "JSON, YAML, XML, Base64, URL – fejlesztői segédeszközök.",
+    i18n: { ro: { label: "Dezvoltator", description: "JSON, YAML, XML, Base64, URL – instrumente pentru dezvoltatori.", intro: [
+      "Colecția de instrumente pentru dezvoltatori oferă uneltele zilnice ale programatorilor: formatare și validare JSON, codare/decodare Base64, URL encode/decode, conversie YAML–JSON, formatare XML și generare hash. Totul rulează în browser, fără server.",
+      "Ideal pentru dezvoltare API, depanare și gestionarea fișierelor de configurare. Nu trebuie să instalezi instrumente CLI – deschide browserul și lucrează.",
+    ] } },
     intro: [
       "A fejlesztői eszközgyűjtemény a programozók mindennapi segédeszközeit kínálja: JSON formázás és validálás, Base64 kódolás/dekódolás, URL encode/decode, YAML–JSON konverzió, XML formázás és hash generálás. Minden a böngészőben fut, szerver nélkül.",
       "Ideális API fejlesztéshez, hibakereséshez és konfigurációs fájlok kezeléséhez. Nem kell CLI eszközt telepíteni – nyisd meg a böngészőt és dolgozz.",
@@ -114,6 +189,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "markdown", label: "Markdown", icon: "✍️", color: "var(--cat-markdown)",
     description: "Markdown HTML-lé alakítása és előnézete.",
+    i18n: { ro: { label: "Markdown", description: "Conversie Markdown în HTML și previzualizare.", intro: [
+      "Cu instrumentele Markdown poți vizualiza și converti instantaneu textul Markdown în HTML. Util la scrierea documentației, editarea fișierelor README sau pregătirea postărilor de blog.",
+      "Conversia se face în browserul tău, deci nu este nevoie de server. Rezultatul formatat poate fi copiat sau descărcat imediat.",
+    ] } },
     intro: [
       "A Markdown eszközök segítségével azonnal megtekintheted és konvertálhatod a Markdown szöveget HTML-lé. Hasznos dokumentáció írásánál, README fájlok szerkesztésénél vagy blogbejegyzések előkészítésénél.",
       "A konverzió a böngésződben történik, így nincs szükség szerverre. A formázott kimenetet azonnal átmásolhatod vagy letöltheted.",
@@ -122,6 +201,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "html", label: "HTML", icon: "🌐", color: "var(--cat-html)",
     description: "HTML szöveggé alakítása, minifikálás.",
+    i18n: { ro: { label: "HTML", description: "Conversie HTML în text, minificare.", intro: [
+      "Cu instrumentele noastre HTML poți transforma rapid codul HTML în text curat, minifica codul sursă sau efectua alte operații pe text. Util pentru dezvoltatori web și sarcini de migrare a conținutului.",
+      "Procesarea se face instantaneu în browserul tău – nu trebuie să încarci nimic.",
+    ] } },
     intro: [
       "HTML eszközeinkkel gyorsan alakíthatod a HTML kódot tiszta szöveggé, minifikálhatod a forráskódot, vagy más szöveges műveleteket végezhetsz. Hasznos webfejlesztőknek és tartalom-migrációs feladatokhoz.",
       "A feldolgozás pillanatok alatt megtörténik a böngésződben – nem kell semmit sem feltölteni.",
@@ -130,6 +213,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "excel", label: "Excel", icon: "📈", color: "var(--cat-excel)",
     description: "Excel (XLSX) konvertálás és megtekintés böngészőben.",
+    i18n: { ro: { label: "Excel", description: "Conversie și vizualizare Excel (XLSX) în browser.", intro: [
+      "Cu instrumentele Excel poți vizualiza fișiere XLSX, le poți converti în CSV sau JSON, direct în browser. Nu este nevoie de Microsoft Office sau LibreOffice – doar încarcă fișierul și lucrează.",
+      "Ideal când trebuie să verifici rapid un tabel sau să exporti datele în alt sistem. Procesarea este privată, fișierele tale nu părăsesc dispozitivul.",
+    ] } },
     intro: [
       "Az Excel eszközökkel XLSX fájlokat tekinthetsz meg, konvertálhatsz CSV-vé vagy JSON-né, közvetlenül a böngészőben. Nem szükséges Microsoft Office vagy LibreOffice – csak töltsd fel a fájlt és dolgozz.",
       "Ideális, ha gyorsan be kell tekintened egy táblázatba, vagy az adatokat más rendszerbe kell exportálnod. A feldolgozás privát, a fájljaid nem hagyják el a gépedet.",
@@ -138,6 +225,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "fajl", label: "Fájl", icon: "🗂️", color: "var(--cat-fajl)",
     description: "ZIP, hash-ellenőrzés, fájl-információ eszközök.",
+    i18n: { ro: { label: "Fișiere", description: "ZIP, verificare hash, informații fișiere.", intro: [
+      "Instrumentele de fișiere oferă soluții pentru sarcinile generale de gestionare a fișierelor: compresie și extragere ZIP, verificare hash fișiere (MD5, SHA-256), informații despre dimensiune și tip fișier. Totul rulează în browserul tău.",
+      "Util pentru administratori de sistem, dezvoltatori și orice utilizator care are nevoie să gestioneze rapid fișiere fără instalare.",
+    ] } },
     intro: [
       "A fájleszközök általános fájlkezelési feladatokhoz kínálnak megoldást: ZIP tömörítés és kicsomagolás, fájl hash ellenőrzés (MD5, SHA-256), fájl méret és típus információ. Minden a böngésződben fut.",
       "Hasznos rendszergazdáknak, fejlesztőknek és bármilyen felhasználónak, akinek gyorsan kell fájlokat kezelni telepítés nélkül.",
@@ -146,6 +237,10 @@ export const CATEGORIES: Category[] = [
   {
     id: "seo", label: "SEO", icon: "🔍", color: "var(--cat-seo)",
     description: "SEO segédeszközök: title/meta hossz, UTM, canonical, robots.txt.",
+    i18n: { ro: { label: "SEO", description: "Instrumente SEO: lungime title/meta, UTM, canonical, robots.txt.", intro: [
+      "Instrumentele SEO oferă ajutor pentru sarcinile zilnice de optimizare pentru motoarele de căutare: verificarea lungimii title și meta description, constructor parametri UTM, generator URL canonical, analizor și tester robots.txt.",
+      "Ideal pentru specialiști SEO, manageri de conținut și dezvoltatori web care doresc să verifice și optimizeze rapid meta datele paginilor. Nu este nevoie de instrumente plătite pentru sarcinile de bază.",
+    ] } },
     intro: [
       "Az SEO eszközök a keresőoptimalizálás mindennapi feladataihoz nyújtanak segítséget: title és meta description hossz ellenőrzés, UTM paraméter építő, canonical URL generátor, robots.txt elemző és tesztelő.",
       "Ideális SEO szakembereknek, tartalomkezelőknek és webfejlesztőknek, akik gyorsan szeretnék ellenőrizni és optimalizálni az oldalak meta adatait. Nincs szükség fizetős eszközökre az alapfeladatokhoz.",
@@ -188,13 +283,13 @@ const rawTools: Tool[] = [
       { q: "Mi a különbség a lossless és lossy WebP között?", a: "A lossless (veszteségmentes) mód pixelről pixelre azonos minőséget ad, de nagyobb fájlmérettel. A lossy (veszteséges) mód 25–35%-kal kisebb fájlt ad, minimális, szabad szemmel alig látható minőségveszteséggel." },
     ],
   },
-  { slug: "jpg-png", category: "kep", title: "JPG → PNG konvertáló | Ingyenes online", h1: "JPG → PNG konvertáló", description: "JPG képek konvertálása veszteségmentes PNG formátumba böngészőben, szerver nélkül. Átlátszó háttér, batch feldolgozás.", keywords: ["jpg png", "jpeg png", "jpg to png", "jpg png konvertáló", "kép konvertálás online"], status: "active", component: "ImageConvertTool", related: ["jpg-webp", "png-jpg", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "png-jpg", category: "kep", title: "PNG → JPG konvertáló | Ingyenes online", h1: "PNG → JPG konvertáló", description: "PNG képek konvertálása JPG formátumba minőség-beállítással, háttérszín választással. Böngészőben, szervermentes.", keywords: ["png jpg", "png to jpg", "png jpeg konvertáló", "png jpg konvertálás online"], status: "active", component: "ImageConvertTool", related: ["jpg-png", "png-webp", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "webp-jpg", category: "kep", title: "WebP → JPG konvertáló | Ingyenes online", h1: "WebP → JPG konvertáló", description: "WebP képek visszakonvertálása JPG formátumba minőség-beállítással. Böngészőben, szerver nélkül, batch módban.", keywords: ["webp jpg", "webp to jpg", "webp jpeg konvertáló", "webp visszaalakítás"], status: "active", component: "ImageConvertTool", related: ["webp-png", "jpg-webp", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "webp-png", category: "kep", title: "WebP → PNG konvertáló | Ingyenes online", h1: "WebP → PNG konvertáló", description: "WebP képek visszakonvertálása veszteségmentes PNG formátumba, alfa-csatorna megőrzéssel. Böngészőben, szervermentes.", keywords: ["webp png", "webp to png", "webp png konvertáló", "webp visszaalakítás lossless"], status: "active", component: "ImageConvertTool", related: ["webp-jpg", "png-webp", "jpg-png"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "jpg-png", category: "kep", title: "JPG → PNG konvertáló | Ingyenes online", h1: "JPG → PNG konvertáló", description: "JPG képek konvertálása veszteségmentes PNG formátumba böngészőben, szerver nélkül. Átlátszó háttér, batch feldolgozás.", keywords: ["jpg png", "jpeg png", "jpg to png", "jpg png konvertáló", "kép konvertálás online"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/jpeg,.jpg,.jpeg", acceptLabel: "JPG", outputFormat: "image/png", outputExt: "png", showQuality: false, zipName: "png-kepek.zip", toolSlug: "jpg-png", convertLabel: "PNG konvertálás", downloadLabel: "PNG letöltése" }, related: ["jpg-webp", "png-jpg", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "png-jpg", category: "kep", title: "PNG → JPG konvertáló | Ingyenes online", h1: "PNG → JPG konvertáló", description: "PNG képek konvertálása JPG formátumba minőség-beállítással, háttérszín választással. Böngészőben, szervermentes.", keywords: ["png jpg", "png to jpg", "png jpeg konvertáló", "png jpg konvertálás online"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/png,.png", acceptLabel: "PNG", outputFormat: "image/jpeg", outputExt: "jpg", showQuality: true, defaultQuality: 90, zipName: "jpg-kepek.zip", toolSlug: "png-jpg", convertLabel: "JPG konvertálás", downloadLabel: "JPG letöltése" }, related: ["jpg-png", "png-webp", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "webp-jpg", category: "kep", title: "WebP → JPG konvertáló | Ingyenes online", h1: "WebP → JPG konvertáló", description: "WebP képek visszakonvertálása JPG formátumba minőség-beállítással. Böngészőben, szerver nélkül, batch módban.", keywords: ["webp jpg", "webp to jpg", "webp jpeg konvertáló", "webp visszaalakítás"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/webp,.webp", acceptLabel: "WebP", outputFormat: "image/jpeg", outputExt: "jpg", showQuality: true, defaultQuality: 90, zipName: "jpg-kepek.zip", toolSlug: "webp-jpg", convertLabel: "JPG konvertálás", downloadLabel: "JPG letöltése" }, related: ["webp-png", "jpg-webp", "tomorites"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "webp-png", category: "kep", title: "WebP → PNG konvertáló | Ingyenes online", h1: "WebP → PNG konvertáló", description: "WebP képek visszakonvertálása veszteségmentes PNG formátumba, alfa-csatorna megőrzéssel. Böngészőben, szervermentes.", keywords: ["webp png", "webp to png", "webp png konvertáló", "webp visszaalakítás lossless"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/webp,.webp", acceptLabel: "WebP", outputFormat: "image/png", outputExt: "png", showQuality: false, zipName: "png-kepek.zip", toolSlug: "webp-png", convertLabel: "PNG konvertálás", downloadLabel: "PNG letöltése" }, related: ["webp-jpg", "png-webp", "jpg-png"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "atmeretezes", category: "kep", title: "Kép átméretező online | Ingyenes, szervermentes", h1: "Kép átméretezés", description: "Képek átméretezése px vagy százalék alapján, képarány megőrzéssel. Batch feldolgozás ZIP kimenettel, böngészőben.", keywords: ["kép átméretezés", "resize image online", "kép átméretező", "képméret csökkentés", "kép méretre vágás"], status: "active", component: "AtmererezesTool", related: ["tomorites", "tomeges-atmeretezes", "levagas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "tomorites", category: "kep", title: "Képtömörítő online | JPG PNG WebP tömörítés", h1: "Képtömörítés online", description: "JPG, PNG, WebP képek tömörítése minőségveszteség minimalizálásával. Böngészőben, szerver nélkül, batch feldolgozással.", keywords: ["képtömörítés", "compress image", "kép tömörítő online", "jpg tömörítés", "png compress", "webp tömörítés"], status: "active", component: "ImageConvertTool", related: ["jpg-webp", "tomeges-tomorites", "minoseg-allitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "minoseg-allitas", category: "kep", title: "Kép minőség-beállítás online | Quality slider", h1: "Kép minőség állítása", description: "JPG/WebP képek quality értékének pontos beállítása fájlméret optimalizáláshoz. Valós idejű előnézet.", keywords: ["kép minőség", "jpg quality", "kép quality beállítás", "jpeg minőség csökkentés", "webp quality"], status: "active", component: "ImageConvertTool", related: ["tomorites", "jpg-webp"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "tomorites", category: "kep", title: "Képtömörítő online | JPG PNG WebP tömörítés", h1: "Képtömörítés online", description: "JPG, PNG, WebP képek tömörítése minőségveszteség minimalizálásával. Böngészőben, szerver nélkül, batch feldolgozással.", keywords: ["képtömörítés", "compress image", "kép tömörítő online", "jpg tömörítés", "png compress", "webp tömörítés"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp", acceptLabel: "JPG, PNG, WebP", outputFormat: "image/webp", outputExt: "webp", showQuality: true, defaultQuality: 75, zipName: "tomorites-kepek.zip", toolSlug: "tomorites", convertLabel: "Tömörítés", downloadLabel: "Tömörített letöltése" }, related: ["jpg-webp", "tomeges-tomorites", "minoseg-allitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "minoseg-allitas", category: "kep", title: "Kép minőség-beállítás online | Quality slider", h1: "Kép minőség állítása", description: "JPG/WebP képek quality értékének pontos beállítása fájlméret optimalizáláshoz. Valós idejű előnézet.", keywords: ["kép minőség", "jpg quality", "kép quality beállítás", "jpeg minőség csökkentés", "webp quality"], status: "active", component: "ImageConvertTool", componentProps: { acceptFormats: "image/jpeg,image/webp,.jpg,.jpeg,.webp", acceptLabel: "JPG, WebP", outputFormat: "image/jpeg", outputExt: "jpg", showQuality: true, defaultQuality: 80, zipName: "minoseg-kepek.zip", toolSlug: "minoseg-allitas", convertLabel: "Konvertálás", downloadLabel: "Kép letöltése" }, related: ["tomorites", "jpg-webp"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "felbontas-kiszamolo", category: "kep", title: "Képfelbontás kalkulátor – DPI/PPI számítás online", h1: "Képfelbontás kiszámolása", description: "DPI és pixel méret kalkulátor nyomtatáshoz és képernyőhöz. Inch, cm, mm konverzió, valós idejű eredmény.", keywords: ["felbontás kalkulátor", "dpi számítás", "ppi kalkulátor", "pixel cm", "nyomtatási méret", "dpi kiszámítás online"], status: "active", component: "FelbontasKiszamoloTool", related: ["atmeretezes", "tomeges-atmeretezes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "levagas", category: "kep", title: "Kép kivágó online (crop) | Ingyenes", h1: "Kép kivágása", description: "Képek kivágása egyéni méretben vagy arányban böngészőben, szervermentes. Előnézet és pontos pixelkoordináták.", keywords: ["kép kivágás", "crop online", "kép crop", "kép vágás", "image crop online ingyenes"], status: "active", component: "LevagoTool", related: ["forgatas", "atmeretezes", "tukrozes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "forgatas", category: "kep", title: "Kép forgatás online | Ingyenes, szervermentes", h1: "Kép forgatása", description: "Képek forgatása tetszőleges szögben vagy 90°-os lépésekben, böngészőben. Előnézettel, szervermentes.", keywords: ["kép forgatás", "rotate image online", "kép elforgatás", "kép forgatás online ingyenes"], status: "active", component: "ForgatoTool", related: ["tukrozes", "90-fokos-forgatas", "levagas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
@@ -257,8 +352,8 @@ const rawTools: Tool[] = [
       { q: "Nagy fájloknál is működik?", a: "Igen, a feldolgozás Web Workerben fut, az UI nem fagy le. Akár több ezer sor is feldolgozható." },
     ],
   },
-  { slug: "tsv-csv", category: "adat", title: "TSV → CSV konvertáló online | Ingyenes", h1: "TSV → CSV konvertáló", description: "Tab-separated values fájl konvertálása comma-separated CSV-vé böngészőben. Szervermentes, privát.", keywords: ["tsv csv", "tsv to csv", "tsv konvertálás", "tab separated csv"], status: "active", component: "DelimiterConvertTool", related: ["csv-json", "csv-tsv", "csv-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "csv-tsv", category: "adat", title: "CSV → TSV konvertáló online | Ingyenes", h1: "CSV → TSV konvertáló", description: "CSV fájl konvertálása tab-elválasztású TSV formátumba böngészőben. Szervermentes, privát.", keywords: ["csv tsv", "csv to tsv", "csv tab konvertálás"], status: "active", component: "DelimiterConvertTool", related: ["tsv-csv", "csv-json", "csv-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "tsv-csv", category: "adat", title: "TSV → CSV konvertáló online | Ingyenes", h1: "TSV → CSV konvertáló", description: "Tab-separated values fájl konvertálása comma-separated CSV-vé böngészőben. Szervermentes, privát.", keywords: ["tsv csv", "tsv to csv", "tsv konvertálás", "tab separated csv"], status: "active", component: "DelimiterConvertTool", componentProps: { inputLabel: "TSV fajl", outputLabel: "CSV kimenet", inputAccept: ".tsv,.txt", workerType: "tsv-to-csv", outputExtension: "csv" }, related: ["csv-json", "csv-tsv", "csv-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "csv-tsv", category: "adat", title: "CSV → TSV konvertáló online | Ingyenes", h1: "CSV → TSV konvertáló", description: "CSV fájl konvertálása tab-elválasztású TSV formátumba böngészőben. Szervermentes, privát.", keywords: ["csv tsv", "csv to tsv", "csv tab konvertálás"], status: "active", component: "DelimiterConvertTool", componentProps: { inputLabel: "CSV fajl", outputLabel: "TSV kimenet", inputAccept: ".csv,.txt", workerType: "csv-to-tsv", outputExtension: "tsv" }, related: ["tsv-csv", "csv-json", "csv-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "csv-tisztitas", category: "adat", title: "CSV adattisztítás online | Üres sorok, duplikátumok", h1: "CSV adattisztítás", description: "CSV tisztítása: üres sorok törlése, whitespace normalizálás, duplikált sorok eltávolítása. Böngészőben, szervermentes.", keywords: ["csv tisztítás", "csv clean", "csv adattisztítás online", "csv üres sorok"], status: "active", component: "CsvTisztitasTool", related: ["csv-json", "fejlec-atnevezes", "oszlopok-kivalasztasa"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "fejlec-atnevezes", category: "adat", title: "CSV fejlécek átnevezése online | Header rename", h1: "CSV fejlécek átnevezése", description: "CSV oszlopfejlécek átnevezése vizuális szerkesztővel. Feltöltés, szerkesztés, letöltés – böngészőben.", keywords: ["csv fejléc rename", "csv header rename", "csv oszlopnév"], status: "active", component: "FejlecAtnevezesTool", related: ["csv-tisztitas", "oszlopok-kivalasztasa", "csv-json"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "oszlopok-kivalasztasa", category: "adat", title: "CSV oszlopok kiválasztása online | Column select", h1: "CSV oszlopok kiválasztása", description: "CSV fájlból meghatározott oszlopok megtartása vagy törlése checkbox-szal. Böngészőben, szervermentes.", keywords: ["csv columns select", "csv oszlop kiválasztás", "csv column filter"], status: "active", component: "OszlopKivalasztasTool", related: ["fejlec-atnevezes", "sorok-szurese", "csv-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
@@ -282,17 +377,17 @@ const rawTools: Tool[] = [
       { q: "Kezel ékezetes karaktereket?", a: "Igen, az összes magyar ékezetet (á,é,í,ó,ö,ő,ú,ü,ű) automatikusan konvertálja." },
     ],
   },
-  { slug: "sorok-rendezese", category: "szoveg", title: "Szöveg sorok rendezése online | Ingyenes ABC rendezés", h1: "Szövegsorok rendezése", description: "Sorok ABC rendezése növekvő, csökkenő vagy véletlenszerű sorrendbe – böngészőben, szerver nélkül. Magyar ékezetes rendezés támogatással.", keywords: ["sorok rendezése", "sort lines", "abc rendezés online", "szöveg sorba rendezés", "szöveg rendezés online"], status: "active", component: "TextTransformTool", related: ["ismetlodok-torlese", "ures-sorok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "ismetlodok-torlese", category: "szoveg", title: "Ismétlődő sorok törlése online | Duplikátum szűrő", h1: "Ismétlődő sorok törlése", description: "Duplikált sorok eltávolítása szövegből – kis-/nagybetű érzékeny és érzéketlen mód. Böngészőben, privát.", keywords: ["duplikált sorok", "deduplicate", "ismétlődő sorok törlése", "duplicate remover online", "szöveg deduplikálás"], status: "active", component: "TextTransformTool", related: ["sorok-rendezese", "ures-sorok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "ures-sorok-torlese", category: "szoveg", title: "Üres sorok törlése szövegből | Online eszköz", h1: "Üres sorok törlése", description: "Üres és whitespace-only sorok eltávolítása szövegből egy kattintással. Böngészőben, privát.", keywords: ["üres sorok törlése", "remove blank lines", "üres sorok eltávolítása", "blank lines remover", "szöveg tisztítás"], status: "active", component: "TextTransformTool", related: ["whitespace-tisztitas", "ismetlodok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "whitespace-tisztitas", category: "szoveg", title: "Whitespace tisztítás online | Szóközök normalizálása", h1: "Whitespace tisztítása", description: "Felesleges szóközök, tabulátorok és sortörések normalizálása – szöveg tisztítás böngészőben.", keywords: ["whitespace", "trim", "whitespace tisztítás", "szóköz eltávolítás", "szöveg trim online"], status: "active", component: "TextTransformTool", related: ["ures-sorok-torlese", "specialis-karakterek-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "ekezetek-eltavolitasa", category: "szoveg", title: "Ékezetek eltávolítása online | Magyar ékezet konverter", h1: "Ékezetek eltávolítása", description: "Magyar és egyéb ékezetes karakterek latin megfelelőre cserélése – á→a, ö→o, ű→u. Böngészőben, szerver nélkül.", keywords: ["ékezet eltávolítás", "diacritics remove", "ékezet konvertáló", "magyar ékezet eltávolítás", "remove accents online"], status: "active", component: "TextTransformTool", related: ["slug-generator", "specialis-karakterek-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "specialis-karakterek-torlese", category: "szoveg", title: "Speciális karakterek törlése online | Szöveg tisztítás", h1: "Speciális karakterek törlése", description: "Nem ASCII és speciális karakterek eltávolítása szövegből – csak betűk, számok és alapvető írásjelek maradnak.", keywords: ["speciális karakterek", "special chars remove", "karakter törlés", "szöveg tisztítás online", "speciális karakter eltávolítás"], status: "active", component: "TextTransformTool", related: ["ekezetek-eltavolitasa", "whitespace-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "sorok-rendezese", category: "szoveg", title: "Szöveg sorok rendezése online | Ingyenes ABC rendezés", h1: "Szövegsorok rendezése", description: "Sorok ABC rendezése növekvő, csökkenő vagy véletlenszerű sorrendbe – böngészőben, szerver nélkül. Magyar ékezetes rendezés támogatással.", keywords: ["sorok rendezése", "sort lines", "abc rendezés online", "szöveg sorba rendezés", "szöveg rendezés online"], status: "active", component: "TextTransformTool", componentProps: { operation: "sort-lines", operationLabel: "Rendezés", placeholder: "Illeszd be a szöveget – minden sor külön elemként rendeződik...", modeKey: "direction", modes: [{ value: "asc", label: "Növekvő (A→Z)" }, { value: "desc", label: "Csökkenő (Z→A)" }] }, related: ["ismetlodok-torlese", "ures-sorok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "ismetlodok-torlese", category: "szoveg", title: "Ismétlődő sorok törlése online | Duplikátum szűrő", h1: "Ismétlődő sorok törlése", description: "Duplikált sorok eltávolítása szövegből – kis-/nagybetű érzékeny és érzéketlen mód. Böngészőben, privát.", keywords: ["duplikált sorok", "deduplicate", "ismétlődő sorok törlése", "duplicate remover online", "szöveg deduplikálás"], status: "active", component: "TextTransformTool", componentProps: { operation: "dedupe-lines", operationLabel: "Duplikátumok törlése", placeholder: "Illeszd be a szöveget – az ismétlődő sorok eltávolításra kerülnek..." }, related: ["sorok-rendezese", "ures-sorok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "ures-sorok-torlese", category: "szoveg", title: "Üres sorok törlése szövegből | Online eszköz", h1: "Üres sorok törlése", description: "Üres és whitespace-only sorok eltávolítása szövegből egy kattintással. Böngészőben, privát.", keywords: ["üres sorok törlése", "remove blank lines", "üres sorok eltávolítása", "blank lines remover", "szöveg tisztítás"], status: "active", component: "TextTransformTool", componentProps: { operation: "remove-empty-lines", operationLabel: "Üres sorok törlése", placeholder: "Illeszd be a szöveget – az üres sorok automatikusan törlődnek..." }, related: ["whitespace-tisztitas", "ismetlodok-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "whitespace-tisztitas", category: "szoveg", title: "Whitespace tisztítás online | Szóközök normalizálása", h1: "Whitespace tisztítása", description: "Felesleges szóközök, tabulátorok és sortörések normalizálása – szöveg tisztítás böngészőben.", keywords: ["whitespace", "trim", "whitespace tisztítás", "szóköz eltávolítás", "szöveg trim online"], status: "active", component: "TextTransformTool", componentProps: { operation: "trim-whitespace", operationLabel: "Whitespace tisztítás", placeholder: "Illeszd be a szöveget – a felesleges szóközök normalizálásra kerülnek..." }, related: ["ures-sorok-torlese", "specialis-karakterek-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "ekezetek-eltavolitasa", category: "szoveg", title: "Ékezetek eltávolítása online | Magyar ékezet konverter", h1: "Ékezetek eltávolítása", description: "Magyar és egyéb ékezetes karakterek latin megfelelőre cserélése – á→a, ö→o, ű→u. Böngészőben, szerver nélkül.", keywords: ["ékezet eltávolítás", "diacritics remove", "ékezet konvertáló", "magyar ékezet eltávolítás", "remove accents online"], status: "active", component: "TextTransformTool", componentProps: { operation: "remove-accents", operationLabel: "Ékezetek eltávolítása", placeholder: "Illeszd be az ékezetes szöveget – á→a, ö→o, ű→u stb." }, related: ["slug-generator", "specialis-karakterek-torlese"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "specialis-karakterek-torlese", category: "szoveg", title: "Speciális karakterek törlése online | Szöveg tisztítás", h1: "Speciális karakterek törlése", description: "Nem ASCII és speciális karakterek eltávolítása szövegből – csak betűk, számok és alapvető írásjelek maradnak.", keywords: ["speciális karakterek", "special chars remove", "karakter törlés", "szöveg tisztítás online", "speciális karakter eltávolítás"], status: "active", component: "TextTransformTool", componentProps: { operation: "remove-special-chars", operationLabel: "Speciális karakterek törlése", placeholder: "Illeszd be a szöveget – a speciális karakterek eltávolításra kerülnek..." }, related: ["ekezetek-eltavolitasa", "whitespace-tisztitas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "karaktercsere", category: "szoveg", title: "Karakter csere online | Szöveg keresés és csere", h1: "Karakter csere", description: "Karakterek és szövegrészek egyszerű cseréje regex nélkül – kis-/nagybetű érzékeny mód. Böngészőben, privát.", keywords: ["karakter csere", "find replace", "szöveg csere online", "karakter csere online", "text replace"], status: "active", component: "KarakterCsereTool", related: ["kereses-csere", "regex-kereses-csere"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "kereses-csere", category: "szoveg", title: "Keresés és csere online szövegben | Find & Replace", h1: "Keresés és csere", description: "Szövegben keresés és csere case-sensitive és teljes szó egyezés opcióval – böngészőben, szervermentes.", keywords: ["keresés csere", "find replace text", "szöveg keresés csere online", "find and replace online", "szöveg csere eszköz"], status: "active", component: "KeresesCsereTool", related: ["karaktercsere", "regex-kereses-csere"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "regex-kereses-csere", category: "szoveg", title: "Regex keresés és csere online | Reguláris kifejezés", h1: "Regex keresés és csere", description: "Reguláris kifejezéssel keresés és csere szövegben – flag választás, match szám, példa minták. Böngészőben.", keywords: ["regex", "regex replace online", "reguláris kifejezés", "regex tesztelő", "regex csere online"], status: "active", component: "RegexCsereTool", related: ["kereses-csere", "karaktercsere"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "kisbetu-nagybetu", category: "szoveg", title: "Kisbetű-nagybetű konvertáló online | Case convert", h1: "Kisbetű/nagybetű konvertálás", description: "Szöveg átalakítása NAGYBETŰ, kisbetű vagy Első Betű Nagy formátumba – egy kattintással, böngészőben.", keywords: ["uppercase lowercase", "case convert", "kisbetű nagybetű", "nagybetű konvertálás", "szöveg kisbetű online"], status: "active", component: "TextTransformTool", related: ["case-konverter", "slug-generator"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "case-konverter", category: "szoveg", title: "Case konverter | camelCase, snake_case, PascalCase online", h1: "Case konverter", description: "Szöveg átalakítása camelCase, snake_case, PascalCase, kebab-case formátumra – fejlesztőknek és tartalom készítőknek.", keywords: ["case converter", "camelcase", "snake_case", "pascalcase", "kebab-case", "case konverter online"], status: "active", component: "TextTransformTool", related: ["kisbetu-nagybetu", "slug-generator"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "kisbetu-nagybetu", category: "szoveg", title: "Kisbetű-nagybetű konvertáló online | Case convert", h1: "Kisbetű/nagybetű konvertálás", description: "Szöveg átalakítása NAGYBETŰ, kisbetű vagy Első Betű Nagy formátumba – egy kattintással, böngészőben.", keywords: ["uppercase lowercase", "case convert", "kisbetű nagybetű", "nagybetű konvertálás", "szöveg kisbetű online"], status: "active", component: "TextTransformTool", componentProps: { operation: "lowercase", operationLabel: "Betűméret konvertálás", placeholder: "Illeszd be a szöveget – válaszd ki a kívánt betűméretet...", modes: [{ value: "lowercase", label: "kisbetű" }, { value: "uppercase", label: "NAGYBETŰ" }, { value: "titlecase", label: "Első Betű Nagy" }] }, related: ["case-konverter", "slug-generator"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "case-konverter", category: "szoveg", title: "Case konverter | camelCase, snake_case, PascalCase online", h1: "Case konverter", description: "Szöveg átalakítása camelCase, snake_case, PascalCase, kebab-case formátumra – fejlesztőknek és tartalom készítőknek.", keywords: ["case converter", "camelcase", "snake_case", "pascalcase", "kebab-case", "case konverter online"], status: "active", component: "TextTransformTool", componentProps: { operation: "camelcase", operationLabel: "Case konvertálás", placeholder: "Illeszd be a szöveget – válaszd ki a kívánt case formátumot...", modes: [{ value: "camelcase", label: "camelCase" }, { value: "snakecase", label: "snake_case" }, { value: "pascalcase", label: "PascalCase" }, { value: "kebabcase", label: "kebab-case" }] }, related: ["kisbetu-nagybetu", "slug-generator"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
 
   // ═══ FEJLESZTŐ ════════════════════════════════════════════
   {
@@ -312,16 +407,16 @@ const rawTools: Tool[] = [
   { slug: "json-minimalas", category: "fejleszto", title: "JSON minifikáló online | Whitespace eltávolítás", h1: "JSON minifikálása", description: "JSON whitespace eltávolítása production build-hez – méretcsökkentés százalékkal. Böngészőben, szerver nélkül.", keywords: ["json minify", "json tömörítés", "json minimalizálás online", "json whitespace"], status: "active", component: "JsonMinimalasTool", related: ["json-formazas", "json-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "json-ellenorzes", category: "fejleszto", title: "JSON validátor online | Szintaxis ellenőrzés", h1: "JSON érvényesítése", description: "JSON szintaxis validálás hibajelzéssel és sor-szám megjelöléssel – valós idejű, böngészőben.", keywords: ["json validate", "json validator", "json ellenőrzés", "json szintaxis", "json validátor online"], status: "active", component: "JsonEllenorzesTool", related: ["json-formazas", "json-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "yaml-ellenorzes", category: "fejleszto", title: "YAML validátor online | Szintaxis ellenőrzés", h1: "YAML érvényesítése", description: "YAML szintaxis ellenőrzés részletes hibajelzéssel – sor és pozíció megjelölése. Böngészőben, szervermentes.", keywords: ["yaml validate", "yaml validátor", "yaml ellenőrzés", "yaml szintaxis", "yaml validator online"], status: "active", component: "CodeFormatterTool", related: ["yaml-formazas", "json-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "yaml-formazas", category: "fejleszto", title: "YAML formázó online | Prettify", h1: "YAML formázása", description: "YAML prettify és normalizálás konzisztens behúzással – js-yaml alapú. Böngészőben, szervermentes.", keywords: ["yaml format", "yaml prettify", "yaml formázó", "yaml beautify online"], status: "active", component: "CodeFormatterTool", related: ["yaml-ellenorzes", "json-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "xml-formazas", category: "fejleszto", title: "XML formázó online | Prettify és behúzás", h1: "XML formázása", description: "XML beautify és behúzás normalizálás – szintaxiskiemelés nélkül, tiszta kimenet. Böngészőben.", keywords: ["xml format", "xml prettify", "xml formázó", "xml beautify online", "xml indent"], status: "active", component: "CodeFormatterTool", related: ["xml-minimalas", "xml-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "xml-minimalas", category: "fejleszto", title: "XML minifikáló online | Tömörítés", h1: "XML minifikálása", description: "XML whitespace és kommentek eltávolítása minimális méretű kimenethez. Méretcsökkentés százalékkal.", keywords: ["xml minify", "xml tömörítés", "xml minifikálás online"], status: "active", component: "CodeFormatterTool", related: ["xml-formazas", "xml-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "yaml-formazas", category: "fejleszto", title: "YAML formázó online | Prettify", h1: "YAML formázása", description: "YAML prettify és normalizálás konzisztens behúzással – js-yaml alapú. Böngészőben, szervermentes.", keywords: ["yaml format", "yaml prettify", "yaml formázó", "yaml beautify online"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "format", language: "yaml", placeholder: ui.pasteYamlCode }, related: ["yaml-ellenorzes", "json-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "xml-formazas", category: "fejleszto", title: "XML formázó online | Prettify és behúzás", h1: "XML formázása", description: "XML beautify és behúzás normalizálás – szintaxiskiemelés nélkül, tiszta kimenet. Böngészőben.", keywords: ["xml format", "xml prettify", "xml formázó", "xml beautify online", "xml indent"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "format", language: "xml", placeholder: "Illeszd be az XML kódot..." }, related: ["xml-minimalas", "xml-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "xml-minimalas", category: "fejleszto", title: "XML minifikáló online | Tömörítés", h1: "XML minifikálása", description: "XML whitespace és kommentek eltávolítása minimális méretű kimenethez. Méretcsökkentés százalékkal.", keywords: ["xml minify", "xml tömörítés", "xml minifikálás online"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "minify", language: "xml", placeholder: "Illeszd be az XML kódot..." }, related: ["xml-formazas", "xml-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "xml-ellenorzes", category: "fejleszto", title: "XML validátor online | Well-formedness", h1: "XML érvényesítése", description: "XML szintaxis validálás és well-formedness ellenőrzés DOMParser-rel. Böngészőben, szervermentes.", keywords: ["xml validate", "xml validátor", "xml ellenőrzés online", "xml well-formed"], status: "active", component: "CodeFormatterTool", related: ["xml-formazas", "yaml-ellenorzes"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "html-formazas", category: "fejleszto", title: "HTML formázó online | Beautify", h1: "HTML formázása", description: "HTML kód beautify és behúzás normalizálás – void elemek kezelése, konzisztens indent. Böngészőben.", keywords: ["html format", "html beautify", "html formázó", "html indent online", "html prettify"], status: "active", component: "CodeFormatterTool", related: ["html-minimalas", "xml-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "html-minimalas", category: "fejleszto", title: "HTML minifikáló online | Fejlesztő eszköz", h1: "HTML minifikálása", description: "HTML whitespace és kommentek eltávolítása production build-hez. Méretcsökkentés százalékkal.", keywords: ["html minify", "html tömörítés", "html minifikálás fejlesztő"], status: "active", component: "CodeFormatterTool", related: ["html-formazas", "css-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "css-formazas", category: "fejleszto", title: "CSS formázó online | Beautify", h1: "CSS formázása", description: "CSS kód beautify konzisztens behúzással – property rendezés, szelektorok elválasztása. Böngészőben.", keywords: ["css format", "css beautify", "css formázó online", "css prettify", "css indent"], status: "active", component: "CodeFormatterTool", related: ["css-minimalas", "html-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "css-minimalas", category: "fejleszto", title: "CSS minifikáló online | Tömörítés", h1: "CSS minifikálása", description: "CSS whitespace és kommentek eltávolítása, rövidítések – kisebb fájlméret production-hoz.", keywords: ["css minify", "css tömörítés", "css minifikálás online", "css compress"], status: "active", component: "CodeFormatterTool", related: ["css-formazas", "js-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "js-formazas", category: "fejleszto", title: "JavaScript formázó online | Beautify", h1: "JavaScript formázása", description: "JavaScript kód prettify és behúzás normalizálás – string-aware, blokk szintű indent. Böngészőben.", keywords: ["js format", "js beautify", "javascript formázó", "js prettify online", "javascript beautify"], status: "active", component: "CodeFormatterTool", related: ["js-minimalas", "json-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
-  { slug: "js-minimalas", category: "fejleszto", title: "JavaScript minifikáló online | Tömörítés", h1: "JavaScript minifikálása", description: "JavaScript kód minifikálása: kommentek, whitespace eltávolítása production build-hez.", keywords: ["js minify", "javascript minify", "js tömörítés online", "javascript minifikálás"], status: "active", component: "CodeFormatterTool", related: ["js-formazas", "css-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "html-formazas", category: "fejleszto", title: "HTML formázó online | Beautify", h1: "HTML formázása", description: "HTML kód beautify és behúzás normalizálás – void elemek kezelése, konzisztens indent. Böngészőben.", keywords: ["html format", "html beautify", "html formázó", "html indent online", "html prettify"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "format", language: "html", placeholder: "Illeszd be a HTML kódot..." }, related: ["html-minimalas", "xml-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "html-minimalas", category: "fejleszto", title: "HTML minifikáló online | Fejlesztő eszköz", h1: "HTML minifikálása", description: "HTML whitespace és kommentek eltávolítása production build-hez. Méretcsökkentés százalékkal.", keywords: ["html minify", "html tömörítés", "html minifikálás fejlesztő"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "minify", language: "html", placeholder: "Illeszd be a HTML kódot..." }, related: ["html-formazas", "css-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "css-formazas", category: "fejleszto", title: "CSS formázó online | Beautify", h1: "CSS formázása", description: "CSS kód beautify konzisztens behúzással – property rendezés, szelektorok elválasztása. Böngészőben.", keywords: ["css format", "css beautify", "css formázó online", "css prettify", "css indent"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "format", language: "css", placeholder: "Illeszd be a CSS kódot..." }, related: ["css-minimalas", "html-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "css-minimalas", category: "fejleszto", title: "CSS minifikáló online | Tömörítés", h1: "CSS minifikálása", description: "CSS whitespace és kommentek eltávolítása, rövidítések – kisebb fájlméret production-hoz.", keywords: ["css minify", "css tömörítés", "css minifikálás online", "css compress"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "minify", language: "css", placeholder: "Illeszd be a CSS kódot..." }, related: ["css-formazas", "js-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "js-formazas", category: "fejleszto", title: "JavaScript formázó online | Beautify", h1: "JavaScript formázása", description: "JavaScript kód prettify és behúzás normalizálás – string-aware, blokk szintű indent. Böngészőben.", keywords: ["js format", "js beautify", "javascript formázó", "js prettify online", "javascript beautify"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "format", language: "js", placeholder: "Illeszd be a JavaScript kódot..." }, related: ["js-minimalas", "json-formazas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
+  { slug: "js-minimalas", category: "fejleszto", title: "JavaScript minifikáló online | Tömörítés", h1: "JavaScript minifikálása", description: "JavaScript kód minifikálása: kommentek, whitespace eltávolítása production build-hez.", keywords: ["js minify", "javascript minify", "js tömörítés online", "javascript minifikálás"], status: "active", component: "CodeFormatterTool", componentProps: { mode: "minify", language: "js", placeholder: "Illeszd be a JavaScript kódot..." }, related: ["js-formazas", "css-minimalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "base64-kodolo-dekodolo", category: "fejleszto", title: "Base64 kódoló/dekódoló online | Ingyenes", h1: "Base64 kódolás és dekódolás", description: "Szöveg Base64 kódolása és dekódolása böngészőben – UTF-8 támogatás, valós idejű. Szervermentes.", keywords: ["base64 encode decode", "base64 online", "base64 kódoló", "base64 dekódoló", "base64 konvertáló"], status: "active", component: "Base64Tool", related: ["url-kodolo-dekodolo", "html-entity-kodolo-dekodolo"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "url-kodolo-dekodolo", category: "fejleszto", title: "URL kódoló/dekódoló online | Percent encoding", h1: "URL kódolás és dekódolás", description: "URL encode/decode: %XX formátum kódolása és visszaalakítása – encodeURIComponent és encodeURI mód.", keywords: ["url encode decode", "percent encoding", "url kódoló", "url dekódoló", "encodeURIComponent online"], status: "active", component: "UrlKodoloTool", related: ["base64-kodolo-dekodolo", "html-entity-kodolo-dekodolo"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "html-entity-kodolo-dekodolo", category: "fejleszto", title: "HTML entity kódoló/dekódoló online | Escape", h1: "HTML entity kódolás/dekódolás", description: "HTML entity-k kódolása (&amp;, &lt;, &gt;, &quot;) és visszaalakítása – valós idejű, böngészőben.", keywords: ["html entity", "html escape", "html entity kódoló", "html escape online", "html karakter kódolás"], status: "active", component: "HtmlEntityTool", related: ["url-kodolo-dekodolo", "base64-kodolo-dekodolo"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
@@ -403,6 +498,42 @@ for (const tool of rawTools) {
   }
 }
 
+// ─── Apply Romanian translations to i18n.ro ─────────────────
+for (const tool of rawTools) {
+  const catTranslations = RO_TRANSLATIONS[tool.category];
+  const roData = catTranslations?.[tool.slug];
+  if (roData) {
+    tool.i18n = tool.i18n ?? {};
+    tool.i18n.ro = { ...roData, ...(tool.i18n.ro ?? {}) };
+  }
+}
+
+// ─── Apply Romanian SEO content to i18n.ro ──────────────────
+const ALL_RO_CONTENT: ContentMap = {
+  ...KEP_RO_CONTENT,
+  ...ADAT_RO_CONTENT,
+  ...SZOVEG_RO_CONTENT,
+  ...FEJLESZTO_RO_CONTENT,
+  ...PDF_RO_CONTENT,
+  ...EXCEL_RO_CONTENT,
+  ...MARKDOWN_RO_CONTENT,
+  ...HTML_RO_CONTENT,
+  ...FAJL_RO_CONTENT,
+  ...SEO_TOOL_RO_CONTENT,
+};
+
+for (const tool of rawTools) {
+  const roContent = ALL_RO_CONTENT[tool.slug];
+  if (roContent) {
+    tool.i18n = tool.i18n ?? {};
+    tool.i18n.ro = tool.i18n.ro ?? {} as any;
+    tool.i18n.ro!.content = roContent.content;
+    tool.i18n.ro!.introText = roContent.introText;
+    tool.i18n.ro!.guide = roContent.guide;
+    tool.i18n.ro!.faq = roContent.faq;
+  }
+}
+
 const tools: Tool[] = rawTools;
 
 // ─── Exports ─────────────────────────────────────────────────────────────────
@@ -428,3 +559,93 @@ export function getCategoryInfo(id: CategoryId): Category | undefined {
 }
 export function getActiveToolsCount(): number { return tools.filter((t) => t.status === "active").length; }
 export function getTotalToolsCount(): number { return tools.length; }
+
+// ─── i18n Helpers ────────────────────────────────────────────────────────────
+
+/**
+ * Visszaadja a tool-t az aktuális nyelvre lokalizálva.
+ * Ha nincs i18n fordítás az adott nyelvhez, az eredeti hu mezők maradnak.
+ */
+export function getLocalizedTool(tool: Tool, lang: SupportedLang = CURRENT_LANG): Tool {
+  const langOverride = tool.i18n?.[lang];
+  if (!langOverride) return tool;
+  return { ...tool, ...langOverride };
+}
+
+/**
+ * Visszaadja a kategóriát az aktuális nyelvre lokalizálva.
+ */
+export function getLocalizedCategory(cat: Category, lang: SupportedLang = CURRENT_LANG): Category {
+  const langOverride = cat.i18n?.[lang];
+  if (!langOverride) return cat;
+  const { intro: roIntro, ...rest } = langOverride;
+  const result = { ...cat, ...rest };
+  if (roIntro && roIntro.length > 0) result.intro = roIntro;
+  return result;
+}
+
+/**
+ * Visszaadja az összes kategóriát lokalizálva.
+ */
+export function getLocalizedCategories(lang: SupportedLang = CURRENT_LANG): Category[] {
+  return CATEGORIES.map(cat => getLocalizedCategory(cat, lang));
+}
+
+/**
+ * Meghatározza hogy az adott tool megjelenik-e az aktuális nyelven.
+ */
+export function isToolVisibleInLang(
+  tool: Tool,
+  lang: SupportedLang = CURRENT_LANG
+): boolean {
+  if (tool.languages && tool.languages.length > 0) {
+    return tool.languages.includes(lang);
+  }
+  const category = CATEGORIES.find(c => c.id === tool.category);
+  if (category?.languages && category.languages.length > 0) {
+    return category.languages.includes(lang);
+  }
+  return true;
+}
+
+/**
+ * Meghatározza hogy az adott kategória megjelenik-e az aktuális nyelven.
+ */
+export function isCategoryVisibleInLang(
+  category: Category,
+  lang: SupportedLang = CURRENT_LANG
+): boolean {
+  if (category.languages && category.languages.length > 0) {
+    return category.languages.includes(lang);
+  }
+  return true;
+}
+
+/**
+ * Visszaadja az aktuális nyelvhez tartozó aktív tool-okat.
+ */
+export function getVisibleActiveTools(lang: SupportedLang = CURRENT_LANG): Tool[] {
+  return tools.filter(
+    t => t.status === "active" && isToolVisibleInLang(t, lang)
+  );
+}
+
+/**
+ * Visszaadja az aktuális nyelvhez tartozó összes tool-t (active + coming-soon).
+ */
+export function getVisibleTools(lang: SupportedLang = CURRENT_LANG): Tool[] {
+  return tools.filter(t => isToolVisibleInLang(t, lang));
+}
+
+/**
+ * Visszaadja az aktuális nyelvhez tartozó kategóriákat.
+ */
+export function getVisibleCategories(lang: SupportedLang = CURRENT_LANG): Category[] {
+  return CATEGORIES.filter(cat => {
+    if (!isCategoryVisibleInLang(cat, lang)) return false;
+    const hasVisibleTool = tools.some(
+      t => t.category === cat.id && isToolVisibleInLang(t, lang)
+    );
+    return hasVisibleTool;
+  });
+}

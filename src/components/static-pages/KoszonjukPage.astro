@@ -1,0 +1,65 @@
+---
+// ============================================================
+// koszonjuk.astro – Köszönjük oldal (form küldés utáni redirect)
+// ============================================================
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { t, tpl, CURRENT_CONFIG } from "../../i18n/index.ts";
+import { staticUrl } from "../../lib/url-utils.ts";
+---
+
+<BaseLayout
+  title={tpl("thankyou.meta_title", { siteName: CURRENT_CONFIG.siteName })}
+  description={t("thankyou.meta_desc")}
+  noIndex={true}
+>
+
+  <div class="thankyou-page container">
+    <div class="thankyou-icon" aria-hidden="true">✅</div>
+    <h1 class="thankyou-title">{t("thankyou.heading")}</h1>
+    <p class="thankyou-desc">
+      {t("thankyou.desc")}
+    </p>
+    <div class="thankyou-actions">
+      <a href="/" class="btn btn--primary btn--lg">{t("thankyou.back_home")}</a>
+      <a href={staticUrl("kapcsolat")} class="btn btn--outline">{t("thankyou.new_message")}</a>
+    </div>
+  </div>
+
+</BaseLayout>
+
+<style>
+.thankyou-page {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-5);
+  max-width: 600px;
+}
+
+.thankyou-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.thankyou-title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.thankyou-desc {
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  max-width: 40ch;
+  line-height: 1.6;
+}
+
+.thankyou-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  justify-content: center;
+  margin-top: var(--sp-4);
+}
+</style>

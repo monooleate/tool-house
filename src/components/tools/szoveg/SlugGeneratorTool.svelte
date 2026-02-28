@@ -2,6 +2,7 @@
   import ConvertButton from "../../ui/ConvertButton.svelte";
   import AdSlot from "../../ui/AdSlot.svelte";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── Timing ─────────────────────────────────────────────
   const TOOL_SLUG = "slug-generator";
@@ -90,7 +91,7 @@
     <div class="io-pane">
       <label class="label" for="slug-input">Szöveg</label>
       <textarea id="slug-input" class="textarea" rows={lines ? 6 : 3}
-        placeholder="pl. Hogyan optimalizálj képeket WebP-re?"
+        placeholder={ui.slugPlaceholder}
         bind:value={input}
       ></textarea>
       <div class="examples">
@@ -103,9 +104,9 @@
 
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Slug eredmény</span>
+        <span class="label">Slug {ui.result}</span>
         {#if copied}
-          <span class="copied-badge">✓ Másolva!</span>
+          <span class="copied-badge">✓ {ui.copied}</span>
         {/if}
       </div>
       <div class="slug-output" class:slug-output--empty={!slugResult}>
@@ -137,7 +138,7 @@
       onConvert={doConvert}
       onDownload={doDownload}
       convertLabel="Slug generálás"
-      downloadLabel="Másolás vágólapra"
+      downloadLabel={ui.copyToClipboard}
     />
   {/if}
 

@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("pdf-oldalak-torlese");
 
@@ -35,7 +36,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `Nem sikerult betolteni a PDF-et: ${err.message}`;
+      error = `${ui.pdfLoadError}: ${err.message}`;
       pageCount = 0;
     }
   }
@@ -47,13 +48,13 @@
       if (part.includes("-")) {
         const [a, b] = part.split("-").map((s) => parseInt(s.trim(), 10));
         if (isNaN(a) || isNaN(b) || a < 1 || b > max || a > b) {
-          throw new Error(`Ervenytelen tartomany: ${part}`);
+          throw new Error(`${ui.invalidRange}: ${part}`);
         }
         for (let i = a; i <= b; i++) indices.add(i - 1);
       } else {
         const num = parseInt(part, 10);
         if (isNaN(num) || num < 1 || num > max) {
-          throw new Error(`Ervenytelen oldalszam: ${part}`);
+          throw new Error(`${ui.invalidPageNumber}: ${part}`);
         }
         indices.add(num - 1);
       }
@@ -68,7 +69,7 @@
     try {
       const toDelete = parseDeletePages(deleteInput, pageCount);
       if (toDelete.size >= pageCount) {
-        error = "Nem torolheto az osszes oldal.";
+        error = ui.cannotDeleteAll;
         isProcessing = false;
         return;
       }
@@ -87,10 +88,10 @@
       const result = await newDoc.save();
       const baseName = file.name.replace(/\.pdf$/i, "");
       resultBlob = new Blob([result], { type: "application/pdf" });
-      resultFilename = `${baseName}_torolve.pdf`;
+      resultFilename = `${baseName}${ui.deletedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isProcessing = false;
     }
@@ -130,7 +131,7 @@
       accept=".pdf,application/pdf"
       multiple={false}
       maxSizeMB={200}
-      label="Huzd ide a PDF fajlt"
+      label={ui.dragPdfHere}
       sublabel=".pdf"
       on:files={handleFiles}
     />
@@ -139,21 +140,21 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
       {#if pageCount > 0}
         <div class="stats-bar">
           <div class="stat">
             <span class="stat__num">{pageCount}</span>
-            <span class="stat__label">osszes oldal</span>
+            <span class="stat__label">{ui.totalPages}</span>
           </div>
           <div class="stat">
             <span class="stat__num stat__num--danger">{deleteCount}</span>
-            <span class="stat__label">torlendo</span>
+            <span class="stat__label">{ui.toDelete}</span>
           </div>
           <div class="stat">
             <span class="stat__num">{remainingCount}</span>
-            <span class="stat__label">marado</span>
+            <span class="stat__label">{ui.remaining}</span>
           </div>
         </div>
       {/if}
@@ -161,7 +162,7 @@
 
     <div class="card settings-card">
       <div class="field">
-        <label class="label" for="delete-pages">Torlendo oldalak</label>
+        <label class="label" for="delete-pages">{ui.deletePagesLabel}</label>
         <input
           id="delete-pages"
           type="text"
@@ -169,7 +170,7 @@
           bind:value={deleteInput}
           placeholder="pl. 1, 3-5, 8"
         />
-        <span class="hint">Oldalszamok es tartomanyok vesszivel elvalasztva (1-{pageCount})</span>
+        <span class="hint">{ui.pagesAndRangesHint} (1-{pageCount})</span>
       </div>
     </div>
 
@@ -183,8 +184,8 @@
       {isDone}
       onConvert={doConvert}
       onDownload={doDownload}
-      convertLabel="Oldalak torlese"
-      downloadLabel="PDF letoltese"
+      convertLabel={ui.deletePages}
+      downloadLabel={ui.downloadPdf}
       fileCount={1}
     />
 

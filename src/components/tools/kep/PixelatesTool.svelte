@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let preview = "";
@@ -42,7 +43,7 @@
       img.src = preview;
       await new Promise<void>((resolve, reject) => {
         img.onload = () => resolve();
-        img.onerror = () => reject(new Error("Kep betoltesi hiba"));
+        img.onerror = () => reject(new Error(ui.imageLoadError));
       });
 
       // Step 1: Draw image at tiny size
@@ -68,7 +69,7 @@
       const q = mimeType === "image/png" ? undefined : quality / 100;
       const blob = await new Promise<Blob>((resolve, reject) => {
         bigCanvas.toBlob(
-          (b) => (b ? resolve(b) : reject(new Error("Blob letrehozasi hiba"))),
+          (b) => (b ? resolve(b) : reject(new Error(ui.blobError))),
           mimeType,
           q,
         );
@@ -101,16 +102,16 @@
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Beallitasok</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
-    <label class="label" for="pixel-slider">Pixel meret: {pixelSize}px</label>
+    <label class="label" for="pixel-slider">{ui.pixelate}: {pixelSize}px</label>
     <input id="pixel-slider" type="range" min="2" max="50" step="1" bind:value={pixelSize} class="slider" />
   </div>
 
   <div class="settings-row two-col">
     <div>
-      <label class="label" for="format-select">Kimeneti formatum</label>
+      <label class="label" for="format-select">{ui.outputFormat}</label>
       <select id="format-select" bind:value={outputFormat} class="input">
         <option value="image/webp">WebP</option>
         <option value="image/jpeg">JPEG</option>
@@ -118,7 +119,7 @@
       </select>
     </div>
     <div>
-      <label class="label" for="quality-slider">Minoseg: {quality}%</label>
+      <label class="label" for="quality-slider">{ui.quality}: {quality}%</label>
       <input id="quality-slider" type="range" min="10" max="100" step="1" bind:value={quality} class="slider" />
     </div>
   </div>
@@ -129,25 +130,25 @@
     accept="image/*"
     multiple={false}
     maxSizeMB={50}
-    label="Huzd ide a kepet a pixelateshez"
+    label={ui.dragImageFor}
     sublabel="JPG, PNG, WebP -- Max. 50 MB"
     on:files={handleFiles}
   />
 {:else}
   <div class="preview-section">
     {#if origWidth && origHeight}
-      <p class="info-text">Eredeti: {origWidth} x {origHeight} px | Pixel meret: {pixelSize}px</p>
+      <p class="info-text">{ui.original}: {origWidth} x {origHeight} px | {ui.pixelate}: {pixelSize}px</p>
     {/if}
 
     <div class="preview-grid">
       <div class="preview-pane">
-        <div class="preview-pane__label">Eredeti{file ? ` -- ${formatFileSize(file.size)}` : ""}</div>
-        <img src={preview} alt="Eredeti kep" class="preview-img" />
+        <div class="preview-pane__label">{ui.original}{file ? ` -- ${formatFileSize(file.size)}` : ""}</div>
+        <img src={preview} alt={ui.original} class="preview-img" />
       </div>
       {#if resultUrl}
         <div class="preview-pane">
-          <div class="preview-pane__label">Pixelalt{resultBlob ? ` -- ${formatFileSize(resultBlob.size)}` : ""}</div>
-          <img src={resultUrl} alt="Pixelalt kep" class="preview-img" />
+          <div class="preview-pane__label">{ui.pixelate}{resultBlob ? ` -- ${formatFileSize(resultBlob.size)}` : ""}</div>
+          <img src={resultUrl} alt={ui.pixelatedImage} class="preview-img" />
         </div>
       {/if}
     </div>
@@ -159,13 +160,13 @@
     <div class="actions">
       {#if !resultUrl}
         <button class="btn btn--primary" on:click={process} disabled={processing}>
-          {processing ? "Feldolgozas..." : "Pixelates"}
+          {processing ? ui.processing : ui.pixelate}
         </button>
       {:else}
-        <button class="btn btn--primary" on:click={download}>Letoltes</button>
-        <button class="btn btn--outline" on:click={() => { resultUrl = ""; resultBlob = null; }}>Ujra</button>
+        <button class="btn btn--primary" on:click={download}>{ui.download}</button>
+        <button class="btn btn--outline" on:click={() => { resultUrl = ""; resultBlob = null; }}>{ui.retry}</button>
       {/if}
-      <button class="btn btn--ghost" on:click={reset}>Uj kep</button>
+      <button class="btn btn--ghost" on:click={reset}>{ui.newFile}</button>
     </div>
   </div>
 {/if}

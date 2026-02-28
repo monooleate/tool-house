@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("pdf-oldalak-forgatasa");
 
@@ -37,7 +38,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `Nem sikerult betolteni a PDF-et: ${err.message}`;
+      error = `${ui.pdfLoadError}: ${err.message}`;
       pageCount = 0;
     }
   }
@@ -49,13 +50,13 @@
       if (part.includes("-")) {
         const [a, b] = part.split("-").map((s) => parseInt(s.trim(), 10));
         if (isNaN(a) || isNaN(b) || a < 1 || b > max || a > b) {
-          throw new Error(`Ervenytelen tartomany: ${part}`);
+          throw new Error(`${ui.invalidRange}: ${part}`);
         }
         for (let i = a; i <= b; i++) indices.add(i - 1);
       } else {
         const num = parseInt(part, 10);
         if (isNaN(num) || num < 1 || num > max) {
-          throw new Error(`Ervenytelen oldalszam: ${part}`);
+          throw new Error(`${ui.invalidPageNumber}: ${part}`);
         }
         indices.add(num - 1);
       }
@@ -89,10 +90,10 @@
       const result = await doc.save();
       const baseName = file.name.replace(/\.pdf$/i, "");
       resultBlob = new Blob([result], { type: "application/pdf" });
-      resultFilename = `${baseName}_forgatott.pdf`;
+      resultFilename = `${baseName}${ui.rotatedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isProcessing = false;
     }
@@ -121,7 +122,7 @@
       accept=".pdf,application/pdf"
       multiple={false}
       maxSizeMB={200}
-      label="Huzd ide a PDF fajlt"
+      label={ui.dragPdfHere}
       sublabel=".pdf"
       on:files={handleFiles}
     />
@@ -130,13 +131,13 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
       {#if pageCount > 0}
         <div class="stats-bar">
           <div class="stat">
             <span class="stat__num">{pageCount}</span>
-            <span class="stat__label">oldal</span>
+            <span class="stat__label">{ui.page}</span>
           </div>
         </div>
       {/if}
@@ -144,40 +145,40 @@
 
     <div class="card settings-card">
       <div class="field">
-        <span class="label">Forgatas szoge</span>
+        <span class="label">{ui.rotationDegree}</span>
         <div class="radio-group">
           <label class="radio-label">
             <input type="radio" bind:group={rotationAngle} value={90} />
-            90° (jobbra)
+            {ui.deg90Right}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={rotationAngle} value={180} />
-            180°
+            {ui.deg180}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={rotationAngle} value={270} />
-            270° (balra)
+            {ui.deg270Left}
           </label>
         </div>
       </div>
 
       <div class="field">
-        <span class="label">Oldalak</span>
+        <span class="label">{ui.pages}</span>
         <div class="radio-group">
           <label class="radio-label">
             <input type="radio" bind:group={pageSelection} value="all" />
-            Minden oldal
+            {ui.everyPage}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={pageSelection} value="custom" />
-            Egyes oldalak
+            {ui.specificPages}
           </label>
         </div>
       </div>
 
       {#if pageSelection === "custom"}
         <div class="field">
-          <label class="label" for="custom-pages">Oldalak (pl. 1, 3-5, 8)</label>
+          <label class="label" for="custom-pages">{ui.pagesExample}</label>
           <input
             id="custom-pages"
             type="text"
@@ -199,8 +200,8 @@
       {isDone}
       onConvert={doConvert}
       onDownload={doDownload}
-      convertLabel="Oldalak forgatasa"
-      downloadLabel="PDF letoltese"
+      convertLabel={ui.rotatePages}
+      downloadLabel={ui.downloadPdf}
       fileCount={1}
     />
 

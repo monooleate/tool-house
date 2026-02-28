@@ -1,9 +1,0 @@
----
-import ToolLayout from "../../layouts/ToolLayout.astro";
-import HtmlMinTool from "../../components/tools/html/HtmlMinTool.svelte";
-import { getToolBySlug } from "../../lib/tool-registry.ts";
-const tool = getToolBySlug("html", "html-minimalas-html")!;
----
-<ToolLayout tool={tool}>
-  <HtmlMinTool client:visible />
-</ToolLayout>

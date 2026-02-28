@@ -1,0 +1,383 @@
+---
+// ============================================================
+// adatvedelmi-nyilatkozat.astro – Adatvédelmi nyilatkozat + Cookie
+// ============================================================
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME, SITE_URL, breadcrumbSchema } from "../../lib/seo.ts";
+import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../../i18n/index.ts";
+import { staticUrl } from "../../lib/url-utils.ts";
+
+const sn = CURRENT_CONFIG.siteName;
+const contactEmail = t("contact.email_address");
+
+const schemas = [
+  breadcrumbSchema([
+    { name: t("privacy.breadcrumb_home"), href: "/" },
+    { name: t("privacy.breadcrumb"), href: staticUrl("adatvedelmi") },
+  ]),
+];
+
+const lastUpdated = "2025-06-01";
+---
+
+<BaseLayout
+  title={tpl("privacy.meta_title", { siteName: sn })}
+  description={tpl("privacy.meta_desc", { siteName: sn })}
+  canonical={staticUrl("adatvedelmi")}
+  schemaScripts={schemas}
+>
+
+  <div class="legal-page container">
+    <header class="legal-header">
+      <nav class="legal-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">{t("privacy.breadcrumb_home")}</a>
+        <span aria-hidden="true">›</span>
+        <span>{t("privacy.breadcrumb")}</span>
+      </nav>
+      <h1 class="legal-title">{t("privacy.heading")}</h1>
+      <p class="legal-updated">{t("privacy.last_updated")} {lastUpdated}</p>
+    </header>
+
+    <div class="legal-body">
+
+      <!-- Összefoglaló -->
+      <section class="legal-section">
+        <div class="legal-highlight">
+          <span class="legal-highlight__icon" aria-hidden="true">🔒</span>
+          <div><Fragment set:html={tpl("privacy.summary", { siteName: sn })} /></div>
+        </div>
+      </section>
+
+      <!-- 1. Adatkezelő -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="adatkezelo">{t("privacy.s1_title")}</h2>
+        <p><Fragment set:html={t("privacy.s1_text")} /></p>
+        <ul>
+          <li>{t("privacy.s1_website")} <a href={SITE_URL}>{SITE_NAME}</a></li>
+          <li>{t("privacy.s1_email")} <a href={"mailto:" + contactEmail}>{contactEmail}</a></li>
+        </ul>
+      </section>
+
+      <!-- 2. Adatfeldolgozási elvek -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="adatfeldolgozas">{t("privacy.s2_title")}</h2>
+        <p><Fragment set:html={tpl("privacy.s2_intro", { siteName: sn })} /></p>
+        <ul>
+          <li>{t("privacy.s2_li1")}</li>
+          <li>{t("privacy.s2_li2")}</li>
+          <li>{t("privacy.s2_li3")}</li>
+          <li>{t("privacy.s2_li4")}</li>
+        </ul>
+      </section>
+
+      <!-- 3. Személyes adatok -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="szemelyes-adatok">{t("privacy.s3_title")}</h2>
+        <p><Fragment set:html={tpl("privacy.s3_intro", { siteName: sn })} /></p>
+
+        <h3 class="legal-subsection">{t("privacy.s3_1_title")}</h3>
+        <p>{t("privacy.s3_1_text")}</p>
+
+        <h3 class="legal-subsection">{t("privacy.s3_2_title")}</h3>
+        <p><Fragment set:html={t("privacy.s3_2_text")} /></p>
+        <ul>
+          <li>{t("privacy.s3_2_li1")}</li>
+          <li>{t("privacy.s3_2_li2")}</li>
+          <li>{t("privacy.s3_2_li3")}</li>
+          <li>{t("privacy.s3_2_li4")}</li>
+        </ul>
+        <p>{t("privacy.s3_2_details")}</p>
+      </section>
+
+      <!-- 4. Cookie (süti) szabályzat -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="cookie-szabalyzat">{t("privacy.s4_title")}</h2>
+        <p><Fragment set:html={tpl("privacy.s4_intro", { siteName: sn })} /></p>
+
+        <div class="cookie-table-wrap">
+          <table class="cookie-table">
+            <thead>
+              <tr>
+                <th>{t("privacy.s4_th_name")}</th>
+                <th>{t("privacy.s4_th_type")}</th>
+                <th>{t("privacy.s4_th_purpose")}</th>
+                <th>{t("privacy.s4_th_expiry")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>theme</code></td>
+                <td>{t("privacy.s4_theme_type")}</td>
+                <td>{t("privacy.s4_theme_purpose")}</td>
+                <td>{t("privacy.s4_theme_expiry")}</td>
+              </tr>
+              <tr>
+                <td><code>_ga</code></td>
+                <td>{t("privacy.s4_ga_type")}</td>
+                <td>{t("privacy.s4_ga_purpose")}</td>
+                <td>{t("privacy.s4_ga_expiry")}</td>
+              </tr>
+              <tr>
+                <td><code>_ga_*</code></td>
+                <td>{t("privacy.s4_ga_type")}</td>
+                <td>{t("privacy.s4_ga4_purpose")}</td>
+                <td>{t("privacy.s4_ga_expiry")}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="legal-subsection">{t("privacy.s4_not_used")}</h3>
+        <ul class="legal-no-list">
+          <li><span class="legal-no" aria-hidden="true">✕</span> {t("privacy.s4_no1")}</li>
+          <li><span class="legal-no" aria-hidden="true">✕</span> {t("privacy.s4_no2")}</li>
+          <li><span class="legal-no" aria-hidden="true">✕</span> {t("privacy.s4_no3")}</li>
+          <li><span class="legal-no" aria-hidden="true">✕</span> {t("privacy.s4_no4")}</li>
+        </ul>
+        <p class="legal-note">{t("privacy.s4_note")}</p>
+      </section>
+
+      <!-- 5. Harmadik féltől származó szolgáltatások -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="harmadik-fel">{t("privacy.s5_title")}</h2>
+        <div class="cookie-table-wrap">
+          <table class="cookie-table">
+            <thead>
+              <tr>
+                <th>{t("privacy.s5_th_service")}</th>
+                <th>{t("privacy.s5_th_purpose")}</th>
+                <th>{t("privacy.s5_th_link")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Netlify</td>
+                <td>{t("privacy.s5_netlify_purpose")}</td>
+                <td><a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">netlify.com/privacy</a></td>
+              </tr>
+              <tr>
+                <td>Google Analytics 4</td>
+                <td>{t("privacy.s5_ga4_purpose")}</td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td>
+              </tr>
+              <tr>
+                <td>Google Fonts</td>
+                <td>{t("privacy.s5_fonts_purpose")}</td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 6. Adatbiztonság -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="adatbiztonsag">{t("privacy.s6_title")}</h2>
+        <ul>
+          <li>{t("privacy.s6_li1")}</li>
+          <li>{t("privacy.s6_li2")}</li>
+          <li>{t("privacy.s6_li3")}</li>
+          <li>{t("privacy.s6_li4")}</li>
+        </ul>
+      </section>
+
+      <!-- 7. Jogaid -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="jogaid">{t("privacy.s7_title")}</h2>
+        <p>{t("privacy.s7_intro")}</p>
+        <ul>
+          <li><Fragment set:html={t("privacy.s7_li1")} /></li>
+          <li><Fragment set:html={t("privacy.s7_li2")} /></li>
+          <li><Fragment set:html={t("privacy.s7_li3")} /></li>
+          <li><Fragment set:html={t("privacy.s7_li4")} /></li>
+          <li><Fragment set:html={t("privacy.s7_li5")} /></li>
+        </ul>
+        <p><Fragment set:html={tpl("privacy.s7_contact", { email: contactEmail })} /></p>
+        {CURRENT_LANG === "hu" && t("privacy.s7_authority_hu") && (
+          <p><Fragment set:html={t("privacy.s7_authority_hu")} /></p>
+        )}
+        {CURRENT_LANG === "ro" && t("privacy.s7_authority_ro") && (
+          <p><Fragment set:html={t("privacy.s7_authority_ro")} /></p>
+        )}
+      </section>
+
+      <!-- 8. Módosítások -->
+      <section class="legal-section">
+        <h2 class="legal-section__title" id="modositasok">{t("privacy.s8_title")}</h2>
+        <p>{t("privacy.s8_text")}</p>
+      </section>
+
+    </div>
+  </div>
+
+</BaseLayout>
+
+<style>
+/* ─── Legal page layout ──────────────────────────────────── */
+.legal-page {
+  padding-top: var(--sp-12);
+  padding-bottom: var(--sp-16);
+  max-width: 800px;
+}
+
+.legal-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-6);
+}
+.legal-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.legal-breadcrumb a:hover { color: var(--accent); }
+
+.legal-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-2);
+}
+
+.legal-updated {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-subtle);
+}
+
+.legal-body {
+  margin-top: var(--sp-10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-10);
+}
+
+/* Highlight box */
+.legal-highlight {
+  display: flex;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent)30;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-md);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.legal-highlight strong { color: var(--text); }
+.legal-highlight__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Sections */
+.legal-section__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-subsection {
+  font-size: 1rem;
+  margin-top: var(--sp-5);
+  margin-bottom: var(--sp-2);
+  color: var(--text);
+}
+
+.legal-section p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.legal-section p + p { margin-top: var(--sp-3); }
+.legal-section strong { color: var(--text); }
+.legal-section a { color: var(--accent); text-decoration: underline; }
+.legal-section a:hover { color: var(--accent-dim); }
+
+.legal-section ul {
+  margin-top: var(--sp-3);
+  padding-left: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.legal-section li {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* "Not used" list */
+.legal-no-list {
+  list-style: none;
+  padding-left: 0 !important;
+}
+.legal-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--error);
+  color: #fff;
+  border-radius: var(--r-full);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-right: var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Cookie table */
+.cookie-table-wrap {
+  margin-top: var(--sp-4);
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.cookie-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.cookie-table th {
+  background: var(--bg-input);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: left;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+.cookie-table td {
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+.cookie-table tr:last-child td { border-bottom: 0; }
+.cookie-table code {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--bg-input);
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+  color: var(--accent);
+}
+
+/* Note */
+.legal-note {
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+  font-style: italic;
+  margin-top: var(--sp-3);
+  line-height: 1.5;
+}
+</style>

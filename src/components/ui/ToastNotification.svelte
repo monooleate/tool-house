@@ -6,6 +6,7 @@
   //            showToast("Letöltés kész!", "success")
   // ============================================================
   import { writable } from "svelte/store";
+  import { ui } from "../../lib/ui-labels.ts";
 
   type ToastType = "success" | "error" | "info" | "warning";
 
@@ -50,7 +51,7 @@
       <button
         class="toast__close"
         on:click={() => dismiss(toast.id)}
-        aria-label="Értesítés bezárása"
+        aria-label={ui.closeNotification}
       >×</button>
     </div>
   {/each}

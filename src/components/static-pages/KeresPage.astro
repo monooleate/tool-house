@@ -1,0 +1,61 @@
+---
+// ============================================================
+// /kereses – Dedikált keresőoldal
+// Kezeli a ?q= URL paramétert (Schema.org SearchAction target)
+// ============================================================
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SearchPage from "../ui/SearchPage.svelte";
+import { SITE_NAME } from "../../lib/seo.ts";
+import { t } from "../../i18n/index.ts";
+import { staticUrl } from "../../lib/url-utils.ts";
+---
+
+<BaseLayout
+  title={`${t("nav.search_text")} | ${SITE_NAME}`}
+  description={t("nav.search_label")}
+  canonical={staticUrl("kereses")}
+  noIndex={true}
+>
+
+  <section class="search-hero container">
+    <h1 class="search-hero__title">
+      <span class="search-hero__icon" aria-hidden="true">🔍</span>
+      {t("nav.search_text")}
+    </h1>
+    <p class="search-hero__desc">{t("nav.search_label")}</p>
+  </section>
+
+  <section class="container search-container">
+    <SearchPage client:load />
+  </section>
+
+</BaseLayout>
+
+<style>
+.search-hero {
+  padding: var(--sp-10) 0 var(--sp-4);
+  text-align: center;
+}
+
+.search-hero__title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  font-size: 1.75rem;
+}
+
+.search-hero__icon {
+  font-size: 1.5rem;
+}
+
+.search-hero__desc {
+  color: var(--text-muted);
+  margin-top: var(--sp-2);
+  font-size: 1rem;
+}
+
+.search-container {
+  padding-bottom: var(--sp-16);
+}
+</style>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let removeComments = true;
@@ -27,25 +28,25 @@
   <div class="card settings-card">
     <label class="checkbox-label">
       <input type="checkbox" bind:checked={removeComments} />
-      HTML kommentek eltávolítása
+      {ui.removeHtmlComments}
     </label>
   </div>
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">HTML bemenet</span>
-      <textarea class="textarea" rows="12" placeholder="Illeszd be a HTML kódot..." bind:value={input}></textarea>
+      <span class="label">HTML {ui.input.toLowerCase()}</span>
+      <textarea class="textarea" rows="12" placeholder={ui.pasteHtmlCode} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Minifikált HTML</span>
+        <span class="label">{ui.minified} HTML</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "min.html", "text/html")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "min.html", "text/html")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="12" value={output} readonly></textarea>
       {#if output}
-        <div class="stats">Eredeti: {input.length} kar. → Minifikált: {output.length} kar. ({Math.round(((input.length - output.length) / input.length) * 100)}% csökkentés)</div>
+        <div class="stats">{ui.original}: {input.length} {ui.chars} → {ui.minified}: {output.length} {ui.chars} ({Math.round(((input.length - output.length) / input.length) * 100)}% {ui.reductionPct})</div>
       {/if}
     </div>
   </div>

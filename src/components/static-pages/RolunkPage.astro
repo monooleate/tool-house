@@ -1,0 +1,677 @@
+---
+// ============================================================
+// rolunk.astro – Rólunk oldal
+// ============================================================
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  SITE_NAME, SITE_URL, SITE_DESCRIPTION,
+  breadcrumbSchema, faqSchema,
+} from "../../lib/seo.ts";
+import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../../i18n/index.ts";
+import { getActiveToolsCount, getTotalToolsCount, CATEGORIES } from "../../lib/tool-registry.ts";
+import { staticUrl } from "../../lib/url-utils.ts";
+
+const activeCount = getActiveToolsCount();
+const totalCount  = getTotalToolsCount();
+const catCount    = CATEGORIES.length;
+
+const sn = CURRENT_CONFIG.siteName;
+const faqs = [
+  { q: tpl("about.faq1_q", { siteName: sn }), a: t("about.faq1_a") },
+  { q: tpl("about.faq2_q", { siteName: sn }), a: t("about.faq2_a") },
+  { q: t("about.faq3_q"), a: t("about.faq3_a") },
+  { q: t("about.faq4_q"), a: t("about.faq4_a") },
+];
+
+const personSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Mészáros János",
+  url: "https://jmeszaros.dev",
+  jobTitle: t("about.schema_job"),
+  worksFor: {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+  },
+  sameAs: ["https://jmeszaros.dev"],
+});
+
+const aboutSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: tpl("about.schema_name", { siteName: CURRENT_CONFIG.siteName }),
+  url: `${SITE_URL}${staticUrl("rolunk")}`,
+  description: tpl("about.schema_desc", { siteName: CURRENT_CONFIG.siteName }),
+  mainEntity: {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    founder: {
+      "@type": "Person",
+      name: "Mészáros János",
+      url: "https://jmeszaros.dev",
+    },
+  },
+});
+
+const faqSchemaStr = faqSchema(faqs);
+
+const schemas = [
+  breadcrumbSchema([
+    { name: t("about.breadcrumb_home"), href: "/" },
+    { name: t("about.breadcrumb_about"), href: staticUrl("rolunk") },
+  ]),
+  personSchema,
+  aboutSchema,
+  ...(faqSchemaStr ? [faqSchemaStr] : []),
+];
+---
+
+<BaseLayout
+  title={tpl("about.meta_title", { siteName: CURRENT_CONFIG.siteName })}
+  description={tpl("about.meta_desc", { siteName: CURRENT_CONFIG.siteName })}
+  canonical={staticUrl("rolunk")}
+  schemaScripts={schemas}
+>
+
+  <div class="about-page container">
+    <header class="about-header">
+      <nav class="about-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">{t("about.breadcrumb_home")}</a>
+        <span aria-hidden="true">›</span>
+        <span>{t("about.breadcrumb_about")}</span>
+      </nav>
+      <h1 class="about-title">{tpl("about.heading", { siteName: CURRENT_CONFIG.siteName })}</h1>
+      <p class="about-desc">
+        {t("about.desc")}
+      </p>
+    </header>
+
+    <!-- ═══ MISSZIÓ ══════════════════════════════════════════════ -->
+    <section class="about-section" aria-labelledby="misszio-title">
+      <h2 id="misszio-title" class="about-section__title">
+        <span class="about-section__icon" aria-hidden="true">🎯</span>
+        {t("about.mission_title")}
+      </h2>
+      <div class="about-section__body">
+        <p><Fragment set:html={tpl("about.mission_p1", { siteName: CURRENT_CONFIG.siteName })} /></p>
+        <p><Fragment set:html={tpl("about.mission_p2", { siteName: CURRENT_CONFIG.siteName })} /></p>
+      </div>
+    </section>
+
+    <!-- ═══ STATISZTIKÁK ═════════════════════════════════════════ -->
+    <div class="about-stats">
+      <div class="about-stat">
+        <span class="about-stat__num">{activeCount}</span>
+        <span class="about-stat__label">{t("about.stat_active")}</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat__num">{totalCount}</span>
+        <span class="about-stat__label">{t("about.stat_total")}</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat__num">{catCount}</span>
+        <span class="about-stat__label">{t("about.stat_category")}</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat__num">0</span>
+        <span class="about-stat__label">{t("about.stat_upload")}</span>
+      </div>
+    </div>
+
+    <!-- ═══ CSAPAT ═══════════════════════════════════════════════ -->
+    <section class="about-section" aria-labelledby="csapat-title">
+      <h2 id="csapat-title" class="about-section__title">
+        <span class="about-section__icon" aria-hidden="true">👥</span>
+        {t("about.team_title")}
+      </h2>
+
+      <div class="team-grid">
+
+        <!-- Mészáros János -->
+        <div class="team-card team-card--featured">
+          <div class="team-card__avatar">
+            <span class="team-card__avatar-emoji" aria-hidden="true">👨‍💻</span>
+          </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">Mészáros János</h3>
+            <p class="team-card__role">{t("about.dev_role")}</p>
+            <p class="team-card__bio">
+              {tpl("about.dev_bio", { siteName: CURRENT_CONFIG.siteName })}
+            </p>
+            <div class="team-card__links">
+              <a href="https://jmeszaros.dev" target="_blank" rel="noopener" class="team-card__link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                jmeszaros.dev
+              </a>
+            </div>
+            <div class="team-card__tags">
+              <span class="team-tag">Astro</span>
+              <span class="team-tag">Svelte</span>
+              <span class="team-tag">TypeScript</span>
+              <span class="team-tag">Web Workers</span>
+              <span class="team-tag">Netlify</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEOTudás.hu -->
+        <div class="team-card">
+          <div class="team-card__avatar">
+            <span class="team-card__avatar-emoji" aria-hidden="true">📈</span>
+          </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">SEOTudás.hu</h3>
+            <p class="team-card__role">{t("about.seo_role")}</p>
+            <p class="team-card__bio">
+              <Fragment set:html={t("about.seo_bio")} />
+            </p>
+            <div class="team-card__links">
+              <a href="https://seotudas.hu" target="_blank" rel="noopener" class="team-card__link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                seotudas.hu
+              </a>
+            </div>
+            <div class="team-card__tags">
+              <span class="team-tag">Technikai SEO</span>
+              <span class="team-tag">On-page SEO</span>
+              <span class="team-tag">Core Web Vitals</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ TECHNOLÓGIA ══════════════════════════════════════════ -->
+    <section class="about-section" aria-labelledby="tech-title">
+      <h2 id="tech-title" class="about-section__title">
+        <span class="about-section__icon" aria-hidden="true">⚙️</span>
+        {t("about.tech_title")}
+      </h2>
+      <div class="about-section__body">
+        <p><Fragment set:html={tpl("about.tech_intro", { siteName: CURRENT_CONFIG.siteName })} /></p>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <strong>Astro SSG</strong>
+          <span>{t("about.tech_astro")}</span>
+        </div>
+        <div class="tech-card">
+          <strong>Svelte</strong>
+          <span>{t("about.tech_svelte")}</span>
+        </div>
+        <div class="tech-card">
+          <strong>Web Workers</strong>
+          <span>{t("about.tech_workers")}</span>
+        </div>
+        <div class="tech-card">
+          <strong>Netlify</strong>
+          <span>{t("about.tech_netlify")}</span>
+        </div>
+        <div class="tech-card">
+          <strong>Google Analytics 4</strong>
+          <span>{t("about.tech_ga4")}</span>
+        </div>
+        <div class="tech-card">
+          <strong>TypeScript</strong>
+          <span>{t("about.tech_ts")}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ KAPCSOLÓDÓ PROJEKTEK (csak HU) ════════════════════════ -->
+    {CURRENT_LANG === "hu" && (
+    <section class="about-section" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="about-section__title">
+        <span class="about-section__icon" aria-hidden="true">🔗</span>
+        {t("about.projects_title")}
+      </h2>
+      <div class="projects-grid">
+        <a href="https://matekmegoldasok.hu" target="_blank" rel="noopener" class="project-card">
+          <div class="project-card__icon" aria-hidden="true">📐</div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">MatekMegoldások.hu</h3>
+            <p class="project-card__desc">{t("about.project_matek_desc")}</p>
+          </div>
+          <span class="project-card__arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="https://seotudas.hu" target="_blank" rel="noopener" class="project-card">
+          <div class="project-card__icon" aria-hidden="true">📈</div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">SEOTudás.hu</h3>
+            <p class="project-card__desc">{tpl("about.project_seo_desc", { siteName: CURRENT_CONFIG.siteName })}</p>
+          </div>
+          <span class="project-card__arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="https://hazepitesikalauz.hu" target="_blank" rel="noopener" class="project-card">
+          <div class="project-card__icon" aria-hidden="true">🏠</div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">HázépítésiKalauz.hu</h3>
+            <p class="project-card__desc">{t("about.project_haz_desc")}</p>
+          </div>
+          <span class="project-card__arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="https://iparimegoldasok.hu" target="_blank" rel="noopener" class="project-card">
+          <div class="project-card__icon" aria-hidden="true">🏭</div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">IpariMegoldások.hu</h3>
+            <p class="project-card__desc">{t("about.project_ipari_desc")}</p>
+          </div>
+          <span class="project-card__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+    )}
+
+    <!-- ═══ GYIK ═════════════════════════════════════════════════ -->
+    <section class="about-section" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="about-section__title">
+        <span class="about-section__icon" aria-hidden="true">❓</span>
+        {t("about.faq_title")}
+      </h2>
+      <div class="faq-grid">
+        {faqs.map((faq) => (
+          <div class="faq-card">
+            <h3 class="faq-card__q">{faq.q}</h3>
+            <p class="faq-card__a">{faq.a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ═══ CTA ══════════════════════════════════════════════════ -->
+    <section class="about-cta">
+      <div class="about-cta__inner">
+        <h2 class="about-cta__title">{t("about.cta_title")}</h2>
+        <p class="about-cta__desc">{t("about.cta_desc")}</p>
+        <div class="about-cta__actions">
+          <a href={staticUrl("kapcsolat")} class="btn btn--primary btn--lg">{t("about.cta_contact")}</a>
+          <a href="/" class="btn btn--outline btn--lg">{t("about.cta_tools")}</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</BaseLayout>
+
+<style>
+/* ─── About page ─────────────────────────────────────────── */
+.about-page {
+  padding-top: var(--sp-12);
+  padding-bottom: var(--sp-16);
+  max-width: 900px;
+}
+
+.about-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-6);
+}
+.about-breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.about-breadcrumb a:hover { color: var(--accent); }
+
+.about-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-3);
+}
+
+.about-desc {
+  font-size: 1.0625rem;
+  color: var(--text-muted);
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+/* Sections */
+.about-section {
+  margin-top: var(--sp-12);
+}
+
+.about-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-6);
+}
+
+.about-section__icon { font-size: 1.25rem; }
+
+.about-section__body p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+.about-section__body p + p { margin-top: var(--sp-3); }
+.about-section__body strong { color: var(--text); }
+
+/* Stats */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-10);
+  padding: var(--sp-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.about-stat__num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.about-stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+
+/* Team grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-5);
+}
+
+@media (min-width: 640px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.team-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  transition: all 180ms ease;
+}
+
+.team-card:hover {
+  border-color: var(--accent)50;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.team-card--featured {
+  border-color: var(--accent)40;
+}
+
+.team-card__avatar {
+  width: 56px;
+  height: 56px;
+  background: var(--accent-subtle);
+  border: 2px solid var(--accent)30;
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-card__avatar-emoji { font-size: 1.75rem; }
+
+.team-card__name {
+  font-size: 1.125rem;
+  margin-bottom: 2px;
+}
+
+.team-card__role {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.team-card__bio {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.team-card__bio strong { color: var(--text); }
+
+.team-card__links {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.team-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+.team-card__link:hover { text-decoration: underline; }
+
+.team-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.team-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-subtle);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+}
+
+/* Tech grid */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+
+.tech-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.tech-card strong {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.tech-card span {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+}
+
+@media (min-width: 640px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5) var(--sp-6);
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.project-card__icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.project-card__info { flex: 1; }
+
+.project-card__name {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: var(--sp-1);
+}
+
+.project-card__desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.project-card__arrow {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity var(--t-fast), transform var(--t-fast);
+  flex-shrink: 0;
+}
+
+.project-card:hover .project-card__arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* FAQ grid */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+}
+
+@media (min-width: 640px) {
+  .faq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.faq-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+}
+
+.faq-card__q {
+  font-size: 0.9375rem;
+  margin-bottom: var(--sp-2);
+}
+
+.faq-card__a {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* CTA */
+.about-cta {
+  margin-top: var(--sp-12);
+}
+
+.about-cta__inner {
+  text-align: center;
+  padding: var(--sp-10) var(--sp-8);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-cta__inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), #3b82f6, #8b5cf6, var(--accent));
+  background-size: 200% 100%;
+  animation: gradient-slide 4s linear infinite;
+}
+
+@keyframes gradient-slide {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.about-cta__title {
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-3);
+}
+
+.about-cta__desc {
+  color: var(--text-muted);
+  margin-bottom: var(--sp-5);
+  max-width: none;
+}
+
+.about-cta__actions {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+</style>

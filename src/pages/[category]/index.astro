@@ -1,0 +1,37 @@
+---
+// ============================================================
+// [category]/index.astro – Dinamikus kategória route
+// Egyetlen fájl generálja az összes kategória oldalt (10)
+// ============================================================
+import CategoryLayout from "../../layouts/CategoryLayout.astro";
+import {
+  CATEGORIES,
+  getToolsByCategory,
+  getCategoryInfo,
+  getLocalizedCategory,
+} from "../../lib/tool-registry.ts";
+import { categoryUrl } from "../../lib/url-utils.ts";
+import { t, CURRENT_LANG } from "../../i18n/index.ts";
+
+export function getStaticPaths() {
+  return CATEGORIES.map((cat) => {
+    const url = categoryUrl(cat.id); // e.g., "/imagine" or "/kep"
+    const catSlug = url.replace(/^\//, "");
+    return {
+      params: { category: catSlug },
+      props: { categoryId: cat.id },
+    };
+  });
+}
+
+const { categoryId } = Astro.props;
+const category = getCategoryInfo(categoryId)!;
+const tools = getToolsByCategory(categoryId);
+---
+
+<CategoryLayout
+  category={category}
+  tools={tools}
+  title={t(`cat_meta.${categoryId}_title`)}
+  description={t(`cat_meta.${categoryId}_desc`)}
+/>

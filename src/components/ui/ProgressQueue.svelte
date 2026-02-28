@@ -1,5 +1,6 @@
 <script lang="ts">
   import { formatFileSize, calcSavingPercent } from "../../lib/download.ts";
+  import { ui } from "../../lib/ui-labels.ts";
 
   export interface QueueItem {
     id: string;
@@ -32,20 +33,20 @@
 </script>
 
 {#if items.length > 0}
-<div class="queue" aria-label="Feldolgozási sor" aria-live="polite">
+<div class="queue" aria-label={ui.processingQueue} aria-live="polite">
 
   <!-- Overall progress -->
   <div class="queue__header">
     <div class="queue__summary">
       <span class="queue__count">
-        {doneCount}/{totalCount} feldolgozva
+        {doneCount}/{totalCount} {ui.processed}
         {#if errorCount > 0}
-          · <span class="queue__errors">{errorCount} hiba</span>
+          · <span class="queue__errors">{errorCount} {ui.error}</span>
         {/if}
       </span>
       {#if totalSaved > 0}
         <span class="queue__saved">
-          🗜️ {formatFileSize(totalSaved)} megtakarítva
+          🗜️ {formatFileSize(totalSaved)} {ui.savedAmount}
         </span>
       {/if}
     </div>
@@ -53,14 +54,14 @@
     <div class="queue__actions">
       {#if allDone}
         <button class="btn btn--ghost btn--sm" on:click={onReset}>
-          Új feldolgozás
+          {ui.newProcessing}
         </button>
       {/if}
     </div>
   </div>
 
   <!-- Overall bar -->
-  <div class="progress-track" role="progressbar" aria-valuenow={overallPercent} aria-valuemin={0} aria-valuemax={100} aria-label="Összes folyamat">
+  <div class="progress-track" role="progressbar" aria-valuenow={overallPercent} aria-valuemin={0} aria-valuemax={100} aria-label={ui.overallProgress}>
     <div class="progress-fill" style={`width: ${overallPercent}%`}></div>
   </div>
 
@@ -72,7 +73,7 @@
           <span class="queue-item__name" title={item.filename}>{item.filename}</span>
           <div class="queue-item__meta">
             {#if item.status === "processing"}
-              <span class="queue-item__status-text">Feldolgozás...</span>
+              <span class="queue-item__status-text">{ui.processingDots}</span>
             {:else if item.status === "done" && item.originalSize && item.outputSize}
               <span class="queue-item__sizes">
                 {formatFileSize(item.originalSize)} → {formatFileSize(item.outputSize)}
@@ -86,14 +87,14 @@
                 <span class="queue-item__time">{item.elapsedMs}ms</span>
               {/if}
             {:else if item.status === "error"}
-              <span class="queue-item__error">{item.error ?? "Hiba történt"}</span>
+              <span class="queue-item__error">{item.error ?? ui.errorOccurred}</span>
             {/if}
           </div>
         </div>
 
         <div class="queue-item__right">
           {#if item.status === "pending"}
-            <span class="queue-item__badge queue-item__badge--pending">Várakozik</span>
+            <span class="queue-item__badge queue-item__badge--pending">{ui.waiting}</span>
           {:else if item.status === "processing"}
             <span class="queue-item__spinner" aria-hidden="true"></span>
           {:else if item.status === "done"}
@@ -102,7 +103,7 @@
               <button
                 class="btn btn--outline btn--sm"
                 on:click={() => onDownload(item)}
-                aria-label={`Letöltés: ${item.outputFilename ?? item.filename}`}
+                aria-label={`${ui.download}: ${item.outputFilename ?? item.filename}`}
               >
                 ↓
               </button>

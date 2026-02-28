@@ -4,6 +4,7 @@
   // Keresés és csere – case-sensitive és whole word opcióval
   // ============================================================
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let input = "";
   let searchStr = "";
@@ -47,12 +48,12 @@
     <div class="replace-row">
       <div class="field">
         <label class="label" for="ks-search">Keresendő</label>
-        <input id="ks-search" type="text" class="input" bind:value={searchStr} placeholder="Keresett szöveg..." />
+        <input id="ks-search" type="text" class="input" bind:value={searchStr} placeholder={ui.searchedText} />
       </div>
       <span class="arrow" aria-hidden="true">→</span>
       <div class="field">
-        <label class="label" for="ks-replace">Csere</label>
-        <input id="ks-replace" type="text" class="input" bind:value={replaceStr} placeholder="Csere szöveg..." />
+        <label class="label" for="ks-replace">{ui.replaceText}</label>
+        <input id="ks-replace" type="text" class="input" bind:value={replaceStr} placeholder={ui.replaceTextPlaceholder} />
       </div>
     </div>
     <div class="options-row">
@@ -74,15 +75,15 @@
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">Bemenet {#if highlighted && searchStr}<span class="highlight-hint">(találatok kiemelve)</span>{/if}</span>
-      <textarea class="textarea" rows="10" placeholder="Illeszd be a szöveget..." bind:value={input}></textarea>
+      <span class="label">{ui.input} {#if highlighted && searchStr}<span class="highlight-hint">(találatok kiemelve)</span>{/if}</span>
+      <textarea class="textarea" rows="10" placeholder={ui.pasteTextHere} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Eredmény</span>
+        <span class="label">{ui.result}</span>
         <div class="output-actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "csere-eredmeny.txt")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "csere-eredmeny.txt")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="10" value={output} readonly></textarea>

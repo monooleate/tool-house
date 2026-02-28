@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   interface ZipEntry { name: string; size: number; data: Uint8Array; }
   let entries: ZipEntry[] = [];
@@ -23,7 +24,7 @@
       }));
     } catch (err) {
       entries = [];
-      alert("Hiba a ZIP kibontásakor: " + (err instanceof Error ? err.message : String(err)));
+      alert(`${ui.error}: ` + (err instanceof Error ? err.message : String(err)));
     } finally {
       isProcessing = false;
     }
@@ -38,7 +39,7 @@
 </script>
 
 <div class="tool">
-  <Dropzone accept=".zip,application/zip,application/x-zip-compressed" multiple={false} maxSizeMB={200} label="Húzd ide a ZIP fájlt" sublabel="vagy kattints a tallózáshoz" on:files={handleFiles} />
+  <Dropzone accept=".zip,application/zip,application/x-zip-compressed" multiple={false} maxSizeMB={200} label={ui.dragHere} sublabel=".zip" on:files={handleFiles} />
 
   {#if isProcessing}
     <div class="processing">Kibontás folyamatban...</div>
@@ -54,7 +55,7 @@
           <li class="file-item">
             <span class="file-name">{entry.name}</span>
             <span class="file-size">{formatFileSize(entry.size)}</span>
-            <button class="btn btn--outline btn--sm" on:click={() => downloadEntry(entry)}>Letöltés</button>
+            <button class="btn btn--outline btn--sm" on:click={() => downloadEntry(entry)}>{ui.download}</button>
           </li>
         {/each}
       </ul>

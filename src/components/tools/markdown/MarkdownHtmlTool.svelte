@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let htmlOutput = "";
   let showPreview = true;
@@ -54,11 +55,11 @@
     <div class="mode-row">
       <label class="mode-opt" class:active={showPreview}>
         <input type="radio" name="view" value={true} bind:group={showPreview} />
-        <span>Előnézet</span>
+        <span>{ui.preview}</span>
       </label>
       <label class="mode-opt" class:active={!showPreview}>
         <input type="radio" name="view" value={false} bind:group={showPreview} />
-        <span>HTML kód</span>
+        <span>{ui.htmlCode}</span>
       </label>
     </div>
   </div>
@@ -66,18 +67,18 @@
   <div class="io-grid">
     <div class="io-pane">
       <span class="label">Markdown</span>
-      <textarea class="textarea" rows="15" placeholder="# Cím&#10;&#10;Ez egy **félkövér** és *dőlt* szöveg.&#10;&#10;- Lista elem 1&#10;- Lista elem 2" bind:value={input}></textarea>
+      <textarea class="textarea" rows="15" placeholder={ui.markdownPlaceholder} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">{showPreview ? "Előnézet" : "HTML kód"}</span>
+        <span class="label">{showPreview ? ui.preview : ui.htmlCode}</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!htmlOutput}>{copied ? "✓ Másolva!" : "HTML másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(htmlOutput, "output.html", "text/html")} disabled={!htmlOutput}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!htmlOutput}>{copied ? `✓ ${ui.copied}` : ui.htmlCopy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(htmlOutput, "output.html", "text/html")} disabled={!htmlOutput}>{ui.download}</button>
         </div>
       </div>
       {#if showPreview}
-        <div class="preview-box">{@html htmlOutput || '<span class="placeholder">Az előnézet itt jelenik meg...</span>'}</div>
+        <div class="preview-box">{@html htmlOutput || `<span class="placeholder">${ui.previewPlaceholder}</span>`}</div>
       {:else}
         <textarea class="textarea textarea--out" rows="15" value={htmlOutput} readonly></textarea>
       {/if}

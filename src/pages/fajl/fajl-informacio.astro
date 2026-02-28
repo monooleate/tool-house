@@ -1,9 +1,0 @@
----
-import ToolLayout from "../../layouts/ToolLayout.astro";
-import FajlInfoTool from "../../components/tools/fajl/FajlInfoTool.svelte";
-import { getToolBySlug } from "../../lib/tool-registry.ts";
-const tool = getToolBySlug("fajl", "fajl-informacio")!;
----
-<ToolLayout tool={tool}>
-  <FajlInfoTool client:visible />
-</ToolLayout>

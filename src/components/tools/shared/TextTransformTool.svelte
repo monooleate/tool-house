@@ -6,11 +6,12 @@
   // ============================================================
   import type { TextOperation } from "../../../workers/text.worker.ts";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   export let operation: TextOperation;
   export let operationLabel: string = "Átalakítás";
   $: void operationLabel;          // suppress unused-export warning (parent-only prop)
-  export let placeholder: string = "Illeszd be a szöveget ide...";
+  export let placeholder: string = ui.pasteTextAreaHere;
   export let outputPlaceholder: string = "Az eredmény itt jelenik meg...";
 
   /** Opcionális: ha az operation-t a user választja (pl. kisbetű/nagybetű) */
@@ -140,7 +141,7 @@
   <div class="io-grid">
     <div class="io-pane">
       <div class="pane-header">
-        <span class="label">Bemenet</span>
+        <span class="label">{ui.input}</span>
         <span class="stats">{inputStats.chars} kar. | {inputStats.lines} sor | {inputStats.words} szó</span>
       </div>
       <textarea
@@ -156,7 +157,7 @@
 
     <div class="io-pane">
       <div class="pane-header">
-        <span class="label">Eredmény</span>
+        <span class="label">{ui.result}</span>
         <span class="stats">
           {#if elapsedMs > 0}
             {outputStats.chars} kar. | {elapsedMs} ms
@@ -172,10 +173,10 @@
       ></textarea>
       <div class="pane-actions">
         <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>
-          {copied ? "✓ Másolva!" : "Másolás"}
+          {copied ? `✓ ${ui.copied}` : ui.copy}
         </button>
         <button class="btn btn--ghost btn--sm" on:click={downloadOutput} disabled={!output}>
-          Letöltés (.txt)
+          {ui.download} (.txt)
         </button>
       </div>
     </div>
@@ -183,7 +184,7 @@
 
   {#if processing}
     <div class="processing-indicator">
-      <span class="spinner"></span> Feldolgozás...
+      <span class="spinner"></span> {ui.processing}
     </div>
   {/if}
 </div>

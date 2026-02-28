@@ -3,6 +3,7 @@
   import ProgressQueue from "../../ui/ProgressQueue.svelte";
   import type { QueueItem } from "../../ui/ProgressQueue.svelte";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── State ────────────────────────────────────────────────
   let lossless = false;
@@ -136,8 +137,8 @@
 </script>
 
 <!-- Settings panel -->
-<div class="tool-settings card" aria-label="Beállítások">
-  <h2 class="tool-settings__title">Beállítások</h2>
+<div class="tool-settings card" aria-label={ui.settings}>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
     <label class="checkbox-label">
@@ -146,17 +147,17 @@
         bind:checked={lossless}
         class="checkbox"
       />
-      <span class="lossless-label">Veszteségmentes (lossless) WebP</span>
+      <span class="lossless-label">{ui.losslessWebp}</span>
     </label>
     <div class="settings-hint">
-      {#if lossless}💎 Pixelpontos minőség – nagyobb fájlméret, de nincs minőségveszteség
-      {:else}📦 Veszteséges mód – kisebb fájl, állítható minőséggel{/if}
+      {#if lossless}💎 {ui.losslessHint}
+      {:else}📦 {ui.lossyHint}{/if}
     </div>
   </div>
 
   <div class="settings-row" class:settings-row--disabled={lossless}>
     <label class="label" for="quality-slider">
-      Minőség: <span class="quality-val">{effectiveQuality}%</span>
+      {ui.quality}: <span class="quality-val">{effectiveQuality}%</span>
     </label>
     <input
       id="quality-slider"
@@ -168,17 +169,17 @@
       aria-describedby="quality-desc"
     />
     <div id="quality-desc" class="settings-hint">
-      {#if lossless}Lossless módban a quality mindig 100%
-      {:else if quality < 50}🔴 Erős tömörítés – kisebb fájl, látható minőségveszteség
-      {:else if quality < 75}🟡 Közepes – jó kompromisszum
-      {:else if quality < 90}🟢 Jó minőség – ajánlott webhez
-      {:else}💎 Nagyon magas – alig tömörít{/if}
+      {#if lossless}{ui.losslessModeHint}
+      {:else if quality < 50}🔴 {ui.strongCompressionLoss}
+      {:else if quality < 75}🟡 {ui.mediumQuality}
+      {:else if quality < 90}🟢 {ui.goodQuality}
+      {:else}💎 {ui.veryHighQuality}{/if}
     </div>
   </div>
 
   <div class="settings-row">
     <label class="label" for="maxwidth-input">
-      Max. szélesség (px) <span class="label-opt">(opcionális)</span>
+      {ui.maxWidthZero}
     </label>
     <input
       id="maxwidth-input"
@@ -186,7 +187,7 @@
       min="0"
       max="8000"
       step="10"
-      placeholder="pl. 1920 – 0 = nincs átméretezés"
+      placeholder={ui.placeholder0}
       bind:value={maxWidth}
       class="input"
     />
@@ -200,8 +201,8 @@
       accept="image/png,.png"
       multiple={true}
       maxSizeMB={50}
-      label="Húzd ide a PNG képeket"
-      sublabel="PNG · Max. 50 MB fájlonként"
+      label={ui.dragImageFor}
+      sublabel="PNG -- Max. 50 MB"
       on:files={handleFiles}
     />
   </div>
@@ -211,7 +212,7 @@
       accept="image/png,.png"
       multiple={true}
       maxSizeMB={50}
-      label="+ Újabb PNG képek hozzáadása"
+      label={ui.addMoreImages}
       sublabel=""
       on:files={handleFiles}
     />
@@ -234,7 +235,7 @@
         <polyline points="7 10 12 15 17 10"/>
         <line x1="12" y1="15" x2="12" y2="3"/>
       </svg>
-      ZIP letöltése ({doneCount} fájl)
+      {ui.zipDownload} ({doneCount} {ui.file})
     </button>
   </div>
 {/if}
@@ -244,13 +245,13 @@
   {@const firstDone = queue.find(i => i.status === "done")}
   {#if firstDone?.outputBlob}
     <div class="preview-section">
-      <h3 class="preview-section__title">Előnézet</h3>
+      <h3 class="preview-section__title">{ui.preview}</h3>
       <div class="preview-grid">
         <div class="preview-pane">
-          <div class="preview-pane__label">Eredeti PNG · {firstDone.originalSize ? formatFileSize(firstDone.originalSize) : ""}</div>
+          <div class="preview-pane__label">{ui.original} PNG · {firstDone.originalSize ? formatFileSize(firstDone.originalSize) : ""}</div>
           <img
             src={URL.createObjectURL(fileMap.get(firstDone.id)!)}
-            alt="Eredeti PNG kép"
+            alt="{ui.original} PNG"
             class="preview-img"
             loading="lazy"
           />
@@ -259,7 +260,7 @@
           <div class="preview-pane__label">WebP{lossless ? " (lossless)" : ""} · {firstDone.outputSize ? formatFileSize(firstDone.outputSize) : ""}</div>
           <img
             src={URL.createObjectURL(firstDone.outputBlob)}
-            alt="Konvertált WebP kép"
+            alt="{ui.converted} WebP"
             class="preview-img"
             loading="lazy"
           />

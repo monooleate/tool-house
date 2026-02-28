@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let preview = "";
@@ -81,23 +82,23 @@
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Beallitasok</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
-    <span class="label">Tukrozes iranya</span>
+    <span class="label">{ui.mirror}</span>
     <div class="radio-group">
       <label class="radio-label">
-        <input type="radio" bind:group={direction} value="horizontal" /> Vizszintes (bal-jobb)
+        <input type="radio" bind:group={direction} value="horizontal" /> &#8596;
       </label>
       <label class="radio-label">
-        <input type="radio" bind:group={direction} value="vertical" /> Fuggoleges (fel-le)
+        <input type="radio" bind:group={direction} value="vertical" /> &#8597;
       </label>
     </div>
   </div>
 
   <div class="settings-row two-col">
     <div>
-      <label class="label" for="format-select">Kimeneti formatum</label>
+      <label class="label" for="format-select">{ui.outputFormat}</label>
       <select id="format-select" bind:value={outputFormat} class="input">
         <option value="image/webp">WebP</option>
         <option value="image/jpeg">JPEG</option>
@@ -105,7 +106,7 @@
       </select>
     </div>
     <div>
-      <label class="label" for="quality-slider">Minoseg: {quality}%</label>
+      <label class="label" for="quality-slider">{ui.quality}: {quality}%</label>
       <input id="quality-slider" type="range" min="10" max="100" step="1" bind:value={quality} class="slider" />
     </div>
   </div>
@@ -116,7 +117,7 @@
     accept="image/*"
     multiple={false}
     maxSizeMB={50}
-    label="Huzd ide a kepet a tukrozeshez"
+    label={ui.dragImageFor}
     sublabel="JPG, PNG, WebP -- Max. 50 MB"
     on:files={handleFiles}
   />
@@ -124,13 +125,13 @@
   <div class="preview-section">
     <div class="preview-grid">
       <div class="preview-pane">
-        <div class="preview-pane__label">Eredeti{file ? ` -- ${formatFileSize(file.size)}` : ""}</div>
-        <img src={preview} alt="Eredeti kep" class="preview-img" />
+        <div class="preview-pane__label">{ui.original}{file ? ` -- ${formatFileSize(file.size)}` : ""}</div>
+        <img src={preview} alt={ui.original} class="preview-img" />
       </div>
       {#if resultUrl}
         <div class="preview-pane">
-          <div class="preview-pane__label">Tukrozott{resultBlob ? ` -- ${formatFileSize(resultBlob.size)}` : ""}</div>
-          <img src={resultUrl} alt="Tukrozott kep" class="preview-img" />
+          <div class="preview-pane__label">{ui.mirrored}{resultBlob ? ` -- ${formatFileSize(resultBlob.size)}` : ""}</div>
+          <img src={resultUrl} alt={ui.mirroredImage} class="preview-img" />
         </div>
       {/if}
     </div>
@@ -142,13 +143,13 @@
     <div class="actions">
       {#if !resultUrl}
         <button class="btn btn--primary" on:click={process} disabled={processing}>
-          {processing ? "Feldolgozas..." : "Tukrozes"}
+          {processing ? ui.processing : ui.mirror}
         </button>
       {:else}
-        <button class="btn btn--primary" on:click={download}>Letoltes</button>
-        <button class="btn btn--outline" on:click={() => { resultUrl = ""; resultBlob = null; }}>Ujra</button>
+        <button class="btn btn--primary" on:click={download}>{ui.download}</button>
+        <button class="btn btn--outline" on:click={() => { resultUrl = ""; resultBlob = null; }}>{ui.retry}</button>
       {/if}
-      <button class="btn btn--ghost" on:click={reset}>Uj kep</button>
+      <button class="btn btn--ghost" on:click={reset}>{ui.newFile}</button>
     </div>
   </div>
 {/if}

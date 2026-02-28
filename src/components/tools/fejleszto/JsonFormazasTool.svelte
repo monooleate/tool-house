@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ui } from "../../../lib/ui-labels.ts";
   // ─── State ────────────────────────────────────────────────
   let input = "";
   let indent: "2" | "4" | "tab" = "2";
@@ -86,25 +87,25 @@
 
   // ─── Example ──────────────────────────────────────────────
   function loadExample() {
-    input = '{"nev":"Béla","kor":30,"aktiv":true,"cim":{"varos":"Budapest","irszam":"1011"},"hobbik":["futás","olvasás",null]}';
+    input = '{"name":"John","age":30,"active":true,"address":{"city":"Budapest","zip":"1011"},"hobbies":["running","reading",null]}';
   }
 </script>
 
 <!-- Toolbar -->
 <div class="toolbar card">
   <div class="toolbar__left">
-    <label class="label" for="indent-select">Behúzás</label>
+    <label class="label" for="indent-select">{ui.indentation}</label>
     <div class="indent-options">
       <button
         class="indent-btn"
         class:active={indent === "2"}
         on:click={() => indent = "2"}
-      >2 szóköz</button>
+      >2 {ui.spaces}</button>
       <button
         class="indent-btn"
         class:active={indent === "4"}
         on:click={() => indent = "4"}
-      >4 szóköz</button>
+      >4 {ui.spaces}</button>
       <button
         class="indent-btn"
         class:active={indent === "tab"}
@@ -115,16 +116,16 @@
 
   <div class="toolbar__actions">
     <button class="btn btn--outline btn--sm" on:click={prettify} disabled={!parseResult.ok}>
-      Formázás
+      {ui.format}
     </button>
     <button class="btn btn--outline btn--sm" on:click={minify} disabled={!parseResult.ok}>
-      Minify
+      {ui.minify}
     </button>
     <button class="btn btn--outline btn--sm" on:click={copyToClipboard} disabled={!formatted}>
-      {copied ? "Másolva!" : "Másolás"}
+      {copied ? ui.copied : ui.copy}
     </button>
     <button class="btn btn--ghost btn--sm" on:click={clear} disabled={!input}>
-      Törlés
+      {ui.delete}
     </button>
   </div>
 </div>
@@ -133,15 +134,15 @@
 <div class="editor-area">
   <div class="editor-panel">
     <div class="editor-panel__header">
-      <span class="editor-panel__title">Bevitel</span>
+      <span class="editor-panel__title">{ui.input}</span>
       {#if !input.trim()}
-        <button class="btn btn--ghost btn--sm" on:click={loadExample}>Példa betöltése</button>
+        <button class="btn btn--ghost btn--sm" on:click={loadExample}>{ui.loadExample}</button>
       {/if}
     </div>
     <textarea
       class="textarea json-input"
       class:json-input--error={input.trim() && !parseResult.ok && parseResult.error}
-      placeholder='Írd be vagy illeszd be a JSON-t...'
+      placeholder={ui.pasteJson}
       bind:value={input}
       spellcheck="false"
       rows="16"
@@ -152,7 +153,7 @@
       <div class="validation-error" role="alert">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
         <span>
-          Érvénytelen JSON
+          {ui.invalid} JSON
           {#if parseResult.line} (sor ~{parseResult.line}){/if}:
           {parseResult.error}
         </span>
@@ -160,7 +161,7 @@
     {:else if input.trim() && parseResult.ok}
       <div class="validation-ok">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <span>Érvényes JSON · {charCount.toLocaleString("hu")} karakter</span>
+        <span>{ui.valid} JSON · {charCount.toLocaleString(ui.locale)} {ui.chars}</span>
       </div>
     {/if}
   </div>
@@ -169,8 +170,8 @@
   {#if parseResult.ok && highlighted}
     <div class="editor-panel">
       <div class="editor-panel__header">
-        <span class="editor-panel__title">Eredmény</span>
-        <span class="editor-panel__meta">{charCount.toLocaleString("hu")} karakter</span>
+        <span class="editor-panel__title">{ui.result}</span>
+        <span class="editor-panel__meta">{charCount.toLocaleString(ui.locale)} {ui.chars}</span>
       </div>
       <pre class="json-output"><code>{@html highlighted}</code></pre>
     </div>
@@ -219,7 +220,7 @@
 .indent-btn:hover { color: var(--text); }
 
 .indent-btn.active {
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
 }
 

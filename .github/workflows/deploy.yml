@@ -1,0 +1,56 @@
+# .github/workflows/deploy.yml
+# Minden main branch push után mindkét site újra deployol
+
+name: Deploy All Sites
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-hu:
+    name: Deploy konvertalo.hu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:hu
+        env:
+          SITE_LANG: hu
+          PUBLIC_SITE_URL: https://konvertalo.hu
+      - uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir=dist --site=${{ secrets.NETLIFY_SITE_ID_HU }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+  deploy-ro:
+    name: Deploy instrumenteonline.ro
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:ro
+        env:
+          SITE_LANG: ro
+          PUBLIC_SITE_URL: https://instrumenteonline.ro
+      - uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod --dir=dist --site=${{ secrets.NETLIFY_SITE_ID_RO }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}

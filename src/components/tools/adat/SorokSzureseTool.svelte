@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── CSV helpers ────────────────────────────────────────────
   function parseCsvSimple(text: string, delimiter: string = ","): string[][] {
@@ -141,25 +142,25 @@
   $: needsValue = condition !== "not-empty";
 
   const CONDITIONS = [
-    { value: "contains", label: "Tartalmazza" },
-    { value: "equals",   label: "Egyenlo" },
-    { value: "not-empty", label: "Nem ures" },
-    { value: "greater",  label: "Nagyobb mint" },
-    { value: "less",     label: "Kisebb mint" },
+    { value: "contains", label: ui.contains },
+    { value: "equals",   label: ui.equals },
+    { value: "not-empty", label: ui.notEmpty },
+    { value: "greater",  label: ui.greaterThan },
+    { value: "less",     label: ui.lessThan },
   ];
 
   const DELIMITERS = [
-    { value: ",",  label: "Vesszo (,)" },
-    { value: ";",  label: "Pontosvesszo (;)" },
-    { value: "\t", label: "Tabulator" },
+    { value: ",",  label: ui.comma },
+    { value: ";",  label: ui.semicolon },
+    { value: "\t", label: ui.tabChar },
     { value: "|",  label: "Pipe (|)" },
   ];
 </script>
 
 <!-- Settings -->
-<div class="card settings" aria-label="Beallitasok">
+<div class="card settings" aria-label={ui.settings}>
   <div class="settings__row">
-    <label class="label" for="delimiter-select">Elvalaszto</label>
+    <label class="label" for="delimiter-select">{ui.delimiter}</label>
     <select
       id="delimiter-select"
       class="select"
@@ -179,7 +180,7 @@
     accept=".csv,text/csv,text/plain"
     multiple={false}
     maxSizeMB={20}
-    label="Huzd ide a CSV fajlt"
+    label={ui.dragHere}
     sublabel="CSV, TXT - Max. 20 MB"
     on:files={handleFiles}
   />
@@ -190,8 +191,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Ujra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -201,7 +202,7 @@
   <div class="filter-panel">
     <div class="filter-panel__header">
       <span class="filter-panel__title">Sorok szurese</span>
-      <span class="filter-panel__info">{rows.length - 1} sor &middot; {headers.length} oszlop</span>
+      <span class="filter-panel__info">{rows.length - 1} {ui.row} &middot; {headers.length} {ui.column}</span>
     </div>
 
     <div class="filter-controls">
@@ -232,7 +233,7 @@
               type="text"
               class="input"
               bind:value={filterValue}
-              placeholder="Keresett ertek..."
+              placeholder={ui.searchValuePlaceholder}
             />
           </div>
         {/if}
@@ -242,7 +243,7 @@
         <button class="btn btn--primary" on:click={applyFilter}>
           Szures alkalmazasa
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Megse</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.cancel}</button>
       </div>
     </div>
 
@@ -251,27 +252,27 @@
       <div class="filter-results">
         <div class="stats-bar">
           <div class="stat">
-            <span class="stat__num">{filteredRows.length.toLocaleString("hu")}</span>
+            <span class="stat__num">{filteredRows.length.toLocaleString(ui.locale)}</span>
             <span class="stat__label">talalat</span>
           </div>
           <div class="stat">
-            <span class="stat__num">{(rows.length - 1 - filteredRows.length).toLocaleString("hu")}</span>
+            <span class="stat__num">{(rows.length - 1 - filteredRows.length).toLocaleString(ui.locale)}</span>
             <span class="stat__label">kiszurt</span>
           </div>
 
           <div class="stats-bar__actions">
             <button class="btn btn--primary" on:click={downloadResult}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Szurt CSV letoltese
+              {ui.downloadCsv}
             </button>
           </div>
         </div>
 
         <div class="preview-block">
           <div class="preview-block__header">
-            <span class="preview-block__title">Elonezet</span>
+            <span class="preview-block__title">{ui.preview}</span>
             <label class="preview-rows-label">
-              Sorok:
+              {ui.rowsColon}
               <select bind:value={previewRows} class="select select--sm">
                 <option value={5}>5</option>
                 <option value={10}>10</option>
@@ -283,7 +284,7 @@
           <pre class="csv-preview"><code>{previewText}</code></pre>
           {#if filteredRows.length > previewRows}
             <div class="preview-more">
-              ... es meg {(filteredRows.length - previewRows).toLocaleString("hu")} sor a letoltott fajlban
+              {ui.andMoreRows.replace("{n}", (filteredRows.length - previewRows).toLocaleString(ui.locale))}
             </div>
           {/if}
         </div>

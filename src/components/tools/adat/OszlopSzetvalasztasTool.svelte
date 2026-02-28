@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── CSV helper (for column preview) ────────────────────────
   function parseCsvSimple(text: string, delimiter: string = ","): string[][] {
@@ -85,7 +86,7 @@
     try {
       const rows = parseCsvSimple(fileText, delimiter);
       if (rows.length < 1) {
-        error = "Ures vagy ervenytelen CSV fajl.";
+        error = ui.emptyOrInvalidCsv;
         status = "error";
         return;
       }
@@ -149,18 +150,18 @@
     : "";
 
   const DELIMITERS = [
-    { value: ",",  label: "Vesszo (,)" },
-    { value: ";",  label: "Pontosvesszo (;)" },
-    { value: "\t", label: "Tabulator" },
+    { value: ",",  label: ui.comma },
+    { value: ";",  label: ui.semicolon },
+    { value: "\t", label: ui.tabChar },
     { value: "|",  label: "Pipe (|)" },
   ];
 </script>
 
 <!-- Settings -->
-<div class="card settings" aria-label="Beallitasok">
+<div class="card settings" aria-label={ui.settings}>
   <div class="settings__grid">
     <div>
-      <label class="label" for="delimiter-select">CSV elvalaszto</label>
+      <label class="label" for="delimiter-select">{ui.csvDelimiter}</label>
       <select
         id="delimiter-select"
         class="select"
@@ -173,7 +174,7 @@
     </div>
 
     <div>
-      <span class="label">Opciok</span>
+      <span class="label">{ui.optionsLabel}</span>
       <div class="checkboxes">
         <label class="checkbox-label">
           <input
@@ -181,7 +182,7 @@
             bind:checked={hasHeader}
             class="checkbox"
           />
-          Az elso sor fejlec
+          {ui.firstRowHeader}
         </label>
       </div>
     </div>
@@ -194,7 +195,7 @@
     accept=".csv,text/csv,text/plain"
     multiple={false}
     maxSizeMB={20}
-    label="Huzd ide a CSV fajlt"
+    label={ui.dragHere}
     sublabel="CSV, TXT - Max. 20 MB"
     on:files={handleFiles}
   />
@@ -205,8 +206,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Ujra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -215,14 +216,14 @@
 {#if status === "configuring"}
   <div class="config-panel">
     <div class="config-panel__header">
-      <span class="config-panel__title">Oszlop szetvalasztas beallitasai</span>
-      <span class="config-panel__info">{headers.length} oszlop</span>
+      <span class="config-panel__title">{ui.splitSettings}</span>
+      <span class="config-panel__info">{headers.length} {ui.column}</span>
     </div>
 
     <div class="config-controls">
       <div class="config-row">
         <div class="config-field">
-          <label class="label" for="split-column">Szetvalasztando oszlop</label>
+          <label class="label" for="split-column">{ui.splitColumn}</label>
           <select id="split-column" class="select" bind:value={columnIndex}>
             {#each headers as h, i}
               <option value={i}>{h}</option>
@@ -231,22 +232,22 @@
         </div>
 
         <div class="config-field">
-          <label class="label" for="split-delimiter">Szetvalaszto karakter</label>
+          <label class="label" for="split-delimiter">{ui.splitChar}</label>
           <input
             id="split-delimiter"
             type="text"
             class="input"
             bind:value={splitDelimiter}
-            placeholder="pl. ; vagy | vagy -"
+            placeholder={ui.splitCharPlaceholder}
           />
         </div>
       </div>
 
       <div class="config-actions">
         <button class="btn btn--primary" on:click={process} disabled={!splitDelimiter}>
-          Szetvalasztas
+          {ui.split}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Megse</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.cancel}</button>
       </div>
     </div>
   </div>
@@ -255,8 +256,8 @@
 <!-- Processing -->
 {#if status === "processing"}
   <div class="state-card" aria-live="polite">
-    <div class="spinner" aria-label="Feldolgozas folyamatban"></div>
-    <p>Szetvalasztas...</p>
+    <div class="spinner" aria-label={ui.processingInProgress}></div>
+    <p>{ui.processing}</p>
   </div>
 {/if}
 
@@ -265,33 +266,33 @@
   <div class="result">
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat__num">{result.rowCount.toLocaleString("hu")}</span>
-        <span class="stat__label">sor</span>
+        <span class="stat__num">{result.rowCount.toLocaleString(ui.locale)}</span>
+        <span class="stat__label">{ui.row}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.colCount}</span>
-        <span class="stat__label">oszlop</span>
+        <span class="stat__label">{ui.column}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.elapsedMs}ms</span>
-        <span class="stat__label">feldolgozas</span>
+        <span class="stat__label">{ui.processingTime}</span>
       </div>
 
       <div class="stats-bar__actions">
         <button class="btn btn--primary" on:click={downloadResult}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          CSV letoltese
+          {ui.downloadCsv}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={backToConfig}>Vissza</button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={backToConfig}>{ui.back}</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     <div class="preview-block">
       <div class="preview-block__header">
-        <span class="preview-block__title">Eredmeny elonezet</span>
+        <span class="preview-block__title">{ui.resultPreview}</span>
         <label class="preview-rows-label">
-          Sorok:
+          {ui.rowsColon}
           <select bind:value={previewRows} class="select select--sm">
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -303,7 +304,7 @@
       <pre class="csv-preview"><code>{previewText}</code></pre>
       {#if result.rowCount > previewRows}
         <div class="preview-more">
-          ... es meg {(result.rowCount - previewRows).toLocaleString("hu")} sor a letoltott fajlban
+          {ui.andMoreRows.replace("{n}", (result.rowCount - previewRows).toLocaleString(ui.locale))}
         </div>
       {/if}
     </div>

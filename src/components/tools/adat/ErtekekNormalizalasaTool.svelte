@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── CSV helpers ────────────────────────────────────────────
   function parseCsvSimple(text: string, delimiter: string = ","): string[][] {
@@ -67,7 +68,7 @@
     try {
       rows = parseCsvSimple(text, delimiter);
       if (rows.length < 3) {
-        error = "A fajlnak legalabb 3 sort kell tartalmaznia (fejlec + legalabb 2 adatsor).";
+        error = ui.csvMinimumRows;
         status = "error";
         return;
       }
@@ -94,7 +95,7 @@
       }
 
       if (numericColumns.length === 0) {
-        error = "Nem talalhato numerikus oszlop a fajlban.";
+        error = ui.noNumericColumns;
         status = "error";
         return;
       }
@@ -111,7 +112,7 @@
   function normalize() {
     const activeIndices = numericColumns.filter((_, i) => selectedColumns[i]);
     if (activeIndices.length === 0) {
-      error = "Legalabb egy oszlopot ki kell jelolni.";
+      error = ui.noNumericColumns;
       return;
     }
 
@@ -169,7 +170,7 @@
   function downloadResult() {
     const dotIdx = filename.lastIndexOf(".");
     const base = dotIdx !== -1 ? filename.slice(0, dotIdx) : filename;
-    downloadText(resultCsv, base + "_normalizalt.csv", "text/csv;charset=utf-8");
+    downloadText(resultCsv, base + "_normalized.csv", "text/csv;charset=utf-8");
   }
 
   // ─── Reset ──────────────────────────────────────────────────
@@ -198,17 +199,17 @@
   $: selectedCount = selectedColumns.filter(Boolean).length;
 
   const DELIMITERS = [
-    { value: ",",  label: "Vesszo (,)" },
-    { value: ";",  label: "Pontosvesszo (;)" },
-    { value: "\t", label: "Tabulator" },
+    { value: ",",  label: ui.comma },
+    { value: ";",  label: ui.semicolon },
+    { value: "\t", label: ui.tabChar },
     { value: "|",  label: "Pipe (|)" },
   ];
 </script>
 
 <!-- Settings -->
-<div class="card settings" aria-label="Beallitasok">
+<div class="card settings" aria-label={ui.settings}>
   <div class="settings__row">
-    <label class="label" for="delimiter-select">Elvalaszto</label>
+    <label class="label" for="delimiter-select">{ui.delimiter}</label>
     <select
       id="delimiter-select"
       class="select"
@@ -228,7 +229,7 @@
     accept=".csv,text/csv,text/plain"
     multiple={false}
     maxSizeMB={20}
-    label="Huzd ide a CSV fajlt"
+    label={ui.dragHere}
     sublabel="CSV, TXT - Max. 20 MB"
     on:files={handleFiles}
   />
@@ -239,8 +240,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Ujra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -249,31 +250,31 @@
 {#if status === "configuring"}
   <div class="config-panel">
     <div class="config-panel__header">
-      <span class="config-panel__title">Ertekek normalizalasa</span>
-      <span class="config-panel__info">{numericColumns.length} numerikus oszlop talalva</span>
+      <span class="config-panel__title">{ui.settings}</span>
+      <span class="config-panel__info">{numericColumns.length} {ui.columns}</span>
     </div>
 
     <div class="config-controls">
       <!-- Mode selection -->
       <div class="config-field" style="margin-bottom: var(--sp-4);">
-        <label class="label">Normalizalasi mod</label>
+        <label class="label">{ui.settings}</label>
         <div class="mode-options">
           <label class="radio-label">
             <input type="radio" bind:group={mode} value="min-max" class="radio" />
             <span>Min-Max (0-1)</span>
-            <span class="mode-desc">Ertekek 0 es 1 koze skalazasa</span>
+            <span class="mode-desc">0 - 1</span>
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={mode} value="z-score" class="radio" />
             <span>Z-score</span>
-            <span class="mode-desc">(ertek - atlag) / szoras</span>
+            <span class="mode-desc">(x - mean) / std</span>
           </label>
         </div>
       </div>
 
       <!-- Column selection -->
       <div class="config-field">
-        <label class="label">Normalizalando oszlopok ({selectedCount} / {numericColumns.length})</label>
+        <label class="label">{ui.columns} ({selectedCount} / {numericColumns.length})</label>
         <div class="columns-grid">
           {#each numericColumns as colIdx, i}
             <label class="column-checkbox">
@@ -294,9 +295,9 @@
           on:click={normalize}
           disabled={selectedCount === 0}
         >
-          Normalialas alkalmazasa
+          {ui.apply}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Megse</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.cancel}</button>
       </div>
     </div>
   </div>
@@ -307,33 +308,33 @@
   <div class="result">
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat__num">{(resultRows.length - 1).toLocaleString("hu")}</span>
-        <span class="stat__label">sor</span>
+        <span class="stat__num">{(resultRows.length - 1).toLocaleString(ui.locale)}</span>
+        <span class="stat__label">{ui.row}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{selectedCount}</span>
-        <span class="stat__label">normalizalt</span>
+        <span class="stat__label">{ui.columns}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{mode === "min-max" ? "0-1" : "Z"}</span>
-        <span class="stat__label">mod</span>
+        <span class="stat__label">{ui.settings}</span>
       </div>
 
       <div class="stats-bar__actions">
         <button class="btn btn--primary" on:click={downloadResult}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          CSV letoltese
+          {ui.downloadCsv}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={backToConfig}>Vissza</button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={backToConfig}>{ui.back}</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     <div class="preview-block">
       <div class="preview-block__header">
-        <span class="preview-block__title">Normalizalt CSV elonezet</span>
+        <span class="preview-block__title">{ui.csvPreview}</span>
         <label class="preview-rows-label">
-          Sorok:
+          {ui.rowsColon}
           <select bind:value={previewRows} class="select select--sm">
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -345,7 +346,7 @@
       <pre class="csv-preview"><code>{previewText}</code></pre>
       {#if resultRows.length - 1 > previewRows}
         <div class="preview-more">
-          ... es meg {(resultRows.length - 1 - previewRows).toLocaleString("hu")} sor a letoltott fajlban
+          {ui.andMoreRows.replace("{n}", (resultRows.length - 1 - previewRows).toLocaleString(ui.locale))}
         </div>
       {/if}
     </div>

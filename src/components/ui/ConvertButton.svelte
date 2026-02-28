@@ -5,6 +5,7 @@
 <script lang="ts">
   import type { TimingConfig } from "../../lib/timing-config.ts";
   import { onDestroy } from "svelte";
+  import { ui } from "../../lib/ui-labels.ts";
 
   // ─── Props ───────────────────────────────────────────────
   export let timing: TimingConfig;
@@ -13,8 +14,8 @@
   export let isDone: boolean          = false;
   export let onConvert: () => void    = () => {};
   export let onDownload: () => void   = () => {};
-  export let convertLabel: string     = "Konvertálás";
-  export let downloadLabel: string    = "Letöltés";
+  export let convertLabel: string     = ui.convert;
+  export let downloadLabel: string    = ui.download;
   export let fileCount: number        = 0;
 
   // ─── Belső állapot ───────────────────────────────────────
@@ -123,8 +124,8 @@
     if (phase === "pre-convert" && timing.showCountdown) {
       return `${convertLabel} (${countdown}s)`;
     }
-    if (phase === "converting") return "Feldolgozás...";
-    const suffix = fileCount > 1 ? ` (${fileCount} fajl)` : "";
+    if (phase === "converting") return ui.processingDots;
+    const suffix = fileCount > 1 ? ` (${fileCount} ${ui.file.toLowerCase()})` : "";
     return convertLabel + suffix;
   })();
 
@@ -142,7 +143,7 @@
     : 0;
 </script>
 
-<div class="convert-actions" role="group" aria-label="Konvertalas muveletek">
+<div class="convert-actions" role="group" aria-label={ui.conversionActions}>
 
   {#if showConvertBtn}
     <button
@@ -157,12 +158,12 @@
     >
       {#if phase === "converting"}
         <span class="btn__spinner" aria-hidden="true"></span>
-        <span>Feldolgozas...</span>
+        <span>{ui.processingDots}</span>
       {:else if phase === "pre-convert"}
         <span class="btn__icon" aria-hidden="true">&#x23F3;</span>
         <span>{convertLabel}</span>
         {#if timing.showCountdown}
-          <span class="btn__countdown" aria-label="{countdown} masodperc">{countdown}</span>
+          <span class="btn__countdown" aria-label="{countdown} {ui.secondsAbbr}">{countdown}</span>
         {/if}
         <span
           class="btn__progress-track"
@@ -193,7 +194,7 @@
         <span class="btn__icon" aria-hidden="true">&#x23F3;</span>
         <span>{downloadLabel}</span>
         {#if timing.showCountdown}
-          <span class="btn__countdown" aria-label="{countdown} masodperc">{countdown}</span>
+          <span class="btn__countdown" aria-label="{countdown} {ui.secondsAbbr}">{countdown}</span>
         {/if}
         <span class="btn__progress-track">
           <span class="btn__progress-fill" style="width: {progressPercent}%"></span>
@@ -236,9 +237,9 @@
 }
 
 .btn--convert {
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
-  border-color: var(--accent);
+  border-color: var(--accent-bright);
 }
 
 .btn--convert:not(.btn--disabled):hover {

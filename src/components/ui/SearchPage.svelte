@@ -4,10 +4,13 @@
   // URL ?q= paraméterből indul, interaktív szűrés
   // ============================================================
   import { onMount } from "svelte";
-  import { getAllTools, getCategoryInfo, CATEGORIES } from "../../lib/tool-registry.ts";
+  import { getAllTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories, CATEGORIES } from "../../lib/tool-registry.ts";
+  import { toolUrl, categoryUrl } from "../../lib/url-utils.ts";
+  import { ui } from "../../lib/ui-labels.ts";
 
-  const allTools = getAllTools();
+  const allTools = getAllTools().map(t => getLocalizedTool(t));
   const activeTools = allTools.filter(t => t.status === "active");
+  const localCats = getLocalizedCategories();
 
   let query = "";
   let inputEl: HTMLInputElement;
@@ -65,18 +68,18 @@
       bind:this={inputEl}
       bind:value={query}
       type="search"
-      placeholder="Keresés név, leírás vagy kulcsszó alapján…"
+      placeholder={ui.searchPlaceholder}
       class="sp-input"
       autocomplete="off"
       spellcheck="false"
-      aria-label="Keresés az eszközök között"
+      aria-label={ui.searchLabel}
     />
     {#if query}
       <button
         type="button"
         class="sp-clear"
         on:click={() => { query = ""; inputEl?.focus(); }}
-        aria-label="Keresés törlése"
+        aria-label={ui.clearSearch}
       >✕</button>
     {/if}
   </div>
@@ -84,16 +87,16 @@
   <!-- Status -->
   <div class="sp-status">
     {#if query.trim()}
-      <span class="sp-status__count">{results.length} találat</span>
-      <span class="sp-status__query">erre: <strong>{query}</strong></span>
+      <span class="sp-status__count">{results.length} {ui.resultsFor}</span>
+      <span class="sp-status__query">{ui.searchFor} <strong>{query}</strong></span>
     {:else}
-      <span class="sp-status__count">{activeTools.length} elérhető eszköz</span>
+      <span class="sp-status__count">{activeTools.length} {ui.availableTools}</span>
     {/if}
 
     <!-- Category pills for results -->
     {#if results.length > 0}
       <div class="sp-cats">
-        {#each CATEGORIES as cat}
+        {#each localCats as cat}
           {#if resultsByCategory[cat.id]}
             <span class="sp-cat-pill" style="--cat-c: {cat.color}">
               {cat.icon} {cat.label}
@@ -109,29 +112,29 @@
   {#if results.length === 0}
     <div class="sp-empty">
       <div class="sp-empty__icon">🔍</div>
-      <p class="sp-empty__text">Nincs találat erre: <strong>{query}</strong></p>
-      <p class="sp-empty__hint">Próbálj rövidebb kulcsszót, vagy böngészd a kategóriákat lent.</p>
+      <p class="sp-empty__text">{ui.noResults} <strong>{query}</strong></p>
+      <p class="sp-empty__hint">{ui.noResultsHint}</p>
       <div class="sp-empty__cats">
-        {#each CATEGORIES as cat}
-          <a href={`/${cat.id}`} class="sp-empty__cat-link">{cat.icon} {cat.label}</a>
+        {#each localCats as cat}
+          <a href={categoryUrl(cat.id)} class="sp-empty__cat-link">{cat.icon} {cat.label}</a>
         {/each}
       </div>
     </div>
   {:else}
     <div class="sp-grid">
       {#each results as tool (tool.slug)}
-        {@const cat = getCategoryInfo(tool.category)}
-        <a href={`/${tool.category}/${tool.slug}`} class="sp-card" class:sp-card--coming={tool.status === "coming-soon"}>
+        {@const cat = localCats.find(c => c.id === tool.category)}
+        <a href={toolUrl(tool)} class="sp-card" class:sp-card--coming={tool.status === "coming-soon"}>
           <div class="sp-card__top">
             <span class="sp-card__cat" style="color: {cat?.color}">{cat?.icon} {cat?.label}</span>
             {#if tool.status === "coming-soon"}
-              <span class="sp-card__badge">Hamarosan</span>
+              <span class="sp-card__badge">{ui.comingSoon}</span>
             {/if}
           </div>
           <div class="sp-card__title">{tool.h1}</div>
           <p class="sp-card__desc">{tool.description}</p>
           <span class="sp-card__cta">
-            {tool.status === "active" ? "Megnyitás" : "Részletek"}
+            {tool.status === "active" ? ui.openTool : ui.details}
             <span class="sp-card__arrow">→</span>
           </span>
         </a>

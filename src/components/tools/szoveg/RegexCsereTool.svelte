@@ -4,6 +4,7 @@
   // Regex keresés és csere – match highlight, flag választás
   // ============================================================
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let input = "";
   let pattern = "";
@@ -41,7 +42,7 @@
     try {
       return input.replace(regex, replacement);
     } catch (e) {
-      return `Hiba: ${e instanceof Error ? e.message : String(e)}`;
+      return `${ui.error}: ${e instanceof Error ? e.message : String(e)}`;
     }
   })();
 
@@ -51,10 +52,10 @@
   }
 
   const EXAMPLES = [
-    { label: "Számok kinyerése", pattern: "\\d+", replacement: "[$&]" },
-    { label: "E-mail elfedés", pattern: "(\\w{2})\\w+(@\\w+)", replacement: "$1***$2" },
-    { label: "Dupla szóközök", pattern: "\\s{2,}", replacement: " " },
-    { label: "HTML tagok törlése", pattern: "<[^>]+>", replacement: "" },
+    { label: ui.regexExNumbers, pattern: "\\d+", replacement: "[$&]" },
+    { label: ui.regexExEmail, pattern: "(\\w{2})\\w+(@\\w+)", replacement: "$1***$2" },
+    { label: ui.regexExSpaces, pattern: "\\s{2,}", replacement: " " },
+    { label: ui.regexExHtml, pattern: "<[^>]+>", replacement: "" },
   ];
 </script>
 
@@ -62,7 +63,7 @@
   <div class="card settings-card">
     <div class="pattern-row">
       <div class="field field--wide">
-        <label class="label" for="rx-pattern">Regex minta</label>
+        <label class="label" for="rx-pattern">{ui.regex}</label>
         <div class="regex-input-wrap">
           <span class="regex-delim">/</span>
           <input id="rx-pattern" type="text" class="input input--regex" bind:value={pattern}
@@ -71,26 +72,26 @@
         </div>
       </div>
       <div class="field">
-        <label class="label" for="rx-replace">Csere</label>
-        <input id="rx-replace" type="text" class="input" bind:value={replacement} placeholder="$1, $&, stb." />
+        <label class="label" for="rx-replace">{ui.replaceText}</label>
+        <input id="rx-replace" type="text" class="input" bind:value={replacement} placeholder="$1, $&, ..." />
       </div>
     </div>
 
     <div class="flags-row">
-      <span class="label">Flagek:</span>
+      <span class="label">{ui.settings}:</span>
       <label class="flag-opt"><input type="checkbox" bind:checked={flagG} /><code>g</code> global</label>
       <label class="flag-opt"><input type="checkbox" bind:checked={flagI} /><code>i</code> case-insensitive</label>
       <label class="flag-opt"><input type="checkbox" bind:checked={flagM} /><code>m</code> multiline</label>
     </div>
 
     {#if error}
-      <div class="error-msg">Hibás regex: {error}</div>
+      <div class="error-msg">{ui.error}: {error}</div>
     {:else if pattern && input}
-      <div class="match-info"><span class="match-count">{matchCount}</span> találat</div>
+      <div class="match-info"><span class="match-count">{matchCount}</span> {ui.resultsFor}</div>
     {/if}
 
     <div class="examples">
-      <span class="examples__label">Példák:</span>
+      <span class="examples__label">{ui.loadExample}:</span>
       {#each EXAMPLES as ex}
         <button class="btn btn--ghost btn--sm" on:click={() => { pattern = ex.pattern; replacement = ex.replacement; }}>
           {ex.label}
@@ -101,15 +102,15 @@
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">Bemenet</span>
-      <textarea class="textarea" rows="10" placeholder="Illeszd be a szöveget..." bind:value={input}></textarea>
+      <span class="label">{ui.input}</span>
+      <textarea class="textarea" rows="10" placeholder={ui.pasteTextHere} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Eredmény</span>
+        <span class="label">{ui.result}</span>
         <div class="output-actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "regex-eredmeny.txt")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "regex-result.txt")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="10" value={output} readonly></textarea>

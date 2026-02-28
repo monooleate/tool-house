@@ -1,0 +1,38 @@
+---
+// ============================================================
+// [staticPage].astro – Dinamikus route statikus oldalakhoz
+// Nyelv alapján generálja a helyes URL-eket:
+//   HU: /kereses, /rolunk, /kapcsolat, /koszonjuk, /adatvedelmi-nyilatkozat
+//   RO: /cautare, /despre-noi, /contact, /multumim, /politica-confidentialitate
+// ============================================================
+import { CURRENT_LANG } from "../i18n/index.ts";
+import { STATIC_URLS } from "../lib/url-map.ts";
+
+import KeresPage from "../components/static-pages/KeresPage.astro";
+import RolunkPage from "../components/static-pages/RolunkPage.astro";
+import KapcsolatPage from "../components/static-pages/KapcsolatPage.astro";
+import KoszonjukPage from "../components/static-pages/KoszonjukPage.astro";
+import AdatvedelmiPage from "../components/static-pages/AdatvedelmiPage.astro";
+
+const PAGE_COMPONENTS: Record<string, any> = {
+  rolunk: RolunkPage,
+  kapcsolat: KapcsolatPage,
+  kereses: KeresPage,
+  koszonjuk: KoszonjukPage,
+  adatvedelmi: AdatvedelmiPage,
+};
+
+export function getStaticPaths() {
+  const lang = (import.meta.env.PUBLIC_SITE_LANG as string) || "hu";
+  const urls = STATIC_URLS[lang as keyof typeof STATIC_URLS] ?? STATIC_URLS.hu;
+
+  return Object.entries(urls).map(([key, slug]) => ({
+    params: { staticPage: slug },
+    props: { pageKey: key },
+  }));
+}
+
+const { pageKey } = Astro.props;
+const PageComponent = PAGE_COMPONENTS[pageKey];
+---
+<PageComponent />

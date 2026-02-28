@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let preserveNewlines = true;
@@ -39,13 +40,13 @@
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Tiszta szöveg</span>
+        <span class="label">{ui.plainText}</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "szoveg.txt")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "szoveg.txt")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
-      <textarea class="textarea textarea--out" rows="12" value={output} readonly placeholder="A tiszta szöveg itt jelenik meg..."></textarea>
+      <textarea class="textarea textarea--out" rows="12" value={output} readonly placeholder={ui.plainTextPreview}></textarea>
     </div>
   </div>
 </div>

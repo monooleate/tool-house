@@ -5,6 +5,7 @@
   import ProgressQueue from "../../ui/ProgressQueue.svelte";
   import type { QueueItem } from "../../ui/ProgressQueue.svelte";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
 
   export let acceptFormats: string = "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp";
@@ -13,10 +14,10 @@
   export let outputExt: string = "webp";
   export let showQuality: boolean = true;
   export let defaultQuality: number = 80;
-  export let zipName: string = "kepek.zip";
+  export let zipName: string = `${ui.images.toLowerCase()}.zip`;
   export let toolSlug: string = "generic-image";
-  export let convertLabel: string = "Konvertálás";
-  export let downloadLabel: string = "Letöltés";
+  export let convertLabel: string = ui.conversion;
+  export let downloadLabel: string = ui.download;
 
   // ─── Timing ─────────────────────────────────────────────────
   const timing = getTimingConfig(toolSlug);
@@ -148,13 +149,13 @@
   <div class="card settings-card">
     {#if showQuality}
     <div class="settings-row">
-      <label class="label" for="quality-slider">Minőség: {quality}%</label>
+      <label class="label" for="quality-slider">{ui.quality}: {quality}%</label>
       <input id="quality-slider" type="range" min="10" max="100" step="5" bind:value={quality} class="slider" />
     </div>
     {/if}
     <div class="settings-row">
-      <label class="label" for="max-width">Max szélesség (0 = eredeti)</label>
-      <input id="max-width" type="number" min="0" max="10000" step="100" bind:value={maxWidth} class="input input--sm" placeholder="pl. 1920" />
+      <label class="label" for="max-width">{ui.maxWidthZero}</label>
+      <input id="max-width" type="number" min="0" max="10000" step="100" bind:value={maxWidth} class="input input--sm" placeholder={ui.placeholder0} />
     </div>
   </div>
 
@@ -164,8 +165,8 @@
       accept={acceptFormats}
       multiple={true}
       maxSizeMB={50}
-      label={`Húzd ide a ${acceptLabel} fájlokat`}
-      sublabel="vagy kattints a tallózáshoz"
+      label={ui.dragImageFor}
+      sublabel=""
       disabled={false}
       on:files={handleFiles}
     />
@@ -175,7 +176,7 @@
         accept={acceptFormats}
         multiple={true}
         maxSizeMB={50}
-        label="+ Újabb képek hozzáadása"
+        label={ui.addMoreImages}
         sublabel=""
         on:files={handleFiles}
       />
@@ -196,7 +197,7 @@
       onConvert={doConvert}
       onDownload={doDownload}
       {convertLabel}
-      downloadLabel={doneCount > 1 ? `ZIP letöltése (${doneCount} fájl)` : downloadLabel}
+      downloadLabel={doneCount > 1 ? `${ui.zipDownload} (${doneCount} ${ui.file})` : downloadLabel}
       fileCount={queue.length}
     />
   {/if}

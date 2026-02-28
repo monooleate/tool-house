@@ -1,9 +1,0 @@
----
-import ToolLayout from "../../layouts/ToolLayout.astro";
-import HashTool from "../../components/tools/fajl/HashTool.svelte";
-import { getToolBySlug } from "../../lib/tool-registry.ts";
-const tool = getToolBySlug("fajl", "hash-ellenorzo")!;
----
-<ToolLayout tool={tool}>
-  <HashTool client:visible />
-</ToolLayout>

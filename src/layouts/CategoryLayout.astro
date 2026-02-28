@@ -5,12 +5,15 @@
 // ============================================================
 import BaseLayout from "./BaseLayout.astro";
 import type { Category, Tool } from "../lib/tool-registry.ts";
+import { getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import {
   categoryBreadcrumbs,
   breadcrumbSchema,
   toolListSchema,
   buildCanonical,
 } from "../lib/seo.ts";
+import { t, CURRENT_LANG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
 
 export interface Props {
   category: Category;
@@ -19,21 +22,24 @@ export interface Props {
   description: string;
 }
 
-const { category, tools, title, description } = Astro.props;
+const { category: rawCategory, tools: rawTools, title, description } = Astro.props;
+const category = getLocalizedCategory(rawCategory, CURRENT_LANG);
+const tools = rawTools.map(tool => getLocalizedTool(tool, CURRENT_LANG));
 const activeTools  = tools.filter((t) => t.status === "active");
 const pendingTools = tools.filter((t) => t.status === "coming-soon");
 const breadcrumbs  = categoryBreadcrumbs(category);
 
 const schemas = [
   breadcrumbSchema(breadcrumbs),
-  toolListSchema(tools, `${category.label} eszközök`),
+  toolListSchema(tools, `${category.label} ${t("category.tools_suffix")}`),
 ];
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  canonical={`/${category.id}`}
+  canonical={categoryUrl(rawCategory.id)}
+  hreflangPaths={{ hu: categoryUrl(rawCategory.id, "hu"), ro: categoryUrl(rawCategory.id, "ro") }}
   schemaScripts={schemas}
 >
   <div class="cat-page container">
@@ -60,14 +66,14 @@ const schemas = [
     <header class="cat-header" style={`--cat-color: ${category.color}`}>
       <div class="cat-header__icon" aria-hidden="true">{category.icon}</div>
       <div class="cat-header__content">
-        <h1>{category.label} eszközök</h1>
+        <h1>{category.label} {t("category.tools_suffix")}</h1>
         <p>{description}</p>
         <div class="cat-header__stats">
           <span class="stat-pill">
-            <span class="stat-pill__num">{activeTools.length}</span> aktív
+            <span class="stat-pill__num">{activeTools.length}</span> {t("category.active_label")}
           </span>
           <span class="stat-pill stat-pill--dim">
-            <span class="stat-pill__num">{pendingTools.length}</span> hamarosan
+            <span class="stat-pill__num">{pendingTools.length}</span> {t("category.coming_label")}
           </span>
         </div>
       </div>
@@ -75,7 +81,7 @@ const schemas = [
 
     <!-- Category intro (SEO) -->
     {category.intro && category.intro.length > 0 && (
-      <section class="cat-intro" aria-label={`${category.label} leírás`}>
+      <section class="cat-intro" aria-label={`${category.label} ${t("category.description_label")}`}>
         {category.intro.map((p) => (
           <p class="cat-intro__para">{p}</p>
         ))}
@@ -87,15 +93,15 @@ const schemas = [
       <section aria-labelledby="active-title">
         <h2 id="active-title" class="section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Elérhető eszközök
+          {t("category.available_tools")}
         </h2>
         <ul class="tool-grid" role="list">
           {activeTools.map((tool) => (
             <li>
-              <a href={`/${tool.category}/${tool.slug}`} class="tool-card tool-card--active">
+              <a href={toolUrl(tool)} class="tool-card tool-card--active">
                 <div class="tool-card__title">{tool.h1}</div>
                 <p class="tool-card__desc">{tool.description}</p>
-                <span class="tool-card__cta">Megnyitás →</span>
+                <span class="tool-card__cta">{t("category.open_tool")}</span>
               </a>
             </li>
           ))}
@@ -108,12 +114,12 @@ const schemas = [
       <section aria-labelledby="coming-title" class="coming-section">
         <h2 id="coming-title" class="section-label section-label--muted">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-          Hamarosan
+          {t("category.coming_soon_tools")}
         </h2>
         <ul class="tool-grid tool-grid--compact" role="list">
           {pendingTools.map((tool) => (
             <li>
-              <a href={`/${tool.category}/${tool.slug}`} class="tool-card tool-card--pending">
+              <a href={toolUrl(tool)} class="tool-card tool-card--pending">
                 <div class="tool-card__title">{tool.h1}</div>
                 <p class="tool-card__desc">{tool.description}</p>
               </a>

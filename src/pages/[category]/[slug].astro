@@ -1,0 +1,34 @@
+---
+// ============================================================
+// [category]/[slug].astro – Dinamikus tool route
+// Egyetlen fájl generálja az összes tool oldalt (93+)
+// ============================================================
+import ToolLayout from "../../layouts/ToolLayout.astro";
+import DynamicTool from "../../components/tools/DynamicTool.svelte";
+import { getAllTools } from "../../lib/tool-registry.ts";
+import { toolUrl } from "../../lib/url-utils.ts";
+
+export function getStaticPaths() {
+  const tools = getAllTools();
+  return tools.map((tool) => {
+    const url = toolUrl(tool);
+    const parts = url.split("/").filter(Boolean);
+    return {
+      params: { category: parts[0], slug: parts[1] },
+      props: {
+        tool,
+        componentName: tool.component ?? "",
+        componentProps: tool.componentProps ?? {},
+      },
+    };
+  });
+}
+
+const { tool, componentName, componentProps: cProps } = Astro.props;
+---
+
+<ToolLayout tool={tool}>
+  {tool.status === "active" && componentName && (
+    <DynamicTool client:visible componentName={componentName} componentProps={cProps} />
+  )}
+</ToolLayout>

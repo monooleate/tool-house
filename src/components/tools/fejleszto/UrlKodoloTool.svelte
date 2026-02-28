@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let mode: "encode" | "decode" = "encode";
@@ -47,15 +48,15 @@
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">{mode === "encode" ? "Szöveg / URL" : "Kódolt szöveg"}</span>
+      <span class="label">{mode === "encode" ? ui.textUrl : ui.encodedText}</span>
       <textarea class="textarea" rows="8" placeholder={mode === "encode" ? "pl. Helló Világ! vagy https://pelda.hu/keresés?q=teszt" : "%48ell%C3%B3%20Vil%C3%A1g"} bind:value={input}></textarea>
       {#if error}<div class="error-msg">{error}</div>{/if}
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">{mode === "encode" ? "URL-kódolt" : "Dekódolt szöveg"}</span>
+        <span class="label">{mode === "encode" ? ui.urlEncoded : ui.decodedText}</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="8" value={output} readonly></textarea>

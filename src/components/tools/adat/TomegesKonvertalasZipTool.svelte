@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadZip } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let files: File[] = [];
   let status: "idle" | "processing" | "done" | "error" = "idle";
@@ -57,7 +58,7 @@
       results = results;
       status = "done";
     } catch (err: any) {
-      error = err.message || "Hiba a konvertálás során.";
+      error = err.message || ui.conversionError;
       status = "error";
     }
   }
@@ -69,7 +70,7 @@
       filename: r.name,
       data: encoder.encode(r.json),
     }));
-    await downloadZip(entries, "json-fajlok.zip");
+    await downloadZip(entries, ui.jsonFilesZip);
   }
 </script>
 
@@ -77,13 +78,13 @@
   <Dropzone
     accept=".csv,.tsv,.txt"
     multiple={true}
-    label="CSV/TSV fajlok feltoltese"
+    label={ui.dragHereMulti}
     on:files={handleFiles}
   />
 
   {#if files.length > 0}
     <div class="file-list">
-      <p class="file-count">{files.length} fajl kivalasztva</p>
+      <p class="file-count">{files.length} {ui.selectedFiles}</p>
       <ul>
         {#each files as f}
           <li class="file-item">{f.name} <span class="file-size">({(f.size / 1024).toFixed(1)} KB)</span></li>
@@ -97,9 +98,9 @@
       disabled={status === "processing"}
     >
       {#if status === "processing"}
-        Konvertalas... ({progress}%)
+        {ui.processingDots} ({progress}%)
       {:else}
-        Konvertalas JSON-ba
+        {ui.convert}
       {/if}
     </button>
   {/if}
@@ -110,12 +111,12 @@
 
   {#if status === "done" && results.length > 0}
     <div class="results">
-      <h3 class="results-title">Eredmenyek</h3>
+      <h3 class="results-title">{ui.result}</h3>
       <table class="results-table">
         <thead>
           <tr>
-            <th>Fajlnev</th>
-            <th>Sorok</th>
+            <th>{ui.fileName}</th>
+            <th>{ui.rows}</th>
           </tr>
         </thead>
         <tbody>
@@ -129,7 +130,7 @@
       </table>
 
       <button class="btn btn--download" on:click={downloadAll}>
-        Osszes letoltese (ZIP)
+        {ui.downloadZip}
       </button>
     </div>
   {/if}
@@ -179,9 +180,9 @@
   transition: all var(--t-fast);
 }
 .btn--primary {
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
-  border-color: var(--accent);
+  border-color: var(--accent-bright);
 }
 .btn--primary:hover:not(:disabled) {
   transform: translateY(-1px);

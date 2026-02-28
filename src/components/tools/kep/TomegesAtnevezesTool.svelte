@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let files: File[] = [];
   let template = "kep-{001}";
@@ -43,7 +44,7 @@
           data: new Uint8Array(await item.file.arrayBuffer()),
         })),
       );
-      await downloadZip(entries, "atnevezett-fajlok.zip");
+      await downloadZip(entries, "renamed-files.zip");
     } finally {
       processing = false;
     }
@@ -60,12 +61,12 @@
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Beallitasok</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
-    <label class="label" for="template-input">Nevminta</label>
+    <label class="label" for="template-input">{ui.renamePattern}</label>
     <input id="template-input" type="text" bind:value={template} class="input" placeholder={"kep-{001}"} />
-    <p class="settings-hint">Hasznald a {"{001}"} mintát a szamozashoz. A nullak szama hatarozza meg a kitoltest (pl. {"{01}"} = 01, 02... / {"{001}"} = 001, 002...).</p>
+    <p class="settings-hint">{"{001}"} = 001, 002... / {"{01}"} = 01, 02...</p>
   </div>
 </div>
 
@@ -74,8 +75,8 @@
     accept="*/*"
     multiple={true}
     maxSizeMB={100}
-    label="Huzd ide a fajlokat az atnevezeshez"
-    sublabel="Barmilyen fajltipus -- Max. 100 MB fajlonkent"
+    label={ui.dragHereMulti}
+    sublabel="Max. 100 MB"
     on:files={handleFiles}
   />
 {:else}
@@ -84,7 +85,7 @@
       accept="*/*"
       multiple={true}
       maxSizeMB={100}
-      label="+ Ujabb fajlok hozzaadasa"
+      label={ui.addMoreImages}
       sublabel=""
       on:files={handleFiles}
     />
@@ -92,11 +93,11 @@
 
   <div class="file-list card">
     <div class="file-list__header">
-      <span class="file-list__count">{files.length} fajl</span>
+      <span class="file-list__count">{files.length} {ui.file}</span>
     </div>
     <table class="data-table">
       <thead>
-        <tr><th>#</th><th>Eredeti nev</th><th>Uj nev</th><th>Meret</th><th></th></tr>
+        <tr><th>#</th><th>{ui.originalName}</th><th>{ui.newName}</th><th>{ui.fileSize}</th><th></th></tr>
       </thead>
       <tbody>
         {#each renamedList as item, i}
@@ -114,9 +115,9 @@
 
   <div class="actions">
     <button class="btn btn--primary" on:click={downloadAll} disabled={processing || files.length === 0}>
-      {processing ? "Csomagolas..." : `ZIP letoltes (${files.length} fajl)`}
+      {processing ? ui.processing : `${ui.zipDownload} (${files.length} ${ui.file})`}
     </button>
-    <button class="btn btn--ghost" on:click={reset}>Ujrakezdes</button>
+    <button class="btn btn--ghost" on:click={reset}>{ui.reset}</button>
   </div>
 {/if}
 

@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "dev:ro": "cross-env PUBLIC_SITE_LANG=ro PUBLIC_SITE_URL=https://instrumenteonline.ro astro dev",
     "build": "astro build",
+    "build:hu": "cross-env PUBLIC_SITE_LANG=hu PUBLIC_SITE_URL=https://konvertalo.hu astro build",
+    "build:ro": "cross-env PUBLIC_SITE_LANG=ro PUBLIC_SITE_URL=https://instrumenteonline.ro astro build",
+    "build:all": "npm run build:hu && npm run build:ro",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "tsc --noEmit",
@@ -27,6 +31,7 @@
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "@types/js-yaml": "^4.0.9",
+    "cross-env": "^10.1.0",
     "satori": "^0.11.2",
     "typescript": "^5.5.0"
   }

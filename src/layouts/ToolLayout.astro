@@ -9,7 +9,11 @@ import type { Tool } from "../lib/tool-registry.ts";
 import {
   getCategoryInfo,
   getRelatedTools,
+  getLocalizedTool,
+  getLocalizedCategory,
 } from "../lib/tool-registry.ts";
+import { t, tpl, CURRENT_LANG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
 import {
   toolSoftwareSchema,
   faqSchema,
@@ -24,9 +28,10 @@ export interface Props {
   tool: Tool;
 }
 
-const { tool } = Astro.props;
-const category = getCategoryInfo(tool.category)!;
-const related = getRelatedTools(tool);
+const { tool: rawTool } = Astro.props;
+const tool = getLocalizedTool(rawTool, CURRENT_LANG);
+const category = getLocalizedCategory(getCategoryInfo(tool.category)!, CURRENT_LANG);
+const related = getRelatedTools(tool).map(t => getLocalizedTool(t, CURRENT_LANG));
 const breadcrumbs = toolBreadcrumbs(tool, category.label);
 
 // JSON-LD schemas
@@ -49,7 +54,8 @@ if (useCaseList) schemas.push(useCaseList);
 <BaseLayout
   title={tool.title}
   description={tool.description}
-  canonical={`/${tool.category}/${tool.slug}`}
+  canonical={toolUrl(rawTool)}
+  hreflangPaths={{ hu: toolUrl(rawTool, "hu"), ro: toolUrl(rawTool, "ro") }}
   ogImage={`/og/${tool.category}/${tool.slug}.png`}
   ogImageWidth={1200}
   ogImageHeight={630}
@@ -82,7 +88,7 @@ if (useCaseList) schemas.push(useCaseList);
     <header class="tool-header">
       <div class="tool-header__meta">
         <a
-          href={`/${tool.category}`}
+          href={categoryUrl(tool.category)}
           class="tool-cat-badge"
           style={`--cat-color: ${category.color}`}
         >
@@ -90,9 +96,9 @@ if (useCaseList) schemas.push(useCaseList);
           {category.label}
         </a>
         {tool.status === "active" ? (
-          <span class="badge badge--active">Aktív</span>
+          <span class="badge badge--active">{t("tool.badge_active")}</span>
         ) : (
-          <span class="badge badge--coming-soon">Hamarosan</span>
+          <span class="badge badge--coming-soon">{t("tool.badge_coming")}</span>
         )}
       </div>
       <h1 class="tool-header__h1">{tool.h1}</h1>
@@ -102,56 +108,55 @@ if (useCaseList) schemas.push(useCaseList);
         <div class="tool-header__trust">
           <span class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Szervermentes
+            {t("tool.trust_serverless")}
           </span>
           <span class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Azonnali
+            {t("tool.trust_instant")}
           </span>
           <span class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Privát
+            {t("tool.trust_private")}
           </span>
           <span class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            Ingyenes
+            {t("tool.trust_free")}
           </span>
         </div>
       )}
     </header>
 
     <!-- Tool UI (Svelte island) -->
-    <section class="tool-ui" aria-label="Eszköz kezelőfelület">
+    <section class="tool-ui" aria-label={t("tool.ui_label")}>
       {tool.status === "active" ? (
         <slot />
       ) : (
         <!-- Coming Soon fallback -->
         <div class="coming-soon-card">
           <div class="coming-soon-card__icon" aria-hidden="true">🚧</div>
-          <h2 class="coming-soon-card__title">Hamarosan elérhető</h2>
+          <h2 class="coming-soon-card__title">{t("tool.coming_soon_title")}</h2>
           <p class="coming-soon-card__text">
-            Ez az eszköz jelenleg fejlesztés alatt áll. Add meg az e-mail-ed,
-            és értesítünk, amint elérhetővé válik.
+            {t("tool.coming_soon_desc")}
           </p>
           <form class="coming-soon-form" action="/api/notify" method="post">
             <input type="hidden" name="tool" value={`${tool.category}/${tool.slug}`} />
             <input
               type="email"
               name="email"
-              placeholder="email@pelda.hu"
+              placeholder={t("tool.email_placeholder")}
               class="input coming-soon-form__input"
               required
-              aria-label="E-mail cím értesítéshez"
+              aria-label={t("tool.notify_email_label")}
             />
-            <button type="submit" class="btn btn--primary">Értesíts</button>
+            <button type="submit" class="btn btn--primary">{t("tool.notify_button")}</button>
           </form>
           <!-- Kapcsolódó aktív eszközök -->
           {related.filter(r => r.status === "active").length > 0 && (
             <div class="coming-soon-active">
-              <p class="coming-soon-active__label">Eközben próbáld ki:</p>
+              <p class="coming-soon-active__label">{t("tool.coming_soon_meanwhile")}</p>
               <div class="coming-soon-active__list">
-                {related.filter(r => r.status === "active").map((t) => (
-                  <a href={`/${t.category}/${t.slug}`} class="btn btn--outline btn--sm">{t.h1}</a>
+                {related.filter(r => r.status === "active").map((rel) => (
+                  <a href={toolUrl(rel)} class="btn btn--outline btn--sm">{rel.h1}</a>
                 ))}
               </div>
             </div>
@@ -163,7 +168,7 @@ if (useCaseList) schemas.push(useCaseList);
     <!-- Bevezető szöveg -->
     {tool.introText && (
       <section class="intro-section" aria-labelledby="intro-title">
-        <h2 id="intro-title" class="section-title">Miről szól ez az eszköz?</h2>
+        <h2 id="intro-title" class="section-title">{t("tool.intro_title")}</h2>
         <div class="intro-text">
           <p>{tool.introText}</p>
         </div>
@@ -178,7 +183,7 @@ if (useCaseList) schemas.push(useCaseList);
     <!-- FAQ -->
     {tool.faq.length > 0 && (
       <section class="faq-section" aria-labelledby="faq-title">
-        <h2 id="faq-title" class="section-title">Gyakran ismételt kérdések</h2>
+        <h2 id="faq-title" class="section-title">{t("faq.title")}</h2>
         <dl class="faq-list">
           {tool.faq.map((item, i) => (
             <div class="faq-item">
@@ -207,21 +212,21 @@ if (useCaseList) schemas.push(useCaseList);
     <!-- Related tools -->
     {related.length > 0 && (
       <section class="related-section" aria-labelledby="related-title">
-        <h2 id="related-title" class="section-title">Kapcsolódó eszközök</h2>
+        <h2 id="related-title" class="section-title">{t("tool.related")}</h2>
         <ul class="related-grid" role="list">
-          {related.map((t) => (
+          {related.map((rel) => (
             <li>
-              <a href={`/${t.category}/${t.slug}`} class={`related-card ${t.status === "coming-soon" ? "related-card--dim" : ""}`}>
+              <a href={toolUrl(rel)} class={`related-card ${rel.status === "coming-soon" ? "related-card--dim" : ""}`}>
                 <div class="related-card__header">
                   <span class="related-card__icon" aria-hidden="true">
-                    {getCategoryInfo(t.category)?.icon}
+                    {getCategoryInfo(rel.category)?.icon}
                   </span>
-                  {t.status === "coming-soon" && (
-                    <span class="badge badge--coming-soon">Soon</span>
+                  {rel.status === "coming-soon" && (
+                    <span class="badge badge--coming-soon">{t("tool.badge_coming")}</span>
                   )}
                 </div>
-                <div class="related-card__title">{t.h1}</div>
-                <p class="related-card__desc">{t.description}</p>
+                <div class="related-card__title">{rel.h1}</div>
+                <p class="related-card__desc">{rel.description}</p>
               </a>
             </li>
           ))}

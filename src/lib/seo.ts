@@ -4,10 +4,12 @@
 // ============================================================
 
 import type { Tool, Category, ToolContent } from "./tool-registry.ts";
+import { t, tpl, CURRENT_CONFIG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl } from "./url-utils.ts";
 
-export const SITE_URL = import.meta.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu";
-export const SITE_NAME = "Konvertalo.hu";
-export const SITE_DESCRIPTION = "Ingyenes online konvertáló és fájlkezelő eszközök képekhez, PDF-ekhez, adatokhoz és szövegekhez – böngészőben, privát.";
+export const SITE_URL = CURRENT_CONFIG.siteUrl;
+export const SITE_NAME = CURRENT_CONFIG.siteName;
+export const SITE_DESCRIPTION = t("meta.site_description");
 
 // ─── Canonical ───────────────────────────────────────────────
 export function buildCanonical(path: string): string {
@@ -74,18 +76,18 @@ export function toolSoftwareSchema(tool: Tool): string {
     "@type": ["SoftwareApplication", "WebApplication"],
     name: tool.h1,
     description: tool.description,
-    url: buildCanonical(`/${tool.category}/${tool.slug}`),
+    url: buildCanonical(toolUrl(tool)),
     applicationCategory: "UtilitiesApplication",
     applicationSubCategory: SUBCATEGORY_MAP[tool.category] ?? "UtilitiesApplication",
-    applicationSuite: "Konvertalo.hu",
+    applicationSuite: SITE_NAME,
     operatingSystem: "Web",
-    browserRequirements: "Requires JavaScript. Requires HTML5 File API.",
-    inLanguage: "hu",
+    browserRequirements: t("schema.browser_req"),
+    inLanguage: CURRENT_CONFIG.lang,
     isAccessibleForFree: true,
     offers: {
       "@type": "Offer",
       price: "0",
-      priceCurrency: "HUF",
+      priceCurrency: t("schema.cost_currency"),
       availability: tool.status === "active"
         ? "https://schema.org/InStock"
         : "https://schema.org/PreOrder",
@@ -98,10 +100,9 @@ export function toolSoftwareSchema(tool: Tool): string {
       worstRating: "1",
     },
     featureList: [
-      "Böngészőben fut – nincs szerverfeltöltés",
-      "Ingyenes, regisztráció nélkül",
-      "Azonnali feldolgozás Web Worker technológiával",
-      "Privát – a fájlok nem hagyják el a böngészőt",
+      t("schema.feature_private"),
+      t("schema.feature_worker"),
+      t("schema.feature_free"),
     ],
     screenshot: buildCanonical(`/og/${tool.category}/${tool.slug}.png`),
     image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
@@ -139,23 +140,23 @@ export function howToSchema(tool: Tool): string | null {
     return JSON.stringify({
       "@context": "https://schema.org",
       "@type": "HowTo",
-      name: `Hogyan használd a(z) ${tool.h1}-t?`,
+      name: tpl("schema.how_to_name", { name: tool.h1 }),
       description: tool.description,
-      url: buildCanonical(`/${tool.category}/${tool.slug}`),
-      inLanguage: "hu",
-      totalTime: "PT1M",
+      url: buildCanonical(toolUrl(tool)),
+      inLanguage: CURRENT_CONFIG.lang,
+      totalTime: t("schema.total_time"),
       estimatedCost: {
         "@type": "MonetaryAmount",
-        currency: "HUF",
+        currency: t("schema.cost_currency"),
         value: "0",
       },
-      tool: [{ "@type": "HowToTool", name: "Böngésző (Chrome, Firefox, Safari, Edge)" }],
+      tool: [{ "@type": "HowToTool", name: t("schema.browser_tool") }],
       step: contentSteps.map((s, i) => ({
         "@type": "HowToStep",
         position: i + 1,
         name: s.title.replace(/^\d+\.\s*/, ""),
         text: s.description,
-        url: buildCanonical(`/${tool.category}/${tool.slug}#hogyan-hasznald`),
+        url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_howto")}`),
       })),
     });
   }
@@ -164,12 +165,12 @@ export function howToSchema(tool: Tool): string | null {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: `Hogyan használd: ${tool.h1}`,
+    name: tpl("schema.how_to_name", { name: tool.h1 }),
     description: tool.description,
-    url: buildCanonical(`/${tool.category}/${tool.slug}`),
-    inLanguage: "hu",
-    totalTime: "PT1M",
-    estimatedCost: { "@type": "MonetaryAmount", currency: "HUF", value: "0" },
+    url: buildCanonical(toolUrl(tool)),
+    inLanguage: CURRENT_CONFIG.lang,
+    totalTime: t("schema.total_time"),
+    estimatedCost: { "@type": "MonetaryAmount", currency: t("schema.cost_currency"), value: "0" },
     tool: [{ "@type": "HowToTool", name: "Böngésző (Chrome, Firefox, Safari, Edge)" }],
     step: tool.guide.map((text, i) => ({
       "@type": "HowToStep",
@@ -191,14 +192,14 @@ export function techArticleSchema(tool: Tool): string | null {
     "@type": "TechArticle",
     headline: about.title,
     description: about.paragraphs[0]?.slice(0, 160) ?? tool.description,
-    url: buildCanonical(`/${tool.category}/${tool.slug}#tudnivalok`),
-    inLanguage: "hu",
+    url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_about")}`),
+    inLanguage: CURRENT_CONFIG.lang,
     isPartOf: {
       "@type": "WebPage",
-      url: buildCanonical(`/${tool.category}/${tool.slug}`),
+      url: buildCanonical(toolUrl(tool)),
     },
-    author: { "@type": "Organization", name: "Konvertalo.hu", url: SITE_URL },
-    publisher: { "@type": "Organization", name: "Konvertalo.hu", url: SITE_URL },
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
     image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
     dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
     datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
@@ -216,8 +217,8 @@ export function useCaseListSchema(tool: Tool): string | null {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Mikor használd a(z) ${tool.h1}-t?`,
-    url: buildCanonical(`/${tool.category}/${tool.slug}#mikor-hasznald`),
+    name: tpl("tool.use_cases_title", { name: tool.h1 }),
+    url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_usecases")}`),
     numberOfItems: useCases.length,
     itemListOrder: "https://schema.org/ItemListOrderAscending",
     itemListElement: useCases.map((uc, i) => ({
@@ -237,12 +238,12 @@ export function websiteSchema(): string {
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    inLanguage: "hu",
+    inLanguage: CURRENT_CONFIG.lang,
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/kereses?q={search_term_string}`,
+        urlTemplate: `${SITE_URL}${t("schema.search_path")}?q={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -260,7 +261,7 @@ export function toolListSchema(tools: Tool[], listName: string): string {
       "@type": "ListItem",
       position: i + 1,
       name: tool.h1,
-      url: buildCanonical(`/${tool.category}/${tool.slug}`),
+      url: buildCanonical(toolUrl(tool)),
       description: tool.description,
     })),
   });
@@ -289,17 +290,17 @@ export function organizationSchema(): string {
 // ─── Tool breadcrumb items helper ────────────────────────────
 export function toolBreadcrumbs(tool: Tool, categoryLabel: string): BreadcrumbItem[] {
   return [
-    { name: "Főoldal", href: "/" },
-    { name: categoryLabel, href: `/${tool.category}` },
-    { name: tool.h1, href: `/${tool.category}/${tool.slug}` },
+    { name: t("nav.home"), href: "/" },
+    { name: categoryLabel, href: categoryUrl(tool.category) },
+    { name: tool.h1, href: toolUrl(tool) },
   ];
 }
 
 // ─── Category breadcrumb items helper ────────────────────────
 export function categoryBreadcrumbs(cat: Category): BreadcrumbItem[] {
   return [
-    { name: "Főoldal", href: "/" },
-    { name: cat.label, href: `/${cat.id}` },
+    { name: t("nav.home"), href: "/" },
+    { name: cat.label, href: categoryUrl(cat.id) },
   ];
 }
 

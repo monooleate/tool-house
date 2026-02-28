@@ -1,0 +1,1 @@
+import{b1 as b,ag as t,y as T,aj as h,T as k}from"./template.BI36eTUN.js";function u(r,i){return r===i||r?.[k]===i}function d(r={},i,f,S){return b(()=>{var a,s;return t(()=>{a=s,s=[],T(()=>{r!==f(...s)&&(i(r,...s),a&&u(f(...a),r)&&i(null,...a))})}),()=>{h(()=>{s&&u(f(...s),r)&&i(null,...s)})}}),r}export{d as b};

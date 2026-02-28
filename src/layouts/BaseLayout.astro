@@ -4,9 +4,14 @@
 // Alap layout: HTML skeleton, SEO meta, dark mode, nav, footer
 // ============================================================
 import "../styles/global.css";
-import { SITE_NAME, SITE_DESCRIPTION, buildCanonical } from "../lib/seo.ts";
-import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory } from "../lib/tool-registry.ts";
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical } from "../lib/seo.ts";
+import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory, getVisibleCategories, getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
+import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
 import { GOOGLE_TAG_ID, GTM_ID, CONSENT_MODE_ENABLED, hasGoogleTag, hasGTM } from "../lib/analytics.ts";
+import { t, tpl, CURRENT_CONFIG, CURRENT_LANG } from "../i18n/index.ts";
+
+const localizedCategories = getVisibleCategories(CURRENT_LANG).map(cat => getLocalizedCategory(cat, CURRENT_LANG));
+const { siteName, siteUrl, lang: htmlLang, locale } = CURRENT_CONFIG;
 // View Transitions kikapcsolva – link navigáció hibát okozott
 // import { ViewTransitions } from "astro:transitions";
 import SearchOverlay from "../components/ui/SearchOverlay.svelte";
@@ -22,6 +27,7 @@ export interface Props {
   ogImageHeight?: number;
   ogType?: "website" | "article";
   schemaScripts?: string[];  // JSON-LD stringek tömbje
+  hreflangPaths?: { hu: string; ro: string };
   noIndex?: boolean;
   publishedAt?: string;
   modifiedAt?: string;
@@ -38,22 +44,22 @@ const {
   ogImageHeight = 630,
   ogType        = "website",
   schemaScripts = [],
+  hreflangPaths,
   noIndex       = false,
   publishedAt,
   modifiedAt,
 } = Astro.props;
-const SITE_URL = import.meta.env.SITE ?? "https://konvertalo.hu";
 const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${SITE_URL.replace(/\/$/, "")}${ogImage}`;
 const hasLargeOgImage = ogImageWidth >= 300 && ogImageHeight >= 157;
 
-const canonicalUrl = canonical ?? buildCanonical(Astro.url.pathname);
+const canonicalUrl = buildCanonical(canonical ?? Astro.url.pathname);
 const resolvedTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 const activeCount = getActiveToolsCount();
 const totalCount = getTotalToolsCount();
 ---
 
 <!doctype html>
-<html lang="hu" class="no-js">
+<html lang={htmlLang} class="no-js" dir={CURRENT_CONFIG.dir}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -65,10 +71,23 @@ const totalCount = getTotalToolsCount();
   {noIndex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="canonical" href={canonicalUrl} />
 
+  <!-- hreflang: language alternates -->
+  {(() => {
+    const huPath = hreflangPaths?.hu ?? (canonical ?? Astro.url.pathname);
+    const roPath = hreflangPaths?.ro ?? (canonical ?? Astro.url.pathname);
+    return (
+      <>
+        <link rel="alternate" hreflang="hu" href={`https://konvertalo.hu${huPath}`} />
+        <link rel="alternate" hreflang="ro" href={`https://instrumenteonline.ro${roPath}`} />
+        <link rel="alternate" hreflang="x-default" href={`https://konvertalo.hu${huPath}`} />
+      </>
+    );
+  })()}
+
   <!-- Open Graph -->
   <meta property="og:type"         content={ogType} />
   <meta property="og:site_name"    content={SITE_NAME} />
-  <meta property="og:locale"       content="hu_HU" />
+  <meta property="og:locale"       content={locale} />
   <meta property="og:title"        content={ogTitle ?? resolvedTitle} />
   <meta property="og:description"  content={ogDescription ?? description} />
   <meta property="og:url"          content={canonicalUrl} />
@@ -220,26 +239,26 @@ const totalCount = getTotalToolsCount();
   )}
 
   <!-- Skip link -->
-  <a href="#main-content" class="sr-only skip-link">Ugrás a tartalomhoz</a>
+  <a href="#main-content" class="sr-only skip-link">{t("nav.skip_to_content")}</a>
 
   <!-- Navigation -->
   <header class="site-header" role="banner">
-    <nav class="site-nav container" aria-label="Főnavigáció">
-      <a href="/" class="site-logo" aria-label={`${SITE_NAME} főoldal`}>
+    <nav class="site-nav container" aria-label={t("nav.main_nav")}>
+      <a href="/" class="site-logo" aria-label={`${SITE_NAME} ${t("nav.home_label")}`}>
         <span class="site-logo__icon" aria-hidden="true">⚡</span>
         <span class="site-logo__text">{SITE_NAME}</span>
-        <span class="site-logo__count" title={`${activeCount} aktív eszköz`}>{activeCount}</span>
+        <span class="site-logo__count" title={tpl("nav.active_tools_title", { count: String(activeCount) })}>{activeCount}</span>
       </a>
 
       <!-- Category nav with mega-menu dropdowns -->
       <ul class="nav-cats" role="list">
-        {CATEGORIES.map((cat) => {
-          const catTools = getToolsByCategory(cat.id);
+        {localizedCategories.map((cat) => {
+          const catTools = getToolsByCategory(cat.id).map(t => getLocalizedTool(t, CURRENT_LANG));
           const activeTools = catTools.filter(t => t.status === "active");
           const comingTools = catTools.filter(t => t.status === "coming-soon");
           return (
             <li class="nav-cat-item">
-              <a href={`/${cat.id}`} class="nav-cat-link" style={`--cat-color: ${cat.color}`}>
+              <a href={categoryUrl(cat.id)} class="nav-cat-link" style={`--cat-color: ${cat.color}`}>
                 <span aria-hidden="true">{cat.icon}</span>
                 <span class="nav-cat-label">{cat.label}</span>
               </a>
@@ -249,7 +268,7 @@ const totalCount = getTotalToolsCount();
                 <div class="mega-dropdown__header">
                   <span class="mega-dropdown__icon">{cat.icon}</span>
                   <div>
-                    <a href={`/${cat.id}`} class="mega-dropdown__title">{cat.label}</a>
+                    <a href={categoryUrl(cat.id)} class="mega-dropdown__title">{cat.label}</a>
                     <p class="mega-dropdown__desc">{cat.description}</p>
                   </div>
                 </div>
@@ -257,11 +276,11 @@ const totalCount = getTotalToolsCount();
                 <div class="mega-dropdown__body">
                   {activeTools.length > 0 && (
                     <div class="mega-dropdown__section">
-                      <span class="mega-dropdown__label">Elérhető eszközök</span>
+                      <span class="mega-dropdown__label">{t("nav.available_tools")}</span>
                       <ul class="mega-dropdown__list">
                         {activeTools.map(tool => (
                           <li>
-                            <a href={`/${tool.category}/${tool.slug}`} class="mega-tool mega-tool--active">
+                            <a href={toolUrl(tool)} class="mega-tool mega-tool--active">
                               <span class="mega-tool__name">{tool.h1}</span>
                               <span class="mega-tool__arrow">→</span>
                             </a>
@@ -273,19 +292,19 @@ const totalCount = getTotalToolsCount();
 
                   {comingTools.length > 0 && (
                     <div class="mega-dropdown__section">
-                      <span class="mega-dropdown__label mega-dropdown__label--dim">Hamarosan ({comingTools.length})</span>
+                      <span class="mega-dropdown__label mega-dropdown__label--dim">{tpl("nav.coming_soon_count", { count: String(comingTools.length) })}</span>
                       <ul class="mega-dropdown__list mega-dropdown__list--coming">
                         {comingTools.slice(0, 4).map(tool => (
                           <li>
-                            <a href={`/${tool.category}/${tool.slug}`} class="mega-tool mega-tool--coming">
+                            <a href={toolUrl(tool)} class="mega-tool mega-tool--coming">
                               <span class="mega-tool__name">{tool.h1}</span>
                             </a>
                           </li>
                         ))}
                         {comingTools.length > 4 && (
                           <li>
-                            <a href={`/${cat.id}`} class="mega-tool mega-tool--more">
-                              +{comingTools.length - 4} további →
+                            <a href={categoryUrl(cat.id)} class="mega-tool mega-tool--more">
+                              {tpl("nav.more_tools", { count: String(comingTools.length - 4) })}
                             </a>
                           </li>
                         )}
@@ -294,8 +313,8 @@ const totalCount = getTotalToolsCount();
                   )}
                 </div>
 
-                <a href={`/${cat.id}`} class="mega-dropdown__viewall">
-                  Összes {cat.label.toLowerCase()} eszköz →
+                <a href={categoryUrl(cat.id)} class="mega-dropdown__viewall">
+                  {tpl("nav.view_all_tools", { label: cat.label.toLowerCase() })}
                 </a>
               </div>
             </li>
@@ -308,21 +327,21 @@ const totalCount = getTotalToolsCount();
         <!-- Search -->
         <button
           class="btn btn--ghost btn--sm nav-search-btn"
-          aria-label="Keresés az eszközök között"
+          aria-label={t("nav.search_label")}
           id="search-trigger"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
-          <span class="nav-search-label">Keresés</span>
+          <span class="nav-search-label">{t("nav.search_text")}</span>
         </button>
 
         <!-- Dark mode toggle -->
         <button
           class="btn btn--ghost btn--sm theme-toggle"
           id="theme-toggle"
-          aria-label="Téma váltása"
-          title="Téma váltása"
+          aria-label={t("nav.theme_toggle")}
+          title={t("nav.theme_toggle")}
         >
           <span class="theme-icon theme-icon--sun" aria-hidden="true">☀️</span>
           <span class="theme-icon theme-icon--moon" aria-hidden="true">🌙</span>
@@ -332,9 +351,11 @@ const totalCount = getTotalToolsCount();
         <button
           class="btn btn--ghost btn--sm mobile-menu-btn"
           id="mobile-menu-toggle"
-          aria-label="Menü megnyitása"
+          aria-label={t("nav.menu_open")}
           aria-expanded="false"
           aria-controls="mobile-drawer"
+          data-open-label={t("nav.menu_open")}
+          data-close-label={t("nav.menu_close")}
         >
           <svg class="hamburger-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="3" y1="6" x2="21" y2="6" class="ham-top"/>
@@ -348,10 +369,10 @@ const totalCount = getTotalToolsCount();
 
   <!-- Mobile drawer overlay -->
   <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
-  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobil menü" aria-hidden="true">
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label={t("nav.mobile_menu")} aria-hidden="true">
     <div class="mobile-drawer__header">
-      <span class="mobile-drawer__title">Kategóriák</span>
-      <button class="btn btn--ghost btn--sm mobile-drawer__close" id="mobile-drawer-close" aria-label="Menü bezárása">
+      <span class="mobile-drawer__title">{t("nav.categories")}</span>
+      <button class="btn btn--ghost btn--sm mobile-drawer__close" id="mobile-drawer-close" aria-label={t("nav.menu_close")}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
@@ -359,12 +380,12 @@ const totalCount = getTotalToolsCount();
     </div>
     <nav class="mobile-drawer__nav">
       <ul class="mobile-drawer__list" role="list">
-        {CATEGORIES.map((cat) => {
+        {localizedCategories.map((cat) => {
           const catTools = getToolsByCategory(cat.id);
           const activeCount = catTools.filter(t => t.status === "active").length;
           return (
             <li>
-              <a href={`/${cat.id}`} class="mobile-drawer__link" style={`--cat-color: ${cat.color}`}>
+              <a href={categoryUrl(cat.id)} class="mobile-drawer__link" style={`--cat-color: ${cat.color}`}>
                 <span class="mobile-drawer__icon" aria-hidden="true">{cat.icon}</span>
                 <span class="mobile-drawer__label">{cat.label}</span>
                 <span class="mobile-drawer__count">{activeCount}</span>
@@ -375,11 +396,11 @@ const totalCount = getTotalToolsCount();
       </ul>
     </nav>
     <div class="mobile-drawer__footer">
-      <a href="/kereses" class="mobile-drawer__search-link">
+      <a href={staticUrl("kereses")} class="mobile-drawer__search-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-        Keresés az eszközök között
+        {t("nav.search_tools_link")}
       </a>
     </div>
   </aside>
@@ -390,7 +411,19 @@ const totalCount = getTotalToolsCount();
   </main>
 
   <!-- Search overlay (Svelte island – client-only, no SSR) -->
-  <SearchOverlay client:only="svelte" />
+  <SearchOverlay client:only="svelte" labels={{
+    dialog_label: t("search.dialog_label"),
+    placeholder: t("search.placeholder"),
+    input_label: t("search.input_label"),
+    close: t("search.close"),
+    results_label: t("search.results_label"),
+    no_results: t("search.no_results"),
+    coming_soon: t("search.coming_soon"),
+    nav_hint: t("search.nav_hint"),
+    open_hint: t("search.open_hint"),
+    close_hint: t("search.close_hint"),
+    tools_count: t("search.tools_count"),
+  }} />
 
   <!-- Footer -->
   <footer class="site-footer" role="contentinfo">
@@ -401,14 +434,14 @@ const totalCount = getTotalToolsCount();
           {SITE_NAME}
         </a>
         <p class="site-footer__tagline">
-          {totalCount} ingyenes online eszköz – szerverfeltöltés nélkül, teljesen privát.
+          {tpl("footer.tagline", { count: String(totalCount) })}
         </p>
       </div>
 
-      <nav class="site-footer__nav" aria-label="Eszközkategóriák">
-        {CATEGORIES.map((cat) => (
+      <nav class="site-footer__nav" aria-label={t("nav.tool_categories")}>
+        {localizedCategories.map((cat) => (
           <div class="footer-cat">
-            <a href={`/${cat.id}`} class="footer-cat__title">
+            <a href={categoryUrl(cat.id)} class="footer-cat__title">
               {cat.icon} {cat.label}
             </a>
           </div>
@@ -417,13 +450,13 @@ const totalCount = getTotalToolsCount();
 
       <div class="site-footer__meta">
         <p class="text-subtle">
-          © {new Date().getFullYear()} {SITE_NAME} · Minden feldolgozás a böngésződben történik
+          © {new Date().getFullYear()} {siteName} · {t("footer.copyright")}
         </p>
-        <nav aria-label="Jogi linkek">
-          <a href="/rolunk">Rólunk</a>
-          <a href="/kapcsolat">Kapcsolat</a>
-          <a href="/adatvedelmi-nyilatkozat">Adatvédelem</a>
-          <a href="/sitemap.xml">Sitemap</a>
+        <nav aria-label={t("nav.legal_links")}>
+          <a href={staticUrl("rolunk")}>{t("nav.about")}</a>
+          <a href={staticUrl("kapcsolat")}>{t("nav.contact")}</a>
+          <a href={staticUrl("adatvedelmi")}>{t("footer.privacy")}</a>
+          <a href="/sitemap.xml">{t("footer.sitemap")}</a>
         </nav>
       </div>
     </div>
@@ -431,21 +464,21 @@ const totalCount = getTotalToolsCount();
 
   <!-- Cookie consent banner – csak ha CONSENT_MODE_ENABLED -->
   {CONSENT_MODE_ENABLED && (
-    <div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie beállítások" aria-hidden="true">
+    <div class="cookie-banner" id="cookie-banner" role="dialog" aria-label={t("cookie.label")} aria-hidden="true">
       <div class="cookie-banner__inner">
         <div class="cookie-banner__content">
           <p class="cookie-banner__text">
-            <strong>🍪 Cookie-k</strong>
-            Az oldal Google Analytics cookie-kat használ a látogatottsági adatok méréséhez.
-            <a href="/adatvedelmi-nyilatkozat#cookie-szabalyzat" class="cookie-banner__link">Részletek</a>
+            <strong>{t("cookie.title")}</strong>
+            {t("cookie.text")}
+            <a href={`${staticUrl("adatvedelmi")}#cookie-szabalyzat`} class="cookie-banner__link">{t("cookie.details")}</a>
           </p>
         </div>
         <div class="cookie-banner__actions">
           <button class="btn btn--ghost btn--sm cookie-banner__reject" id="cookie-reject">
-            Elutasítom
+            {t("cookie.reject")}
           </button>
           <button class="btn btn--primary btn--sm cookie-banner__accept" id="cookie-accept">
-            Elfogadom
+            {t("cookie.accept")}
           </button>
         </div>
       </div>
@@ -493,7 +526,7 @@ const totalCount = getTotalToolsCount();
 
 .site-logo__count {
   font-size: 0.65rem;
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
   padding: 1px 5px;
   border-radius: var(--r-full);
@@ -960,7 +993,7 @@ const totalCount = getTotalToolsCount();
   top: var(--sp-4);
   left: var(--sp-4);
   z-index: 9999;
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
   padding: var(--sp-3) var(--sp-5);
   border-radius: var(--r-md);
@@ -1135,7 +1168,7 @@ function openDrawer() {
   overlay.classList.add("is-open");
   overlay.setAttribute("aria-hidden", "false");
   menuToggle.setAttribute("aria-expanded", "true");
-  menuToggle.setAttribute("aria-label", "Menü bezárása");
+  menuToggle.setAttribute("aria-label", menuToggle.dataset.closeLabel || "Close menu");
   document.body.style.overflow = "hidden";
 }
 
@@ -1146,7 +1179,7 @@ function closeDrawer() {
   overlay.classList.remove("is-open");
   overlay.setAttribute("aria-hidden", "true");
   menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Menü megnyitása");
+  menuToggle.setAttribute("aria-label", menuToggle.dataset.openLabel || "Open menu");
   document.body.style.overflow = "";
 }
 

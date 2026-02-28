@@ -5,6 +5,7 @@
   // Nyelvek: yaml, xml, html, css, js
   // ============================================================
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   export let mode: "format" | "minify" | "validate";
   export let language: string; // "yaml", "xml", "html", "css", "js"
@@ -69,7 +70,7 @@
     const doc = parser.parseFromString(xml, "text/xml");
     const errorNode = doc.querySelector("parsererror");
     if (errorNode) {
-      return { valid: false, error: errorNode.textContent || "Ismeretlen XML hiba" };
+      return { valid: false, error: errorNode.textContent || "XML error" };
     }
     return { valid: true, error: "" };
   }
@@ -299,8 +300,8 @@
     <!-- Input pane -->
     <div class="io-pane">
       <div class="pane-header">
-        <span class="label">Bemenet</span>
-        <button class="btn btn--ghost btn--sm" on:click={() => input = ""} disabled={!input}>Törlés</button>
+        <span class="label">{ui.input}</span>
+        <button class="btn btn--ghost btn--sm" on:click={() => input = ""} disabled={!input}>{ui.delete}</button>
       </div>
       <textarea
         class="textarea textarea--code"
@@ -315,12 +316,12 @@
     {#if mode !== "validate"}
       <div class="io-pane">
         <div class="pane-header">
-          <span class="label">Eredmény</span>
+          <span class="label">{ui.result}</span>
           <div class="output-actions">
             <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>
-              {copied ? "\u2713 Másolva!" : "Másolás"}
+              {copied ? `\u2713 ${ui.copied}` : ui.copy}
             </button>
-            <button class="btn btn--ghost btn--sm" on:click={downloadOutput} disabled={!output}>Letöltés</button>
+            <button class="btn btn--ghost btn--sm" on:click={downloadOutput} disabled={!output}>{ui.download}</button>
           </div>
         </div>
         <textarea
@@ -337,9 +338,9 @@
   <!-- Size stats (format / minify) -->
   {#if input.trim() && output && mode !== "validate"}
     <div class="size-stats">
-      <span>Bemenet: <strong>{input.length.toLocaleString("hu")}</strong> kar.</span>
+      <span>{ui.input}: <strong>{input.length.toLocaleString(ui.locale)}</strong> {ui.chars}</span>
       <span class="size-stats__sep">→</span>
-      <span>Kimenet: <strong>{output.length.toLocaleString("hu")}</strong> kar.</span>
+      <span>{ui.output}: <strong>{output.length.toLocaleString(ui.locale)}</strong> {ui.chars}</span>
       {#if mode === "minify" && input.length > 0}
         <span class="saving">−{Math.round((1 - output.length / input.length) * 100)}%</span>
       {/if}
@@ -354,13 +355,13 @@
       class:invalid={!isValid && input.trim()}
     >
       {#if !input.trim()}
-        Illeszd be a kódot az érvényesítéshez.
+        {ui.pasteCodeValidation}
       {:else if processing}
-        Ellenőrzés...
+        {ui.checking}
       {:else if isValid}
-        <span class="valid-icon">\u2713</span> Érvényes {language.toUpperCase()}
+        <span class="valid-icon">\u2713</span> {ui.valid} {language.toUpperCase()}
       {:else}
-        <span class="invalid-icon">\u2717</span> Hiba: {validationError}
+        <span class="invalid-icon">\u2717</span> {ui.error}: {validationError}
       {/if}
     </div>
   {/if}

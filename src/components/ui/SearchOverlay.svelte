@@ -5,11 +5,40 @@
   // Statikus keresés – nincs backend, nincs API call
   // ============================================================
   import { onMount, onDestroy } from "svelte";
-  import { getAllTools, getCategoryInfo } from "../../lib/tool-registry.ts";
+  import { getAllTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
+  import { toolUrl } from "../../lib/url-utils.ts";
 
   export let open = false;
 
-  const allTools = getAllTools();
+  /** Localized UI strings – passed from Astro layout via t() */
+  export let labels: {
+    dialog_label: string;
+    placeholder: string;
+    input_label: string;
+    close: string;
+    results_label: string;
+    no_results: string;
+    coming_soon: string;
+    nav_hint: string;
+    open_hint: string;
+    close_hint: string;
+    tools_count: string;
+  } = {
+    dialog_label: "Eszköz keresés",
+    placeholder: "Keresés az eszközök között…",
+    input_label: "Keresés",
+    close: "Bezárás",
+    results_label: "Keresési eredmények",
+    no_results: "Nincs találat:",
+    coming_soon: "Hamarosan",
+    nav_hint: "navigáció",
+    open_hint: "megnyitás",
+    close_hint: "bezárás",
+    tools_count: "{{count}} eszköz",
+  };
+
+  const allTools = getAllTools().map(t => getLocalizedTool(t));
+  const localCats = getLocalizedCategories();
   let query      = "";
   let inputEl: HTMLInputElement;
   let selectedIdx = 0;
@@ -45,12 +74,12 @@
       selectedIdx = Math.max(selectedIdx - 1, 0);
     } else if (e.key === "Enter" && results[selectedIdx]) {
       const tool = results[selectedIdx];
-      navigate(tool.category, tool.slug);
+      navigate(tool);
     }
   }
 
-  function navigate(category: string, slug: string) {
-    window.location.href = `/${category}/${slug}`;
+  function navigate(tool: typeof allTools[0]) {
+    window.location.href = toolUrl(tool);
   }
 
   function close() {
@@ -115,7 +144,7 @@
     class="search-dialog"
     role="dialog"
     aria-modal="true"
-    aria-label="Eszköz keresés"
+    aria-label={labels.dialog_label}
   >
     <!-- Input -->
     <div class="search-input-row">
@@ -127,16 +156,16 @@
         bind:this={inputEl}
         bind:value={query}
         type="search"
-        placeholder="Keresés az eszközök között…"
+        placeholder={labels.placeholder}
         class="search-input"
         autocomplete="off"
         spellcheck="false"
-        aria-label="Keresés"
+        aria-label={labels.input_label}
         aria-autocomplete="list"
         aria-controls="search-results"
         aria-activedescendant={results[selectedIdx] ? `result-${selectedIdx}` : undefined}
       />
-      <button type="button" class="search-esc" on:click={close} aria-label="Bezárás"><kbd>Esc</kbd></button>
+      <button type="button" class="search-esc" on:click={close} aria-label={labels.close}><kbd>Esc</kbd></button>
     </div>
 
     <!-- Results -->
@@ -145,15 +174,15 @@
       id="search-results"
       class="search-results"
       role="listbox"
-      aria-label="Keresési eredmények"
+      aria-label={labels.results_label}
     >
       {#if results.length === 0}
         <li class="search-empty">
-          <span>Nincs találat: <strong>{query}</strong></span>
+          <span>{labels.no_results} <strong>{query}</strong></span>
         </li>
       {:else}
         {#each results as tool, i (tool.slug)}
-          {@const cat = getCategoryInfo(tool.category)}
+          {@const cat = localCats.find(c => c.id === tool.category)}
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <li
             id="result-{i}"
@@ -162,7 +191,7 @@
             class:search-result--inactive={tool.status === "coming-soon"}
             role="option"
             aria-selected={i === selectedIdx}
-            on:click={() => navigate(tool.category, tool.slug)}
+            on:click={() => navigate(tool)}
             on:mouseenter={() => (selectedIdx = i)}
           >
             <span class="result-icon" aria-hidden="true" style={`color: ${cat?.color}`}>
@@ -173,7 +202,7 @@
               <span class="result-cat">{cat?.label}</span>
             </div>
             {#if tool.status === "coming-soon"}
-              <span class="result-soon">Hamarosan</span>
+              <span class="result-soon">{labels.coming_soon}</span>
             {:else}
               <span class="result-arrow" aria-hidden="true">→</span>
             {/if}
@@ -184,10 +213,10 @@
 
     <!-- Footer hint -->
     <div class="search-footer" aria-hidden="true">
-      <span><kbd>↑↓</kbd> navigáció</span>
-      <span><kbd>↵</kbd> megnyitás</span>
-      <span><kbd>Esc</kbd> bezárás</span>
-      <span class="search-footer__total">{allTools.length} eszköz</span>
+      <span><kbd>↑↓</kbd> {labels.nav_hint}</span>
+      <span><kbd>↵</kbd> {labels.open_hint}</span>
+      <span><kbd>Esc</kbd> {labels.close_hint}</span>
+      <span class="search-footer__total">{labels.tools_count.replace('{{count}}', String(allTools.length))}</span>
     </div>
   </div>
 {/if}

@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("kepek-pdfbe");
 
@@ -55,7 +56,7 @@
 
   async function doConvert() {
     if (files.length === 0) {
-      error = "Legalabb 1 kep szukseges.";
+      error = ui.minOneImage;
       return;
     }
     isConverting = true;
@@ -107,7 +108,7 @@
       resultFilename = "kepek.pdf";
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isConverting = false;
     }
@@ -127,16 +128,16 @@
     accept="image/jpeg,image/png,.jpg,.jpeg,.png"
     multiple={true}
     maxSizeMB={100}
-    label="Huzd ide a kepeket"
-    sublabel=".jpg, .png - tobb fajl is valaszthato"
+    label={ui.dragHereMulti}
+    sublabel=".jpg, .png"
     on:files={handleFiles}
   />
 
   {#if files.length > 0}
     <div class="card file-list-card">
       <div class="file-header">
-        <span class="label">{files.length} kep ({formatFileSize(totalSize)})</span>
-        <button class="btn btn--ghost btn--sm" on:click={clearAll}>Osszes torlese</button>
+        <span class="label">{files.length} {ui.imageCountLabel} ({formatFileSize(totalSize)})</span>
+        <button class="btn btn--ghost btn--sm" on:click={clearAll}>{ui.deleteAll}</button>
       </div>
       <ul class="file-list">
         {#each files as file, i}
@@ -145,9 +146,9 @@
             <span class="file-item__name" title={file.name}>{file.name}</span>
             <span class="file-item__size">{formatFileSize(file.size)}</span>
             <div class="file-item__actions">
-              <button class="btn btn--ghost btn--sm" on:click={() => moveUp(i)} disabled={i === 0} title="Mozgatas fel">&#9650;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => moveDown(i)} disabled={i === files.length - 1} title="Mozgatas le">&#9660;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} title="Eltavolitas">&#10005;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => moveUp(i)} disabled={i === 0} title={ui.moveUp}>&#9650;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => moveDown(i)} disabled={i === files.length - 1} title={ui.moveDown}>&#9660;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} title={ui.remove}>&#10005;</button>
             </div>
           </li>
         {/each}
@@ -156,19 +157,19 @@
 
     <div class="card settings-card">
       <div class="field">
-        <span class="label">Oldalmeret</span>
+        <span class="label">{ui.pageSizeLabel}</span>
         <div class="radio-group">
           <label class="radio-label">
             <input type="radio" bind:group={pageSize} value="original" />
-            Eredeti kepmeret
+            {ui.originalImageSize}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={pageSize} value="a4-portrait" />
-            A4 allo
+            {ui.a4Portrait}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={pageSize} value="a4-landscape" />
-            A4 fekvo
+            {ui.a4Landscape}
           </label>
         </div>
       </div>
@@ -185,8 +186,8 @@
         {isDone}
         onConvert={doConvert}
         onDownload={doDownload}
-        convertLabel="PDF létrehozása"
-        downloadLabel="PDF letöltése"
+        convertLabel={ui.createPdf}
+        downloadLabel={ui.downloadPdf}
         fileCount={files.length}
       />
     {/if}

@@ -1,10 +1,11 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let files: File[] = [];
   let processing = false;
-  let zipFilename = "fajlok.zip";
+  let zipFilename = "files.zip";
 
   function handleFiles(event: CustomEvent<File[]>) {
     files = [...files, ...event.detail];
@@ -34,16 +35,16 @@
 
   function reset() {
     files = [];
-    zipFilename = "fajlok.zip";
+    zipFilename = "files.zip";
   }
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Beallitasok</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
-    <label class="label" for="zip-name">ZIP fajlnev</label>
-    <input id="zip-name" type="text" bind:value={zipFilename} class="input" placeholder="fajlok.zip" />
+    <label class="label" for="zip-name">{ui.fileName}</label>
+    <input id="zip-name" type="text" bind:value={zipFilename} class="input" placeholder="files.zip" />
   </div>
 </div>
 
@@ -52,8 +53,8 @@
     accept="*/*"
     multiple={true}
     maxSizeMB={100}
-    label="Huzd ide a fajlokat a ZIP-be csomagolashoz"
-    sublabel="Barmilyen fajltipus -- Max. 100 MB fajlonkent"
+    label={ui.dragHereMulti}
+    sublabel="Max. 100 MB"
     on:files={handleFiles}
   />
 {:else}
@@ -62,7 +63,7 @@
       accept="*/*"
       multiple={true}
       maxSizeMB={100}
-      label="+ Ujabb fajlok hozzaadasa"
+      label={ui.addMoreImages}
       sublabel=""
       on:files={handleFiles}
     />
@@ -70,8 +71,8 @@
 
   <div class="file-list card">
     <div class="file-list__header">
-      <span class="file-list__count">{files.length} fajl</span>
-      <span class="file-list__size">Ossz. meret: {formatFileSize(totalSize)}</span>
+      <span class="file-list__count">{files.length} {ui.file}</span>
+      <span class="file-list__size">{formatFileSize(totalSize)}</span>
     </div>
     <ul class="file-list__items" role="list">
       {#each files as f, i}
@@ -88,9 +89,9 @@
 
   <div class="actions">
     <button class="btn btn--primary" on:click={downloadAll} disabled={processing || files.length === 0}>
-      {processing ? "Csomagolas..." : `ZIP letoltes (${files.length} fajl)`}
+      {processing ? ui.processing : `${ui.zipDownload} (${files.length} ${ui.file})`}
     </button>
-    <button class="btn btn--ghost" on:click={reset}>Ujrakezdes</button>
+    <button class="btn btn--ghost" on:click={reset}>{ui.reset}</button>
   </div>
 {/if}
 

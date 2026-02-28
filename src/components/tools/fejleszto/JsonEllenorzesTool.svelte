@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let valid: boolean | null = null;
   let errorMsg = "";
@@ -22,8 +23,8 @@
   }
 
   const EXAMPLES = [
-    { label: "Érvényes JSON", value: '{\n  "nev": "Kovács János",\n  "kor": 30,\n  "aktiv": true\n}' },
-    { label: "Hibás JSON", value: '{\n  "nev": "Kovács"\n  "kor": 30\n}' },
+    { label: `${ui.valid} JSON`, value: '{\n  "nev": "Kovács János",\n  "kor": 30,\n  "aktiv": true\n}' },
+    { label: `${ui.invalid} JSON`, value: '{\n  "nev": "Kovács"\n  "kor": 30\n}' },
   ];
 </script>
 
@@ -31,15 +32,15 @@
   <div class="card status-card" class:status--valid={valid === true} class:status--invalid={valid === false} class:status--empty={valid === null}>
     {#if valid === null}
       <span class="status-icon">⏳</span>
-      <span>Illeszd be a JSON szöveget az ellenőrzéshez</span>
+      <span>{ui.pasteJsonValidate}</span>
     {:else if valid}
       <span class="status-icon">✅</span>
-      <span class="status-text">Érvényes JSON</span>
+      <span class="status-text">{ui.valid} JSON</span>
     {:else}
       <span class="status-icon">❌</span>
       <div class="error-detail">
-        <span class="status-text">Érvénytelen JSON</span>
-        <span class="error-line">{errorLine > 0 ? `Hiba a(z) ${errorLine}. sor közelében` : ""}</span>
+        <span class="status-text">{ui.invalid} JSON</span>
+        <span class="error-line">{errorLine > 0 ? `${ui.error} a(z) ${errorLine}. sor közelében` : ""}</span>
         <code class="error-code">{errorMsg}</code>
       </div>
     {/if}
@@ -52,7 +53,7 @@
     {/each}
   </div>
 
-  <textarea class="textarea" rows="15" placeholder='Illeszd be a JSON-t ide...' bind:value={input} class:textarea--valid={valid === true} class:textarea--invalid={valid === false}></textarea>
+  <textarea class="textarea" rows="15" placeholder={ui.pasteHere} bind:value={input} class:textarea--valid={valid === true} class:textarea--invalid={valid === false}></textarea>
 </div>
 
 <style>

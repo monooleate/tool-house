@@ -5,12 +5,14 @@
   // Edge-hover auto-scroll a tab sávon
   // ============================================================
   import { onMount } from "svelte";
+  import { ui } from "../../lib/ui-labels.ts";
 
   export let categories: Array<{
     id: string;
     label: string;
     icon: string;
     color: string;
+    url: string;
   }> = [];
 
   export let tools: Array<{
@@ -19,6 +21,7 @@
     h1: string;
     description: string;
     status: string;
+    url: string;
   }> = [];
 
   let activeTab = "pdf";
@@ -132,7 +135,7 @@
       <button
         class="scroll-arrow scroll-arrow--left"
         on:click={() => scrollBy(-1)}
-        aria-label="Tabok görgetése balra"
+        aria-label={ui.scrollTabsLeft}
       >‹</button>
     {/if}
 
@@ -140,7 +143,7 @@
       class="tabs-bar"
       role="tablist"
       tabindex="0"
-      aria-label="Kategória szűrő"
+      aria-label={ui.categoryFilter}
       bind:this={tabsBarEl}
       on:scroll={checkScroll}
       on:mousemove={handleMouseMove}
@@ -179,7 +182,7 @@
       <button
         class="scroll-arrow scroll-arrow--right"
         on:click={() => scrollBy(1)}
-        aria-label="Tabok görgetése jobbra"
+        aria-label={ui.scrollTabsRight}
       >›</button>
     {/if}
   </div>
@@ -188,13 +191,13 @@
   <div class="tools-grid" class:tools-grid--animating={animating} role="tabpanel">
     {#each filteredTools as tool (tool.slug)}
       {@const cat = catMap[tool.category]}
-      <a href={`/${tool.category}/${tool.slug}`} class="tool-card">
+      <a href={tool.url} class="tool-card">
         <div class="tool-card__header">
           <span class="tool-card__cat" style="color: {cat?.color}">{cat?.icon} {cat?.label}</span>
         </div>
         <div class="tool-card__title">{tool.h1}</div>
         <p class="tool-card__desc">{tool.description}</p>
-        <span class="tool-card__cta">Megnyitás <span class="tool-card__arrow">→</span></span>
+        <span class="tool-card__cta">{ui.openTool} <span class="tool-card__arrow">→</span></span>
       </a>
     {/each}
   </div>
@@ -202,9 +205,9 @@
   <!-- Result count -->
   <div class="tools-footer">
     <span class="tools-count">
-      {filteredTools.length} eszköz
+      {filteredTools.length} {ui.toolCount}
       {#if activeTab !== "all"}
-        a <strong>{catMap[activeTab]?.label}</strong> kategóriában
+        {ui.inCategory.replace("{cat}", catMap[activeTab]?.label ?? "")}
       {/if}
     </span>
   </div>

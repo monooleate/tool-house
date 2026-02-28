@@ -5,9 +5,14 @@ import type { APIRoute } from "astro";
 import {
   getAllTools,
   CATEGORIES,
+  getVisibleTools,
+  getVisibleCategories,
   type CategoryId,
   type Tool,
 } from "../lib/tool-registry.ts";
+import { CURRENT_LANG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
+import { getStaticUrl } from "../lib/url-map.ts";
 
 const PRIORITY: Record<CategoryId | "home" | "category", string> = {
   home:       "1.0",
@@ -57,7 +62,8 @@ function urlEntry(
 
 export const GET: APIRoute = ({ site }) => {
   const base  = (site?.toString() ?? "https://konvertalo.hu").replace(/\/$/, "");
-  const tools = getAllTools();
+  const tools = getVisibleTools(CURRENT_LANG);
+  const visibleCategories = getVisibleCategories(CURRENT_LANG);
   const today = new Date().toISOString().split("T")[0];
   const urls: string[] = [];
 
@@ -65,8 +71,8 @@ export const GET: APIRoute = ({ site }) => {
   urls.push(urlEntry(base, "/", "1.0", "daily", today));
 
   // Kategória oldalak
-  for (const cat of CATEGORIES) {
-    urls.push(urlEntry(base, `/${cat.id}`, PRIORITY.category, CHANGEFREQ.category));
+  for (const cat of visibleCategories) {
+    urls.push(urlEntry(base, categoryUrl(cat.id), PRIORITY.category, CHANGEFREQ.category));
   }
 
   // Tool oldalak
@@ -76,11 +82,11 @@ export const GET: APIRoute = ({ site }) => {
     const chfreq    = isActive ? CHANGEFREQ[tool.category] : "monthly";
     // lastmod: tool.updatedAt ha meg van adva, egyébként mai dátum
     const lastmod   = tool.updatedAt ?? undefined;
-    urls.push(urlEntry(base, `/${tool.category}/${tool.slug}`, priority, chfreq, lastmod));
+    urls.push(urlEntry(base, toolUrl(tool), priority, chfreq, lastmod));
   }
 
   // Statikus oldalak
-  urls.push(urlEntry(base, "/adatvedelmi-nyilatkozat", "0.3", "yearly"));
+  urls.push(urlEntry(base, `/${getStaticUrl("adatvedelmi")}`, "0.3", "yearly"));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset

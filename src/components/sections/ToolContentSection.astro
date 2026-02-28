@@ -2,6 +2,7 @@
 // src/components/sections/ToolContentSection.astro
 // Tool oldalak alatti SEO tartalom szekciók
 import type { ToolContent } from "../../lib/tool-registry.ts";
+import { t, tpl } from "../../i18n/index.ts";
 
 export interface Props {
   content: ToolContent;
@@ -17,7 +18,7 @@ const { howToSteps, useCases, formatComparison, aboutSection, tips } = content;
   <!-- Hogyan használd? -->
   <section class="content-section" id="hogyan-hasznald" aria-labelledby="how-to-heading">
     <h2 id="how-to-heading" class="content-section__title">
-      Hogyan használd a {toolName}-t?
+      {tpl("tool.how_to_title", { name: toolName })}
     </h2>
     <ol class="how-to-steps" role="list">
       {howToSteps.map((step, i) => (
@@ -35,7 +36,7 @@ const { howToSteps, useCases, formatComparison, aboutSection, tips } = content;
   <!-- Mikor érdemes használni? -->
   <section class="content-section" id="mikor-hasznald" aria-labelledby="use-cases-heading">
     <h2 id="use-cases-heading" class="content-section__title">
-      Mikor van rá szükséged?
+      {t("tool.use_cases_title")}
     </h2>
     <ul class="use-cases" role="list">
       {useCases.map((uc) => (
@@ -95,12 +96,12 @@ const { howToSteps, useCases, formatComparison, aboutSection, tips } = content;
   <!-- Tippek (opcionális) -->
   {tips && tips.length > 0 && (
     <section class="content-section" id="tippek" aria-labelledby="tips-heading">
-      <h2 id="tips-heading" class="content-section__title">Hasznos tippek</h2>
+      <h2 id="tips-heading" class="content-section__title">{t("tool.tips_title")}</h2>
       <ul class="tips-list" role="list">
-        {tips.map((t) => (
+        {tips.map((tip) => (
           <li class="tip-item">
-            <span class="tip-item__icon" aria-hidden="true">{t.icon}</span>
-            <p class="tip-item__text">{t.tip}</p>
+            <span class="tip-item__icon" aria-hidden="true">{tip.icon}</span>
+            <p class="tip-item__text">{tip.tip}</p>
           </li>
         ))}
       </ul>
@@ -167,7 +168,7 @@ const { howToSteps, useCases, formatComparison, aboutSection, tips } = content;
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  background: var(--accent);
+  background: var(--accent-bright);
   color: #000;
   font-family: var(--font-mono);
   font-weight: 700;

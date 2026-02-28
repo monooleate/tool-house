@@ -1,0 +1,31 @@
+[build]
+  command = "pnpm build:hu"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_VERSION = "9"
+  PUBLIC_SITE_LANG = "hu"
+  PUBLIC_SITE_URL = "https://konvertalo.hu"
+
+[[redirects]]
+  from = "/jpg-to-webp"
+  to = "/kep/jpg-webp"
+  status = 301
+
+[[redirects]]
+  from = "/csv-to-json"
+  to = "/adat/csv-json"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[dev]
+  command = "pnpm dev"
+  port = 4321
+  autoLaunch = false

@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let preview = "";
@@ -42,7 +43,7 @@
   }
 
   function formatDate(ms: number): string {
-    return new Date(ms).toLocaleString("hu-HU");
+    return new Date(ms).toLocaleString(ui.locale);
   }
 </script>
 
@@ -51,7 +52,7 @@
     accept="image/*"
     multiple={false}
     maxSizeMB={50}
-    label="Huzd ide a kepet a metaadatok megjelenitésehez"
+    label={ui.dragImageFor}
     sublabel="JPG, PNG, WebP -- Max. 50 MB"
     on:files={handleFiles}
   />
@@ -59,41 +60,38 @@
   <div class="preview-section">
     <div class="preview-grid">
       <div class="preview-pane">
-        <div class="preview-pane__label">Elonezet</div>
-        <img src={preview} alt="Feltoltott kep" class="preview-img" />
+        <div class="preview-pane__label">{ui.preview}</div>
+        <img src={preview} alt={ui.uploadedImage} class="preview-img" />
       </div>
 
       <div class="meta-table-wrap">
         {#if loading}
-          <p class="info-text">Betoltes...</p>
+          <p class="info-text">{ui.processing}</p>
         {:else}
           <table class="data-table">
             <thead>
-              <tr><th>Tulajdonsag</th><th>Ertek</th></tr>
+              <tr><th>{ui.property}</th><th>{ui.value}</th></tr>
             </thead>
             <tbody>
-              <tr><td>Fajlnev</td><td class="mono">{file.name}</td></tr>
-              <tr><td>Fajl meret</td><td class="mono">{formatFileSize(file.size)}</td></tr>
-              <tr><td>MIME tipus</td><td class="mono">{file.type || "ismeretlen"}</td></tr>
-              <tr><td>Utolso modositas</td><td class="mono">{formatDate(file.lastModified)}</td></tr>
+              <tr><td>{ui.fileName}</td><td class="mono">{file.name}</td></tr>
+              <tr><td>{ui.fileSize}</td><td class="mono">{formatFileSize(file.size)}</td></tr>
+              <tr><td>{ui.mimeType}</td><td class="mono">{file.type || ui.unknown}</td></tr>
+              <tr><td>{ui.lastModified}</td><td class="mono">{formatDate(file.lastModified)}</td></tr>
               {#if imgWidth && imgHeight}
-                <tr><td>Meret (px)</td><td class="mono">{imgWidth} x {imgHeight}</td></tr>
-                <tr><td>Megapixel</td><td class="mono">{megapixel} MP</td></tr>
-                <tr><td>Keeparany</td><td class="mono">{aspectW}:{aspectH}</td></tr>
+                <tr><td>{ui.sizeInPx}</td><td class="mono">{imgWidth} x {imgHeight}</td></tr>
+                <tr><td>{ui.megapixel}</td><td class="mono">{megapixel} MP</td></tr>
+                <tr><td>{ui.aspectRatio}</td><td class="mono">{aspectW}:{aspectH}</td></tr>
               {/if}
             </tbody>
           </table>
 
-          <p class="info-hint">
-            Megjegyzes: a bongeszo File API korlatozott metaadatokat biztosit.
-            Teljes EXIF adatokhoz (GPS, kamera, stb.) specializalt konyvtar szukseges (pl. exifr, exif-js).
-          </p>
+          <p class="info-hint">{ui.metaNote}</p>
         {/if}
       </div>
     </div>
 
     <div class="actions">
-      <button class="btn btn--ghost" on:click={reset}>Uj kep</button>
+      <button class="btn btn--ghost" on:click={reset}>{ui.newImage}</button>
     </div>
   </div>
 {/if}

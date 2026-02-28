@@ -4,6 +4,7 @@
   // Egyszerű karakter/szöveg csere – regex nélkül
   // ============================================================
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let input = "";
   let searchStr = "";
@@ -37,13 +38,13 @@
   <div class="card settings-card">
     <div class="replace-row">
       <div class="field">
-        <label class="label" for="search-str">Keresett szöveg</label>
+        <label class="label" for="search-str">{ui.searchText}</label>
         <input id="search-str" type="text" class="input" bind:value={searchStr} placeholder="pl. alma" />
       </div>
       <span class="arrow" aria-hidden="true">→</span>
       <div class="field">
         <label class="label" for="replace-str">Csere erre</label>
-        <input id="replace-str" type="text" class="input" bind:value={replaceStr} placeholder="pl. körte" />
+        <input id="replace-str" type="text" class="input" bind:value={replaceStr} placeholder={ui.examplePlaceholder} />
       </div>
     </div>
     <label class="checkbox-label">
@@ -57,13 +58,13 @@
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">Bemenet</span>
-      <textarea class="textarea" rows="10" placeholder="Illeszd be a szöveget..." bind:value={input}></textarea>
+      <span class="label">{ui.input}</span>
+      <textarea class="textarea" rows="10" placeholder={ui.pasteTextHere} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Eredmény</span>
-        <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
+        <span class="label">{ui.result}</span>
+        <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
       </div>
       <textarea class="textarea textarea--out" rows="10" value={output} readonly></textarea>
     </div>

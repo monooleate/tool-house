@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("pdf-oldalak-sorrendje");
 
@@ -37,7 +38,7 @@
       // Pre-fill with default order
       orderInput = Array.from({ length: pageCount }, (_, i) => i + 1).join(", ");
     } catch (err: any) {
-      error = `Nem sikerult betolteni a PDF-et: ${err.message}`;
+      error = `${ui.pdfLoadError}: ${err.message}`;
       pageCount = 0;
     }
   }
@@ -56,7 +57,7 @@
     const nums = input.split(",").map((s) => parseInt(s.trim(), 10));
     for (const n of nums) {
       if (isNaN(n) || n < 1 || n > max) {
-        throw new Error(`Ervenytelen oldalszam: ${n}. Elfogadott: 1-${max}`);
+        throw new Error(`${ui.invalidPageNumber}: ${n}. (1-${max})`);
       }
     }
     return nums.map((n) => n - 1);
@@ -77,10 +78,10 @@
       const result = await newDoc.save();
       const baseName = file.name.replace(/\.pdf$/i, "");
       resultBlob = new Blob([result], { type: "application/pdf" });
-      resultFilename = `${baseName}_atrendezve.pdf`;
+      resultFilename = `${baseName}${ui.reorderedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isProcessing = false;
     }
@@ -109,7 +110,7 @@
       accept=".pdf,application/pdf"
       multiple={false}
       maxSizeMB={200}
-      label="Huzd ide a PDF fajlt"
+      label={ui.dragPdfHere}
       sublabel=".pdf"
       on:files={handleFiles}
     />
@@ -118,13 +119,13 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
       {#if pageCount > 0}
         <div class="stats-bar">
           <div class="stat">
             <span class="stat__num">{pageCount}</span>
-            <span class="stat__label">oldal</span>
+            <span class="stat__label">{ui.page}</span>
           </div>
         </div>
       {/if}
@@ -132,7 +133,7 @@
 
     <div class="card settings-card">
       <div class="field">
-        <label class="label" for="page-order">Oldalak sorrendje</label>
+        <label class="label" for="page-order">{ui.pageOrderLabel}</label>
         <input
           id="page-order"
           type="text"
@@ -140,11 +141,11 @@
           bind:value={orderInput}
           placeholder="pl. 3, 1, 2, 4"
         />
-        <span class="hint">Oldalszamok az uj sorrendben, vesszivel elvalasztva</span>
+        <span class="hint">{ui.pageOrderHint}</span>
       </div>
       <div class="quick-actions">
-        <button class="btn btn--outline btn--sm" on:click={reverseOrder}>Forditott sorrend</button>
-        <button class="btn btn--outline btn--sm" on:click={resetOrder}>Eredeti sorrend</button>
+        <button class="btn btn--outline btn--sm" on:click={reverseOrder}>{ui.reverseOrder}</button>
+        <button class="btn btn--outline btn--sm" on:click={resetOrder}>{ui.originalOrder}</button>
       </div>
     </div>
 
@@ -158,8 +159,8 @@
       {isDone}
       onConvert={doConvert}
       onDownload={doDownload}
-      convertLabel="Oldalak atrendezese"
-      downloadLabel="PDF letoltese"
+      convertLabel={ui.reorderPages}
+      downloadLabel={ui.downloadPdf}
       fileCount={1}
     />
 

@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("pdf-osszefuzes");
 
@@ -51,7 +52,7 @@
 
   async function doConvert() {
     if (files.length < 2) {
-      error = "Legalabb 2 PDF fajl szukseges az osszeilleszteshez.";
+      error = ui.minTwoPdf;
       return;
     }
     isMerging = true;
@@ -70,7 +71,7 @@
       resultFilename = "merged.pdf";
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isMerging = false;
     }
@@ -90,16 +91,16 @@
     accept=".pdf,application/pdf"
     multiple={true}
     maxSizeMB={200}
-    label="Huzd ide a PDF fajlokat"
-    sublabel=".pdf - tobb fajl is valaszthato"
+    label={ui.dragHereMulti}
+    sublabel=".pdf"
     on:files={handleFiles}
   />
 
   {#if files.length > 0}
     <div class="card file-list-card">
       <div class="file-header">
-        <span class="label">{files.length} fajl ({formatFileSize(totalSize)})</span>
-        <button class="btn btn--ghost btn--sm" on:click={clearAll}>Osszes torlese</button>
+        <span class="label">{files.length} {ui.fileCountLabel} ({formatFileSize(totalSize)})</span>
+        <button class="btn btn--ghost btn--sm" on:click={clearAll}>{ui.deleteAll}</button>
       </div>
       <ul class="file-list">
         {#each files as file, i}
@@ -108,9 +109,9 @@
             <span class="file-item__name" title={file.name}>{file.name}</span>
             <span class="file-item__size">{formatFileSize(file.size)}</span>
             <div class="file-item__actions">
-              <button class="btn btn--ghost btn--sm" on:click={() => moveUp(i)} disabled={i === 0} title="Mozgatas fel">&#9650;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => moveDown(i)} disabled={i === files.length - 1} title="Mozgatas le">&#9660;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} title="Eltavolitas">&#10005;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => moveUp(i)} disabled={i === 0} title={ui.moveUp}>&#9650;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => moveDown(i)} disabled={i === files.length - 1} title={ui.moveDown}>&#9660;</button>
+              <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} title={ui.remove}>&#10005;</button>
             </div>
           </li>
         {/each}
@@ -128,8 +129,8 @@
         {isDone}
         onConvert={doConvert}
         onDownload={doDownload}
-        convertLabel="PDF-ek összefűzése"
-        downloadLabel="Összefűzött PDF letöltése"
+        convertLabel={ui.mergePdfs}
+        downloadLabel={ui.downloadMergedPdf}
         fileCount={files.length}
       />
     {/if}

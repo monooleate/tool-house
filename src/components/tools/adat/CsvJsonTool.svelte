@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── Timing ─────────────────────────────────────────────
   const TOOL_SLUG = "csv-json";
@@ -118,18 +119,18 @@
 
   const DELIMITERS = [
     { value: "auto", label: "Auto-detect" },
-    { value: ",",    label: "Vessző (,)" },
-    { value: ";",    label: "Pontosvessző (;)" },
-    { value: "\t",   label: "Tabulátor" },
+    { value: ",",    label: ui.comma },
+    { value: ";",    label: ui.semicolon },
+    { value: "\t",   label: ui.tabChar },
     { value: "|",    label: "Pipe (|)" },
   ];
 </script>
 
 <!-- Settings -->
-<div class="card settings" aria-label="Beállítások">
+<div class="card settings" aria-label={ui.settings}>
   <div class="settings__grid">
     <div>
-      <label class="label" for="delimiter-select">Elválasztó</label>
+      <label class="label" for="delimiter-select">{ui.delimiter}</label>
       <select
         id="delimiter-select"
         class="select"
@@ -142,7 +143,7 @@
     </div>
 
     <div>
-      <span class="label">Opciók</span>
+      <span class="label">{ui.optionsLabel}</span>
       <div class="checkboxes">
         <label class="checkbox-label">
           <input
@@ -150,7 +151,7 @@
             bind:checked={hasHeader}
             class="checkbox"
           />
-          Az első sor fejléc
+          {ui.firstRowHeader}
         </label>
         <label class="checkbox-label">
           <input
@@ -158,7 +159,7 @@
             bind:checked={autoType}
             class="checkbox"
           />
-          Típus-detektálás (szám, bool, null)
+          {ui.typeDetection}
         </label>
       </div>
     </div>
@@ -171,7 +172,7 @@
     accept=".csv,text/csv,text/plain"
     multiple={false}
     maxSizeMB={20}
-    label="Húzd ide a CSV fájlt"
+    label={ui.dragHere}
     sublabel="CSV, TSV, TXT · Max. 20 MB"
     on:files={handleFilesRaw}
   />
@@ -191,7 +192,7 @@
     onConvert={doConvert}
     onDownload={doDownload}
     convertLabel="JSON konvertálás"
-    downloadLabel="JSON letöltése"
+    downloadLabel={ui.downloadJson}
   />
 
   <!-- Ad slot: letöltés előtti ablak -->
@@ -201,8 +202,8 @@
 <!-- Processing -->
 {#if status === "processing"}
   <div class="state-card" aria-live="polite">
-    <div class="spinner" aria-label="Feldolgozás folyamatban"></div>
-    <p>Feldolgozás...</p>
+    <div class="spinner" aria-label={ui.processing}></div>
+    <p>{ui.processing}</p>
   </div>
 {/if}
 
@@ -211,8 +212,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Újra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -224,29 +225,29 @@
     <!-- Stats bar -->
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat__num">{result.rowCount.toLocaleString("hu")}</span>
-        <span class="stat__label">sor</span>
+        <span class="stat__num">{result.rowCount.toLocaleString(ui.locale)}</span>
+        <span class="stat__label">{ui.row}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.colCount}</span>
-        <span class="stat__label">oszlop</span>
+        <span class="stat__label">{ui.column}</span>
       </div>
       <div class="stat">
         <span class="stat__num">
           {result.detectedDelimiter === "\t" ? "TAB" : result.detectedDelimiter === "auto" ? "?" : `"${result.detectedDelimiter}"`}
         </span>
-        <span class="stat__label">elválasztó</span>
+        <span class="stat__label">{ui.delimiter}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.elapsedMs}ms</span>
-        <span class="stat__label">feldolgozás</span>
+        <span class="stat__label">{ui.processingTime}</span>
       </div>
     </div>
 
     <!-- Column headers -->
     {#if result.headers.length > 0}
       <div class="headers-row">
-        <span class="headers-label">Oszlopok:</span>
+        <span class="headers-label">{ui.columnsColon}</span>
         {#each result.headers as h}
           <span class="header-chip">{h}</span>
         {/each}
@@ -256,9 +257,9 @@
     <!-- JSON preview -->
     <div class="preview-block">
       <div class="preview-block__header">
-        <span class="preview-block__title">JSON előnézet</span>
+        <span class="preview-block__title">JSON {ui.preview}</span>
         <label class="preview-rows-label">
-          Sorok:
+          {ui.rowsColon}
           <select bind:value={previewRows} class="select select--sm">
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -270,7 +271,7 @@
       <pre class="json-preview"><code>{previewJson}</code></pre>
       {#if result.rowCount > previewRows}
         <div class="preview-more">
-          … és még {(result.rowCount - previewRows).toLocaleString("hu")} sor a letöltött fájlban
+          {ui.andMoreRows.replace("{n}", (result.rowCount - previewRows).toLocaleString(ui.locale))}
         </div>
       {/if}
     </div>
@@ -281,7 +282,7 @@
         accept=".csv,text/csv,text/plain"
         multiple={false}
         maxSizeMB={20}
-        label="Más CSV fájl feldolgozása"
+        label={ui.anotherFile}
         on:files={handleFilesRaw}
       />
     </div>

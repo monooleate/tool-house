@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let error = "";
@@ -27,24 +28,24 @@
 <div class="tool">
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">JSON bemenet</span>
-      <textarea class="textarea" rows="12" placeholder={'{"kulcs": "érték", "szam": 42}'} bind:value={input}></textarea>
+      <span class="label">{ui.jsonInput}</span>
+      <textarea class="textarea" rows="12" placeholder={'{"key": "value", "num": 42}'} bind:value={input}></textarea>
       {#if error}<div class="error-msg">{error}</div>{/if}
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">Minifikált JSON</span>
+        <span class="label">{ui.minified} JSON</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "minified.json", "application/json")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "minified.json", "application/json")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
-      <textarea class="textarea textarea--out" rows="12" value={output} readonly placeholder="A minifikált JSON itt jelenik meg..."></textarea>
+      <textarea class="textarea textarea--out" rows="12" value={output} readonly placeholder={ui.resultPlaceholder}></textarea>
       {#if output}
         <div class="stats">
-          <span>Eredeti: {input.length} kar.</span>
-          <span>Minifikált: {output.length} kar.</span>
-          <span class="saving">Csökkentés: {Math.round(((input.length - output.length) / input.length) * 100)}%</span>
+          <span>{ui.original}: {input.length} {ui.chars}</span>
+          <span>{ui.minified}: {output.length} {ui.chars}</span>
+          <span class="saving">{ui.reductionPct}: {Math.round(((input.length - output.length) / input.length) * 100)}%</span>
         </div>
       {/if}
     </div>

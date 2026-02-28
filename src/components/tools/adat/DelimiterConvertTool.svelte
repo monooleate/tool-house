@@ -1,10 +1,11 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── Props ──────────────────────────────────────────────────
-  export let inputLabel: string = "Fajl";
-  export let outputLabel: string = "Kimenet";
+  export let inputLabel: string = ui.file;
+  export let outputLabel: string = ui.output;
   export let inputAccept: string = ".csv,.tsv,.txt";
   export let workerType: string = "tsv-to-csv";
   export let outputExtension: string = "csv";
@@ -90,7 +91,7 @@
     accept={inputAccept}
     multiple={false}
     maxSizeMB={20}
-    label="Huzd ide a(z) {inputLabel.toLowerCase()}t"
+    label={ui.dragHere}
     sublabel="{inputAccept} - Max. 20 MB"
     on:files={handleFiles}
   />
@@ -99,8 +100,8 @@
 <!-- Processing -->
 {#if status === "processing"}
   <div class="state-card" aria-live="polite">
-    <div class="spinner" aria-label="Feldolgozas folyamatban"></div>
-    <p>Konvertalas...</p>
+    <div class="spinner" aria-label={ui.processingInProgress}></div>
+    <p>{ui.processing}</p>
   </div>
 {/if}
 
@@ -109,8 +110,8 @@
   <div class="alert alert--error" role="alert">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
     <div>
-      <strong>Hiba:</strong> {error}
-      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">Ujra</button>
+      <strong>{ui.error}:</strong> {error}
+      <button class="btn btn--ghost btn--sm" on:click={reset} style="margin-left: 8px;">{ui.retry}</button>
     </div>
   </div>
 {/if}
@@ -121,33 +122,33 @@
     <!-- Stats bar -->
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat__num">{result.rowCount.toLocaleString("hu")}</span>
-        <span class="stat__label">sor</span>
+        <span class="stat__num">{result.rowCount.toLocaleString(ui.locale)}</span>
+        <span class="stat__label">{ui.row}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.colCount}</span>
-        <span class="stat__label">oszlop</span>
+        <span class="stat__label">{ui.column}</span>
       </div>
       <div class="stat">
         <span class="stat__num">{result.elapsedMs}ms</span>
-        <span class="stat__label">feldolgozas</span>
+        <span class="stat__label">{ui.processingTime}</span>
       </div>
 
       <div class="stats-bar__actions">
         <button class="btn btn--primary" on:click={downloadResult}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          {outputLabel} letoltese
+          {outputLabel} {ui.download}
         </button>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     <!-- Preview -->
     <div class="preview-block">
       <div class="preview-block__header">
-        <span class="preview-block__title">{outputLabel} elonezet</span>
+        <span class="preview-block__title">{outputLabel} {ui.preview}</span>
         <label class="preview-rows-label">
-          Sorok:
+          {ui.rowsColon}
           <select bind:value={previewRows} class="select select--sm">
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -159,7 +160,7 @@
       <pre class="csv-preview"><code>{previewText}</code></pre>
       {#if result.rowCount > previewRows}
         <div class="preview-more">
-          ... es meg {(result.rowCount - previewRows).toLocaleString("hu")} sor a letoltott fajlban
+          {ui.andMoreRows.replace("{n}", (result.rowCount - previewRows).toLocaleString(ui.locale))}
         </div>
       {/if}
     </div>
@@ -170,7 +171,7 @@
         accept={inputAccept}
         multiple={false}
         maxSizeMB={20}
-        label="Masik fajl feldolgozasa"
+        label={ui.anotherFile}
         on:files={handleFiles}
       />
     </div>

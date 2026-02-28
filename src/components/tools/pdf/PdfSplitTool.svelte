@@ -4,6 +4,7 @@
   import AdSlot from "../../ui/AdSlot.svelte";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   const timing = getTimingConfig("pdf-szetbontas");
 
@@ -37,7 +38,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `Nem sikerult betolteni a PDF-et: ${err.message}`;
+      error = `${ui.pdfLoadError}: ${err.message}`;
       pageCount = 0;
     }
   }
@@ -49,7 +50,7 @@
       if (part.includes("-")) {
         const [a, b] = part.split("-").map((s) => parseInt(s.trim(), 10));
         if (isNaN(a) || isNaN(b) || a < 1 || b > max || a > b) {
-          throw new Error(`Ervenytelen tartomany: ${part}`);
+          throw new Error(`${ui.invalidRange}: ${part}`);
         }
         const pages: number[] = [];
         for (let i = a; i <= b; i++) pages.push(i - 1);
@@ -57,7 +58,7 @@
       } else {
         const num = parseInt(part, 10);
         if (isNaN(num) || num < 1 || num > max) {
-          throw new Error(`Ervenytelen oldalszam: ${part}`);
+          throw new Error(`${ui.invalidPageNumber}: ${part}`);
         }
         groups.push([num - 1]);
       }
@@ -93,7 +94,7 @@
         pages.forEach((p) => newDoc.addPage(p));
         const result = await newDoc.save();
         resultBlob = new Blob([result], { type: "application/pdf" });
-        resultFilename = `${baseName}_resz1.pdf`;
+        resultFilename = `${baseName}${ui.splitSuffix}1.pdf`;
       } else {
         const entries = await Promise.all(
           groups.map(async (pageIndices, idx) => {
@@ -102,17 +103,17 @@
             pages.forEach((p) => newDoc.addPage(p));
             const result = await newDoc.save();
             return {
-              filename: `${baseName}_resz${idx + 1}.pdf`,
+              filename: `${baseName}${ui.splitSuffix}${idx + 1}.pdf`,
               data: new Uint8Array(result),
             };
           })
         );
         resultEntries = entries;
-        resultZipFilename = `${baseName}_szetbontva.zip`;
+        resultZipFilename = `${baseName}${ui.splitZipSuffix}.zip`;
       }
       isDone = true;
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isSplitting = false;
     }
@@ -144,7 +145,7 @@
       accept=".pdf,application/pdf"
       multiple={false}
       maxSizeMB={200}
-      label="Huzd ide a PDF fajlt"
+      label={ui.dragHere}
       sublabel=".pdf"
       on:files={handleFiles}
     />
@@ -153,13 +154,13 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
       {#if pageCount > 0}
         <div class="stats-bar">
           <div class="stat">
             <span class="stat__num">{pageCount}</span>
-            <span class="stat__label">oldal</span>
+            <span class="stat__label">{ui.page}</span>
           </div>
         </div>
       {/if}
@@ -167,22 +168,22 @@
 
     <div class="card settings-card">
       <div class="field">
-        <span class="label">Szetbontas modja</span>
+        <span class="label">{ui.splitMode}</span>
         <div class="radio-group">
           <label class="radio-label">
             <input type="radio" bind:group={splitMode} value="every" />
-            Minden oldal kulon
+            {ui.everyPageSeparate}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={splitMode} value="ranges" />
-            Oldaltartomanyok
+            {ui.pageRanges}
           </label>
         </div>
       </div>
 
       {#if splitMode === "ranges"}
         <div class="field">
-          <label class="label" for="ranges-input">Tartomanyok (pl. 1-3, 4-6, 7)</label>
+          <label class="label" for="ranges-input">{ui.rangesLabel}</label>
           <input id="ranges-input" type="text" class="input" bind:value={rangesInput} placeholder="1-3, 4-6, 7" />
         </div>
       {/if}
@@ -199,8 +200,8 @@
         {isDone}
         onConvert={doConvert}
         onDownload={doDownload}
-        convertLabel="PDF széttördelése"
-        downloadLabel="Letöltés"
+        convertLabel={ui.splitPdfPages}
+        downloadLabel={ui.download}
         fileCount={pageCount}
       />
     {/if}

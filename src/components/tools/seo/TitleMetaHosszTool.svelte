@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ui } from "../../../lib/ui-labels.ts";
   // ─── State ────────────────────────────────────────────────
   let title = "";
   let metaDescription = "";
@@ -23,11 +24,11 @@
   $: titlePxStatus = titlePx <= 520 ? "ok" : titlePx <= TITLE_MAX_PX ? "warn" : "over";
 
   // ─── SERP Preview ─────────────────────────────────────────
-  $: serpTitle = title || "Oldal címe kerül ide";
+  $: serpTitle = title || ui.pageTitlePlaceholder;
   $: serpTitleTruncated = titlePx > TITLE_MAX_PX
     ? serpTitle.slice(0, Math.floor(TITLE_MAX_PX / AVG_CHAR_PX)) + "..."
     : serpTitle;
-  $: serpMeta = metaDescription || "A meta description szövege jelenik meg itt a keresési találatoknál...";
+  $: serpMeta = metaDescription || ui.metaDescPreview;
   $: serpMetaTruncated = metaLen > META_MAX_CHARS
     ? serpMeta.slice(0, META_MAX_CHARS) + "..."
     : serpMeta;
@@ -60,7 +61,7 @@
     class="textarea title-input"
     class:field--warn={titleStatus === "warn"}
     class:field--over={titleStatus === "over"}
-    placeholder="Írd be az oldal title tag-jét..."
+    placeholder={ui.titleTagPlaceholder}
     bind:value={title}
     rows="2"
   ></textarea>
@@ -96,7 +97,7 @@
     class="textarea meta-input"
     class:field--warn={metaStatus === "warn"}
     class:field--over={metaStatus === "over"}
-    placeholder="Írd be a meta description szövegét..."
+    placeholder={ui.metaDescPlaceholder}
     bind:value={metaDescription}
     rows="3"
   ></textarea>
@@ -153,7 +154,7 @@
     <div class="summary-card__content">
       <div class="summary-card__title">Title tag</div>
       <div class="summary-card__text">
-        {#if titleLen === 0}Adj meg egy title szöveget
+        {#if titleLen === 0}{ui.enterTitle}
         {:else if titleStatus === "ok"}Tökéletes hosszúság!
         {:else if titleStatus === "warn"}Elfogadható, de közelíted a limitet
         {:else}{titleLen - TITLE_MAX_CHARS} karakterrel túl hosszú – a Google csonkolni fogja{/if}
@@ -170,7 +171,7 @@
     <div class="summary-card__content">
       <div class="summary-card__title">Meta description</div>
       <div class="summary-card__text">
-        {#if metaLen === 0}Adj meg egy meta description szöveget
+        {#if metaLen === 0}{ui.enterMetaDesc}
         {:else if metaStatus === "ok"}Ideális hosszúság!
         {:else if metaStatus === "warn"}Elfogadható – még nem csonkolja a Google
         {:else}{metaLen - META_MAX_CHARS} karakterrel túl hosszú – csonkolódni fog{/if}

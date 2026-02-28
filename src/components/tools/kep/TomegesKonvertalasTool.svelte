@@ -3,6 +3,7 @@
   import ProgressQueue from "../../ui/ProgressQueue.svelte";
   import type { QueueItem } from "../../ui/ProgressQueue.svelte";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let quality = 82;
   let outputFormat: "image/webp" | "image/jpeg" | "image/png" = "image/webp";
@@ -86,11 +87,11 @@
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Beallitasok</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row two-col">
     <div>
-      <label class="label" for="format-select">Kimeneti formatum</label>
+      <label class="label" for="format-select">{ui.outputFormat}</label>
       <select id="format-select" bind:value={outputFormat} class="input">
         <option value="image/webp">WebP</option>
         <option value="image/jpeg">JPEG</option>
@@ -98,7 +99,7 @@
       </select>
     </div>
     <div>
-      <label class="label" for="quality-slider">Minoseg: {quality}%</label>
+      <label class="label" for="quality-slider">{ui.quality}: {quality}%</label>
       <input id="quality-slider" type="range" min="10" max="100" step="1" bind:value={quality} class="slider" />
     </div>
   </div>
@@ -109,8 +110,8 @@
     accept="image/*"
     multiple={true}
     maxSizeMB={50}
-    label="Huzd ide a kepeket a tomeges konvertalashoz"
-    sublabel="JPG, PNG, WebP -- Max. 50 MB fajlonkent"
+    label={ui.dragHereMulti}
+    sublabel="JPG, PNG, WebP -- Max. 50 MB"
     on:files={handleFiles}
   />
 {:else}
@@ -119,7 +120,7 @@
       accept="image/*"
       multiple={true}
       maxSizeMB={50}
-      label="+ Ujabb kepek hozzaadasa"
+      label={ui.addMoreImages}
       sublabel=""
       on:files={handleFiles}
     />
@@ -131,7 +132,7 @@
 {#if hasResults && doneCount > 1}
   <div class="batch-download">
     <button class="btn btn--primary btn--lg" on:click={handleDownloadAll}>
-      ZIP letoltes ({doneCount} fajl)
+      {ui.zipDownload} ({doneCount} {ui.file})
     </button>
   </div>
 {/if}

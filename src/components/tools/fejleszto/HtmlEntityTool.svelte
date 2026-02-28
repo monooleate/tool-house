@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let mode: "encode" | "decode" = "encode";
@@ -42,26 +43,26 @@
     <div class="mode-row">
       <label class="mode-opt" class:mode-opt--active={mode === "encode"}>
         <input type="radio" name="mode" value="encode" bind:group={mode} />
-        <span>Kódolás (& → &amp;amp;)</span>
+        <span>{ui.encode} (& → &amp;amp;)</span>
       </label>
       <label class="mode-opt" class:mode-opt--active={mode === "decode"}>
         <input type="radio" name="mode" value="decode" bind:group={mode} />
-        <span>Dekódolás (&amp;amp; → &)</span>
+        <span>{ui.decode} (&amp;amp; → &)</span>
       </label>
     </div>
   </div>
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">{mode === "encode" ? "HTML / szöveg" : "HTML entity kód"}</span>
-      <textarea class="textarea" rows="10" placeholder={mode === "encode" ? '<p>Helló & "Világ"</p>' : '&lt;p&gt;Hell&oacute; &amp; &quot;Vil&aacute;g&quot;&lt;/p&gt;'} bind:value={input}></textarea>
+      <span class="label">{mode === "encode" ? ui.htmlText : "HTML entity"}</span>
+      <textarea class="textarea" rows="10" placeholder={mode === "encode" ? '<p>Hello & "World"</p>' : '&lt;p&gt;Hello &amp; &quot;World&quot;&lt;/p&gt;'} bind:value={input}></textarea>
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">{mode === "encode" ? "HTML entity kód" : "Dekódolt szöveg"}</span>
+        <span class="label">{mode === "encode" ? "HTML entity" : ui.decodedText}</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "html-entity.txt")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, "html-entity.txt")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="10" value={output} readonly></textarea>

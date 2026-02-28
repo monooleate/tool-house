@@ -1,5 +1,6 @@
 <script lang="ts">
   import { downloadText } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
   let input = "";
   let output = "";
   let mode: "encode" | "decode" = "encode";
@@ -34,27 +35,27 @@
     <div class="mode-row">
       <label class="mode-opt" class:mode-opt--active={mode === "encode"}>
         <input type="radio" name="mode" value="encode" bind:group={mode} />
-        <span>Kódolás (Encode)</span>
+        <span>{ui.encode} (Encode)</span>
       </label>
       <label class="mode-opt" class:mode-opt--active={mode === "decode"}>
         <input type="radio" name="mode" value="decode" bind:group={mode} />
-        <span>Dekódolás (Decode)</span>
+        <span>{ui.decode} (Decode)</span>
       </label>
     </div>
   </div>
 
   <div class="io-grid">
     <div class="io-pane">
-      <span class="label">{mode === "encode" ? "Szöveg" : "Base64 kód"}</span>
-      <textarea class="textarea" rows="10" placeholder={mode === "encode" ? "Írd be a kódolandó szöveget..." : "Illeszd be a Base64 kódot..."} bind:value={input}></textarea>
+      <span class="label">{mode === "encode" ? ui.input : "Base64"}</span>
+      <textarea class="textarea" rows="10" placeholder={mode === "encode" ? ui.pasteBase64Encode : ui.pasteBase64Decode} bind:value={input}></textarea>
       {#if error}<div class="error-msg">{error}</div>{/if}
     </div>
     <div class="io-pane">
       <div class="output-header">
-        <span class="label">{mode === "encode" ? "Base64 eredmény" : "Dekódolt szöveg"}</span>
+        <span class="label">{mode === "encode" ? `Base64 ${ui.result.toLowerCase()}` : ui.result}</span>
         <div class="actions">
-          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? "✓ Másolva!" : "Másolás"}</button>
-          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, mode === "encode" ? "base64.txt" : "decoded.txt")} disabled={!output}>Letöltés</button>
+          <button class="btn btn--outline btn--sm" on:click={copyOutput} disabled={!output}>{copied ? `✓ ${ui.copied}` : ui.copy}</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => downloadText(output, mode === "encode" ? "base64.txt" : "decoded.txt")} disabled={!output}>{ui.download}</button>
         </div>
       </div>
       <textarea class="textarea textarea--out" rows="10" value={output} readonly></textarea>

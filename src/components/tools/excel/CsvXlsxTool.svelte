@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let pasteMode = false;
@@ -60,14 +61,14 @@
 
       if (pasteMode) {
         if (!pasteText.trim()) {
-          error = "Nincs szoveg a konvertalsahoz.";
+          error = `${ui.noFile}.`;
           return;
         }
         csvText = pasteText;
         baseName = "output";
       } else {
         if (!file) {
-          error = "Nincs fajl a konvertalashoz.";
+          error = `${ui.noFile}.`;
           return;
         }
         csvText = await file.text();
@@ -79,7 +80,7 @@
       rowCount = rows.length;
 
       if (rows.length === 0) {
-        error = "A fajl ures vagy nem sikerult feldolgozni.";
+        error = ui.emptyOrUnprocessable;
         return;
       }
 
@@ -95,7 +96,7 @@
         `${baseName}.xlsx`
       );
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isConverting = false;
     }
@@ -116,26 +117,26 @@
       accept=".csv,text/csv,text/plain"
       multiple={false}
       maxSizeMB={50}
-      label="Huzd ide a CSV fajlt"
+      label={ui.dragHere}
       sublabel=".csv"
       on:files={handleFiles}
     />
     <div class="alt-action">
-      <span class="alt-action__text">vagy</span>
-      <button class="btn btn--outline btn--sm" on:click={switchToPaste}>Szoveg beillesztese</button>
+      <span class="alt-action__text">{ui.or}</span>
+      <button class="btn btn--outline btn--sm" on:click={switchToPaste}>{ui.pasteTextLabel}</button>
     </div>
   {:else}
     {#if pasteMode}
       <div class="card paste-card">
         <div class="paste-header">
-          <span class="label">CSV szoveg beillesztese</span>
-          <button class="btn btn--ghost btn--sm" on:click={switchToFile}>Fajl feltoltes</button>
+          <span class="label">{ui.pasteCsvLabel}</span>
+          <button class="btn btn--ghost btn--sm" on:click={switchToFile}>{ui.uploadFile}</button>
         </div>
         <textarea
           class="textarea"
           bind:value={pasteText}
           rows="10"
-          placeholder="Illeszd be a CSV adatokat ide..."
+          placeholder={ui.pasteCsvHere}
         ></textarea>
       </div>
     {:else}
@@ -143,30 +144,30 @@
         <div class="file-info__row">
           <span class="file-info__name">{file.name}</span>
           <span class="file-info__meta">{formatFileSize(file.size)}</span>
-          <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+          <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
         </div>
       </div>
     {/if}
 
     <div class="card settings-card">
       <div class="field">
-        <span class="label">Elvalaszto karakter</span>
+        <span class="label">{ui.delimiter}</span>
         <div class="radio-group">
           <label class="radio-label">
             <input type="radio" bind:group={delimiter} value="auto" />
-            Automatikus
+            {ui.automatic}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={delimiter} value="," />
-            Vesszo (,)
+            {ui.comma}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={delimiter} value=";" />
-            Pontosvesszo (;)
+            {ui.semicolon}
           </label>
           <label class="radio-label">
             <input type="radio" bind:group={delimiter} value={"\t"} />
-            Tabulator
+            {ui.tabChar}
           </label>
         </div>
       </div>
@@ -177,12 +178,12 @@
       on:click={convert}
       disabled={isConverting || (!file && !pasteText.trim())}
     >
-      {isConverting ? "Konvertalas folyamatban..." : "Konvertalas XLSX-be"}
+      {isConverting ? ui.convertingInProgress : ui.convertToXlsx}
     </button>
 
     {#if rowCount > 0}
       <div class="card result-card">
-        <span class="result-text">{rowCount} sor sikeresen konvertalva.</span>
+        <span class="result-text">{rowCount} {ui.rowsConverted}</span>
       </div>
     {/if}
   {/if}

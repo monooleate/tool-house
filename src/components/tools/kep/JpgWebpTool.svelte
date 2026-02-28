@@ -6,6 +6,7 @@
   import type { QueueItem } from "../../ui/ProgressQueue.svelte";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   // ─── Timing ─────────────────────────────────────────────
   const TOOL_SLUG = "jpg-webp";
@@ -154,12 +155,12 @@
 </script>
 
 <!-- Settings panel -->
-<div class="tool-settings card" aria-label="Beállítások">
-  <h2 class="tool-settings__title">Beállítások</h2>
+<div class="tool-settings card" aria-label={ui.settings}>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
     <label class="label" for="quality-slider">
-      Minőség: <span class="quality-val">{quality}%</span>
+      {ui.quality}: <span class="quality-val">{quality}%</span>
     </label>
     <input
       id="quality-slider"
@@ -170,16 +171,16 @@
       aria-describedby="quality-desc"
     />
     <div id="quality-desc" class="settings-hint">
-      {#if quality < 50}Erős tömörítés – kisebb fájl, látható minőségromlás
-      {:else if quality < 75}Közepes – jó kompromisszum
-      {:else if quality < 90}Jó minőség – ajánlott webhez
-      {:else}Nagyon magas – alig tömörít{/if}
+      {#if quality < 50}{ui.strongCompression}
+      {:else if quality < 75}{ui.mediumQuality}
+      {:else if quality < 90}{ui.goodQuality}
+      {:else}{ui.veryHighQuality}{/if}
     </div>
   </div>
 
   <div class="settings-row">
     <label class="label" for="maxwidth-input">
-      Max. szélesség (px) <span class="label-opt">(opcionális)</span>
+      {ui.maxWidthZero}
     </label>
     <input
       id="maxwidth-input"
@@ -187,7 +188,7 @@
       min="0"
       max="8000"
       step="10"
-      placeholder="pl. 1920 – 0 = nincs átméretezés"
+      placeholder={ui.placeholder0}
       bind:value={maxWidth}
       class="input"
     />
@@ -201,8 +202,8 @@
       accept="image/jpeg,image/png,.jpg,.jpeg,.png"
       multiple={true}
       maxSizeMB={50}
-      label="Húzd ide a JPG/PNG képeket"
-      sublabel="JPG, JPEG, PNG · Max. 50 MB fájlonként"
+      label={ui.dragImageFor}
+      sublabel="JPG, JPEG, PNG -- Max. 50 MB"
       on:files={handleFiles}
     />
   </div>
@@ -212,7 +213,7 @@
       accept="image/jpeg,image/png,.jpg,.jpeg,.png"
       multiple={true}
       maxSizeMB={50}
-      label="+ Újabb képek hozzáadása"
+      label={ui.addMoreImages}
       sublabel=""
       on:files={handleFiles}
     />
@@ -232,8 +233,8 @@
     {isDone}
     onConvert={doConvert}
     onDownload={doDownload}
-    convertLabel="WebP konvertálás"
-    downloadLabel={doneCount > 1 ? "ZIP letöltése (" + doneCount + " fájl)" : "WebP letöltése"}
+    convertLabel={"WebP " + ui.conversion}
+    downloadLabel={doneCount > 1 ? ui.zipDownload + " (" + doneCount + " " + ui.file + ")" : "WebP " + ui.download}
     fileCount={queue.length}
   />
 {/if}
@@ -253,13 +254,13 @@
   {@const firstDone = queue.find(i => i.status === "done")}
   {#if firstDone?.outputBlob}
     <div class="preview-section">
-      <h3 class="preview-section__title">Előnézet</h3>
+      <h3 class="preview-section__title">{ui.preview}</h3>
       <div class="preview-grid">
         <div class="preview-pane">
-          <div class="preview-pane__label">Eredeti · {firstDone.originalSize ? formatFileSize(firstDone.originalSize) : ""}</div>
+          <div class="preview-pane__label">{ui.original} · {firstDone.originalSize ? formatFileSize(firstDone.originalSize) : ""}</div>
           <img
             src={URL.createObjectURL(fileMap.get(firstDone.id)!)}
-            alt="Eredeti kép"
+            alt="{ui.original}"
             class="preview-img"
             loading="lazy"
           />
@@ -268,7 +269,7 @@
           <div class="preview-pane__label">WebP · {firstDone.outputSize ? formatFileSize(firstDone.outputSize) : ""}</div>
           <img
             src={URL.createObjectURL(firstDone.outputBlob)}
-            alt="Konvertált WebP kép"
+            alt="{ui.converted} WebP"
             class="preview-img"
             loading="lazy"
           />

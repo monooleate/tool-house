@@ -1,5 +1,6 @@
 <script lang="ts">
   // DPI / felbontas kiszamolo -- tisztan matematikai, nincs fajlfeltoltes
+  import { ui } from "../../../lib/ui-labels.ts";
   let mode: "pixel-to-print" | "print-to-pixel" = "pixel-to-print";
 
   // Pixel -> print
@@ -38,7 +39,7 @@
 </script>
 
 <div class="tool-settings card">
-  <h2 class="tool-settings__title">Szamitas modja</h2>
+  <h2 class="tool-settings__title">{ui.settings}</h2>
 
   <div class="settings-row">
     <div class="radio-group">
@@ -58,11 +59,11 @@
 
     <div class="settings-row two-col">
       <div>
-        <label class="label" for="px-w">Szelesseg (px)</label>
+        <label class="label" for="px-w">{ui.width} (px)</label>
         <input id="px-w" type="number" min="1" max="100000" bind:value={pixelW} class="input" />
       </div>
       <div>
-        <label class="label" for="px-h">Magassag (px)</label>
+        <label class="label" for="px-h">{ui.height} (px)</label>
         <input id="px-h" type="number" min="1" max="100000" bind:value={pixelH} class="input" />
       </div>
     </div>
@@ -93,7 +94,7 @@
     <div class="result-table">
       <table class="data-table">
         <thead>
-          <tr><th>Mertekegyseg</th><th>Szelesseg</th><th>Magassag</th></tr>
+          <tr><th></th><th>{ui.width}</th><th>{ui.height}</th></tr>
         </thead>
         <tbody>
           <tr><td>cm</td><td>{printWidthCm.toFixed(2)} cm</td><td>{printHeightCm.toFixed(2)} cm</td></tr>
@@ -109,11 +110,11 @@
 
     <div class="settings-row two-col">
       <div>
-        <label class="label" for="pr-w">Szelesseg ({printUnit})</label>
+        <label class="label" for="pr-w">{ui.width} ({printUnit})</label>
         <input id="pr-w" type="number" min="0.1" max="10000" step="0.1" bind:value={printW} class="input" />
       </div>
       <div>
-        <label class="label" for="pr-h">Magassag ({printUnit})</label>
+        <label class="label" for="pr-h">{ui.height} ({printUnit})</label>
         <input id="pr-h" type="number" min="0.1" max="10000" step="0.1" bind:value={printH} class="input" />
       </div>
     </div>
@@ -135,13 +136,13 @@
     <div class="result-table">
       <table class="data-table">
         <thead>
-          <tr><th>Szukseges meret</th><th>Ertek</th></tr>
+          <tr><th>{ui.property}</th><th>{ui.value}</th></tr>
         </thead>
         <tbody>
-          <tr><td>Szelesseg</td><td><strong>{neededW} px</strong></td></tr>
-          <tr><td>Magassag</td><td><strong>{neededH} px</strong></td></tr>
-          <tr><td>Ossz. pixel</td><td>{(neededW * neededH).toLocaleString()} px</td></tr>
-          <tr><td>Megapixel</td><td>{((neededW * neededH) / 1_000_000).toFixed(1)} MP</td></tr>
+          <tr><td>{ui.width}</td><td><strong>{neededW} px</strong></td></tr>
+          <tr><td>{ui.height}</td><td><strong>{neededH} px</strong></td></tr>
+          <tr><td>px</td><td>{(neededW * neededH).toLocaleString(ui.locale)} px</td></tr>
+          <tr><td>{ui.megapixel}</td><td>{((neededW * neededH) / 1_000_000).toFixed(1)} MP</td></tr>
         </tbody>
       </table>
     </div>

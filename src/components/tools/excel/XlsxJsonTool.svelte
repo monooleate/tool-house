@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadJson, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let isConverting = false;
@@ -29,7 +30,7 @@
       sheetNames = wb.SheetNames;
       selectedSheet = sheetNames[0] || "";
     } catch (err: any) {
-      error = `Nem sikerult betolteni a fajlt: ${err.message}`;
+      error = `${ui.fileLoadError}: ${err.message}`;
       sheetNames = [];
     }
   }
@@ -45,7 +46,7 @@
       const wb = XLSX.read(arrayBuffer, { type: "array" });
       const ws = wb.Sheets[selectedSheet];
       if (!ws) {
-        error = "A kivalasztott munkalap nem talalhato.";
+        error = ui.sheetNotFound;
         return;
       }
       const json = XLSX.utils.sheet_to_json(ws, {
@@ -59,7 +60,7 @@
       const baseName = file.name.replace(/\.(xlsx|xls)$/i, "");
       downloadJson(json, `${baseName}.json`);
     } catch (err: any) {
-      error = `Hiba: ${err.message || "Ismeretlen hiba tortent."}`;
+      error = `${ui.error}: ${err.message || ui.unknownError}`;
     } finally {
       isConverting = false;
     }
@@ -81,7 +82,7 @@
       accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
       multiple={false}
       maxSizeMB={100}
-      label="Huzd ide az Excel fajlt"
+      label={ui.dragHere}
       sublabel=".xlsx, .xls"
       on:files={handleFiles}
     />
@@ -90,14 +91,14 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     {#if sheetNames.length > 0}
       <div class="card settings-card">
         <div class="field">
-          <label class="label" for="sheet-select">Munkalap</label>
+          <label class="label" for="sheet-select">{ui.sheet}</label>
           <select id="sheet-select" class="select" bind:value={selectedSheet}>
             {#each sheetNames as name}
               <option value={name}>{name}</option>
@@ -108,7 +109,7 @@
         <div class="field">
           <label class="checkbox-label">
             <input type="checkbox" bind:checked={hasHeader} />
-            Az elso sor fejlec (kulcsnevek)
+            {ui.firstRowIsHeader}
           </label>
         </div>
       </div>
@@ -118,13 +119,13 @@
         on:click={convert}
         disabled={isConverting || !selectedSheet}
       >
-        {isConverting ? "Konvertalas folyamatban..." : "Konvertalas JSON-ba"}
+        {isConverting ? ui.convertingInProgress : ui.convertToJsonFile}
       </button>
     {/if}
 
     {#if jsonPreview}
       <div class="card preview-card">
-        <h3 class="preview-title">Elonezet (elso 5 sor, ossz: {rowCount})</h3>
+        <h3 class="preview-title">{ui.preview} (5 / {rowCount})</h3>
         <pre class="preview-code">{jsonPreview}</pre>
       </div>
     {/if}

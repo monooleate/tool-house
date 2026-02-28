@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let isLoading = false;
@@ -73,7 +74,7 @@
         pageHeight: `${Math.round(height)} pt (${(height / 72 * 25.4).toFixed(1)} mm)`,
       };
     } catch (err: any) {
-      error = `Nem sikerult betolteni a PDF-et: ${err.message}`;
+      error = `${ui.pdfLoadError}: ${err.message}`;
       info = null;
     } finally {
       isLoading = false;
@@ -93,7 +94,7 @@
       accept=".pdf,application/pdf"
       multiple={false}
       maxSizeMB={200}
-      label="Huzd ide a PDF fajlt"
+      label={ui.dragPdfHere}
       sublabel=".pdf"
       on:files={handleFiles}
     />
@@ -102,63 +103,63 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
     {#if isLoading}
       <div class="card loading-card">
-        <span class="loading-text">Informaciok betoltese...</span>
+        <span class="loading-text">{ui.loadingInfo}</span>
       </div>
     {/if}
 
     {#if info}
       <div class="card info-card">
-        <h3 class="info-card__title">PDF informaciok</h3>
+        <h3 class="info-card__title">{ui.pdfInfoTitle}</h3>
         <table class="info-table">
           <tbody>
             <tr>
-              <td class="info-table__label">Fajlnev</td>
+              <td class="info-table__label">{ui.fileName}</td>
               <td class="info-table__value">{info.fileName}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Fajlmeret</td>
+              <td class="info-table__label">{ui.fileSize}</td>
               <td class="info-table__value">{info.fileSize}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Oldalszam</td>
+              <td class="info-table__label">{ui.pageCount}</td>
               <td class="info-table__value">{info.pageCount}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Oldalmeret (elso oldal)</td>
+              <td class="info-table__label">{ui.firstPageSize}</td>
               <td class="info-table__value">{info.pageWidth} x {info.pageHeight}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Cim</td>
+              <td class="info-table__label">{ui.pdfTitle}</td>
               <td class="info-table__value">{info.title}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Szerzo</td>
+              <td class="info-table__label">{ui.pdfAuthor}</td>
               <td class="info-table__value">{info.author}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Targy</td>
+              <td class="info-table__label">{ui.pdfSubject}</td>
               <td class="info-table__value">{info.subject}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Letrehozo program</td>
+              <td class="info-table__label">{ui.creatorProgram}</td>
               <td class="info-table__value">{info.creator}</td>
             </tr>
             <tr>
-              <td class="info-table__label">PDF producer</td>
+              <td class="info-table__label">{ui.pdfProducer}</td>
               <td class="info-table__value">{info.producer}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Letrehozas datuma</td>
+              <td class="info-table__label">{ui.creationDate}</td>
               <td class="info-table__value">{info.creationDate}</td>
             </tr>
             <tr>
-              <td class="info-table__label">Modositas datuma</td>
+              <td class="info-table__label">{ui.modificationDate}</td>
               <td class="info-table__value">{info.modificationDate}</td>
             </tr>
           </tbody>

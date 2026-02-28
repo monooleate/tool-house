@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let file: File | null = null;
   let isLoading = false;
@@ -36,7 +37,7 @@
         loadSheetData(wb, selectedSheet);
       }
     } catch (err: any) {
-      error = `Nem sikerult betolteni a fajlt: ${err.message}`;
+      error = `${ui.fileLoadError}: ${err.message}`;
       sheetNames = [];
     } finally {
       isLoading = false;
@@ -80,7 +81,7 @@
       const wb = XLSX.read(arrayBuffer, { type: "array" });
       loadSheetData(wb, selectedSheet);
     } catch (err: any) {
-      error = `Hiba: ${err.message}`;
+      error = `${ui.error}: ${err.message}`;
     } finally {
       isLoading = false;
     }
@@ -119,7 +120,7 @@
       accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
       multiple={false}
       maxSizeMB={100}
-      label="Huzd ide az Excel fajlt"
+      label={ui.dragHere}
       sublabel=".xlsx, .xls"
       on:files={handleFiles}
     />
@@ -128,7 +129,7 @@
       <div class="file-info__row">
         <span class="file-info__name">{file.name}</span>
         <span class="file-info__meta">{formatFileSize(file.size)}</span>
-        <button class="btn btn--ghost btn--sm" on:click={reset}>Új fájl</button>
+        <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.newFile}</button>
       </div>
     </div>
 
@@ -148,7 +149,7 @@
 
     {#if isLoading}
       <div class="card loading-card">
-        <span class="loading-text">Betoltes...</span>
+        <span class="loading-text">{ui.loading}</span>
       </div>
     {/if}
 
@@ -156,7 +157,7 @@
       <div class="card table-card">
         <div class="table-info">
           <span class="table-info__text">
-            {totalRows} sor osszesen{totalRows > MAX_PREVIEW_ROWS ? ` (elso ${MAX_PREVIEW_ROWS} megjelenitve)` : ""}
+            {totalRows} {ui.rowsTotal}{totalRows > MAX_PREVIEW_ROWS ? ` (${ui.showingFirst.replace("{n}", String(MAX_PREVIEW_ROWS))})` : ""}
           </span>
         </div>
         <div class="table-wrapper">
@@ -184,7 +185,7 @@
       </div>
     {:else if !isLoading}
       <div class="card empty-card">
-        <span class="empty-text">A munkalap ures.</span>
+        <span class="empty-text">{ui.sheetEmpty}</span>
       </div>
     {/if}
   {/if}
@@ -203,7 +204,7 @@
 .sheet-tabs { display: flex; gap: var(--sp-1); flex-wrap: wrap; }
 .sheet-tab { font-family: var(--font-mono); font-size: .8125rem; padding: var(--sp-2) var(--sp-4); border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-card); color: var(--text-muted); cursor: pointer; transition: all var(--t-fast); }
 .sheet-tab:hover { border-color: var(--accent); color: var(--text); }
-.sheet-tab--active { background: var(--accent); color: white; border-color: var(--accent); }
+.sheet-tab--active { background: var(--accent-bright); color: #000; border-color: var(--accent-bright); }
 .loading-card { display: flex; justify-content: center; padding: var(--sp-6); }
 .loading-text { font-size: .875rem; color: var(--text-muted); }
 .table-card { display: flex; flex-direction: column; gap: var(--sp-3); }

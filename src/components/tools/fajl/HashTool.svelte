@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   interface HashResult { algorithm: string; hash: string; }
   let results: HashResult[] = [];
@@ -43,10 +44,10 @@
 </script>
 
 <div class="tool">
-  <Dropzone accept="*/*" multiple={false} maxSizeMB={500} label="Húzd ide a fájlt" sublabel="bármely fájltípus" on:files={handleFiles} />
+  <Dropzone accept="*/*" multiple={false} maxSizeMB={500} label={ui.dragHere} sublabel="*.*" on:files={handleFiles} />
 
   {#if isProcessing}
-    <div class="processing">Hash számítás folyamatban...</div>
+    <div class="processing">{ui.hashCalculating}</div>
   {/if}
 
   {#if results.length > 0}
@@ -60,7 +61,7 @@
           <span class="hash-algo">{r.algorithm}</span>
           <code class="hash-value">{r.hash}</code>
           <button class="btn btn--outline btn--sm" on:click={() => copyHash(r.hash)}>
-            {copied === r.hash ? "✓" : "Másolás"}
+            {copied === r.hash ? "✓" : ui.copy}
           </button>
         </div>
       {/each}

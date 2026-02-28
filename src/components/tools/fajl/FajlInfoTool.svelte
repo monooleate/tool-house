@@ -1,6 +1,7 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   interface FileInfo { name: string; size: number; type: string; lastModified: string; extension: string; }
   let fileInfo: FileInfo | null = null;
@@ -20,14 +21,14 @@
 </script>
 
 <div class="tool">
-  <Dropzone accept="*/*" multiple={false} maxSizeMB={500} label="Húzd ide a fájlt" sublabel="bármely fájltípus" on:files={handleFiles} />
+  <Dropzone accept="*/*" multiple={false} maxSizeMB={500} label={ui.dragHere} sublabel="*.*" on:files={handleFiles} />
 
   {#if fileInfo}
     <div class="card info-grid">
-      <div class="info-row"><span class="info-label">Fájlnév</span><span class="info-value">{fileInfo.name}</span></div>
-      <div class="info-row"><span class="info-label">Méret</span><span class="info-value">{formatFileSize(fileInfo.size)} ({fileInfo.size.toLocaleString("hu-HU")} bájt)</span></div>
-      <div class="info-row"><span class="info-label">MIME típus</span><code class="info-value info-value--code">{fileInfo.type}</code></div>
-      <div class="info-row"><span class="info-label">Kiterjesztés</span><code class="info-value info-value--code">.{fileInfo.extension}</code></div>
+      <div class="info-row"><span class="info-label">{ui.fileName}</span><span class="info-value">{fileInfo.name}</span></div>
+      <div class="info-row"><span class="info-label">{ui.fileSize}</span><span class="info-value">{formatFileSize(fileInfo.size)} ({fileInfo.size.toLocaleString("hu-HU")} bájt)</span></div>
+      <div class="info-row"><span class="info-label">MIME {ui.fileType.toLowerCase()}</span><code class="info-value info-value--code">{fileInfo.type}</code></div>
+      <div class="info-row"><span class="info-label">{ui.fileType}</span><code class="info-value info-value--code">.{fileInfo.extension}</code></div>
       <div class="info-row"><span class="info-label">Módosítva</span><span class="info-value">{fileInfo.lastModified}</span></div>
     </div>
   {/if}

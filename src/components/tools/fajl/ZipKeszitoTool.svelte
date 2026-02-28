@@ -1,10 +1,11 @@
 <script lang="ts">
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadZip, formatFileSize } from "../../../lib/download.ts";
+  import { ui } from "../../../lib/ui-labels.ts";
 
   let files: File[] = [];
   let isCreating = false;
-  let zipFilename = "letoltes.zip";
+  let zipFilename = "download.zip";
 
   function handleFiles(e: CustomEvent<File[]>) {
     files = [...files, ...e.detail];
@@ -36,18 +37,18 @@
 <div class="tool">
   <div class="card settings-card">
     <div class="field">
-      <label class="label" for="zip-name">ZIP fájlnév</label>
-      <input id="zip-name" type="text" class="input" bind:value={zipFilename} placeholder="letoltes.zip" />
+      <label class="label" for="zip-name">{ui.fileName}</label>
+      <input id="zip-name" type="text" class="input" bind:value={zipFilename} placeholder="download.zip" />
     </div>
   </div>
 
-  <Dropzone accept="*/*" multiple={true} maxSizeMB={200} label="Húzd ide a fájlokat" sublabel="vagy kattints a tallózáshoz" on:files={handleFiles} />
+  <Dropzone accept="*/*" multiple={true} maxSizeMB={200} label={ui.dragHereMulti} sublabel="" on:files={handleFiles} />
 
   {#if files.length > 0}
     <div class="card file-list">
       <div class="file-header">
-        <span class="label">{files.length} fájl ({formatFileSize(totalSize)})</span>
-        <button class="btn btn--ghost btn--sm" on:click={() => (files = [])}>Összes törlése</button>
+        <span class="label">{files.length} {ui.file} ({formatFileSize(totalSize)})</span>
+        <button class="btn btn--ghost btn--sm" on:click={() => (files = [])}>{ui.deleteAll}</button>
       </div>
       <ul class="files">
         {#each files as file, i}
@@ -61,7 +62,7 @@
     </div>
 
     <button class="btn btn--primary" on:click={createZip} disabled={isCreating}>
-      {isCreating ? "ZIP készítés..." : `ZIP létrehozása (${files.length} fájl)`}
+      {isCreating ? ui.processingDots : `${ui.createZip} (${files.length} ${ui.file})`}
     </button>
   {/if}
 </div>
