@@ -54,6 +54,8 @@ export interface LangConfig {
   siteName: string;       // Site neve az adott piacon
   siteUrl: string;        // Canonical base URL
   dir: "ltr" | "rtl";    // Szöveg iránya
+  gtagId: string;         // Google Analytics 4 mérési ID (G-XXXXXXXXXX), "" = kikapcsolva
+  gtmId: string;          // Google Tag Manager ID (GTM-XXXXXXX), "" = kikapcsolva
 }
 
 export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
@@ -63,6 +65,8 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     siteName: "Konvertalo.hu",
     siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu",
     dir: "ltr",
+    gtagId: "G-GGJNWNYZ5G",
+    gtmId: "",
   },
   ro: {
     lang: "ro",
@@ -70,6 +74,8 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     siteName: "InstrumenteOnline",
     siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://instrumenteonline.ro",
     dir: "ltr",
+    gtagId: "",   // TODO: RO GA4 mérési ID beállítása
+    gtmId: "",
   },
 };
 

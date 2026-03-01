@@ -2,20 +2,18 @@
 // ANALYTICS CONFIG – Központi tracking beállítások
 // Google Tag (gtag.js / GA4) + GTM
 //
-// Használat:
-//   1. GOOGLE_TAG_ID → Google Analytics 4 mérési azonosító (G-XXXXXXXXXX)
-//   2. GTM_ID → Google Tag Manager container (GTM-XXXXXXX)
-//   3. A BaseLayout.astro automatikusan beilleszti, CSAK production-ban
-//   4. Ha GTM-et használsz, a GA4-et GTM-en belül konfiguráld!
+// A mérési ID-k nyelvenként eltérőek – a CURRENT_CONFIG-ból olvassuk.
+// Így minden domain (konvertalo.hu, instrumenteonline.ro, stb.)
+// saját GA4 property-t és/vagy GTM container-t használhat.
+//
+// Beállítás: src/i18n/index.ts → LANG_CONFIG → gtagId / gtmId
 // ============================================================
 
-// ─── Google Analytics 4 (gtag.js) ────────────────────────────
-// Formátum: "G-XXXXXXXXXX"  |  "" = kikapcsolva
-export const GOOGLE_TAG_ID = "G-GGJNWNYZ5G";
+import { CURRENT_CONFIG } from "../i18n/index.ts";
 
-// ─── Google Tag Manager ──────────────────────────────────────
-// Formátum: "GTM-XXXXXXX"  |  "" = kikapcsolva
-export const GTM_ID = "";
+// ─── Nyelv-specifikus ID-k ─────────────────────────────────
+export const GOOGLE_TAG_ID = CURRENT_CONFIG.gtagId;
+export const GTM_ID = CURRENT_CONFIG.gtmId;
 
 // ─── Google Consent Mode v2 (GDPR) ──────────────────────────
 // true = denied default → consent banner kell az engedélyezéshez
