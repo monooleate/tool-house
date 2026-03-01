@@ -384,6 +384,8 @@ const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.
 /* ═══ CTA ZÁRÓ ═══════════════════════════════════════════════ */
 .cta-section {
   margin-bottom: var(--sp-16);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
 }
 
 .cta-box {
@@ -401,16 +403,16 @@ const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  width: 200%;
   height: 3px;
   background: linear-gradient(90deg, var(--accent), #3b82f6, #8b5cf6, var(--accent));
-  background-size: 200% 100%;
   animation: gradient-slide 4s linear infinite;
+  will-change: transform;
 }
 
 @keyframes gradient-slide {
-  0%   { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .cta-box__title {

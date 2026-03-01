@@ -33,8 +33,8 @@ export default defineConfig({
   },
 
   build: {
-    // Inlining kisebb CSS assets a HTTP kérések csökkentéséhez
-    inlineStylesheets: "auto",
+    // CSS inline-olás – megszünteti a render-blocking CSS kéréseket
+    inlineStylesheets: "always",
     // Assets prefix ha CDN-t használsz:
     // assetsPrefix: "https://cdn.konvertalo.hu",
   },

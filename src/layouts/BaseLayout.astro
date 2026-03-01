@@ -116,18 +116,17 @@ const totalCount = getTotalToolsCount();
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f5f0" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#0f0f0e" />
 
-  <!-- Preconnect + Font preload -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <!-- Preconnect + Font loading (display=optional → zero CLS) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     rel="preload"
     as="style"
-    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=optional"
+    onload="this.onload=null;this.rel='stylesheet'"
   />
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=swap"
-  />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=optional" />
+  </noscript>
 
   <!-- View Transitions kikapcsolva – link navigáció hibát okozott -->
   <!-- <ViewTransitions fallback="none" /> -->
@@ -173,42 +172,52 @@ const totalCount = getTotalToolsCount();
     </script>
   )}
 
-  <!-- Google Analytics 4 (gtag.js) – csak production, és NEM GTM mellett -->
+  <!-- Google Analytics 4 (gtag.js) – csak production, késleltetett betöltés -->
   {import.meta.env.PROD && hasGoogleTag() && !hasGTM() && (
-    <Fragment>
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}></script>
-      <script is:inline define:vars={{ GOOGLE_TAG_ID, CONSENT_MODE_ENABLED }}>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        // Consent Mode v2 defaults (GDPR)
-        if (CONSENT_MODE_ENABLED) {
-          gtag('consent', 'default', {
-            ad_storage: 'denied',
-            ad_user_data: 'denied',
-            ad_personalization: 'denied',
-            analytics_storage: 'denied',
-            functionality_storage: 'granted',
-            personalization_storage: 'granted',
-            security_storage: 'granted',
-            wait_for_update: 500
-          });
-          // Korábbi consent visszaállítása
-          try {
-            if (localStorage.getItem('cookie_consent') === 'granted') {
-              gtag('consent', 'update', {
-                ad_storage: 'granted', ad_user_data: 'granted',
-                ad_personalization: 'granted', analytics_storage: 'granted'
-              });
-            }
-          } catch(e) {}
-        }
+    <script is:inline define:vars={{ GOOGLE_TAG_ID, CONSENT_MODE_ENABLED }}>
+      // Consent Mode v2 defaults – azonnal beállítjuk (nem blokkoló)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      if (CONSENT_MODE_ENABLED) {
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'denied',
+          functionality_storage: 'granted',
+          personalization_storage: 'granted',
+          security_storage: 'granted',
+          wait_for_update: 500
+        });
+        try {
+          if (localStorage.getItem('cookie_consent') === 'granted') {
+            gtag('consent', 'update', {
+              ad_storage: 'granted', ad_user_data: 'granted',
+              ad_personalization: 'granted', analytics_storage: 'granted'
+            });
+          }
+        } catch(e) {}
+      }
+
+      // Késleltetett gtag.js betöltés – ne blokkolja a fő szálat
+      function loadGtag() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GOOGLE_TAG_ID;
+        s.async = true;
+        document.head.appendChild(s);
         gtag('js', new Date());
         gtag('config', GOOGLE_TAG_ID, {
           send_page_view: true,
           cookie_flags: 'SameSite=None;Secure'
         });
-      </script>
-    </Fragment>
+      }
+      // requestIdleCallback-kel vagy 2.5s késleltetéssel
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGtag, { timeout: 3000 });
+      } else {
+        setTimeout(loadGtag, 2500);
+      }
+    </script>
   )}
 
   <!-- Inline dark mode script (FOUC prevention) -->
@@ -1036,6 +1045,8 @@ const totalCount = getTotalToolsCount();
   border-top: 1px solid var(--border);
   margin-top: var(--sp-16);
   padding: var(--sp-12) 0 var(--sp-8);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
 }
 
 .site-footer__inner {

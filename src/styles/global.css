@@ -5,7 +5,29 @@
    Dark mode: class-based (.dark on <html>) + prefers-color-scheme
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=swap");
+/* Google Fonts betöltés a BaseLayout.astro <link> tagen keresztül történik.
+   Az @import innen eltávolítva – dupla betöltést és render-blocking-ot okozott.
+   Font fallback metrikák a CLS csökkentéséhez: */
+
+/* Figtree fallback – méretileg közelítő system font */
+@font-face {
+  font-family: "Figtree Fallback";
+  src: local("Segoe UI"), local("system-ui"), local("Arial");
+  size-adjust: 100.5%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+/* Space Mono fallback – monospace rendszer font */
+@font-face {
+  font-family: "Space Mono Fallback";
+  src: local("Consolas"), local("Courier New"), local("monospace");
+  size-adjust: 108%;
+  ascent-override: 89%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
@@ -56,8 +78,8 @@
   --sp-16: 64px;
 
   /* Typography */
-  --font-mono: "Space Mono", "Courier New", monospace;
-  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Space Mono", "Space Mono Fallback", "Courier New", monospace;
+  --font-body: "Figtree", "Figtree Fallback", "Segoe UI", system-ui, sans-serif;
 
   /* Radius */
   --r-sm:  6px;
@@ -129,9 +151,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+/* Smooth scroll csak ha a felhasználó nem kérte a reduced motion-t */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }
 
 body {
