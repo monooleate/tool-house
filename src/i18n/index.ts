@@ -54,17 +54,25 @@ export interface LangConfig {
   siteName: string;       // Site neve az adott piacon
   siteUrl: string;        // Canonical base URL
   dir: "ltr" | "rtl";    // Szöveg iránya
+  nativeName: string;     // Nyelv saját nevén (pl. "Magyar", "Română")
+  flag: string;           // Emoji zászló
   gtagId: string;         // Google Analytics 4 mérési ID (G-XXXXXXXXXX), "" = kikapcsolva
   gtmId: string;          // Google Tag Manager ID (GTM-XXXXXXX), "" = kikapcsolva
 }
 
+// FONTOS: A siteUrl-ek hardcode-oltak, hogy a keresztlinkelés
+// (footer nyelvi linkek, hreflang) mindig a helyes domainre mutasson.
+// A PUBLIC_SITE_URL env var csak a CURRENT build siteUrl-jét írja felül
+// (pl. staging/preview domain esetén).
 export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
   hu: {
     lang: "hu",
     locale: "hu_HU",
     siteName: "Konvertalo.hu",
-    siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu",
+    siteUrl: "https://konvertalo.hu",
     dir: "ltr",
+    nativeName: "Magyar",
+    flag: "🇭🇺",
     gtagId: "G-GGJNWNYZ5G",
     gtmId: "",
   },
@@ -72,11 +80,21 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     lang: "ro",
     locale: "ro_RO",
     siteName: "InstrumenteOnline",
-    siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://instrumenteonline.ro",
+    siteUrl: "https://instrumenteonline.ro",
     dir: "ltr",
+    nativeName: "Română",
+    flag: "🇷🇴",
     gtagId: "",   // TODO: RO GA4 mérési ID beállítása
     gtmId: "",
   },
 };
 
-export const CURRENT_CONFIG: LangConfig = LANG_CONFIG[CURRENT_LANG];
+// Az aktuális nyelv konfigja – PUBLIC_SITE_URL env var felülírhatja
+// (pl. staging/preview URL-ek esetén)
+export const CURRENT_CONFIG: LangConfig = {
+  ...LANG_CONFIG[CURRENT_LANG],
+  ...(import.meta.env.PUBLIC_SITE_URL
+    ? { siteUrl: import.meta.env.PUBLIC_SITE_URL }
+    : {}
+  ),
+};

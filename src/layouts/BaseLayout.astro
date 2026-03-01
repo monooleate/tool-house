@@ -8,7 +8,8 @@ import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical } from "../lib/se
 import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory, getVisibleCategories, getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
 import { GOOGLE_TAG_ID, GTM_ID, CONSENT_MODE_ENABLED, hasGoogleTag, hasGTM } from "../lib/analytics.ts";
-import { t, tpl, CURRENT_CONFIG, CURRENT_LANG } from "../i18n/index.ts";
+import { t, tpl, CURRENT_CONFIG, CURRENT_LANG, LANG_CONFIG } from "../i18n/index.ts";
+import type { SupportedLang } from "../i18n/index.ts";
 
 const localizedCategories = getVisibleCategories(CURRENT_LANG).map(cat => getLocalizedCategory(cat, CURRENT_LANG));
 const { siteName, siteUrl, lang: htmlLang, locale } = CURRENT_CONFIG;
@@ -447,6 +448,32 @@ const totalCount = getTotalToolsCount();
           </div>
         ))}
       </nav>
+
+      {/* Cross-language links – dinamikusan a LANG_CONFIG-ból */}
+      {(() => {
+        const otherLangs = (Object.keys(LANG_CONFIG) as SupportedLang[]).filter(l => l !== CURRENT_LANG);
+        if (otherLangs.length === 0) return null;
+        return (
+          <div class="site-footer__langs">
+            <span class="footer-langs__label">{t("footer.also_available")}</span>
+            <div class="footer-langs__list">
+              {otherLangs.map(lang => {
+                const cfg = LANG_CONFIG[lang];
+                const langPath = hreflangPaths?.[lang] ?? "/";
+                const fullUrl = `${cfg.siteUrl}${langPath}`;
+                return (
+                  <a href={fullUrl} class="footer-lang-link" hreflang={lang} rel="alternate">
+                    <span class="footer-lang-link__flag" aria-hidden="true">{cfg.flag}</span>
+                    <span class="footer-lang-link__name">{cfg.nativeName}</span>
+                    <span class="footer-lang-link__site">{cfg.siteName}</span>
+                    <span class="footer-lang-link__arrow" aria-hidden="true">→</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
 
       <div class="site-footer__meta">
         <p class="text-subtle">
@@ -1017,15 +1044,7 @@ const totalCount = getTotalToolsCount();
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 768px) {
-  .site-footer__inner {
-    grid-template-columns: 280px 1fr;
-    grid-template-rows: auto auto;
-  }
-  .site-footer__brand { grid-column: 1; }
-  .site-footer__nav   { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--sp-4); }
-  .site-footer__meta  { grid-column: 1 / -1; }
-}
+/* Desktop footer grid – moved to cross-language section below */
 
 .site-footer__tagline {
   font-size: 0.875rem;
@@ -1059,6 +1078,89 @@ const totalCount = getTotalToolsCount();
 }
 
 .text-subtle { color: var(--text-subtle); }
+
+/* ─── Footer cross-language links ────────────────────────── */
+.site-footer__langs {
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.footer-langs__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-3);
+}
+
+.footer-langs__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.footer-lang-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all 180ms ease;
+  min-width: 180px;
+}
+
+.footer-lang-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+  transform: translateY(-1px);
+}
+
+.footer-lang-link__flag {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.footer-lang-link__name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.footer-lang-link__site {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.footer-lang-link__arrow {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.footer-lang-link:hover .footer-lang-link__arrow {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .site-footer__inner {
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .site-footer__brand { grid-column: 1; }
+  .site-footer__nav   { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--sp-4); }
+  .site-footer__langs { grid-column: 1 / -1; }
+  .site-footer__meta  { grid-column: 1 / -1; }
+}
 
 /* ─── Cookie consent banner ──────────────────────────────── */
 .cookie-banner {
