@@ -84,7 +84,7 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     dir: "ltr",
     nativeName: "Română",
     flag: "🇷🇴",
-    gtagId: "",   // TODO: RO GA4 mérési ID beállítása
+    gtagId: "G-1906283TT4",   // TODO: RO GA4 mérési ID beállítása
     gtmId: "",
   },
 };
