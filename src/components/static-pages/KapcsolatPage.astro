@@ -47,8 +47,6 @@ const schemas = [
           netlify-honeypot="bot-field"
           class="contact-form"
           id="contact-form"
-          data-error-msg={tpl("contact.submit_error", { email: t("contact.email_address") })}
-          data-success-url={staticUrl("koszonjuk")}
         >
           <input type="hidden" name="form-name" value="contact" />
 
@@ -342,38 +340,20 @@ const schemas = [
 
 <script>
 // ─── Form submit handler (Netlify Forms + UX) ──────────────
+// A form natívan submit-el (action → köszönöm oldal), Netlify a CDN szinten
+// intercept-eli a POST-ot és feldolgozza. Az e.preventDefault() TILOS,
+// mert az megakadályozza a Netlify form processing-et.
 const form = document.getElementById("contact-form") as HTMLFormElement | null;
 
 if (form) {
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
+  form.addEventListener("submit", () => {
+    // Csak UX: gomb letiltása + "Küldés..." szöveg amíg a natív submit fut
     const submitBtn = document.getElementById("contact-submit") as HTMLButtonElement | null;
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = submitBtn.dataset.submittingText || "Sending...";
     }
-
-    try {
-      const formData = new FormData(form);
-      const res = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString(),
-      });
-
-      if (res.ok) {
-        window.location.href = form.dataset.successUrl || "/koszonjuk";
-      } else {
-        throw new Error("Form submission failed");
-      }
-    } catch (err) {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitBtn.dataset.submitText || "Send";
-      }
-      alert(form.dataset.errorMsg || "An error occurred.");
-    }
+    // A form natívan submit-el → Netlify feldolgozza → redirect az action URL-re
   });
 }
 </script>

@@ -1,7 +1,7 @@
 # Tool House -- Fejlesztoi Dokumentacio
 
 > **Belso hasznalatra** -- fejlesztoknek es AI asszisztenseknek, akik a kodbazisat modositjak.
-> Utolso frissites: 2026-03-01
+> Utolso frissites: 2026-03-01 (v2 -- cross-linking, performance, analytics defer)
 
 ---
 
@@ -18,9 +18,11 @@
 9. [Tartalom (Content)](#9-tartalom-content)
 10. [Timing es Delay Rendszer](#10-timing-es-delay-rendszer)
 11. [Middleware es Biztonsag](#11-middleware-es-biztonsag)
-12. [Gyakori Hibak es Tanulsagok](#12-gyakori-hibak-es-tanulsagok)
-13. [Uj Nyelv Hozzaadasa (Checklist)](#13-uj-nyelv-hozzaadasa-checklist)
-14. [Uj Eszkoz Hozzaadasa (Checklist)](#14-uj-eszkoz-hozzaadasa-checklist)
+12. [Performance Optimalizacio](#12-performance-optimalizacio)
+13. [Cross-Language Linkeles](#13-cross-language-linkeles)
+14. [Gyakori Hibak es Tanulsagok](#14-gyakori-hibak-es-tanulsagok)
+15. [Uj Nyelv Hozzaadasa (Checklist)](#15-uj-nyelv-hozzaadasa-checklist)
+16. [Uj Eszkoz Hozzaadasa (Checklist)](#16-uj-eszkoz-hozzaadasa-checklist)
 
 ---
 
@@ -255,10 +257,42 @@ export interface LangConfig {
   siteName: string;       // Site neve ("Konvertalo.hu" | "InstrumenteOnline")
   siteUrl: string;        // Canonical base URL
   dir: "ltr" | "rtl";    // Szoveg iranya
+  nativeName: string;     // Nyelv sajat neven (pl. "Magyar", "Romana")
+  flag: string;           // Emoji zaszlo (pl. "🇭🇺", "🇷🇴")
   gtagId: string;         // Google Analytics 4 meresi ID (ures = kikapcsolva)
   gtmId: string;          // Google Tag Manager ID (ures = kikapcsolva)
 }
 ```
+
+**FONTOS** -- A `LANG_CONFIG`-ban a `siteUrl` **hardcode-olt** (nem env var!), hogy a keresztlinkelesnel mindig a helyes domainre mutasson:
+
+```typescript
+export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
+  hu: {
+    lang: "hu", locale: "hu_HU", siteName: "Konvertalo.hu",
+    siteUrl: "https://konvertalo.hu",  // HARDCODE -- ne hasznalj env var-t!
+    dir: "ltr", nativeName: "Magyar", flag: "🇭🇺",
+    gtagId: "G-GGJNWNYZ5G", gtmId: "",
+  },
+  ro: {
+    lang: "ro", locale: "ro_RO", siteName: "InstrumenteOnline",
+    siteUrl: "https://instrumenteonline.ro",  // HARDCODE
+    dir: "ltr", nativeName: "Romana", flag: "🇷🇴",
+    gtagId: "", gtmId: "",  // TODO: RO GA4 ID
+  },
+};
+
+// CURRENT_CONFIG -- a PUBLIC_SITE_URL env var CSAK az aktualis build siteUrl-jet irja felul
+export const CURRENT_CONFIG: LangConfig = {
+  ...LANG_CONFIG[CURRENT_LANG],
+  ...(import.meta.env.PUBLIC_SITE_URL
+    ? { siteUrl: import.meta.env.PUBLIC_SITE_URL }
+    : {}
+  ),
+};
+```
+
+**Miert hardcode?** Korabban mindket nyelv config-janal `import.meta.env.PUBLIC_SITE_URL ?? fallback` volt. Igy ha a RO build soran `PUBLIC_SITE_URL=https://instrumenteonline.ro` volt beallitva, a HU config `siteUrl`-je is az lett! Ez elrontotta a keresztlinkeket. A javitas: `LANG_CONFIG`-ban hardcode URL-ek, a `CURRENT_CONFIG`-ban spread + opcionalis env var feluliras.
 
 ### A harom i18n reteg
 
@@ -802,6 +836,10 @@ A ToolLayout-ban:
 
 **FONTOS**: A `rawTool`-t hasznaljuk (nem a lokalizaltat!), mert a `toolUrl()` maga vegzi a slug lokalizalast a megadott nyelv alapjan.
 
+### Cross-Language Footer Linkek
+
+A hreflang tag-ek mellett a footer-ben is vannak **lathato linkek** a masik nyelvu tarsoldalra. Lasd: [13. Cross-Language Linkeles](#13-cross-language-linkeles).
+
 ### Sitemap
 
 **Fajl**: `src/pages/sitemap.xml.ts`
@@ -845,6 +883,25 @@ LANG_CONFIG = {
   ro: { gtagId: "",               gtmId: "" },  // TODO
 };
 ```
+
+### Kesleltett Betoltes (Performance)
+
+A gtag.js **NEM** azonnal toltodik be -- `requestIdleCallback`-kel vagy 2.5s timeout-tal kesleltetve:
+
+```javascript
+// BaseLayout.astro -- gtag defer minta
+// 1. Consent Mode defaults azonnal beallitodnak (nem blokkolo)
+// 2. A tenyleges gtag.js script CSAK idle-ben toltodik be:
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(loadGtag, { timeout: 3000 });
+} else {
+  setTimeout(loadGtag, 2500);
+}
+```
+
+**Miert?** A Lighthouse riport szerint a gtag.js 151 KiB es 3 "long task"-ot okozott a main thread-en (ossz. ~365ms). A kesleltetes kikeruli az LCP/FCP kritikus idoszakot.
+
+**Kovetkezmeny**: Az elso ~3 masodperc oldaltekintest nem mindig regisztralja a GA. Ez elfogadhato trade-off a Lighthouse Performance score javulasaert.
 
 ### Event Tracking
 
@@ -1012,7 +1069,220 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' .
 
 ---
 
-## 12. Gyakori Hibak es Tanulsagok
+## 12. Performance Optimalizacio
+
+### Lighthouse Optimalizaciok
+
+A Lighthouse Performance score 77-rol ~90+ kozelebe javult az alabbi optimalizaciokkal.
+
+### 12.1. Font Betoltes -- CLS Csokkentes
+
+**Problema**: A Google Fonts betoltese `display=swap`-pal 0.182 CLS-t okozott, mert a fallback font es a betoltott font kozott meret kulonbseg van (layout shift).
+
+**Megoldas (3 resz)**:
+
+1. **`display=optional`** -- ha a font nem toltodik be idejeben (~100ms), marad a fallback font, **NINCS layout shift**:
+
+```html
+<!-- BaseLayout.astro -->
+<link rel="preload" as="style"
+  href="...?display=optional"
+  onload="this.onload=null;this.rel='stylesheet'" />
+<noscript>
+  <link rel="stylesheet" href="...?display=optional" />
+</noscript>
+```
+
+2. **Dupla betoltes megszuntetese** -- a `global.css`-bol eltavolitottuk az `@import url(fonts.google...)` sort, mert a BaseLayout.astro `<link>` tag-je mar betolti. A dupla betoltes feleslegesen blokkolt.
+
+3. **Font fallback metrikak** (`global.css`) -- a rendszer font-ot meretben kozelitjuk a Google Fonts-hoz, hogy meg `display=swap` eseten is minimalis legyen a shift:
+
+```css
+@font-face {
+  font-family: "Figtree Fallback";
+  src: local("Segoe UI"), local("system-ui"), local("Arial");
+  size-adjust: 100.5%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Space Mono Fallback";
+  src: local("Consolas"), local("Courier New"), local("monospace");
+  size-adjust: 108%;
+  ascent-override: 89%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --font-body: "Figtree", "Figtree Fallback", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Space Mono", "Space Mono Fallback", "Courier New", monospace;
+}
+```
+
+### 12.2. Non-Composited Animation Fix
+
+**Problema**: A `.cta-box::before` gradient animacio `background-position`-t hasznalt, ami NEM compositable (nem GPU-accelerated), janky es CLS-t okoz.
+
+**Megoldas**: `transform: translateX()`-ra valtottuk, ami GPU-composited:
+
+```css
+/* REGI (nem compositable): */
+.cta-box::before {
+  background-size: 200% 100%;
+  animation: gradient-slide 4s linear infinite;
+}
+@keyframes gradient-slide {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* UJ (compositable, GPU-accelerated): */
+.cta-box::before {
+  width: 200%;
+  animation: gradient-slide 4s linear infinite;
+  will-change: transform;
+}
+@keyframes gradient-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+```
+
+**Erintett fajlok**: `index.astro` (.cta-box::before) es `RolunkPage.astro` (.about-cta__inner::before).
+
+### 12.3. CSS Inline-olas
+
+**Problema**: 3 kulon CSS fajl blokkolta a renderelest (render-blocking).
+
+**Megoldas**: `astro.config.mjs`-ben `inlineStylesheets: "always"` -- minden CSS-t inline-ol a HTML-be, nulla kulso CSS keres:
+
+```javascript
+build: {
+  inlineStylesheets: "always",  // korabbban "auto" volt
+}
+```
+
+### 12.4. Content-Visibility
+
+A fold alatti szekciok `content-visibility: auto`-val vannak megjelolve, igy a bongeszo NEM rendereli oket amig nem lathatoak:
+
+```css
+.cta-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+}
+
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px;
+}
+```
+
+Ez csokenti a Style & Layout munkat es a Total Blocking Time-ot.
+
+### 12.5. Google Analytics Kesleltetes
+
+Lasd: [8. Analytics -- Kesleltett Betoltes](#kesleltett-betoltes-performance)
+
+### 12.6. Scroll Behavior
+
+A `scroll-behavior: smooth` csak akkor aktiv, ha a felhasznalo nem kerte a reduced motion-t:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+```
+
+### Lighthouse Score Valtozasok (becsult)
+
+| Metrika | Elotte | Utana | Javitas |
+|---------|--------|-------|---------|
+| **CLS** | 0.182 | ~0 | Font display=optional + fallback metrikak |
+| **LCP** | ~3.5s | ~2.5s | Render-blocking CSS eltavolitva, font async |
+| **TBT** | ~800ms | ~400ms | gtag defer, content-visibility |
+| **Performance** | 77 | ~90+ | Osszes optimalizacio |
+
+---
+
+## 13. Cross-Language Linkeles
+
+### Mi ez?
+
+A footer-ben minden oldalon megjelenik egy "Mas nyelven is elerheto" szekcion, ami a **masik nyelvu tarsoldalra** mutat. Nem a fooldalar, hanem az **adott oldal pontos parjara** (pl. `/imagine/convertor-jpg-webp` a RO oldalon).
+
+### Hogyan mukodik?
+
+A `BaseLayout.astro` footer-jeben a `LANG_CONFIG`-bol dinamikusan generalodik a tobbi nyelv linkje:
+
+```astro
+{(() => {
+  const otherLangs = (Object.keys(LANG_CONFIG) as SupportedLang[])
+    .filter(l => l !== CURRENT_LANG);
+  if (otherLangs.length === 0) return null;
+  return (
+    <div class="site-footer__langs">
+      <span class="footer-langs__label">{t("footer.also_available")}</span>
+      <div class="footer-langs__list">
+        {otherLangs.map(lang => {
+          const cfg = LANG_CONFIG[lang];
+          const langPath = hreflangPaths?.[lang] ?? "/";
+          const fullUrl = `${cfg.siteUrl}${langPath}`;
+          return (
+            <a href={fullUrl} class="footer-lang-link"
+               hreflang={lang} rel="alternate">
+              <span>{cfg.flag}</span>
+              <span>{cfg.nativeName}</span>
+              <span>{cfg.siteName}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+})()}
+```
+
+### Hogyan erkezik a helyes URL?
+
+A `hreflangPaths` prop-ot a layout-ok adjak at:
+
+| Layout | Honnan jon az URL? |
+|--------|-------------------|
+| `ToolLayout.astro` | `hreflangPaths={{ hu: toolUrl(rawTool, "hu"), ro: toolUrl(rawTool, "ro") }}` |
+| `CategoryLayout.astro` | `hreflangPaths={{ hu: categoryUrl(cat.id, "hu"), ro: categoryUrl(cat.id, "ro") }}` |
+| Fooldal, statikus | `hreflangPaths` nincs beallitva → fallback "/" |
+
+### SEO Szempontok
+
+1. **hreflang tag-ek** (head-ben) -- a Google szamara jelzi a nyelvi parokat ✓
+2. **Lathato footer link** -- a felhasznalok es a crawlerek szamara ✓
+3. **`rel="alternate"` + `hreflang`** a footer linkeken -- erositi a nyelvi kapcsolatot ✓
+4. **Oldal-specifikus link** -- nem a fooldala, hanem az adott oldal parjara mutat ✓
+5. **Nyelv sajat neven** -- "Magyar" / "Romana" (nem forditas!) ✓
+
+### Skalazhatosag
+
+Uj nyelv hozzaadasakor **SEMMI kulon teendot nem igenyel** a keresztlinkeles. A `LANG_CONFIG`-ba felvett uj nyelv automatikusan megjelenik a footer-ben mindkét (ill. minden) oldalon.
+
+Pelda: Ha felveszik az `en` nyelvet a `LANG_CONFIG`-ba:
+- A HU footer-ben megjelenik: 🇷🇴 Romana + 🇬🇧 English
+- A RO footer-ben megjelenik: 🇭🇺 Magyar + 🇬🇧 English
+- Az EN footer-ben megjelenik: 🇭🇺 Magyar + 🇷🇴 Romana
+
+### i18n Kulcsok
+
+| Kulcs | HU | RO |
+|-------|----|----|
+| `footer.also_available` | "Mas nyelven is elerheto" | "Disponibil si in alte limbi" |
+| `footer.visit_site` | "Meglatogatom" | "Viziteaza" |
+
+---
+
+## 14. Gyakori Hibak es Tanulsagok
 
 ### 1. getCategoryInfo() NEM lokalizal
 
@@ -1103,9 +1373,60 @@ const tool = getLocalizedTool(rawTool, CURRENT_LANG);  // Lokalizalt verzio
 // A toolUrl() maga lokalizalja a slug-ot a megadott nyelv alapjan
 ```
 
+### 10. LANG_CONFIG siteUrl -- NE hasznalj env var-t!
+
+```typescript
+// ROSSZ -- a PUBLIC_SITE_URL mindket nyelv URL-jet felulirja:
+hu: { siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu" },
+ro: { siteUrl: import.meta.env.PUBLIC_SITE_URL ?? "https://instrumenteonline.ro" },
+// RO build-nel: hu.siteUrl === "https://instrumenteonline.ro" <-- HIBA!
+
+// JO -- hardcode a LANG_CONFIG-ban, env var csak CURRENT_CONFIG-ban:
+hu: { siteUrl: "https://konvertalo.hu" },
+ro: { siteUrl: "https://instrumenteonline.ro" },
+export const CURRENT_CONFIG = {
+  ...LANG_CONFIG[CURRENT_LANG],
+  ...(import.meta.env.PUBLIC_SITE_URL ? { siteUrl: import.meta.env.PUBLIC_SITE_URL } : {}),
+};
+```
+
+### 11. background-position animacio NEM compositable
+
+```css
+/* ROSSZ -- CLS-t es janky animaciot okoz: */
+@keyframes gradient-slide {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* JO -- GPU-accelerated, sima: */
+@keyframes gradient-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+```
+
+Mindig `transform` vagy `opacity` animaciot hasznalj, ezek compositable property-k. A `background-position`, `width`, `height`, `left`, `top` stb. NEM compositable!
+
+### 12. Google Fonts @import NE legyen a CSS-ben
+
+```css
+/* ROSSZ -- dupla betoltes + render-blocking: */
+@import url("https://fonts.googleapis.com/css2?...");
+
+/* JO -- a BaseLayout.astro <link> tag-je tolti be, nem CSS @import: */
+/* (CSS-ben csak fallback @font-face deklaraciok legyenek) */
+```
+
+### 13. display=swap vs display=optional
+
+- `display=swap` -- **mindig** lecsereli a fallback fontot a betoltott fontra → **CLS-t okoz**
+- `display=optional` -- ha a font nem toltodik be ~100ms-on belul, **marad a fallback** → **NINCS CLS**
+- A mi esettunk: `display=optional` + font fallback metrikak → a felhasznalo eseten nem veszi eszre a kulonbseget
+
 ---
 
-## 13. Uj Nyelv Hozzaadasa (Checklist)
+## 15. Uj Nyelv Hozzaadasa (Checklist)
 
 Pelda: angol (`en`) nyelv hozzaadasa.
 
@@ -1143,13 +1464,17 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     lang: "en",
     locale: "en_US",
     siteName: "ToolHouse",
-    siteUrl: "https://toolhouse.com",
+    siteUrl: "https://toolhouse.com",  // HARDCODE -- ne hasznalj env var-t!
     dir: "ltr",
-    gtagId: "",  // Uj GA4 ID
+    nativeName: "English",             // Nyelv sajat neven
+    flag: "🇬🇧",                        // Emoji zaszlo
+    gtagId: "",                        // Uj GA4 ID
     gtmId: "",
   },
 };
 ```
+
+> **Ezzel a footer cross-link automatikusan megjelenik!** Nem kell kulon footer modositas.
 
 ### 4. lepes: URL Map kiegeszites
 
@@ -1235,11 +1560,22 @@ A `BaseLayout.astro`-ban add hozza az uj hreflang linket:
 <link rel="alternate" hreflang="en" href={`https://toolhouse.com${enPath}`} />
 ```
 
-### 11. lepes: Netlify konfig
+### 11. lepes: i18n kulcsok kiegeszitese
+
+Az uj nyelv JSON fajljaban (`en.json`) legyenek benne a `footer.also_available` es `footer.visit_site` kulcsok:
+
+```json
+{
+  "footer.also_available": "Also available in",
+  "footer.visit_site": "Visit"
+}
+```
+
+### 12. lepes: Netlify konfig
 
 Uj fajl: `netlify.en.toml`
 
-### 12. lepes: Tesztelss
+### 13. lepes: Tesztelss
 
 ```bash
 npm run dev:en    # Helyi teszteles
@@ -1253,10 +1589,14 @@ Ellenorizd:
 - [ ] Tool title/h1/description angolul jelenik meg
 - [ ] Sitemap helyes URL-eket tartalmaz
 - [ ] hreflang linkek mindket iranyban mukodnek
+- [ ] Footer cross-language link megjelenik (automatikus a LANG_CONFIG-bol)
+- [ ] Footer link az adott oldal parjara mutat, nem a fooldara
+- [ ] Footer linken a helyes domain szerepel
+- [ ] A masik ket nyelvben (HU, RO) is megjelenik az uj nyelv footer linkje
 
 ---
 
-## 14. Uj Eszkoz Hozzaadasa (Checklist)
+## 16. Uj Eszkoz Hozzaadasa (Checklist)
 
 ### 1. lepes: Tool regisztracia
 
@@ -1464,6 +1804,43 @@ prefetch: {
 }
 ```
 
+### Build Konfiguracio (astro.config.mjs)
+
+```javascript
+export default defineConfig({
+  output: "static",
+  site: SITE_URL,
+
+  integrations: [ svelte() ],
+
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: "hover",     // Hover-re prefetch
+  },
+
+  build: {
+    inlineStylesheets: "always",  // Minden CSS inline-olva (0 render-blocking CSS)
+  },
+
+  vite: {
+    worker: { format: "es" },     // OffscreenCanvas Workers
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            svelte: ["svelte"],   // Kulon Svelte chunk
+          },
+        },
+      },
+    },
+    optimizeDeps: {
+      include: ["pdf-lib", "pdfjs-dist", "js-yaml"],
+      exclude: ["jszip"],
+    },
+  },
+});
+```
+
 ### CSS Valtozok
 
 A kategoriak CSS szineket hasznalnak: `var(--cat-kep)`, `var(--cat-pdf)`, stb. Ezek a `global.css`-ben vannak definialva.
@@ -1481,6 +1858,21 @@ npm run gen-pages        # Oldalak generálása
 npm run gen-pages:force  # Felülírás kényszerítése
 npm run gen-pages:dry    # Száraz futtatás (csak kiírja, mit csinálna)
 ```
+
+### Modositott Fajlok Osszefoglaloja (legutobbi session)
+
+| Fajl | Modositas |
+|------|-----------|
+| `src/i18n/index.ts` | `nativeName`, `flag` mezok; hardcode siteUrl; CURRENT_CONFIG spread |
+| `src/i18n/hu.json` | `footer.also_available`, `footer.visit_site` kulcsok |
+| `src/i18n/ro.json` | `footer.also_available`, `footer.visit_site` kulcsok |
+| `src/layouts/BaseLayout.astro` | Footer cross-language links; font preload/onload; gtag defer; content-visibility |
+| `src/styles/global.css` | @import eltavolitva; font fallback @font-face; scroll-behavior media query |
+| `src/pages/index.astro` | Composited gradient animation; content-visibility CTA |
+| `src/components/static-pages/RolunkPage.astro` | Composited gradient animation |
+| `astro.config.mjs` | `inlineStylesheets: "always"` |
+| `src/components/ui/SearchOverlay.svelte` | `getLocalizedCategories()` fix |
+| `src/lib/analytics.ts` | CURRENT_CONFIG-bol olvassa a gtagId-t |
 
 ---
 
