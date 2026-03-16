@@ -17,7 +17,7 @@ export const GTM_ID = CURRENT_CONFIG.gtmId;
 
 // ─── Google Consent Mode v2 (GDPR) ──────────────────────────
 // true = denied default → consent banner kell az engedélyezéshez
-export const CONSENT_MODE_ENABLED = true;
+export const CONSENT_MODE_ENABLED = false;
 
 // ─── Helperek ────────────────────────────────────────────────
 export function hasGoogleTag(): boolean { return GOOGLE_TAG_ID.length > 0; }

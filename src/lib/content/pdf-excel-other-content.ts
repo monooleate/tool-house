@@ -6,7 +6,7 @@ import type { ContentMap } from "./types.ts";
 // ╚══════════════════════════════════════════════════════════════════════════════╝
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PDF (9 tool)
+// PDF (17 tool)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const PDF_CONTENT: ContentMap = {
@@ -406,6 +406,335 @@ export const PDF_CONTENT: ContentMap = {
         { icon: "📊", tip: "Ellenőrizd a PDF verziót, ha kompatibilitási problémát tapasztalsz egy olvasóban." },
         { icon: "📅", tip: "A létrehozás dátuma hasznos lehet dokumentumok kronológiai rendezéséhez." },
         { icon: "📐", tip: "Az oldalméret információ segít a nyomtatási beállítások megválasztásában." },
+      ],
+    },
+  },
+
+  // ─── 10. PDF tömörítés ──────────────────────────────────────────────────────
+  "tomoritese": {
+    introText:
+      "Csökkentsd a PDF fájlod méretét tömörítéssel, közvetlenül a böngészőben. Ideális nagyméretű dokumentumok könnyebb megosztásához és tárolásához.",
+    guide: [
+      "1. Töltsd be a tömörítendő PDF fájlt.",
+      "2. Válaszd ki a tömörítési szintet (enyhe, közepes, erős).",
+      "3. Kattints a «Tömörítés» gombra – az eszköz feldolgozza a fájlt.",
+      "4. Töltsd le a tömörített PDF-et.",
+    ],
+    faq: [
+      { q: "Mekkora méretcsökkenésre számíthatok?", a: "A tömörítési arány a PDF tartalmától függ: képgazdag dokumentumoknál akár 50-80%-os csökkenés is elérhető, míg szöveges fájloknál kisebb a különbség." },
+      { q: "Romlik a minőség a tömörítéstől?", a: "Az enyhe és közepes szinten a minőségromlás szabad szemmel szinte észrevehetetlen. Erős tömörítésnél a képek minősége csökkenhet." },
+      { q: "Biztonságos az adataim szempontjából?", a: "Igen, a tömörítés teljes egészében a böngésződben történik, a fájl nem kerül szerverre." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki vagy húzd be a tömörítendő PDF fájlt." },
+        { title: "2. Tömörítési szint kiválasztása", description: "Válaszd ki a kívánt tömörítési szintet az igényeidnek megfelelően." },
+        { title: "3. Tömörítés indítása", description: "Kattints a tömörítés gombra – az eszköz feldolgozza a fájlt." },
+        { title: "4. Letöltés", description: "Töltsd le a kisebb méretű PDF fájlt." },
+      ],
+      useCases: [
+        { icon: "📧", title: "E-mail melléklet", description: "Túl nagy PDF csatolmányok méretének csökkentése az e-mail korlátok betartásához." },
+        { icon: "☁️", title: "Felhőtárhely", description: "Tárhelymegtakarítás a felhőben tárolt dokumentumok tömörítésével." },
+        { icon: "📱", title: "Mobil megosztás", description: "Kisebb fájlméret gyorsabb letöltést és megosztást jelent mobilon." },
+        { icon: "🖨️", title: "Nyomtatás", description: "Tömörített PDF gyorsabban feldolgozható a nyomtató számára." },
+      ],
+      aboutSection: {
+        title: "Mi az a PDF tömörítés?",
+        paragraphs: [
+          "A PDF tömörítés a fájlméret csökkentésére szolgál a dokumentum tartalmának optimalizálásával – a beágyazott képek újratömörítésével és a felesleges metaadatok eltávolításával.",
+          "Az eszközünk közvetlenül a böngészőben dolgozik, így a dokumentumaid soha nem hagyják el a gépedet, garantálva a teljes adatvédelmet.",
+        ],
+      },
+      tips: [
+        { icon: "📄", tip: "Szöveges PDF-ek kevésbé tömöríthetők, mivel a szöveg már eleve kis helyet foglal." },
+        { icon: "🔍", tip: "Nagyméretű PDF-eknél először próbáld az enyhe szintet – gyakran ez is elegendő méretcsökkenést eredményez." },
+      ],
+    },
+  },
+
+  // ─── 11. PDF vízjel ────────────────────────────────────────────────────────
+  "pdf-vizjel": {
+    introText:
+      "Adj vízjelet a PDF dokumentumaidhoz a tartalom védelme és a szerzőség jelzése érdekében. A vízjel szövegét, pozícióját és átlátszóságát szabadon konfigurálhatod.",
+    guide: [
+      "1. Töltsd be a PDF fájlt, amelyhez vízjelet szeretnél adni.",
+      "2. Állítsd be a vízjel szövegét, pozícióját és átlátszóságát.",
+      "3. Kattints a «Vízjel hozzáadása» gombra.",
+      "4. Töltsd le a vízjelezett PDF-et.",
+    ],
+    faq: [
+      { q: "Eltávolítható utólag a vízjel?", a: "A vízjel a PDF-be ágyazódik, így közvetlenül nem törölhető. Az eredeti, vízjel nélküli fájlt érdemes megőrizni." },
+      { q: "Minden oldalra kerül vízjel?", a: "Igen, alapértelmezetten minden oldalra felkerül a vízjel, egységes megjelenést biztosítva." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki a PDF fájlt a gépedről." },
+        { title: "2. Vízjel beállítása", description: "Add meg a vízjel szövegét, válaszd ki a pozícióját és az átlátszóságot." },
+        { title: "3. Vízjel hozzáadása", description: "Kattints a gombra – az eszköz minden oldalra elhelyezi a vízjelet." },
+        { title: "4. Letöltés", description: "Töltsd le a vízjelezett PDF dokumentumot." },
+      ],
+      useCases: [
+        { icon: "🔒", title: "Bizalmas dokumentumok", description: "«Bizalmas» vagy «Titkos» jelzés elhelyezése a dokumentumon." },
+        { icon: "📝", title: "Piszkozatok jelölése", description: "«Piszkozat» vízjel hozzáadása a még nem végleges dokumentumokhoz." },
+        { icon: "🏢", title: "Céges arculat", description: "Cégnév vagy logó szöveges megjelenítése a dokumentumokon." },
+        { icon: "⚖️", title: "Jogi dokumentumok", description: "Szerzői jogi vagy tulajdonosi jelzés elhelyezése jogi iratokon." },
+      ],
+      aboutSection: {
+        title: "Miért érdemes vízjelet használni?",
+        paragraphs: [
+          "A vízjel vizuális jelzésként szolgál a dokumentum állapotáról, tulajdonosáról vagy bizalmassági szintjéről, elrettentve a jogosulatlan felhasználástól.",
+          "Az eszközünk a böngészőben helyezi el a vízjelet, így a dokumentum nem kerül szerverre, és az adatvédelem garantált.",
+        ],
+      },
+      tips: [
+        { icon: "👁️", tip: "Állítsd az átlátszóságot 30-50% közé, hogy a vízjel látható legyen, de ne zavarja az olvashatóságot." },
+        { icon: "💾", tip: "Mindig őrizd meg az eredeti, vízjel nélküli PDF-et is, ha később módosítani szeretnéd." },
+      ],
+    },
+  },
+
+  // ─── 12. Oldalszámozás ────────────────────────────────────────────────────
+  "oldalszamok": {
+    introText:
+      "Adj oldalszámokat a PDF dokumentumodhoz egyszerűen és gyorsan. Válaszd ki a pozíciót, formátumot, és az oldalszámozás azonnal elkészül a böngésződben.",
+    guide: [
+      "1. Töltsd be a PDF fájlt.",
+      "2. Válaszd ki az oldalszám pozícióját (fejléc/lábléc, bal/közép/jobb) és a formátumot.",
+      "3. Kattints az «Oldalszámozás» gombra.",
+      "4. Töltsd le az oldalszámozott PDF-et.",
+    ],
+    faq: [
+      { q: "Beállíthatom a kezdő oldalszámot?", a: "Igen, megadhatod, hogy az oldalszámozás melyik számtól induljon, például ha a címoldalt nem szeretnéd számozni." },
+      { q: "Milyen formátumok érhetők el?", a: "Egyszerű szám (1, 2, 3), «X / Y oldal» formátum, illetve római számozás is választható." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki vagy húzd be a PDF fájlt." },
+        { title: "2. Pozíció és formátum kiválasztása", description: "Állítsd be, hová és milyen formátumban kerüljenek az oldalszámok." },
+        { title: "3. Oldalszámok hozzáadása", description: "Kattints a gombra – az eszköz minden oldalra elhelyezi a számozást." },
+        { title: "4. Letöltés", description: "Töltsd le a számozott PDF dokumentumot." },
+      ],
+      useCases: [
+        { icon: "📊", title: "Üzleti jelentések", description: "Oldalszámozott jelentések készítése professzionális megjelenéssel." },
+        { icon: "🎓", title: "Szakdolgozatok", description: "Tudományos munkák és szakdolgozatok kötelező oldalszámozása." },
+        { icon: "📜", title: "Szerződések", description: "Jogi dokumentumok oldalszámozása a hivatkozhatóság érdekében." },
+        { icon: "📖", title: "Kézikönyvek", description: "Használati útmutatók és kézikönyvek áttekinthető számozása." },
+      ],
+      aboutSection: {
+        title: "Miért fontos az oldalszámozás?",
+        paragraphs: [
+          "Az oldalszámozás megkönnyíti a dokumentum navigálását, hivatkozását és nyomtatás utáni rendezését.",
+          "Az eszközünk közvetlenül a böngészőben dolgozik, így az oldalszámok hozzáadása gyors, biztonságos és nem igényel szoftvertelepítést.",
+        ],
+      },
+      tips: [
+        { icon: "📏", tip: "Hivatalos dokumentumoknál a lábléc közepén elhelyezett oldalszám a legelterjedtebb." },
+        { icon: "🔢", tip: "Ha a címoldalt nem szeretnéd számozni, állítsd a kezdő oldalszámot 0-ra vagy használd a kihagyás opciót." },
+      ],
+    },
+  },
+
+  // ─── 13. Szöveg kinyerés ──────────────────────────────────────────────────
+  "szoveg-kinyerese": {
+    introText:
+      "Nyerd ki a szöveges tartalmat PDF fájlokból egyszerűen. A kinyert szöveg másolható vagy letölthető, és az egész folyamat a böngésződben történik.",
+    guide: [
+      "1. Töltsd be a PDF fájlt, amelyből szöveget szeretnél kinyerni.",
+      "2. Másold ki a kinyert szöveget a vágólapra, vagy töltsd le szövegfájlként.",
+      "3. Használd fel a szöveget a kívánt célra.",
+    ],
+    faq: [
+      { q: "Miért üres az eredmény?", a: "Ha a PDF szkennelt képeket tartalmaz szöveg helyett, a szövegkinyerés nem tud karaktereket felismerni. Ilyen esetben OCR (optikai karakterfelismerő) szükséges." },
+      { q: "Megmarad az eredeti formázás?", a: "A kinyert szöveg egyszerű, formázatlan szöveg (plain text). A betűtípusok, oszlopok és elrendezés nem őrződik meg." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki a PDF fájlt, amelyből szöveget szeretnél kinyerni." },
+        { title: "2. Szöveg kinyerése", description: "Az eszköz automatikusan kiolvassa a PDF szöveges tartalmát." },
+        { title: "3. Másolás vagy letöltés", description: "Másold a szöveget a vágólapra, vagy töltsd le TXT fájlként." },
+      ],
+      useCases: [
+        { icon: "🔬", title: "Kutatás", description: "Tudományos cikkek és publikációk szövegének kinyerése további elemzéshez." },
+        { icon: "📊", title: "Adatkinyerés", description: "PDF táblázatokból és jelentésekből szöveges adatok másolása." },
+        { icon: "♿", title: "Akadálymentesítés", description: "PDF tartalom elérhetővé tétele képernyőolvasók és egyéb segédeszközök számára." },
+        { icon: "🗄️", title: "Archiválás", description: "Dokumentumok szöveges mentése kereshetőség és hosszú távú tárolás céljából." },
+      ],
+      aboutSection: {
+        title: "Szöveg kinyerése PDF-ből",
+        paragraphs: [
+          "A szövegkinyerés a PDF-ben tárolt szöveges adatot olvassa ki, lehetővé téve a tartalom újrafelhasználását, keresését és szerkesztését.",
+          "Az eszköz közvetlenül a böngészőben működik – a fájl nem kerül szerverre, így a bizalmas dokumentumok is biztonságban vannak.",
+        ],
+      },
+      tips: [
+        { icon: "📄", tip: "Szöveges alapú PDF-ek (pl. Word-ből exportált) esetén a legjobb az eredmény." },
+        { icon: "📷", tip: "Szkennelt vagy képalapú PDF-eknél a szövegkinyerés nem működik – ilyenkor OCR szükséges." },
+      ],
+    },
+  },
+
+  // ─── 14. PDF aláírás ──────────────────────────────────────────────────────
+  "alairas": {
+    introText:
+      "Írd alá PDF dokumentumaidat digitálisan, közvetlenül a böngészőben. Rajzold meg, gépeld be vagy töltsd fel az aláírásodat, majd helyezd el a kívánt pozícióba.",
+    guide: [
+      "1. Töltsd be az aláírandó PDF fájlt.",
+      "2. Válaszd ki az aláírás módját: rajzolás, begépelés vagy kép feltöltése.",
+      "3. Hozd létre az aláírásodat.",
+      "4. Helyezd el az aláírást a dokumentum kívánt pozíciójába.",
+      "5. Töltsd le az aláírt PDF-et.",
+    ],
+    faq: [
+      { q: "Jogilag érvényes az aláírás?", a: "Az eszköz vizuális aláírást helyez el a dokumentumon. A jogi érvényesség az adott ország jogszabályaitól és a felek megállapodásától függ." },
+      { q: "Kiválaszthatom, melyik oldalra kerüljön?", a: "Igen, az aláírást a dokumentum bármely oldalának tetszőleges pozíciójába elhelyezheted." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki az aláírandó PDF dokumentumot." },
+        { title: "2. Aláírás mód kiválasztása", description: "Válassz a rajzolás, begépelés vagy képfeltöltés közül." },
+        { title: "3. Aláírás létrehozása", description: "Rajzold meg, gépeld be vagy töltsd fel az aláírásodat." },
+        { title: "4. Pozicionálás", description: "Húzd az aláírást a dokumentum kívánt pozíciójába." },
+        { title: "5. Letöltés", description: "Töltsd le az aláírt PDF dokumentumot." },
+      ],
+      useCases: [
+        { icon: "📜", title: "Szerződések", description: "Szerződések és megállapodások gyors, digitális aláírása." },
+        { icon: "📋", title: "Űrlapok", description: "Hivatalos űrlapok és nyomtatványok aláírása nyomtatás nélkül." },
+        { icon: "📬", title: "Pályázatok", description: "Pályázati dokumentumok és kérvények aláírása." },
+        { icon: "✅", title: "Jóváhagyások", description: "Dokumentumok jóváhagyása és engedélyezése aláírással." },
+      ],
+      aboutSection: {
+        title: "PDF dokumentumok digitális aláírása",
+        paragraphs: [
+          "A digitális aláírás lehetővé teszi, hogy dokumentumokat írj alá anélkül, hogy nyomtatnod, kézzel aláírnod és visszaszkenned kellene.",
+          "Az eszközünk a böngészőben működik – az aláírásod és a dokumentum nem kerül szerverre, így a bizalmas iratok is védelemben maradnak.",
+        ],
+      },
+      tips: [
+        { icon: "✍️", tip: "A rajzolt aláírás természetesebb hatást kelt – használd egeret vagy érintőképernyőt a legjobb eredményért." },
+        { icon: "📐", tip: "Az aláírás méretét és pozícióját szabadon állíthatod az elhelyezés után is." },
+      ],
+    },
+  },
+
+  // ─── 15. Jelszóvédelem ────────────────────────────────────────────────────
+  "jelszo-vedelem": {
+    introText:
+      "Védd jelszóval a PDF dokumentumaidat, hogy csak az arra jogosultak férhessenek hozzá a tartalomhoz. A titkosítás közvetlenül a böngésződben történik.",
+    guide: [
+      "1. Töltsd be a védelemmel ellátandó PDF fájlt.",
+      "2. Add meg a kívánt jelszót.",
+      "3. Állítsd be az engedélyeket (nyomtatás, másolás, szerkesztés).",
+      "4. Töltsd le a jelszóval védett PDF-et.",
+    ],
+    faq: [
+      { q: "Milyen erős a titkosítás?", a: "Az eszköz AES-256 titkosítást használ, amely az iparági szabvány a dokumentumvédelemben." },
+      { q: "Mi történik, ha elfelejtem a jelszót?", a: "A jelszó nem visszaállítható, ezért mindenképp jegyezd meg vagy tárold biztonságos helyen. Jelszó nélkül a dokumentum nem nyitható meg." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki a jelszóval védendő PDF fájlt." },
+        { title: "2. Jelszó megadása", description: "Add meg az erős, biztonságos jelszót." },
+        { title: "3. Engedélyek beállítása", description: "Válaszd ki, milyen műveleteket engedélyezel (nyomtatás, másolás, szerkesztés)." },
+        { title: "4. Letöltés", description: "Töltsd le a titkosított PDF dokumentumot." },
+      ],
+      useCases: [
+        { icon: "🔒", title: "Bizalmas dokumentumok", description: "Üzleti titkok és belső dokumentumok védelme illetéktelen hozzáféréstől." },
+        { icon: "⚖️", title: "Jogi iratok", description: "Szerződések és jogi dokumentumok titkosítása a biztonságos megosztáshoz." },
+        { icon: "🏥", title: "Orvosi dokumentumok", description: "Egészségügyi adatok és leletek jelszavas védelme." },
+        { icon: "💼", title: "Pénzügyi dokumentumok", description: "Számlák, kimutatások és pénzügyi jelentések védelme." },
+      ],
+      aboutSection: {
+        title: "Miért fontos a PDF jelszóvédelem?",
+        paragraphs: [
+          "A jelszóvédelem megakadályozza, hogy illetéktelenek hozzáférjenek a dokumentum tartalmához, biztosítva az adatok bizalmasságát.",
+          "Az eszközünk a böngészőben végzi a titkosítást, így a fájl és a jelszó sosem kerül szerverre – teljes adatvédelem garantált.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Használj legalább 8 karakteres jelszót, amely tartalmaz kis- és nagybetűt, számot és speciális karaktert." },
+        { icon: "💾", tip: "Mentsd el a jelszót biztonságos helyre (pl. jelszókezelő), mert elvesztés esetén a dokumentum nem nyitható meg." },
+      ],
+    },
+  },
+
+  // ─── 16. Jelszó eltávolítás ───────────────────────────────────────────────
+  "jelszo-eltavolitasa": {
+    introText:
+      "Távolítsd el a jelszóvédelmet a PDF dokumentumaidról, ha ismered az eredeti jelszót. A feloldás a böngésződben történik, szerverre semmi nem kerül.",
+    guide: [
+      "1. Töltsd be a jelszóval védett PDF fájlt.",
+      "2. Add meg a dokumentum jelszavát a feloldáshoz.",
+      "3. Töltsd le a jelszó nélküli PDF-et.",
+    ],
+    faq: [
+      { q: "Feloldhatom jelszó nélkül?", a: "Nem, a jelszóvédelem feloldásához az eredeti jelszó megadása szükséges. Az eszköz nem töri fel a titkosítást." },
+      { q: "Automatikusan felismeri a védelem típusát?", a: "Igen, az eszköz automatikusan érzékeli, hogy a PDF jelszóval védett-e, és kéri a jelszó megadását." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki a jelszóval védett PDF fájlt." },
+        { title: "2. Jelszó megadása", description: "Írd be a dokumentum eredeti jelszavát." },
+        { title: "3. Letöltés", description: "Töltsd le a feloldott, jelszó nélküli PDF-et." },
+      ],
+      useCases: [
+        { icon: "🔓", title: "Megosztás", description: "Jelszó eltávolítása, hogy a dokumentumot szabadon megoszthad a jogosultakkal." },
+        { icon: "🗄️", title: "Archiválás", description: "Régi, jelszóval védett dokumentumok feloldása hosszú távú archiváláshoz." },
+        { icon: "✏️", title: "Szerkesztés", description: "Védett PDF feloldása szerkesztés vagy módosítás céljából." },
+        { icon: "🖨️", title: "Nyomtatás", description: "Nyomtatási korlátozás feloldása a dokumentum kinyomtatásához." },
+      ],
+      aboutSection: {
+        title: "PDF jelszóvédelem eltávolítása",
+        paragraphs: [
+          "A jelszó eltávolítás lehetővé teszi, hogy az ismert jelszóval rendelkező dokumentumokról eltávolítsd a védelmet, megkönnyítve a megosztást és felhasználást.",
+          "Az eszköz a böngésződben dolgozik – sem a fájl, sem a jelszó nem kerül szerverre, így a folyamat teljes mértékben biztonságos.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Csak akkor tudod eltávolítani a jelszót, ha ismered az eredeti jelszót – az eszköz nem fejt fel titkosítást." },
+        { icon: "💾", tip: "A feloldott PDF-et érdemes új néven menteni, hogy az eredeti védett változat is megmaradjon." },
+      ],
+    },
+  },
+
+  // ─── 17. PDF redakálás (eltakarás) ────────────────────────────────────────
+  "eltakares": {
+    introText:
+      "Takard el a PDF dokumentum érzékeny információit visszavonhatatlanul. Rajzolj fekete téglalapokat a szövegre, képekre vagy adatokra, amelyeket véglegesen el szeretnél rejteni.",
+    guide: [
+      "1. Töltsd be a PDF fájlt, amelyben el szeretnéd takarni az érzékeny adatokat.",
+      "2. Rajzolj téglalapokat a kitakarandó területekre.",
+      "3. Ellenőrizd az előnézetben a kijelölt területeket.",
+      "4. Erősítsd meg a redakálást – a kitakart tartalom véglegesen törlődik.",
+      "5. Töltsd le a redakált PDF-et.",
+    ],
+    faq: [
+      { q: "Visszavonható a redakálás?", a: "Nem, a redakálás visszafordíthatatlan: a kitakart tartalom véglegesen törlődik a fájlból, nem csupán vizuálisan kerül elrejtésre. Mindig őrizd meg az eredeti fájlt." },
+      { q: "A szöveg tényleg törlődik, nem csak eltakarva van?", a: "Igen, a redakálás nemcsak vizuálisan fedi el a tartalmat, hanem az alatta lévő szöveget és adatot is véglegesen eltávolítja a PDF-ből." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. PDF betöltése", description: "Válaszd ki a redakálandó PDF dokumentumot." },
+        { title: "2. Területek kijelölése", description: "Rajzolj téglalapokat az eltakarandó szövegre vagy képekre." },
+        { title: "3. Előnézet ellenőrzése", description: "Tekintsd át a kijelölt területeket a véglegesítés előtt." },
+        { title: "4. Redakálás megerősítése", description: "Erősítsd meg – a kitakart tartalom véglegesen törlődik." },
+        { title: "5. Letöltés", description: "Töltsd le a redakált PDF dokumentumot." },
+      ],
+      useCases: [
+        { icon: "⚖️", title: "Jogi iratok", description: "Bizalmas adatok eltávolítása bírósági vagy jogi dokumentumokból a nyilvánosságra hozatal előtt." },
+        { icon: "🛡️", title: "GDPR megfelelőség", description: "Személyes adatok végleges eltávolítása a GDPR és adatvédelmi előírásoknak megfelelően." },
+        { icon: "🏥", title: "Orvosi dokumentumok", description: "Betegazonosító adatok kitakarása egészségügyi dokumentumokból." },
+        { icon: "💼", title: "Pénzügyi dokumentumok", description: "Bankszámlaszámok, adószámok és egyéb pénzügyi adatok eltakarása." },
+      ],
+      aboutSection: {
+        title: "Mi az a PDF redakálás?",
+        paragraphs: [
+          "A PDF redakálás (eltakarás) az érzékeny információk visszafordíthatatlan eltávolítására szolgál: a kitakart szöveg és képek véglegesen törlődnek a dokumentumból.",
+          "Az eszközünk a böngészőben végzi a redakálást – a dokumentum nem kerül szerverre, így a bizalmas adatok kezelése teljes mértékben biztonságos.",
+        ],
+      },
+      tips: [
+        { icon: "⚠️", tip: "A redakálás végleges és visszavonhatatlan – mindig mentsd el az eredeti PDF-et a redakálás előtt." },
+        { icon: "🔍", tip: "Használd a nagyítást a pontos kijelöléshez, hogy ne takarj el szükséges tartalmat." },
       ],
     },
   },

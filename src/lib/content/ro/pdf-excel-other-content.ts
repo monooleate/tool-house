@@ -6,7 +6,7 @@ import type { ContentMap } from "../types.ts";
 // ╚══════════════════════════════════════════════════════════════════════════════╝
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PDF (9 instrumente)
+// PDF (17 instrumente)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const PDF_RO_CONTENT: ContentMap = {
@@ -406,6 +406,343 @@ export const PDF_RO_CONTENT: ContentMap = {
         { icon: "📊", tip: "Verifică versiunea PDF dacă întâmpini probleme de compatibilitate într-un cititor." },
         { icon: "📅", tip: "Data creării poate fi utilă pentru ordonarea cronologică a documentelor." },
         { icon: "📐", tip: "Informația despre dimensiunea paginii ajută la alegerea setărilor de imprimare." },
+      ],
+    },
+  },
+
+  // ─── 10. Comprimare PDF ────────────────────────────────────────────────────
+  "tomoritese": {
+    introText:
+      "Reduce dimensiunea fișierului PDF fără pierderi semnificative de calitate. Ideal pentru trimiterea prin e-mail sau încărcarea pe platforme cu limite de dimensiune. Totul are loc în browserul tău.",
+    guide: [
+      "1. Încarcă fișierul PDF pe care dorești să-l comprimi.",
+      "2. Selectează nivelul de compresie dorit (scăzut, mediu, ridicat).",
+      "3. Apasă butonul «Comprimare» – PDF-ul optimizat poate fi descărcat imediat.",
+    ],
+    faq: [
+      { q: "La ce este utilă comprimarea PDF-ului?", a: "Servește la reducerea dimensiunii fișierului PDF pentru a-l putea trimite mai ușor prin e-mail sau pentru a economisi spațiu de stocare." },
+      { q: "Se pierde calitatea documentului?", a: "Comprimarea optimizează imaginile și structura internă, dar textul și elementele vectoriale rămân intacte. Pierderea de calitate vizuală este minimă." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, fișierul este procesat exclusiv în browserul tău, fără a fi încărcat pe vreun server." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează sau trage fișierul PDF pe care dorești să-l comprimi." },
+        { title: "2. Alegerea nivelului de compresie", description: "Selectează nivelul dorit: compresie ușoară pentru calitate maximă sau compresie puternică pentru dimensiune minimă." },
+        { title: "3. Comprimare", description: "Apasă butonul – instrumentul optimizează fișierul." },
+        { title: "4. Descărcare", description: "Descarcă PDF-ul comprimat pe computer." },
+      ],
+      useCases: [
+        { icon: "📧", title: "Trimitere prin e-mail", description: "Reduce dimensiunea PDF-ului pentru a respecta limitele de atașament ale serviciilor de e-mail." },
+        { icon: "☁️", title: "Încărcare în cloud", description: "Optimizează PDF-urile mari pentru încărcare rapidă pe platforme cloud." },
+        { icon: "💾", title: "Economisire spațiu", description: "Comprimă arhivele de documente PDF pentru a economisi spațiu de stocare." },
+        { icon: "📱", title: "Partajare pe mobil", description: "Fișierele mai mici se descarcă și se deschid mai rapid pe dispozitivele mobile." },
+      ],
+      aboutSection: {
+        title: "De ce să comprimi fișierele PDF?",
+        paragraphs: [
+          "Fișierele PDF pot deveni foarte mari, mai ales dacă conțin imagini de înaltă rezoluție sau grafice complexe. Comprimarea reduce dimensiunea fără a afecta semnificativ calitatea vizuală.",
+          "Instrumentul nostru folosește tehnici de optimizare a imaginilor și a structurii interne a PDF-ului, procesând totul direct în browser pentru a garanta confidențialitatea datelor.",
+        ],
+      },
+      tips: [
+        { icon: "⚖️", tip: "Alege compresie ușoară pentru documente unde calitatea imaginii este critică (portofolii, fotografii)." },
+        { icon: "📊", tip: "Comprimarea puternică poate reduce dimensiunea cu până la 70-80% pentru PDF-uri cu multe imagini." },
+        { icon: "🔍", tip: "Verifică PDF-ul comprimat înainte de a-l trimite, pentru a te asigura că textul rămâne lizibil." },
+      ],
+    },
+  },
+
+  // ─── 11. Watermark PDF ─────────────────────────────────────────────────────
+  "pdf-vizjel": {
+    introText:
+      "Adaugă un filigran (watermark) text sau imagine pe paginile documentului PDF. Protejează-ți documentele marcându-le cu numele tău, logo-ul companiei sau mențiunea «Confidențial». Procesarea se face complet în browser.",
+    guide: [
+      "1. Încarcă fișierul PDF.",
+      "2. Introdu textul filigranului sau încarcă o imagine de filigran.",
+      "3. Ajustează poziția, dimensiunea și transparența.",
+      "4. Apasă butonul «Aplicare» – PDF-ul cu filigran poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este util filigranul PDF?", a: "Servește la protejarea documentelor împotriva utilizării neautorizate, prin adăugarea unui text sau logo vizibil pe fiecare pagină." },
+      { q: "Pot personaliza aspectul filigranului?", a: "Da, poți ajusta textul, dimensiunea, culoarea, rotația și transparența filigranului." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, fișierul nu părăsește browserul tău – procesarea are loc local." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează fișierul PDF pe care dorești să-l marchezi cu filigran." },
+        { title: "2. Configurarea filigranului", description: "Introdu textul dorit sau încarcă o imagine de filigran." },
+        { title: "3. Ajustarea poziției", description: "Setează poziția, dimensiunea, rotația și transparența filigranului." },
+        { title: "4. Descărcare", description: "Apasă butonul de aplicare și descarcă PDF-ul cu filigran." },
+      ],
+      useCases: [
+        { icon: "🔒", title: "Documente confidențiale", description: "Marchează documentele sensibile cu mențiunea «Confidențial» sau «Doar pentru uz intern»." },
+        { icon: "🏢", title: "Branding corporativ", description: "Adaugă logo-ul companiei pe propuneri, rapoarte și prezentări." },
+        { icon: "📝", title: "Versiuni draft", description: "Marchează versiunile preliminare cu filigranul «Draft» pentru a evita confuziile." },
+        { icon: "©️", title: "Protecția drepturilor de autor", description: "Adaugă numele autorului pe materiale digitale pentru protecția proprietății intelectuale." },
+      ],
+      aboutSection: {
+        title: "De ce să adaugi filigran pe PDF-uri?",
+        paragraphs: [
+          "Filigranul este o metodă eficientă de protejare a documentelor împotriva copierii sau distribuirii neautorizate. Marchează clar proprietatea și statutul documentului.",
+          "Instrumentul nostru oferă opțiuni flexibile de personalizare a filigranului – text sau imagine, cu control complet asupra poziției, dimensiunii și transparenței, totul procesat în browser.",
+        ],
+      },
+      tips: [
+        { icon: "👁️", tip: "Setează transparența la 30-50% pentru ca filigranul să fie vizibil fără a obstrucționa conținutul." },
+        { icon: "↗️", tip: "Rotirea diagonală (45°) face filigranul mai greu de eliminat și mai vizibil." },
+        { icon: "🎨", tip: "Folosește culori deschise (gri deschis) pentru filigranele text, pentru a nu afecta lizibilitatea documentului." },
+      ],
+    },
+  },
+
+  // ─── 12. Numerotare pagini PDF ─────────────────────────────────────────────
+  "oldalszamok": {
+    introText:
+      "Adaugă numere de pagină pe documentul PDF. Alege poziția, formatul și stilul numerotării. Procesarea completă are loc în browserul tău, fără încărcare pe server.",
+    guide: [
+      "1. Încarcă fișierul PDF.",
+      "2. Selectează poziția numerelor de pagină (sus/jos, stânga/centru/dreapta).",
+      "3. Alege formatul de numerotare și numărul de start.",
+      "4. Apasă butonul «Aplicare» – PDF-ul numerotat poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este utilă numerotarea paginilor?", a: "Servește la adăugarea automată a numerelor de pagină pe documentele PDF, facilitând navigarea și referențierea." },
+      { q: "Pot alege unde apar numerele de pagină?", a: "Da, poți plasa numerele în antet sau subsol, aliniate la stânga, centru sau dreapta." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, totul se procesează în browserul tău, fără încărcare pe server." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează fișierul PDF pe care dorești să-l numerotezi." },
+        { title: "2. Configurarea numerotării", description: "Alege poziția, formatul și stilul numerelor de pagină." },
+        { title: "3. Aplicare", description: "Apasă butonul – instrumentul adaugă numerele pe fiecare pagină." },
+        { title: "4. Descărcare", description: "Descarcă PDF-ul cu paginile numerotate." },
+      ],
+      useCases: [
+        { icon: "📖", title: "Cărți și manuale", description: "Adaugă numere de pagină pentru navigarea ușoară în documente lungi." },
+        { icon: "📋", title: "Rapoarte profesionale", description: "Dă un aspect profesional rapoartelor și propunerilor de afaceri." },
+        { icon: "📚", title: "Lucrări academice", description: "Numerotarea paginilor conform cerințelor academice." },
+        { icon: "📄", title: "Documente juridice", description: "Adaugă numere de pagină pentru referințe precise în contracte." },
+      ],
+      aboutSection: {
+        title: "Numerotarea paginilor PDF",
+        paragraphs: [
+          "Numerotarea paginilor este esențială pentru documentele profesionale și academice. Facilitează navigarea, referențierea și oferă un aspect ordonat documentului.",
+          "Instrumentul nostru permite personalizarea completă a stilului de numerotare – format, poziție, dimensiune și pagina de start – totul procesat în siguranță în browserul tău.",
+        ],
+      },
+      tips: [
+        { icon: "📏", tip: "Plasează numerele de pagină în subsolul centrat pentru cel mai profesional aspect." },
+        { icon: "🔢", tip: "Poți exclude prima pagină (coperta) de la numerotare și începe numerotarea de la pagina a doua." },
+        { icon: "🎨", tip: "Alege o dimensiune și o culoare a fontului care se potrivesc cu stilul documentului." },
+      ],
+    },
+  },
+
+  // ─── 13. Extragere text din PDF ────────────────────────────────────────────
+  "szoveg-kinyerese": {
+    introText:
+      "Extrage textul din fișierele PDF și salvează-l ca text simplu. Ideal pentru copierea conținutului din documente scanate sau protejate, direct în browserul tău.",
+    guide: [
+      "1. Încarcă fișierul PDF din care dorești să extragi textul.",
+      "2. Instrumentul procesează automat documentul și extrage textul.",
+      "3. Copiază textul extras sau descarcă-l ca fișier text.",
+    ],
+    faq: [
+      { q: "La ce este utilă extragerea textului?", a: "Servește la extragerea conținutului text din fișierele PDF pentru editare, analiză sau reutilizare în alte documente." },
+      { q: "Funcționează cu documente scanate?", a: "Instrumentul extrage textul încorporat în PDF. Pentru documente scanate ca imagini, este necesară tehnologia OCR." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, procesarea are loc exclusiv în browserul tău, fără transmitere de date." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează fișierul PDF din care dorești să extragi textul." },
+        { title: "2. Extragere automată", description: "Instrumentul citește și extrage textul din toate paginile." },
+        { title: "3. Copiere sau descărcare", description: "Copiază textul în clipboard sau descarcă-l ca fișier .txt." },
+      ],
+      useCases: [
+        { icon: "📝", title: "Editarea conținutului", description: "Extrage textul din PDF pentru a-l edita în Word sau alt editor de text." },
+        { icon: "🔍", title: "Căutare în documente", description: "Transformă conținutul PDF în text căutabil pentru analiza rapidă." },
+        { icon: "📊", title: "Extragere date", description: "Extrage date din tabele și rapoarte PDF pentru prelucrare ulterioară." },
+        { icon: "🌐", title: "Traducere", description: "Extrage textul din PDF pentru a-l traduce cu un instrument de traducere." },
+      ],
+      aboutSection: {
+        title: "Extragerea textului din PDF",
+        paragraphs: [
+          "Extragerea textului din PDF este utilă atunci când ai nevoie de conținutul documentului într-un format editabil. Instrumentul identifică straturile de text din fișierul PDF și le extrage fidel.",
+          "Procesarea se face complet în browserul tău, garantând confidențialitatea datelor. Textul extras păstrează ordinea paragrafelor și structura de bază a documentului original.",
+        ],
+      },
+      tips: [
+        { icon: "📄", tip: "Verifică textul extras – formatarea complexă (coloane, tabele) poate necesita ajustări manuale." },
+        { icon: "🔤", tip: "Pentru cele mai bune rezultate, folosește PDF-uri create digital, nu scanate ca imagini." },
+        { icon: "📋", tip: "Folosește funcția de copiere pentru a transfera rapid textul extras în alte aplicații." },
+      ],
+    },
+  },
+
+  // ─── 14. Semnare PDF ──────────────────────────────────────────────────────
+  "alairas": {
+    introText:
+      "Adaugă semnătura ta pe documentele PDF – desenează, tastează sau încarcă o imagine cu semnătura. Semnează contracte, formulare și documente oficial, direct din browser.",
+    guide: [
+      "1. Încarcă fișierul PDF pe care dorești să-l semnezi.",
+      "2. Creează semnătura – desenează cu mouse-ul, tastează sau încarcă o imagine.",
+      "3. Plasează semnătura pe pagina dorită și ajustează dimensiunea.",
+      "4. Apasă butonul «Salvare» – PDF-ul semnat poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este utilă semnarea PDF-ului?", a: "Servește la adăugarea semnăturii personale pe documente PDF, fără a fi nevoie să le tipărești, semnezi manual și scanezi din nou." },
+      { q: "Semnătura are valoare juridică?", a: "Semnătura electronică adăugată vizual pe PDF are caracter informativ. Pentru semnătură digitală cu valoare juridică completă, este necesară o semnătură electronică calificată." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, documentul și semnătura rămân în browserul tău, fără a fi transmise pe vreun server." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează documentul PDF pe care dorești să-l semnezi." },
+        { title: "2. Crearea semnăturii", description: "Desenează semnătura, tastează-o sau încarcă o imagine cu semnătura ta." },
+        { title: "3. Plasarea semnăturii", description: "Trage semnătura pe poziția dorită și ajustează dimensiunea." },
+        { title: "4. Descărcare", description: "Salvează și descarcă PDF-ul semnat." },
+      ],
+      useCases: [
+        { icon: "📝", title: "Semnarea contractelor", description: "Semnează contracte și acorduri fără a le tipări." },
+        { icon: "📋", title: "Formulare oficiale", description: "Completează și semnează formulare administrative sau fiscale." },
+        { icon: "✉️", title: "Scrisori și documente", description: "Adaugă semnătura pe scrisori oficiale și documente de afaceri." },
+        { icon: "🏠", title: "Documente imobiliare", description: "Semnează documentele de închiriere sau vânzare-cumpărare." },
+      ],
+      aboutSection: {
+        title: "Semnarea electronică a PDF-urilor",
+        paragraphs: [
+          "Semnarea electronică a documentelor PDF elimină necesitatea tipăririi, semnării manuale și scanării. Economisești timp și hârtie, putând semna documente de oriunde.",
+          "Instrumentul nostru oferă mai multe metode de creare a semnăturii – desen liber, tastare sau imagine încărcată – cu control complet asupra poziționării și dimensiunii pe document.",
+        ],
+      },
+      tips: [
+        { icon: "✍️", tip: "Desenează semnătura cu mouse-ul sau cu degetul pe ecranul tactil pentru un aspect natural." },
+        { icon: "💾", tip: "Salvează semnătura pentru a o reutiliza rapid pe alte documente." },
+        { icon: "📐", tip: "Ajustează dimensiunea semnăturii pentru a se potrivi în spațiul destinat de pe document." },
+      ],
+    },
+  },
+
+  // ─── 15. Protejare PDF cu parolă ──────────────────────────────────────────
+  "jelszo-vedelem": {
+    introText:
+      "Protejează fișierul PDF cu parolă pentru a preveni accesul neautorizat. Setează o parolă de deschidere și restricții de tipărire sau copiere. Criptarea se face complet în browser.",
+    guide: [
+      "1. Încarcă fișierul PDF pe care dorești să-l protejezi.",
+      "2. Introdu parola dorită și selectează restricțiile (tipărire, copiere).",
+      "3. Apasă butonul «Protejare» – PDF-ul criptat poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este utilă protejarea cu parolă?", a: "Servește la restricționarea accesului la documentul PDF – doar persoanele care cunosc parola pot deschide fișierul." },
+      { q: "Ce tip de criptare se folosește?", a: "Instrumentul folosește criptare standard PDF, care protejează documentul cu parola specificată de tine." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, criptarea are loc exclusiv în browserul tău – parola și fișierul nu sunt transmise nicăieri." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează fișierul PDF pe care dorești să-l protejezi cu parolă." },
+        { title: "2. Setarea parolei", description: "Introdu parola de deschidere și selectează restricțiile dorite." },
+        { title: "3. Criptare", description: "Apasă butonul – instrumentul criptează fișierul PDF." },
+        { title: "4. Descărcare", description: "Descarcă PDF-ul protejat cu parolă." },
+      ],
+      useCases: [
+        { icon: "🔒", title: "Documente confidențiale", description: "Protejează rapoartele financiare, contractele și documentele sensibile." },
+        { icon: "📧", title: "Trimitere securizată prin e-mail", description: "Criptează PDF-urile înainte de a le trimite prin e-mail pentru protecție suplimentară." },
+        { icon: "🏥", title: "Date medicale", description: "Protejează documentele medicale și rapoartele de sănătate cu parolă." },
+        { icon: "👤", title: "Date personale", description: "Securizează documentele ce conțin date cu caracter personal." },
+      ],
+      aboutSection: {
+        title: "Protejarea PDF-urilor cu parolă",
+        paragraphs: [
+          "Protejarea cu parolă a fișierelor PDF este esențială pentru securizarea documentelor confidențiale. Criptarea previne accesul neautorizat și protejează informațiile sensibile.",
+          "Instrumentul nostru permite setarea unei parole de deschidere și a restricțiilor suplimentare (tipărire, copiere), iar întreaga procesare are loc în browserul tău pentru securitate maximă.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Folosește o parolă puternică – cel puțin 8 caractere, cu litere mari, mici, cifre și simboluri." },
+        { icon: "📝", tip: "Notează parola într-un loc sigur – fără ea, documentul nu poate fi deschis." },
+        { icon: "🔐", tip: "Adaugă și restricții de copiere sau tipărire pentru un nivel suplimentar de protecție." },
+      ],
+    },
+  },
+
+  // ─── 16. Eliminare parolă PDF ─────────────────────────────────────────────
+  "jelszo-eltavolitasa": {
+    introText:
+      "Elimină protecția cu parolă de pe fișierele PDF. Dacă cunoști parola curentă, poți debloca documentul și salva o versiune fără restricții. Procesarea se face complet în browser.",
+    guide: [
+      "1. Încarcă fișierul PDF protejat cu parolă.",
+      "2. Introdu parola curentă a documentului.",
+      "3. Apasă butonul «Deblocare» – PDF-ul fără parolă poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este utilă eliminarea parolei?", a: "Servește la deblocarea fișierelor PDF protejate cu parolă, creând o versiune fără restricții de acces." },
+      { q: "Pot elimina parola fără s-o cunosc?", a: "Nu, trebuie să cunoști parola curentă pentru a debloca documentul. Instrumentul nu sparge parole." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, fișierul și parola sunt procesate exclusiv în browserul tău, fără transmitere pe server." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului protejat", description: "Selectează fișierul PDF protejat cu parolă." },
+        { title: "2. Introducerea parolei", description: "Introdu parola curentă a documentului pentru autentificare." },
+        { title: "3. Deblocare", description: "Apasă butonul – instrumentul elimină protecția cu parolă." },
+        { title: "4. Descărcare", description: "Descarcă PDF-ul deblocat, fără restricții." },
+      ],
+      useCases: [
+        { icon: "🔓", title: "Deblocarea documentelor proprii", description: "Elimină parola de pe documentele tale când nu mai este necesară protecția." },
+        { icon: "🖨️", title: "Activare tipărire", description: "Deblochează restricția de tipărire pentru a putea imprima documentul." },
+        { icon: "📋", title: "Activare copiere", description: "Elimină restricțiile de copiere a textului din document." },
+      ],
+      aboutSection: {
+        title: "Eliminarea parolei din PDF",
+        paragraphs: [
+          "Uneori protecția cu parolă nu mai este necesară – de exemplu, atunci când documentul a fost aprobat sau când dorești să-l partajezi liber. Eliminarea parolei creează o versiune deschisă a documentului.",
+          "Instrumentul necesită cunoașterea parolei curente – nu este un instrument de spargere a parolelor. Procesarea se face complet în browserul tău pentru securitatea datelor.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Asigură-te că ai parola corectă înainte de a începe – instrumentul nu poate recupera parole uitate." },
+        { icon: "💾", tip: "Salvează o copie a fișierului protejat original, în cazul în care vei avea nevoie de el în viitor." },
+        { icon: "⚠️", tip: "După eliminarea parolei, oricine poate accesa documentul – asigură-te că acest lucru este intenționat." },
+      ],
+    },
+  },
+
+  // ─── 17. Redactare PDF ────────────────────────────────────────────────────
+  "eltakares": {
+    introText:
+      "Redactează (acoperă permanent) informațiile sensibile din documentele PDF. Marchează zonele pe care dorești să le ascunzi – textul acoperit nu poate fi recuperat. Procesarea are loc în browser.",
+    guide: [
+      "1. Încarcă fișierul PDF care conține informații sensibile.",
+      "2. Selectează sau marchează zonele de text pe care dorești să le redactezi.",
+      "3. Apasă butonul «Redactare» – PDF-ul cu informațiile acoperite poate fi descărcat.",
+    ],
+    faq: [
+      { q: "La ce este utilă redactarea PDF-ului?", a: "Servește la acoperirea permanentă a informațiilor sensibile (nume, adrese, coduri numerice personale) din documentele PDF înainte de partajare." },
+      { q: "Informațiile redactate pot fi recuperate?", a: "Nu, redactarea este permanentă – textul acoperit este eliminat complet din fișier și nu poate fi recuperat." },
+      { q: "Este sigur din punct de vedere al datelor mele?", a: "Da, documentul este procesat exclusiv în browserul tău, fără transmitere pe server." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea PDF-ului", description: "Selectează fișierul PDF care conține informații de redactat." },
+        { title: "2. Marcarea zonelor sensibile", description: "Selectează textul sau zonele pe care dorești să le acoperi permanent." },
+        { title: "3. Aplicarea redactării", description: "Apasă butonul – instrumentul acoperă ireversibil zonele marcate." },
+        { title: "4. Descărcare", description: "Descarcă PDF-ul redactat cu informațiile sensibile eliminate." },
+      ],
+      useCases: [
+        { icon: "👤", title: "Protecția datelor personale", description: "Acoperă numele, adresele și codurile numerice personale din documente înainte de partajare." },
+        { icon: "💰", title: "Informații financiare", description: "Redactează sumele, numerele de cont sau alte date financiare sensibile." },
+        { icon: "⚖️", title: "Documente juridice", description: "Acoperă informațiile confidențiale din contracte și documente legale." },
+        { icon: "🏥", title: "Date medicale", description: "Protejează informațiile medicale din rapoarte și documente de sănătate." },
+      ],
+      aboutSection: {
+        title: "Redactarea informațiilor din PDF",
+        paragraphs: [
+          "Redactarea PDF este procesul de acoperire permanentă a informațiilor sensibile dintr-un document. Spre deosebire de simpla acoperire vizuală, redactarea elimină complet textul din structura fișierului.",
+          "Instrumentul nostru garantează că informațiile redactate nu pot fi recuperate prin niciun mijloc – textul este eliminat permanent, nu doar ascuns. Procesarea se face în browser pentru securitate maximă.",
+        ],
+      },
+      tips: [
+        { icon: "🔍", tip: "Verifică cu atenție toate zonele marcate înainte de a aplica redactarea – procesul este ireversibil." },
+        { icon: "💾", tip: "Păstrează întotdeauna o copie a documentului original înainte de redactare." },
+        { icon: "📋", tip: "Verifică PDF-ul redactat prin căutare text pentru a te asigura că informațiile sensibile au fost complet eliminate." },
       ],
     },
   },

@@ -2,6 +2,7 @@
   import Dropzone from "../../ui/Dropzone.svelte";
   import ConvertButton from "../../ui/ConvertButton.svelte";
   import AdSlot from "../../ui/AdSlot.svelte";
+  import PdfPreview from "./PdfPreview.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
@@ -14,6 +15,7 @@
   let isDone = false;
   let convertBtnRef: ConvertButton;
   let resultBlob: Blob | null = null;
+  let resultBytes: Uint8Array | null = null;
   let resultFilename = "";
 
   function handleFiles(e: CustomEvent<File[]>) {
@@ -67,6 +69,7 @@
         pages.forEach((p) => merged.addPage(p));
       }
       const result = await merged.save();
+      resultBytes = new Uint8Array(result);
       resultBlob = new Blob([result], { type: "application/pdf" });
       resultFilename = "merged.pdf";
       isDone = true;
@@ -136,6 +139,14 @@
     {/if}
 
     <AdSlot show={timing.showAdSlot} slot="before-download" />
+
+    {#if isDone && resultBytes}
+      <PdfPreview
+        pdfBytes={resultBytes}
+        filename={resultFilename}
+        onReset={() => { resultBytes = null; resultBlob = null; files = []; isDone = false; convertBtnRef?.reset(); }}
+      />
+    {/if}
   {/if}
 
   {#if error}

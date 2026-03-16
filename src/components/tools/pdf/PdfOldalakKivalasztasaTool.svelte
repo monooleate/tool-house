@@ -5,6 +5,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import PdfPreview from "./PdfPreview.svelte";
 
   const timing = getTimingConfig("pdf-oldalak-kivalasztasa");
 
@@ -16,6 +17,7 @@
   let isDone = false;
   let convertBtnRef: ConvertButton;
   let resultBlob: Blob | null = null;
+  let resultBytes: Uint8Array | null = null;
   let resultFilename = "";
 
   function handleFiles(e: CustomEvent<File[]>) {
@@ -81,6 +83,7 @@
       pages.forEach((p) => newDoc.addPage(p));
       const result = await newDoc.save();
       const baseName = file.name.replace(/\.pdf$/i, "");
+      resultBytes = new Uint8Array(result);
       resultBlob = new Blob([result], { type: "application/pdf" });
       resultFilename = `${baseName}${ui.selectedSuffix}.pdf`;
       isDone = true;
@@ -165,6 +168,14 @@
     />
 
     <AdSlot show={timing.showAdSlot} slot="before-download" />
+
+    {#if isDone && resultBytes}
+      <PdfPreview
+        pdfBytes={resultBytes}
+        filename={resultFilename}
+        onReset={() => { resultBytes = null; resultBlob = null; file = null; isDone = false; convertBtnRef?.reset(); }}
+      />
+    {/if}
   {/if}
 
   {#if error}

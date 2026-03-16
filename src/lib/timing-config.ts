@@ -53,6 +53,9 @@ export const TOOL_TIMING: Record<string, Partial<TimingConfig>> = {
   // Fájl info – azonnali
   "fajl-informacio":            { delayBeforeConvert: 0, delayBeforeDownload: 0 },
   "hash-ellenorzo":             { delayBeforeConvert: 0, delayBeforeDownload: 0 },
+  // PDF v2 – szöveg kinyerés azonnali
+  "szoveg-kinyerese":           { delayBeforeConvert: 0, delayBeforeDownload: 0 },
+  "tomoritese":                 { delayBeforeConvert: 3000, delayBeforeDownload: 3000 },
 };
 
 /** Visszaadja az adott tool timing config-ját (merged globális + egyedi) */

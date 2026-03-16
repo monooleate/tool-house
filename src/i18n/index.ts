@@ -73,7 +73,7 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     dir: "ltr",
     nativeName: "Magyar",
     flag: "🇭🇺",
-    gtagId: "G-GGJNWNYZ5G",
+    gtagId: "",  // GA4 kikapcsolva – cookie consent nem szükséges
     gtmId: "",
   },
   ro: {
@@ -84,7 +84,7 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     dir: "ltr",
     nativeName: "Română",
     flag: "🇷🇴",
-    gtagId: "G-1906283TT4",   // TODO: RO GA4 mérési ID beállítása
+    gtagId: "",  // GA4 kikapcsolva – cookie consent nem szükséges
     gtmId: "",
   },
 };

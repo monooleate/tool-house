@@ -275,7 +275,9 @@ export function organizationSchema(): string {
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    foundingDate: "2025-01-01",
+    foundingDate: "2026-01-15",
+    image: `${SITE_URL}/og-default.png`,
+    logo: `${SITE_URL}/og-default.png`,
     founder: {
       "@type": "Person",
       name: "Mészáros János",

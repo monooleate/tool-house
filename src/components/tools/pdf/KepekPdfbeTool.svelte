@@ -5,6 +5,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import PdfPreview from "./PdfPreview.svelte";
 
   const timing = getTimingConfig("kepek-pdfbe");
 
@@ -15,6 +16,7 @@
   let isDone = false;
   let convertBtnRef: ConvertButton;
   let resultBlob: Blob | null = null;
+  let resultBytes: Uint8Array | null = null;
   let resultFilename = "";
 
   const A4_W = 595.28;
@@ -104,6 +106,7 @@
       }
 
       const result = await doc.save();
+      resultBytes = new Uint8Array(result);
       resultBlob = new Blob([result], { type: "application/pdf" });
       resultFilename = "kepek.pdf";
       isDone = true;
@@ -121,6 +124,14 @@
   }
 
   $: totalSize = files.reduce((sum, f) => sum + f.size, 0);
+
+  // Reset conversion when page size changes
+  $: if (pageSize && isDone) {
+    isDone = false;
+    resultBlob = null;
+    resultBytes = null;
+    convertBtnRef?.reset();
+  }
 </script>
 
 <div class="tool">
@@ -193,6 +204,14 @@
     {/if}
 
     <AdSlot show={timing.showAdSlot} slot="before-download" />
+
+    {#if isDone && resultBytes}
+      <PdfPreview
+        pdfBytes={resultBytes}
+        filename={resultFilename}
+        onReset={() => { resultBytes = null; resultBlob = null; files = []; isDone = false; convertBtnRef?.reset(); }}
+      />
+    {/if}
   {/if}
 
   {#if error}

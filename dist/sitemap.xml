@@ -5,644 +5,692 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://konvertalo.hu/</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/imagine</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/pdf</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/date</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/text</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/dezvoltator</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/markdown</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/markdown</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/html</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/html</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/excel</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/excel</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fajl</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/fisiere</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/jpg-webp</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-jpg-webp</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/png-webp</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-png-webp</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/jpg-png</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-jpg-png</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/png-jpg</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-png-jpg</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/webp-jpg</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-webp-jpg</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/webp-png</loc>
+    <loc>https://instrumenteonline.ro/imagine/convertor-webp-png</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/atmeretezes</loc>
+    <loc>https://instrumenteonline.ro/imagine/redimensionare-imagini</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomorites</loc>
+    <loc>https://instrumenteonline.ro/imagine/comprimare-imagini</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/minoseg-allitas</loc>
+    <loc>https://instrumenteonline.ro/imagine/setare-calitate-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/felbontas-kiszamolo</loc>
+    <loc>https://instrumenteonline.ro/imagine/calculator-rezolutie</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/levagas</loc>
+    <loc>https://instrumenteonline.ro/imagine/decupare-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/forgatas</loc>
+    <loc>https://instrumenteonline.ro/imagine/rotire-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tukrozes</loc>
+    <loc>https://instrumenteonline.ro/imagine/oglindire-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/90-fokos-forgatas</loc>
+    <loc>https://instrumenteonline.ro/imagine/rotire-90-grade</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/elmosas</loc>
+    <loc>https://instrumenteonline.ro/imagine/estompare-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/pixelates</loc>
+    <loc>https://instrumenteonline.ro/imagine/pixelare-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/fekete-feher</loc>
+    <loc>https://instrumenteonline.ro/imagine/alb-negru</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/kontraszt-fenyero</loc>
+    <loc>https://instrumenteonline.ro/imagine/contrast-luminozitate</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/vizjel</loc>
+    <loc>https://instrumenteonline.ro/imagine/watermark-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/keret-padding</loc>
+    <loc>https://instrumenteonline.ro/imagine/chenar-padding</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/metadata-megjelenites</loc>
+    <loc>https://instrumenteonline.ro/imagine/cititor-metadata-exif</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/metadata-torles</loc>
+    <loc>https://instrumenteonline.ro/imagine/stergere-metadata</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomeges-konvertalas</loc>
+    <loc>https://instrumenteonline.ro/imagine/conversie-lot-imagini</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomeges-atmeretezes</loc>
+    <loc>https://instrumenteonline.ro/imagine/redimensionare-lot</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomeges-tomorites</loc>
+    <loc>https://instrumenteonline.ro/imagine/comprimare-lot</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomeges-atnevezes</loc>
+    <loc>https://instrumenteonline.ro/imagine/redenumire-lot</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/kep/tomeges-zip-letoltes</loc>
+    <loc>https://instrumenteonline.ro/imagine/impachetare-zip-imagini</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/osszeillesztes</loc>
+    <loc>https://instrumenteonline.ro/pdf/combinare-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/szetbontas</loc>
+    <loc>https://instrumenteonline.ro/pdf/separare-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/oldalak-kivalasztasa</loc>
+    <loc>https://instrumenteonline.ro/pdf/selectare-pagini-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/oldalak-sorrendje</loc>
+    <loc>https://instrumenteonline.ro/pdf/reordonare-pagini-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/oldalak-forgatasa</loc>
+    <loc>https://instrumenteonline.ro/pdf/rotire-pagini-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/oldalak-torlese</loc>
+    <loc>https://instrumenteonline.ro/pdf/stergere-pagini-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/pdf-keppe</loc>
+    <loc>https://instrumenteonline.ro/pdf/pdf-in-imagine</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/kepek-pdfbe</loc>
+    <loc>https://instrumenteonline.ro/pdf/imagini-in-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/pdf/pdf-informacio</loc>
+    <loc>https://instrumenteonline.ro/pdf/informatii-pdf</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/csv-json</loc>
+    <loc>https://instrumenteonline.ro/pdf/comprimare-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/watermark-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/numerotare-pagini</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/extragere-text-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/semnare-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/protejare-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/eliminare-parola-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/pdf/redactare-pdf</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/date/convertor-csv-json</loc>
     <lastmod>2025-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/json-csv</loc>
+    <loc>https://instrumenteonline.ro/date/convertor-json-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/tsv-csv</loc>
+    <loc>https://instrumenteonline.ro/date/convertor-tsv-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/csv-tsv</loc>
+    <loc>https://instrumenteonline.ro/date/convertor-csv-tsv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/csv-tisztitas</loc>
+    <loc>https://instrumenteonline.ro/date/curatare-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/fejlec-atnevezes</loc>
+    <loc>https://instrumenteonline.ro/date/redenumire-antete-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/oszlopok-kivalasztasa</loc>
+    <loc>https://instrumenteonline.ro/date/selectare-coloane-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/sorok-szurese</loc>
+    <loc>https://instrumenteonline.ro/date/filtrare-randuri-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/oszlop-szetvalasztas</loc>
+    <loc>https://instrumenteonline.ro/date/separare-coloana-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/ertekek-normalizalasa</loc>
+    <loc>https://instrumenteonline.ro/date/normalizare-valori-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adat/tomeges-konvertalas-zip</loc>
+    <loc>https://instrumenteonline.ro/date/conversie-masa-csv-zip</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/slug-generator</loc>
+    <loc>https://instrumenteonline.ro/text/generator-slug-url</loc>
     <lastmod>2025-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/sorok-rendezese</loc>
+    <loc>https://instrumenteonline.ro/text/sortare-randuri</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/ismetlodok-torlese</loc>
+    <loc>https://instrumenteonline.ro/text/stergere-duplicate</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/ures-sorok-torlese</loc>
+    <loc>https://instrumenteonline.ro/text/stergere-randuri-goale</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/whitespace-tisztitas</loc>
+    <loc>https://instrumenteonline.ro/text/curatare-whitespace</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/ekezetek-eltavolitasa</loc>
+    <loc>https://instrumenteonline.ro/text/eliminare-diacritice</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/specialis-karakterek-torlese</loc>
+    <loc>https://instrumenteonline.ro/text/stergere-caractere-speciale</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/karaktercsere</loc>
+    <loc>https://instrumenteonline.ro/text/inlocuire-caractere</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/kereses-csere</loc>
+    <loc>https://instrumenteonline.ro/text/cautare-inlocuire</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/regex-kereses-csere</loc>
+    <loc>https://instrumenteonline.ro/text/regex-cautare-inlocuire</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/kisbetu-nagybetu</loc>
+    <loc>https://instrumenteonline.ro/text/majuscule-minuscule</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/szoveg/case-konverter</loc>
+    <loc>https://instrumenteonline.ro/text/case-converter</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/json-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-json</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/json-minimalas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/minificare-json</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/json-ellenorzes</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/validare-json</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/yaml-ellenorzes</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/validare-yaml</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/yaml-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-yaml</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/xml-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-xml</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/xml-minimalas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/minificare-xml</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/xml-ellenorzes</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/validare-xml</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/html-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-html</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/html-minimalas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/minificare-html</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/css-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-css</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/css-minimalas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/minificare-css</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/js-formazas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/formatare-javascript</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/js-minimalas</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/minificare-javascript</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/base64-kodolo-dekodolo</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/base64-codificare-decodificare</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/url-kodolo-dekodolo</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/url-codificare-decodificare</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fejleszto/html-entity-kodolo-dekodolo</loc>
+    <loc>https://instrumenteonline.ro/dezvoltator/html-entity-codificare-decodificare</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/markdown/markdown-html</loc>
+    <loc>https://instrumenteonline.ro/markdown/conversie-markdown-html</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/html/html-szovegge</loc>
+    <loc>https://instrumenteonline.ro/html/conversie-html-text</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/html/html-minimalas-html</loc>
+    <loc>https://instrumenteonline.ro/html/minificare-html</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/excel/xlsx-csv</loc>
+    <loc>https://instrumenteonline.ro/excel/conversie-excel-csv</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/excel/xlsx-json</loc>
+    <loc>https://instrumenteonline.ro/excel/conversie-excel-json</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/excel/csv-xlsx</loc>
+    <loc>https://instrumenteonline.ro/excel/conversie-csv-excel</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/excel/xlsx-megtekinto</loc>
+    <loc>https://instrumenteonline.ro/excel/vizualizator-excel</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fajl/zip-keszito</loc>
+    <loc>https://instrumenteonline.ro/fisiere/creare-zip</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fajl/zip-kibonto</loc>
+    <loc>https://instrumenteonline.ro/fisiere/extragere-zip</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fajl/hash-ellenorzo</loc>
+    <loc>https://instrumenteonline.ro/fisiere/verificare-hash</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/fajl/fajl-informacio</loc>
+    <loc>https://instrumenteonline.ro/fisiere/informatii-fisier</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/title-meta-hossz</loc>
+    <loc>https://instrumenteonline.ro/seo/verificare-title-meta</loc>
     <lastmod>2026-02-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/utm-eltavolito</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/eliminare-utm</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/url-normalizalo</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/normalizare-url</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/canonical-epito</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/generator-canonical</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/fajlnev-optimalizalo</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/optimizare-nume-fisier</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/alt-szoveg-sablon</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/generator-text-alt</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/robots-txt-ellenorzo</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/verificare-robots-txt</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/sitemap-url-ellenorzo</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/seo/verificare-sitemap</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/adatvedelmi-nyilatkozat</loc>
-    <lastmod>2026-03-03</lastmod>
+    <loc>https://instrumenteonline.ro/politica-confidentialitate</loc>
+    <lastmod>2026-03-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -147,4 +147,68 @@ export const PDF_RO: Record<
       "pdf properties online",
     ],
   },
+
+  "tomoritese": {
+    slug: "comprimare-pdf",
+    title: "Comprimare PDF online – gratuit, în browser | InstrumenteOnline",
+    h1: "Comprimă PDF",
+    description: "Comprimă fișierele PDF gratuit în browser. Fără încărcare pe server, complet privat. Reducere medie 40-80%.",
+    keywords: ["comprimare pdf", "reducere dimensiune pdf", "compressor pdf online", "micșorare pdf"],
+  },
+
+  "pdf-vizjel": {
+    slug: "watermark-pdf",
+    title: "Adaugă watermark la PDF – online, gratuit | InstrumenteOnline",
+    h1: "Adaugă watermark PDF",
+    description: "Adaugă watermark textual documentelor PDF în browser. Poziție diagonală, opacitate și culoare configurabile. Fără server.",
+    keywords: ["watermark pdf", "adaugă marcaj pdf", "pdf confidențial", "ștampilă pdf"],
+  },
+
+  "oldalszamok": {
+    slug: "numerotare-pagini",
+    title: "Adaugă numere de pagină la PDF – online, gratuit | InstrumenteOnline",
+    h1: "Numerotare pagini PDF",
+    description: "Adaugă numere de pagină documentelor PDF în browser. Poziție, format și număr de start configurabile. Gratuit, privat.",
+    keywords: ["numerotare pdf", "adaugă pagini pdf", "număr pagină pdf", "paginare pdf"],
+  },
+
+  "szoveg-kinyerese": {
+    slug: "extragere-text-pdf",
+    title: "Extragere text din PDF – online, gratuit | InstrumenteOnline",
+    h1: "Extrage text din PDF",
+    description: "Extrage textul din fișierele PDF în browser. Copiabil și descărcabil ca TXT. Fără încărcare pe server, complet privat.",
+    keywords: ["extragere text pdf", "copiere text pdf", "pdf în text", "text din pdf"],
+  },
+
+  "alairas": {
+    slug: "semnare-pdf",
+    title: "Semnătură PDF online – gratuit, în browser | InstrumenteOnline",
+    h1: "Semnează PDF online",
+    description: "Semnează documente PDF în browser. Semnătură desenată, scrisă sau încărcată ca imagine. Fără server, complet privat.",
+    keywords: ["semnătură pdf", "semnat pdf online", "semnătură electronică pdf", "adaugă semnătură pdf"],
+  },
+
+  "jelszo-vedelem": {
+    slug: "protejare-pdf",
+    title: "Protejează PDF cu parolă – online, gratuit | InstrumenteOnline",
+    h1: "Adaugă parolă la PDF",
+    description: "Protejează fișierele PDF cu parolă în browser. Setare parolă de deschidere și restricții opționale. Fără server.",
+    keywords: ["protejare pdf", "parolă pdf", "criptare pdf", "blocare pdf"],
+  },
+
+  "jelszo-eltavolitasa": {
+    slug: "eliminare-parola-pdf",
+    title: "Elimină parola din PDF – online, gratuit | InstrumenteOnline",
+    h1: "Elimină parola din PDF",
+    description: "Elimină protecția cu parolă din fișierele PDF în browser. Introdu parola existentă și descarcă versiunea neprotejată.",
+    keywords: ["eliminare parolă pdf", "deprotejare pdf", "deblocare pdf", "scoate parolă pdf"],
+  },
+
+  "eltakares": {
+    slug: "redactare-pdf",
+    title: "Redactare PDF – ascundere date sensibile online | InstrumenteOnline",
+    h1: "Redactare PDF",
+    description: "Ascunde datele sensibile din documentele PDF. Dreptunghiuri negre arse ireversibil. În browser, fără încărcare pe server.",
+    keywords: ["redactare pdf", "ascundere date pdf", "cenzurare pdf", "ștergere informații pdf"],
+  },
 };
