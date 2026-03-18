@@ -12,7 +12,7 @@ import { t, tpl, CURRENT_CONFIG, CURRENT_LANG, LANG_CONFIG } from "../i18n/index
 import type { SupportedLang } from "../i18n/index.ts";
 
 const localizedCategories = getVisibleCategories(CURRENT_LANG).map(cat => getLocalizedCategory(cat, CURRENT_LANG));
-const { siteName, siteUrl, lang: htmlLang, locale } = CURRENT_CONFIG;
+const { siteName, siteUrl, siteNameShort, lang: htmlLang, locale } = CURRENT_CONFIG;
 // View Transitions kikapcsolva – link navigáció hibát okozott
 // import { ViewTransitions } from "astro:transitions";
 import SearchOverlay from "../components/ui/SearchOverlay.svelte";
@@ -104,6 +104,8 @@ const totalCount = getTotalToolsCount();
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content={hasLargeOgImage ? "summary_large_image" : "summary"} />
+  <meta name="twitter:site"        content="@jmeszarosdev" />
+  <meta name="twitter:creator"     content="@jmeszarosdev" />
   <meta name="twitter:title"       content={ogTitle ?? resolvedTitle} />
   <meta name="twitter:description" content={ogDescription ?? description} />
   <meta name="twitter:image"       content={ogImageAbsolute} />
@@ -256,7 +258,8 @@ const totalCount = getTotalToolsCount();
     <nav class="site-nav container" aria-label={t("nav.main_nav")}>
       <a href="/" class="site-logo" aria-label={`${SITE_NAME} ${t("nav.home_label")}`}>
         <span class="site-logo__icon" aria-hidden="true">⚡</span>
-        <span class="site-logo__text">{SITE_NAME}</span>
+        <span class="site-logo__text site-logo__text--full">{SITE_NAME}</span>
+        <span class="site-logo__text site-logo__text--short">{siteNameShort}</span>
         <span class="site-logo__count" title={tpl("nav.active_tools_title", { count: String(activeCount) })}>{activeCount}</span>
       </a>
 
@@ -559,6 +562,11 @@ const totalCount = getTotalToolsCount();
 
 .site-logo__icon { font-size: 1.25rem; }
 .site-logo__text { color: inherit; }
+.site-logo__text--short { display: none; }
+@media (max-width: 480px) {
+  .site-logo__text--full { display: none; }
+  .site-logo__text--short { display: inline; }
+}
 
 .site-logo__count {
   font-size: 0.65rem;

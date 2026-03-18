@@ -53,6 +53,7 @@ export interface LangConfig {
   locale: string;         // OG locale (pl. "hu_HU")
   siteName: string;       // Site neve az adott piacon
   siteUrl: string;        // Canonical base URL
+  siteNameShort: string;  // Rövid név mobilra (pl. "IO" az InstrumenteOnline-hoz)
   dir: "ltr" | "rtl";    // Szöveg iránya
   nativeName: string;     // Nyelv saját nevén (pl. "Magyar", "Română")
   flag: string;           // Emoji zászló
@@ -70,6 +71,7 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     locale: "hu_HU",
     siteName: "Konvertalo.hu",
     siteUrl: "https://konvertalo.hu",
+    siteNameShort: "Konvertalo",
     dir: "ltr",
     nativeName: "Magyar",
     flag: "🇭🇺",
@@ -81,6 +83,7 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     locale: "ro_RO",
     siteName: "InstrumenteOnline",
     siteUrl: "https://instrumenteonline.ro",
+    siteNameShort: "IO",
     dir: "ltr",
     nativeName: "Română",
     flag: "🇷🇴",

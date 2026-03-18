@@ -86,7 +86,10 @@ export const GET: APIRoute = ({ site }) => {
   }
 
   // Statikus oldalak
+  urls.push(urlEntry(base, `/${getStaticUrl("rolunk")}`, "0.4", "monthly"));
+  urls.push(urlEntry(base, `/${getStaticUrl("kapcsolat")}`, "0.4", "monthly"));
   urls.push(urlEntry(base, `/${getStaticUrl("adatvedelmi")}`, "0.3", "yearly"));
+  urls.push(urlEntry(base, `/${getStaticUrl("kereses")}`, "0.5", "weekly"));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
