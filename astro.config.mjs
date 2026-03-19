@@ -54,8 +54,10 @@ export default defineConfig({
       },
     },
     optimizeDeps: {
-      include: ["pdf-lib", "pdfjs-dist", "js-yaml"],
-      exclude: ["jszip"],
+      include: ["pdf-lib", "pdfjs-dist", "js-yaml", "heic2any", "color-thief-ts"],
+      exclude: ["jszip", "@jsquash/avif", "@jsquash/webp", "gifenc", "gifuct-js"],
     },
+    // WASM fájlok kezelése
+    assetsInclude: ["**/*.wasm"],
   },
 });

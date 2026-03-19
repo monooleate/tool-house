@@ -56,6 +56,10 @@ export const TOOL_TIMING: Record<string, Partial<TimingConfig>> = {
   // PDF v2 – szöveg kinyerés azonnali
   "szoveg-kinyerese":           { delayBeforeConvert: 0, delayBeforeDownload: 0 },
   "tomoritese":                 { delayBeforeConvert: 3000, delayBeforeDownload: 3000 },
+  // Kép eszközök – azonnali feedback
+  "kep-base64":                 { delayBeforeConvert: 0, delayBeforeDownload: 0 },
+  "szin-paletta":               { delayBeforeConvert: 0, delayBeforeDownload: 0 },
+  "exif-terkep":                { delayBeforeConvert: 0, delayBeforeDownload: 0 },
 };
 
 /** Visszaadja az adott tool timing config-ját (merged globális + egyedi) */

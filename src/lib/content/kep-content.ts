@@ -1291,4 +1291,344 @@ export const KEP_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ── ÚJ KÉPESZKÖZÖK SEO TARTALOM ──────────────────────────────
+
+  "heic-jpg": {
+    introText: "A HEIC (High Efficiency Image Container) az iPhone és iPad alapértelmezett képformátuma iOS 11 óta. Bár kiváló tömörítést nyújt, sok Windows program, weboldal és szerkesztőeszköz nem tudja megnyitni. Ez az eszköz böngészőben, szerver nélkül alakítja át a HEIC fájlokat universálisan kompatibilis JPG formátumba.",
+    guide: [
+      "1. Húzd be vagy tallózd ki a HEIC fájl(oka)t az eszközbe.",
+      "2. Az eszköz automatikusan konvertálja a fájlokat 90%-os JPG minőséggel.",
+      "3. Egyetlen fájlnál közvetlenül letölthető; több fájlnál ZIP archívumban.",
+    ],
+    faq: [
+      { q: "Miért nem nyílik meg a HEIC képem Windows-on?", a: "Windows alapértelmezetten nem tartalmaz HEIC dekódert. Konvertáld JPG-vé, amely minden rendszeren megnyílik." },
+      { q: "Elvész a kép minősége?", a: "90%-os JPG minőséggel konvertálunk, ami szemmel alig észrevehető különbséget jelent." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Fájl kiválasztása", description: "Húzd be a HEIC fájlt az eszközbe, vagy kattints a tallózás gombra. Egyszerre több fájl is feltölthető." },
+        { title: "Automatikus konverzió", description: "Az eszköz azonnal elkezdi a feldolgozást. A HEIC/HEIF dekódolás WebAssembly-vel, böngészőben zajlik." },
+        { title: "Letöltés", description: "Egyetlen fájlnál JPG-ként töltsd le. Több fájlnál ZIP archívumba csomagolva kerülnek a JPG fájlok." },
+      ],
+      useCases: [
+        { icon: "📱", title: "iPhone fotók megosztása", description: "Az iPhone-ról átmásolt fotók HEIC formátumban érkeznek. Konvertálással mindenki meg tudja nyitni őket." },
+        { icon: "💼", title: "Önéletrajz és pályázat", description: "Hatósági rendszerek és HR szoftverek általában JPG-t fogadnak el, HEIC-et nem." },
+        { icon: "🖥️", title: "Windows kompatibilitás", description: "Windows Photo Viewer és a legtöbb szerkesztőprogram JPG-t kezel, HEIC-et nem feltétlenül." },
+      ],
+      aboutSection: {
+        title: "A HEIC formátumról",
+        paragraphs: [
+          "A HEIC (High Efficiency Image Coding) az Apple által adoptált képformátum, amely az HEVC (H.265) videokodeken alapul. Fő előnye, hogy azonos képminőség mellett körülbelül feleakkora fájlméretet eredményez, mint a JPEG.",
+          "Hátránya az alacsony kompatibilitás: Windows, Android és legtöbb webalkalmazás alapértelmezetten nem tudja megnyitni.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Ha GPS adatot is szeretnéd megőrizni, a HEIC → JPG konverzió megtartja az EXIF metaadatokat." },
+        { icon: "📦", tip: "Egyszerre akár 50+ HEIC fájlt is feltölthetsz – az eredmény ZIP archívumban kerül letöltésre." },
+      ],
+    },
+  },
+
+  "heic-png": {
+    introText: "A HEIC → PNG konvertáló veszteségmentesen alakítja át iPhone és iPad képeidet PNG formátumba, megőrizve az alfa-csatornát és a teljes képminőséget.",
+    guide: ["1. Töltsd fel a HEIC/HEIF fájlt vagy fájlokat.", "2. Az eszköz PNG-vé konvertálja őket böngészőben.", "3. Töltsd le az eredményt."],
+    faq: [{ q: "Mikor érdemes PNG-t választani JPG helyett?", a: "Ha veszteségmentes minőség kell, vagy ha átlátszóság is szerepel a képben." }],
+    content: {
+      howToSteps: [
+        { title: "Fájl feltöltése", description: "Válaszd ki a HEIC fájlt." },
+        { title: "PNG konverzió", description: "Veszteségmentes PNG kimenet alfa-csatornával." },
+        { title: "Letöltés", description: "PNG fájlként töltsd le az eredményt." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Grafikai szerkesztés", description: "PNG formátum szükséges veszteségmentes szerkesztéshez." },
+        { icon: "🌐", title: "Webes használat", description: "PNG az egyik legelterjedtebb webes képformátum." },
+      ],
+      aboutSection: { title: "HEIC → PNG konverzió", paragraphs: ["A PNG veszteségmentes tömörítést alkalmaz, így ideális logókhoz, ikonokhoz és minden olyan képhez, ahol a minőség nem kompromisszálható."] },
+    },
+  },
+
+  "jpg-avif": {
+    introText: "Az AVIF (AV1 Image File Format) a legmodernebb képformátum, amely 2025-re minden főbb böngészőben támogatott. JPG képeidből AVIF-et generálva akár 50%-kal kisebb fájlméretet érhetsz el – teljesen szerver nélkül, a böngésződben.",
+    guide: ["1. Töltsd fel a JPG fájlt vagy fájlokat.", "2. Állítsd be a kívánt minőséget (1-63 CQ érték).", "3. Kattints a Konvertálás gombra.", "4. Töltsd le az AVIF fájlt."],
+    faq: [
+      { q: "Az AVIF minden böngészőben működik?", a: "Igen, 2025-re Chrome, Firefox, Safari 16+, Edge mind támogatja az AVIF-et." },
+      { q: "Mekkora méretmegtakarítás várható?", a: "Tipikusan 40-50% azonos szubjektív minőség mellett a JPEG-hez képest." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "JPG feltöltése", description: "Húzd be a JPG fájl(oka)t – tömeges feldolgozás is lehetséges." },
+        { title: "Minőség beállítása", description: "A CQ értéket 1-63 között állíthatod. 30-40 körüli érték ajánlott webes használatra." },
+        { title: "AVIF letöltése", description: "Töltsd le az AVIF fájlt, amelyet közvetlenül beilleszthetsz a weboldaladba." },
+      ],
+      useCases: [
+        { icon: "⚡", title: "Weboldal optimalizálás", description: "Az AVIF a leghatékonyabb módszer a képek méretének csökkentésére a Core Web Vitals javítása érdekében." },
+        { icon: "🛒", title: "E-commerce termékképek", description: "Webshop termékképeknél drasztikusan csökkenthető az oldal betöltési ideje AVIF-fel." },
+      ],
+      aboutSection: {
+        title: "Az AVIF formátumról",
+        paragraphs: [
+          "Az AVIF az AV1 videokodeken alapuló, royalty-free képformátum. A WebP utódjának tekinthető, mivel általában 20-25%-kal jobb tömörítést nyújt azonos vizuális minőség mellett.",
+          "2025-ben az AVIF már Baseline 2024 státuszt ért el, ami azt jelenti, hogy az összes modern böngésző stabilan támogatja.",
+        ],
+      },
+      formatComparison: {
+        title: "Képformátumok összehasonlítása",
+        columns: ["Formátum", "Fájlméret", "Minőség", "Böngésző támogatás"],
+        rows: [
+          { feature: "JPEG", values: ["~540 KB", "Közepes", "Mindenhol"] },
+          { feature: "WebP", values: ["~350 KB", "Jó", "Modern böngészők"] },
+          { feature: "AVIF", values: ["~210 KB", "Kiváló", "Modern böngészők (2024+)"] },
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "30-as CQ érték webes használatra optimális: jó minőség, kis méret." },
+        { icon: "🔄", tip: "Ha AVIF-et nem tudsz használni, a <picture> elemmel WebP és JPEG fallback-et is megadhat a böngészőnek." },
+      ],
+    },
+  },
+
+  "png-avif": {
+    introText: "Konvertáld PNG képeidet AVIF formátumba böngészőben – az átlátszóság (alfa-csatorna) teljes megőrzésével.",
+    guide: ["1. Töltsd fel a PNG fájlt.", "2. Válaszd ki a módot: veszteséges vagy veszteségmentes.", "3. Konvertálj és töltsd le az AVIF-et."],
+    faq: [{ q: "Az AVIF megőrzi az átlátszóságot?", a: "Igen, az AVIF teljes alfa-csatorna támogatással rendelkezik." }],
+    content: {
+      howToSteps: [
+        { title: "PNG feltöltése", description: "Válaszd ki a PNG fájlt, akár átlátszó háttérrel." },
+        { title: "Mód kiválasztása", description: "Veszteséges (kisebb méret) vagy veszteségmentes." },
+        { title: "AVIF letöltése", description: "Töltsd le az eredményt." },
+      ],
+      useCases: [
+        { icon: "🖼️", title: "UI elemek és ikonok", description: "Átlátszó hátterű UI elemek optimalizálása." },
+        { icon: "🎨", title: "Logók és grafika", description: "Vektoros exportok és logók." },
+      ],
+      aboutSection: { title: "PNG vs AVIF", paragraphs: ["Az AVIF veszteségmentes módban általában 10-20%-kal kisebb fájlméretet ér el, mint a PNG."] },
+    },
+  },
+
+  "kep-base64": {
+    introText: "A Base64 kódolás lehetővé teszi, hogy képet közvetlenül HTML vagy CSS fájlba ágyazz be, külön HTTP kérés nélkül. Kis ikonokhoz, e-mail sablonokhoz és inline CSS háttérképekhez ideális megoldás.",
+    guide: ["1. Töltsd fel a képet (JPG, PNG, WebP, SVG, GIF).", "2. Válaszd ki a kimeneti formátumot.", "3. Másold a vágólapra a generált kódot."],
+    faq: [
+      { q: "Mikor érdemes Base64-et használni?", a: "50KB alatti kis képeknél, ikonoknál, logóknál." },
+      { q: "Mi a hátránya?", a: "A Base64 kép 33%-kal nagyobb fájlméretet eredményez, és nem cachelhető külön." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Kép feltöltése", description: "Válaszd ki a képet – JPG, PNG, WebP, SVG vagy GIF." },
+        { title: "Formátum kiválasztása", description: "HTML img tag, CSS background-image, vagy nyers data URI." },
+        { title: "Másolás", description: "Másold a generált kódot a vágólapra." },
+      ],
+      useCases: [
+        { icon: "📧", title: "E-mail sablonok", description: "E-mailekben a Base64 beágyazott képek mindig megjelennek." },
+        { icon: "⚡", title: "Kritikus above-the-fold képek", description: "Kis képeket Base64-ként beágyazva elkerülheted a render-blocking HTTP kéréseket." },
+      ],
+      aboutSection: { title: "A Base64 kódolásról", paragraphs: ["A Base64 egy kódolási séma, amely bináris adatot ASCII szövegként ábrázol."] },
+    },
+  },
+
+  "kep-ico": {
+    introText: "Minden weboldalnak szüksége van faviconra. Ez az eszköz PNG, JPG vagy WebP képből ICO fájlt generál böngészőben, 16×16, 32×32 és 48×48 px méreteket tartalmazva.",
+    guide: ["1. Töltsd fel a forrásképet.", "2. Az eszköz automatikusan legenerálja a méreteket.", "3. Töltsd le a favicon.ico fájlt."],
+    faq: [
+      { q: "Milyen méretű forrásképet használjak?", a: "Legalább 64×64 px ajánlott, de 512×512 px az ideális." },
+      { q: "Szükséges a favicon.ico?", a: "Modern böngészők elfogadnak PNG favicont is, de az ICO biztosítja a maximális kompatibilitást." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Forráskép feltöltése", description: "PNG ajánlott átlátszó háttérrel." },
+        { title: "ICO generálás", description: "Az eszköz 16×16, 32×32 és 48×48 px méreteket csomagol egyetlen ICO fájlba." },
+        { title: "Beillesztés", description: "Töltsd fel a favicon.ico-t a gyökérmappába." },
+      ],
+      useCases: [
+        { icon: "🌐", title: "Weboldal favicon", description: "A böngésző fülén és könyvjelzőkben megjelenő ikon." },
+        { icon: "🖥️", title: "Windows alkalmazás ikon", description: "Desktop alkalmazások és parancsikonok ikonja." },
+      ],
+      aboutSection: { title: "Az ICO formátumról", paragraphs: ["Az ICO egy Windows ikon formátum, amely több méretű képet tárol egyetlen fájlban."] },
+    },
+  },
+
+  "atmeterezas-kb": {
+    introText: "Sokszor pontos fájlméret-korlátot kell teljesíteni: álláspályázatnál max 2MB, hatósági feltöltésnél max 500KB. Ez az eszköz bináris kereséssel automatikusan megtalálja az optimális JPEG minőséget.",
+    guide: ["1. Töltsd fel a képet.", "2. Add meg a célméretet KB-ban.", "3. Kattints a Konvertálás gombra.", "4. Töltsd le az eredményt."],
+    faq: [
+      { q: "Mekkora a pontosság?", a: "Az eszköz ±5%-on belül találja el a célméretet." },
+      { q: "Elvész a kép minősége?", a: "A minimálisan szükséges minőségveszteséggel dolgozik az eszköz." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Kép feltöltése", description: "JPG, PNG vagy WebP fájlt tölthetsz fel." },
+        { title: "Célméret megadása", description: "Add meg a maximálisan elfogadható fájlméretet KB-ban." },
+        { title: "Optimalizálás", description: "Az eszköz bináris kereséssel megtalálja az optimális minőségi értéket." },
+        { title: "Letöltés", description: "Töltsd le a megcélzott méretű JPG képet." },
+      ],
+      useCases: [
+        { icon: "💼", title: "Álláspályázat", description: "HR rendszerek általában max 2MB fájlméretet fogadnak el." },
+        { icon: "🏛️", title: "Hatósági feltöltések", description: "Kormányzati portálok sokszor strict méretkorlátot alkalmaznak." },
+      ],
+      aboutSection: { title: "Hogyan működik a KB-ra méretezés?", paragraphs: ["Az algoritmus bináris keresést alkalmaz: a 0.01 és 1.0 közötti JPEG minőségi tartományban iteratívan szűkíti a keresési teret."] },
+    },
+  },
+
+  "gif-keszito": {
+    introText: "Az animált GIF az internet egyik legismertebb képformátuma. Ez az eszköz képek sorozatából böngészőben, szerver nélkül generál animált GIF-et.",
+    guide: ["1. Töltsd fel a képeket – ezek lesznek a GIF frame-jei.", "2. Állítsd be a frame delay értéket és a hurok beállítást.", "3. Konvertálj és töltsd le."],
+    faq: [
+      { q: "Hány frame-t lehet egy GIF-be tenni?", a: "Legfeljebb 100 képet." },
+      { q: "Miért homályosak a GIF színei?", a: "A GIF formátum maximálisan 256 színt tárol frame-enként." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Képek feltöltése", description: "Húzd be a képeket – a feltöltés sorrendje lesz az animáció sorrendje." },
+        { title: "Timing beállítása", description: "Frame delay: 100ms ≈ 10fps, 500ms = lassú diavetítés." },
+        { title: "GIF generálás", description: "A gifenc könyvtár kvantálja és kódolja a képkockákat." },
+      ],
+      useCases: [
+        { icon: "😂", title: "Reakció GIF-ek", description: "Egyedi reakció GIF-ek Discord-ra, Slack-re." },
+        { icon: "🛍️", title: "Termékanimáció", description: "Termékek különböző szögekből való bemutatása." },
+      ],
+      aboutSection: { title: "A GIF formátumról", paragraphs: ["A GIF (Graphics Interchange Format) 1987 óta az animált képek standard formátuma az interneten."] },
+    },
+  },
+
+  "gif-webp-animalt": {
+    introText: "Az animált WebP az animált GIF modern alternatívája: azonos minőség mellett akár 80%-kal kisebb fájlméretet nyújt.",
+    guide: ["1. Töltsd fel a GIF fájlt.", "2. Állítsd be a minőséget.", "3. Konvertálj és töltsd le az animált WebP-t."],
+    faq: [
+      { q: "Minden böngésző lejátssza az animált WebP-t?", a: "Igen, Chrome, Firefox, Safari 14+ és Edge mind támogatja." },
+      { q: "Mekkora a méretmegtakarítás?", a: "Tipikusan 60-80% azonos minőség mellett." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "GIF feltöltése", description: "Válaszd ki az animált GIF fájlt." },
+        { title: "Minőség beállítása", description: "80% ajánlott – jó minőség, kis méret." },
+        { title: "WebP letöltése", description: "Az animált WebP fájl közvetlenül használható HTML img tagben." },
+      ],
+      useCases: [
+        { icon: "⚡", title: "Weboldal sebesség", description: "Cseréld le a GIF-eket animált WebP-re a gyorsabb betöltéshez." },
+        { icon: "📱", title: "Mobilhálózat", description: "Kisebb fájlméret = kevesebb adatforgalom mobilon." },
+      ],
+      aboutSection: { title: "Animált WebP vs GIF", paragraphs: ["Az animált WebP mind veszteséges, mind veszteségmentes módban sokkal jobb tömörítést nyújt mint a GIF."] },
+    },
+  },
+
+  "svg-png": {
+    introText: "Az SVG vektorgrafika bármilyen méretben élesen jelenik meg, de nem minden program és platform támogatja. Ez az eszköz SVG-t alakít PNG vagy JPG rasztergrafikává megadott felbontásban.",
+    guide: ["1. Töltsd fel az SVG fájlt.", "2. Válaszd ki a kimeneti formátumot és a szélességet.", "3. Töltsd le a raszterített képet."],
+    faq: [
+      { q: "Mekkora felbontást adjak meg?", a: "Retina/HiDPI kijelzőkre 2× az eredeti CSS méretnél." },
+      { q: "Az SVG animációk is konvertálódnak?", a: "Nem – csak az SVG statikus állapota renderelődik." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "SVG feltöltése", description: "Válaszd ki az SVG fájlt." },
+        { title: "Beállítások", description: "PNG vagy JPG, és a kívánt szélesség pixelben." },
+        { title: "Letöltés", description: "Töltsd le a raszterített képet." },
+      ],
+      useCases: [
+        { icon: "📧", title: "E-mail", description: "E-mail kliensek sokszor blokkolják az SVG-t – PNG-vé konvertálva biztonságos." },
+        { icon: "📄", title: "Word/PDF dokumentumok", description: "Logók, diagramok beillesztése dokumentumokba." },
+      ],
+      aboutSection: { title: "SVG raszterizálásról", paragraphs: ["Az SVG XML alapú vektorgrafika-formátum. Böngészőkben a Canvas API segítségével raszterizálható szerver nélkül."] },
+    },
+  },
+
+  "kep-collage": {
+    introText: "Fűzz össze több képet egyetlen kompozícióba – vízszintesen, függőlegesen vagy rácsban.",
+    guide: ["1. Töltsd fel a képeket (min. 2, max. 20).", "2. Válaszd ki az elrendezést és a rés méretét.", "3. Konvertálj és töltsd le."],
+    faq: [{ q: "Különböző méretű képeket is lehet kombinálni?", a: "Igen – az eszköz automatikusan igazítja a méreteket." }],
+    content: {
+      howToSteps: [
+        { title: "Képek feltöltése", description: "Töltsd fel a kombinálni kívánt képeket." },
+        { title: "Elrendezés kiválasztása", description: "Vízszintes, függőleges vagy rácsos kompozíció." },
+        { title: "Letöltés", description: "PNG formátumban töltsd le a kész collage-t." },
+      ],
+      useCases: [
+        { icon: "🛒", title: "Termékbemutató", description: "Egy termék több nézetből egyetlen képen." },
+        { icon: "📱", title: "Instagram kollázs", description: "Több fotó kombinálása közösségi médiára." },
+      ],
+      aboutSection: { title: "Képkombinálás böngészőben", paragraphs: ["A Canvas API lehetővé teszi több kép összeillesztését egyetlen OffscreenCanvas-ra."] },
+    },
+  },
+
+  "szin-paletta": {
+    introText: "Nyerd ki egy kép domináns színeit másodpercek alatt. A color-thief algoritmus Canvas API-val elemzi a képet és a leggyakoribb színcsoportokat adja vissza HEX, RGB és HSL formátumban.",
+    guide: ["1. Töltsd fel a képet.", "2. Állítsd be a domináns színek számát (3-10).", "3. Másold a HEX kódokat a vágólapra."],
+    faq: [{ q: "Milyen algoritmus alapján határozza meg a domináns színeket?", a: "Módosított median cut algoritmus, amely területenkénti átlagszíneket számít." }],
+    content: {
+      howToSteps: [
+        { title: "Kép feltöltése", description: "Töltsd fel a képet." },
+        { title: "Szín beállítása", description: "Add meg, hány domináns színt szeretnél (3-10)." },
+        { title: "Másolás", description: "Kattints bármely szín HEX kódjára a másoláshoz." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Brand dizájn", description: "Meglévő logóból brand szín paletta összeállítása." },
+        { icon: "🖥️", title: "UI/UX tervezés", description: "Webdizájn szín témák képből való kinyerése." },
+      ],
+      aboutSection: { title: "Szín paletta kinyerésről", paragraphs: ["A kép OffscreenCanvas-on renderelve, pixel-szintű statisztikával határozzuk meg a domináns színcsoportokat."] },
+    },
+  },
+
+  "automatikus-vagas": {
+    introText: "Távolítsd el a felesleges fehér vagy egyszínű széleket a képeidről automatikusan. Pixel-szintű elemzéssel találja meg a tényleges tartalom határait.",
+    guide: ["1. Töltsd fel a képet.", "2. Állítsd be a háttérszínt és a toleranciát.", "3. Konvertálj és töltsd le a levágott képet."],
+    faq: [
+      { q: "Működik nem fehér háttéren is?", a: "Igen – a szín-kiválasztóval bármelyik egyszínű háttérszínt megadhatod." },
+      { q: "Mi a tolerancia beállítás?", a: "A tolerancia azt határozza meg, mennyire hasonlíthatnak a szélső pixelek a háttérszínhez." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Kép feltöltése", description: "JPG, PNG vagy WebP fájlt tölthetsz fel." },
+        { title: "Beállítások", description: "Háttérszín és tolerancia (0-80)." },
+        { title: "Letöltés", description: "PNG formátumban töltsd le a levágott képet." },
+      ],
+      useCases: [
+        { icon: "📷", title: "Szkennerből érkező dokumentumok", description: "Fehér szél automatikus levágása." },
+        { icon: "🛒", title: "Webshop termékképek", description: "Fehér hátteres termékképek egységesítése." },
+      ],
+      aboutSection: { title: "Automatikus képvágásról", paragraphs: ["Az algoritmus pixelenként végigpásztázza a képet és megtalálja a minimális befoglaló téglalapot."] },
+    },
+  },
+
+  "exif-terkep": {
+    introText: "Tudtad, hogy az okostelefonod minden fotóba beleírja a GPS koordinátáit? Ez az eszköz kinyeri az EXIF adatokban tárolt helyszínt és interaktív OpenStreetMap térképen jeleníti meg.",
+    guide: ["1. Töltsd fel a JPEG képet.", "2. Az eszköz kinyeri a GPS koordinátákat.", "3. A helyszín interaktív térképen jelenik meg."],
+    faq: [
+      { q: "Minden fotóban van GPS adat?", a: "Nem – csak ha a fotó készítésekor be volt kapcsolva a helymeghatározás." },
+      { q: "Adatbiztonság?", a: "Az összes feldolgozás a böngésződben zajlik." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "JPEG feltöltése", description: "Töltsd fel az okostelefonnal készített JPEG fotót." },
+        { title: "EXIF elemzés", description: "Az exifr könyvtár kinyeri a GPS koordinátákat." },
+        { title: "Térkép megjelenítés", description: "OpenStreetMap térképen jelöli meg a fotó készítési helyszínét." },
+      ],
+      useCases: [
+        { icon: "📍", title: "Fotó helyszín azonosítás", description: "Régi fotók helyszínének meghatározása." },
+        { icon: "🔒", title: "Adatvédelmi ellenőrzés", description: "Ellenőrizd, hogy a feltöltendő képeidben van-e GPS adat." },
+      ],
+      aboutSection: { title: "EXIF GPS adatokról", paragraphs: ["Az EXIF metaadatok a JPEG fájlok fejlécében tárolódnak. Az okostelefonok alapértelmezetten rögzítik a GPS koordinátákat."] },
+    },
+  },
+
+  "sprite-vagas": {
+    introText: "A sprite sheet egyetlen nagy képfájl, amely több kisebb képet tartalmaz egységes rácsban. Ez az eszköz megadott cellaméret alapján feldarabolja és ZIP-be exportálja az egyedi frame-eket.",
+    guide: ["1. Töltsd fel a sprite sheet képet.", "2. Add meg egy cella szélességét és magasságát pixelben.", "3. Az eszköz automatikusan exportál."],
+    faq: [
+      { q: "Milyen névvel kerülnek a képek a ZIP-be?", a: "sprite-00-00.png, sprite-00-01.png stb. – sor-oszlop sorrendben." },
+      { q: "Aszimmetrikus sprite sheet-eket is kezel?", a: "Igen, a cellaméret szélességben és magasságban külön megadható." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Sprite sheet feltöltése", description: "Töltsd fel a PNG/JPG/WebP sprite sheet képet." },
+        { title: "Cellaméret megadása", description: "Add meg egy sprite cella méretét pixelben." },
+        { title: "ZIP letöltés", description: "Töltsd le a ZIP archívumot." },
+      ],
+      useCases: [
+        { icon: "🎮", title: "Játékfejlesztés", description: "Animációs frame-ek, karakter sprite-ok szétválasztása." },
+        { icon: "🖥️", title: "UI ikonkészletek", description: "Icon sprite sheet-ek feldolgozása." },
+      ],
+      aboutSection: { title: "Sprite sheet vágásról", paragraphs: ["Az algoritmus a rácsméret alapján kiszámolja a cellák számát, majd OffscreenCanvas-on kivágja és exportálja az egyes frame-eket."] },
+    },
+  },
 };

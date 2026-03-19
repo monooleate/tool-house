@@ -1291,4 +1291,299 @@ export const KEP_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ── NOI INSTRUMENTE IMAGINE – CONȚINUT SEO ──────────────────
+
+  "heic-jpg": {
+    introText: "HEIC (High Efficiency Image Container) este formatul implicit pentru imaginile iPhone și iPad. Deși oferă compresie excelentă, multe aplicații Windows, site-uri web și instrumente de editare nu-l pot deschide. Acest instrument convertește fișierele HEIC în JPG universal compatibil, direct în browser.",
+    guide: ["1. Trage sau selectează fișierele HEIC în instrument.", "2. Instrumentul convertește automat fișierele cu calitate JPG de 90%.", "3. Descarcă JPG-ul sau arhiva ZIP."],
+    faq: [
+      { q: "De ce nu se deschide imaginea HEIC pe Windows?", a: "Windows nu include implicit un decodor HEIC." },
+      { q: "Se pierde calitatea imaginii?", a: "Convertim cu calitate JPG de 90%, diferență aproame imperceptibilă." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Selectare fișier", description: "Trage fișierul HEIC în instrument sau dă clic pentru a răsfoi." },
+        { title: "Conversie automată", description: "Decodificarea HEIC/HEIF se face cu WebAssembly, direct în browser." },
+        { title: "Descărcare", description: "Un singur fișier: descarcă ca JPG. Mai multe fișiere: arhivă ZIP." },
+      ],
+      useCases: [
+        { icon: "📱", title: "Partajare fotografii iPhone", description: "Fotografiile copiate de pe iPhone vin în format HEIC." },
+        { icon: "💼", title: "CV și aplicații", description: "Sistemele HR accept de obicei JPG, nu HEIC." },
+      ],
+      aboutSection: {
+        title: "Despre formatul HEIC",
+        paragraphs: ["HEIC este formatul de imagine adoptat de Apple, bazat pe codecul video HEVC. Principalul avantaj: la aceeași calitate, dimensiunea fișierului este aproximativ la jumătate față de JPEG."],
+      },
+      tips: [{ icon: "💡", tip: "Conversia HEIC → JPG păstrează metadatele EXIF, inclusiv coordonatele GPS." }],
+    },
+  },
+
+  "heic-png": {
+    introText: "Convertorul HEIC → PNG transformă imaginile iPhone și iPad în format PNG fără pierderi, păstrând canalul alfa.",
+    guide: ["1. Încarcă fișierul HEIC.", "2. Instrumentul convertește în PNG.", "3. Descarcă rezultatul."],
+    faq: [{ q: "Când să aleg PNG în loc de JPG?", a: "Când ai nevoie de calitate fără pierderi sau de transparență." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare fișier", description: "Selectează fișierul HEIC." },
+        { title: "Conversie PNG", description: "Ieșire PNG fără pierderi cu canal alfa." },
+        { title: "Descărcare", description: "Descarcă fișierul PNG." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Editare grafică", description: "Format PNG necesar pentru editare fără pierderi." },
+        { icon: "🌐", title: "Utilizare web", description: "PNG este unul dintre cele mai răspândite formate web." },
+      ],
+      aboutSection: { title: "Conversie HEIC → PNG", paragraphs: ["PNG aplică compresie fără pierderi, ideal pentru logo-uri și icoane."] },
+    },
+  },
+
+  "jpg-avif": {
+    introText: "AVIF (AV1 Image File Format) este cel mai modern format de imagine, suportat de toate browserele majore din 2025. Din imagini JPG poți genera AVIF cu până la 50% mai puțin spațiu.",
+    guide: ["1. Încarcă fișierul JPG.", "2. Setează calitatea (1-63 CQ).", "3. Convertește și descarcă AVIF."],
+    faq: [
+      { q: "AVIF funcționează în toate browserele?", a: "Da, din 2025 Chrome, Firefox, Safari 16+, Edge toate suportă AVIF." },
+      { q: "Cât spațiu se economisește?", a: "De obicei 40-50% față de JPEG la aceeași calitate." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Încărcare JPG", description: "Trage fișierele JPG – procesare în lot posibilă." },
+        { title: "Setare calitate", description: "Valoarea CQ 30-40 este recomandată pentru web." },
+        { title: "Descărcare AVIF", description: "Descarcă fișierul AVIF pentru utilizare pe site." },
+      ],
+      useCases: [
+        { icon: "⚡", title: "Optimizare site", description: "AVIF este cea mai eficientă metodă de reducere a dimensiunii imaginilor." },
+        { icon: "🛒", title: "Imagini produse e-commerce", description: "Reducere drastică a timpului de încărcare." },
+      ],
+      aboutSection: {
+        title: "Despre formatul AVIF",
+        paragraphs: ["AVIF se bazează pe codecul video AV1, este royalty-free și oferă cu 20-25% compresie mai bună decât WebP."],
+      },
+    },
+  },
+
+  "png-avif": {
+    introText: "Convertește imagini PNG în format AVIF în browser, cu păstrarea completă a canalului alfa.",
+    guide: ["1. Încarcă fișierul PNG.", "2. Alege modul: lossy sau lossless.", "3. Descarcă AVIF."],
+    faq: [{ q: "AVIF păstrează transparența?", a: "Da, AVIF suportă complet canalul alfa." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare PNG", description: "Selectează fișierul PNG." },
+        { title: "Alegere mod", description: "Lossy (dimensiune mai mică) sau lossless." },
+        { title: "Descărcare AVIF", description: "Descarcă rezultatul." },
+      ],
+      useCases: [
+        { icon: "🖼️", title: "Elemente UI și icoane", description: "Optimizare elemente UI cu fundal transparent." },
+        { icon: "🎨", title: "Logo-uri și grafică", description: "Exporturi vectoriale și logo-uri." },
+      ],
+      aboutSection: { title: "PNG vs AVIF", paragraphs: ["AVIF în mod lossless obține de obicei 10-20% dimensiune mai mică decât PNG."] },
+    },
+  },
+
+  "kep-base64": {
+    introText: "Codificarea Base64 permite integrarea directă a imaginilor în fișiere HTML sau CSS, fără cereri HTTP separate.",
+    guide: ["1. Încarcă imaginea.", "2. Alege formatul de ieșire.", "3. Copiază codul generat."],
+    faq: [{ q: "Când să folosesc Base64?", a: "Pentru imagini mici sub 50KB – icoane, logo-uri." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagine", description: "JPG, PNG, WebP, SVG sau GIF." },
+        { title: "Alegere format", description: "HTML img, CSS background-image sau Data URI brut." },
+        { title: "Copiere", description: "Copiază codul generat." },
+      ],
+      useCases: [
+        { icon: "📧", title: "Șabloane email", description: "Imaginile Base64 apar mereu în email." },
+        { icon: "⚡", title: "Imagini above-the-fold", description: "Evitare cereri HTTP render-blocking." },
+      ],
+      aboutSection: { title: "Despre codificarea Base64", paragraphs: ["Base64 este o schemă de codificare care reprezintă date binare ca text ASCII."] },
+    },
+  },
+
+  "kep-ico": {
+    introText: "Generează fișier ICO favicon din PNG, JPG sau WebP în browser, conținând dimensiunile 16×16, 32×32 și 48×48 px.",
+    guide: ["1. Încarcă imaginea sursă.", "2. Se generează automat dimensiunile.", "3. Descarcă favicon.ico."],
+    faq: [{ q: "Ce dimensiune sursă să folosesc?", a: "Minim 64×64 px, ideal 512×512 px." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagine", description: "PNG recomandat cu fundal transparent." },
+        { title: "Generare ICO", description: "Dimensiuni 16×16, 32×32 și 48×48 px într-un singur fișier ICO." },
+        { title: "Integrare", description: "Încarcă favicon.ico în directorul rădăcină." },
+      ],
+      useCases: [
+        { icon: "🌐", title: "Favicon site", description: "Icoana din tab-ul browser-ului." },
+        { icon: "🖥️", title: "Icoane Windows", description: "Icoane pentru aplicații desktop." },
+      ],
+      aboutSection: { title: "Despre formatul ICO", paragraphs: ["ICO este un format Windows care stochează mai multe dimensiuni ale imaginii într-un singur fișier."] },
+    },
+  },
+
+  "atmeterezas-kb": {
+    introText: "Setează dimensiunea țintă în KB – instrumentul găsește automat calitatea JPEG optimă prin căutare binară.",
+    guide: ["1. Încarcă imaginea.", "2. Setează dimensiunea țintă în KB.", "3. Convertește și descarcă."],
+    faq: [{ q: "Cât de precis este?", a: "±5% de dimensiunea țintă." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagine", description: "JPG, PNG sau WebP." },
+        { title: "Setare dimensiune", description: "Dimensiunea maximă acceptabilă în KB." },
+        { title: "Optimizare", description: "Căutare binară pentru calitatea optimă." },
+        { title: "Descărcare", description: "Descarcă JPG-ul la dimensiunea țintă." },
+      ],
+      useCases: [
+        { icon: "💼", title: "Aplicații de angajare", description: "Sistemele HR au de obicei limită de 2MB." },
+        { icon: "🏛️", title: "Formulare oficiale", description: "Portaluri guvernamentale cu limite stricte." },
+      ],
+      aboutSection: { title: "Cum funcționează redimensionarea la KB?", paragraphs: ["Algoritmul folosește căutare binară în intervalul de calitate JPEG 0.01-1.0."] },
+    },
+  },
+
+  "gif-keszito": {
+    introText: "Creează GIF-uri animate din imagini JPG, PNG sau WebP, direct în browser, fără server.",
+    guide: ["1. Încarcă imaginile – acestea vor fi cadrele GIF-ului.", "2. Setează delay-ul și bucla.", "3. Generează și descarcă."],
+    faq: [{ q: "Câte cadre pot adăuga?", a: "Maximum 100 imagini." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagini", description: "Trage imaginile – ordinea încărcării = ordinea animației." },
+        { title: "Setare timing", description: "Frame delay: 100ms ≈ 10fps." },
+        { title: "Generare GIF", description: "Bibliotecã gifenc cuantizează și codifică cadrele." },
+      ],
+      useCases: [
+        { icon: "😂", title: "GIF-uri reacție", description: "GIF-uri personalizate pentru Discord, Slack." },
+        { icon: "🛍️", title: "Animație produs", description: "Prezentare produs din mai multe unghiuri." },
+      ],
+      aboutSection: { title: "Despre formatul GIF", paragraphs: ["GIF (Graphics Interchange Format) este standardul pentru imagini animate pe internet din 1987."] },
+    },
+  },
+
+  "gif-webp-animalt": {
+    introText: "WebP animat este alternativa modernă la GIF animat: la aceeași calitate, până la 80% dimensiune mai mică.",
+    guide: ["1. Încarcă fișierul GIF.", "2. Setează calitatea.", "3. Convertește și descarcă WebP animat."],
+    faq: [{ q: "Toate browserele redă WebP animat?", a: "Da, Chrome, Firefox, Safari 14+ și Edge." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare GIF", description: "Selectează fișierul GIF animat." },
+        { title: "Setare calitate", description: "80% recomandat." },
+        { title: "Descărcare WebP", description: "Fișierul WebP animat poate fi folosit direct în HTML." },
+      ],
+      useCases: [
+        { icon: "⚡", title: "Viteză site", description: "Înlocuiește GIF-urile cu WebP animat." },
+        { icon: "📱", title: "Rețea mobilă", description: "Dimensiune mai mică = mai puțin trafic." },
+      ],
+      aboutSection: { title: "WebP animat vs GIF", paragraphs: ["WebP animat oferă compresie mult mai bună decât GIF, cu suport complet pentru canal alfa."] },
+    },
+  },
+
+  "svg-png": {
+    introText: "SVG este format vectorial care se afișează clar la orice dimensiune, dar nu toate programele îl suportă. Acest instrument convertește SVG în PNG sau JPG la rezoluția dorită.",
+    guide: ["1. Încarcă fișierul SVG.", "2. Alege formatul de ieșire și lățimea.", "3. Descarcă imaginea rasterizată."],
+    faq: [{ q: "Ce rezoluție să setez?", a: "Pentru ecrane Retina, 2× dimensiunea CSS." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare SVG", description: "Selectează fișierul SVG." },
+        { title: "Setări", description: "PNG sau JPG, și lățimea în pixeli." },
+        { title: "Descărcare", description: "Descarcă imaginea rasterizată." },
+      ],
+      useCases: [
+        { icon: "📧", title: "Email", description: "Clienții email blochează adesea SVG." },
+        { icon: "📄", title: "Documente Word/PDF", description: "Inserare logo-uri în documente." },
+      ],
+      aboutSection: { title: "Despre rasterizarea SVG", paragraphs: ["SVG este un format vectorial bazat pe XML. În browser poate fi rasterizat cu Canvas API."] },
+    },
+  },
+
+  "kep-collage": {
+    introText: "Combină mai multe imagini într-o singură compoziție – orizontal, vertical sau în grilă.",
+    guide: ["1. Încarcă imaginile (min. 2, max. 20).", "2. Alege aspectul și spațierea.", "3. Convertește și descarcă."],
+    faq: [{ q: "Se pot combina imagini de dimensiuni diferite?", a: "Da – instrumentul ajustează automat dimensiunile." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagini", description: "Încarcă imaginile de combinat." },
+        { title: "Alegere aspect", description: "Orizontal, vertical sau grilă." },
+        { title: "Descărcare", description: "Descarcă colajul în format PNG." },
+      ],
+      useCases: [
+        { icon: "🛒", title: "Prezentare produs", description: "Produs din mai multe unghiuri într-o singură imagine." },
+        { icon: "📱", title: "Colaj Instagram", description: "Combinare fotografii pentru social media." },
+      ],
+      aboutSection: { title: "Combinare imagini în browser", paragraphs: ["Canvas API permite alăturarea mai multor imagini pe un singur OffscreenCanvas."] },
+    },
+  },
+
+  "szin-paletta": {
+    introText: "Extrage culorile dominante dintr-o imagine în câteva secunde. Algoritmul analizează imaginea pe Canvas și returnează grupurile de culori dominante în format HEX, RGB și HSL.",
+    guide: ["1. Încarcă imaginea.", "2. Setează numărul de culori (3-10).", "3. Copiază codurile HEX."],
+    faq: [{ q: "Ce algoritm folosește?", a: "Algoritm median cut modificat, calculând medii de culoare pe zone." }],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagine", description: "Încarcă imaginea pentru extragere paletă." },
+        { title: "Setare culori", description: "Câte culori dominante dorești (3-10)." },
+        { title: "Copiere", description: "Clic pe codul HEX pentru copiere." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Design brand", description: "Compunerea paletei de culori din logo existent." },
+        { icon: "🖥️", title: "Design UI/UX", description: "Extragerea temelor de culori din imagini." },
+      ],
+      aboutSection: { title: "Despre extragerea paletei", paragraphs: ["Imaginea este randată pe OffscreenCanvas la dimensiune redusă, apoi statistici la nivel de pixel determină grupurile dominante."] },
+    },
+  },
+
+  "automatikus-vagas": {
+    introText: "Elimină automat marginile albe sau unicolore de pe imagini. Analiza la nivel de pixel găsește limitele conținutului real.",
+    guide: ["1. Încarcă imaginea.", "2. Setează culoarea de fundal și toleranța.", "3. Convertește și descarcă."],
+    faq: [
+      { q: "Funcționează și pe fundal non-alb?", a: "Da – cu selectorul de culoare poți seta orice culoare de fundal." },
+      { q: "Ce este setarea de toleranță?", a: "Determină cât de apropiați pot fi pixelii de culoarea de fundal." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Încărcare imagine", description: "JPG, PNG sau WebP." },
+        { title: "Setări", description: "Culoare fundal și toleranță (0-80)." },
+        { title: "Descărcare", description: "Descarcă imaginea decupată în format PNG." },
+      ],
+      useCases: [
+        { icon: "📷", title: "Documente scanate", description: "Eliminare automată a marginilor albe." },
+        { icon: "🛒", title: "Fotografii produse webshop", description: "Uniformizarea imaginilor de produse." },
+      ],
+      aboutSection: { title: "Despre decuparea automată", paragraphs: ["Algoritmul scanează pixelii de la margini și găsește dreptunghiul minim de încadrare."] },
+    },
+  },
+
+  "exif-terkep": {
+    introText: "Știai că smartphone-ul tău scrie coordonatele GPS în fiecare fotografie? Acest instrument extrage locația din datele EXIF și o afișează pe hartă interactivă OpenStreetMap.",
+    guide: ["1. Încarcă fotografia JPEG.", "2. Se extrag coordonatele GPS.", "3. Locația apare pe hartă interactivă."],
+    faq: [
+      { q: "Toate fotografiile conțin date GPS?", a: "Nu – doar dacă localizarea era activă la fotografiere." },
+      { q: "Securitatea datelor?", a: "Totul se procesează în browser." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Încărcare JPEG", description: "Încarcă fotografia JPEG făcută cu smartphone-ul." },
+        { title: "Analiză EXIF", description: "Biblioteca exifr extrage coordonatele GPS." },
+        { title: "Afișare hartă", description: "Locația este marcată pe harta OpenStreetMap." },
+      ],
+      useCases: [
+        { icon: "📍", title: "Identificare locație foto", description: "Determinarea locului unde au fost făcute fotografii vechi." },
+        { icon: "🔒", title: "Verificare confidențialitate", description: "Verifică dacă imaginile conțin date GPS." },
+      ],
+      aboutSection: { title: "Despre datele GPS EXIF", paragraphs: ["Metadatele EXIF sunt stocate în headerul fișierelor JPEG. Smartphone-urile înregistrează implicit coordonatele GPS."] },
+    },
+  },
+
+  "sprite-vagas": {
+    introText: "Un sprite sheet este un singur fișier imagine mare care conține mai multe imagini mici într-o grilă uniformă. Acest instrument le taie și le exportă în ZIP.",
+    guide: ["1. Încarcă sprite sheet-ul.", "2. Setează lățimea și înălțimea celulei.", "3. Instrumentul exportă automat."],
+    faq: [
+      { q: "Cu ce nume sunt exportate imaginile?", a: "sprite-00-00.png, sprite-00-01.png etc." },
+      { q: "Funcționează cu sprite sheet-uri asimetrice?", a: "Da, dimensiunea celulei poate fi setată separat." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "Încărcare sprite sheet", description: "Încarcă imaginea PNG/JPG/WebP sprite sheet." },
+        { title: "Setare dimensiune celulă", description: "Setează dimensiunea unei celule sprite în pixeli." },
+        { title: "Descărcare ZIP", description: "Descarcă arhiva ZIP cu toate sprite-urile." },
+      ],
+      useCases: [
+        { icon: "🎮", title: "Dezvoltare jocuri", description: "Separarea cadrelor de animație și sprite-urilor de personaje." },
+        { icon: "🖥️", title: "Seturi de icoane UI", description: "Procesarea sprite sheet-urilor de icoane." },
+      ],
+      aboutSection: { title: "Despre tăierea sprite sheet-urilor", paragraphs: ["Algoritmul calculează numărul de celule bazat pe dimensiunea grilei, apoi taie și exportă fiecare cadru."] },
+    },
+  },
 };
