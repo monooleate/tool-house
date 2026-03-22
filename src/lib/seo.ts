@@ -13,7 +13,10 @@ export const SITE_DESCRIPTION = t("meta.site_description");
 
 // ─── Canonical ───────────────────────────────────────────────
 export function buildCanonical(path: string): string {
-  return `${SITE_URL}${path.startsWith("/") ? path : "/" + path}`;
+  const normalized = path.startsWith("/") ? path : "/" + path;
+  // Trailing slash hozzáadása (egyezzen a sitemap-pel és a szerver redirect-ekkel)
+  const withSlash = normalized === "/" ? normalized : (normalized.endsWith("/") ? normalized : normalized + "/");
+  return `${SITE_URL}${withSlash}`;
 }
 
 // ─── ISO 8601 dátum időzónával (Google Rich Results) ─────────

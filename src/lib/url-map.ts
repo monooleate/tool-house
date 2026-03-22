@@ -42,6 +42,7 @@ export const STATIC_URLS: Record<SupportedLang, Record<string, string>> = {
     adatvedelmi: "adatvedelmi-nyilatkozat",
     koszonjuk: "koszonjuk",
     kereses: "kereses",
+    aszf: "felhasznalasi-feltetelek",
   },
   ro: {
     rolunk: "despre-noi",
@@ -49,6 +50,7 @@ export const STATIC_URLS: Record<SupportedLang, Record<string, string>> = {
     adatvedelmi: "politica-confidentialitate",
     koszonjuk: "multumim",
     kereses: "cautare",
+    aszf: "termeni-conditii",
   },
 };
 

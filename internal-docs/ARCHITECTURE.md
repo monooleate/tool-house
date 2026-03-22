@@ -87,6 +87,7 @@ C:\dev\tool_house\
 |
 |-- astro.config.mjs              # Astro konfiguracio (output: static, svelte, vite)
 |-- package.json                  # Fuggosegek es npm script-ek
+|-- .env.example                  # ENV valtozok dokumentacioja
 |-- netlify.toml                  # Netlify deploy konfiguracio (alap)
 |-- netlify.hu.toml               # HU-specifikus deploy beallitasok
 |-- netlify.ro.toml               # RO-specifikus deploy beallitasok
@@ -763,6 +764,8 @@ Minden Svelte tool komponens hasonlo mintat kovet:
   import { ui } from "../../lib/ui-labels.ts";       // UI szovegek
   import Dropzone from "../ui/Dropzone.svelte";       // Fajl feltoltes
   import ConvertButton from "../ui/ConvertButton.svelte"; // Konvertalas gomb
+  import AdSlot from "../ui/AdSlot.svelte";           // AdSense slot
+  import EmailCaptureBar from "../ui/EmailCaptureBar.svelte"; // Email capture
   import { getTimingConfig } from "../../lib/timing-config.ts";
   import { trackToolEvent } from "../../lib/analytics.ts";
 
@@ -770,13 +773,20 @@ Minden Svelte tool komponens hasonlo mintat kovet:
 
   let files: File[] = [];
   let result: Blob | null = null;
+  let isDone = false;
   // ... tool-specifikus logika
 </script>
 
 <div class="tool-ui">
+  <AdSlot show={timing.showAdSlot} slot="before-convert" />
   <Dropzone accept="image/jpeg" on:files={handleFiles} />
-  <ConvertButton {timing} canConvert={files.length > 0} onConvert={convert} onDownload={download} />
+  <ConvertButton {timing} canConvert={files.length > 0} onConvert={convert} onDownload={download} {isDone} />
+  <AdSlot show={timing.showAdSlot} slot="before-download" />
   <!-- Eredmeny megjelenites -->
+  {#if isDone}
+    <AdSlot show={true} slot="post-result" />
+    <EmailCaptureBar />
+  {/if}
 </div>
 ```
 
@@ -842,6 +852,19 @@ A ToolLayout-ban:
 ### Cross-Language Footer Linkek
 
 A hreflang tag-ek mellett a footer-ben is vannak **lathato linkek** a masik nyelvu tarsoldalra. Lasd: [13. Cross-Language Linkeles](#13-cross-language-linkeles).
+
+### GEO (Generative Engine Optimization) -- 2026-03-22
+
+A GEO audit alapjan vegrehajtott javitasok:
+
+- **llms.txt**: `public/llms.txt` -- AI crawlerek szamara strukturalt eszkoz-lista (111 tool kategorizalva)
+- **robots.txt**: `OAI-SearchBot` hozzaadva a megengedett AI crawlerekhez
+- **Person schema**: `founderPersonSchema()` -- alapito szemely (jobTitle, sameAs, knowsAbout)
+- **Organization sameAs**: Valodi GitHub + LinkedIn linkek (nem placeholder)
+- **TechArticle**: `author` atirva Organization → Person `@id` referenciara
+- **speakable**: SpeakableSpecification hozzaadva a TechArticle schema-hoz
+- **HowTo schema**: Eltavolitva (Google 2023-ban megszuntette a rich results-ot)
+- **Sitemap**: Trailing-slash fix (URL-ek egyeznek a szerver redirect-ekkel)
 
 ### Sitemap
 
@@ -1158,7 +1181,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' .
 
 A Lighthouse Performance score 77-rol ~90+ kozelebe javult az alabbi optimalizaciokkal.
 
-### 12.1. Font Betoltes -- CLS Csokkentes
+### 13.1. Font Betoltes -- CLS Csokkentes
 
 **Problema**: A Google Fonts betoltese `display=swap`-pal 0.182 CLS-t okozott, mert a fallback font es a betoltott font kozott meret kulonbseg van (layout shift).
 
@@ -1205,7 +1228,7 @@ A Lighthouse Performance score 77-rol ~90+ kozelebe javult az alabbi optimalizac
 }
 ```
 
-### 12.2. Non-Composited Animation Fix
+### 13.2. Non-Composited Animation Fix
 
 **Problema**: A `.cta-box::before` gradient animacio `background-position`-t hasznalt, ami NEM compositable (nem GPU-accelerated), janky es CLS-t okoz.
 
@@ -1236,7 +1259,7 @@ A Lighthouse Performance score 77-rol ~90+ kozelebe javult az alabbi optimalizac
 
 **Erintett fajlok**: `index.astro` (.cta-box::before) es `RolunkPage.astro` (.about-cta__inner::before).
 
-### 12.3. CSS Inline-olas
+### 13.3. CSS Inline-olas
 
 **Problema**: 3 kulon CSS fajl blokkolta a renderelest (render-blocking).
 
@@ -1248,7 +1271,7 @@ build: {
 }
 ```
 
-### 12.4. Content-Visibility
+### 13.4. Content-Visibility
 
 A fold alatti szekciok `content-visibility: auto`-val vannak megjelolve, igy a bongeszo NEM rendereli oket amig nem lathatoak:
 
@@ -1266,11 +1289,11 @@ A fold alatti szekciok `content-visibility: auto`-val vannak megjelolve, igy a b
 
 Ez csokenti a Style & Layout munkat es a Total Blocking Time-ot.
 
-### 12.5. Google Analytics Kesleltetes
+### 13.5. Google Analytics Kesleltetes
 
 Lasd: [8. Analytics -- Kesleltett Betoltes](#kesleltett-betoltes-performance)
 
-### 12.6. Scroll Behavior
+### 13.6. Scroll Behavior
 
 A `scroll-behavior: smooth` csak akkor aktiv, ha a felhasznalo nem kerte a reduced motion-t:
 

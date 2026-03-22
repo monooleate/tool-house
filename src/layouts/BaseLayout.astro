@@ -72,6 +72,9 @@ const totalCount = getTotalToolsCount();
   {noIndex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="canonical" href={canonicalUrl} />
 
+  <!-- llms.txt: AI crawler discovery -->
+  <link rel="alternate" type="text/plain" href={`${siteUrl}/llms.txt`} title="LLMs.txt" />
+
   <!-- hreflang: language alternates -->
   {(() => {
     const huPath = hreflangPaths?.hu ?? (canonical ?? Astro.url.pathname);
@@ -508,6 +511,7 @@ const totalCount = getTotalToolsCount();
           <a href={staticUrl("rolunk")}>{t("nav.about")}</a>
           <a href={staticUrl("kapcsolat")}>{t("nav.contact")}</a>
           <a href={staticUrl("adatvedelmi")}>{t("footer.privacy")}</a>
+          <a href={staticUrl("aszf")}>{t("footer.tos")}</a>
           <a href="/sitemap.xml">{t("footer.sitemap")}</a>
         </nav>
       </div>
