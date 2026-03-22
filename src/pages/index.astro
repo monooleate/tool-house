@@ -1,174 +1,333 @@
 ---
 // ============================================================
-// index.astro – Főoldal
-// Tabbed tool directory + SEO content (~1000 szó)
+// index.astro – Főoldal Redesign
+// Modern landing page: Hero, Trust, Featured, Categories,
+// ToolTabs, Why, How, FAQ – SEO optimalizált struktúra
 // ============================================================
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ToolTabs from "../components/home/ToolTabs.svelte";
 import {
   CATEGORIES, getAllTools, getActiveToolsCount, getTotalToolsCount,
-  getLocalizedCategories, getLocalizedTool,
+  getLocalizedCategories, getLocalizedTool, getLocalizedCategory,
+  getToolBySlug, getToolsByCategory, getVisibleCategories,
 } from "../lib/tool-registry.ts";
-import { t, tpl, CURRENT_LANG } from "../i18n/index.ts";
+import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import {
-  websiteSchema, organizationSchema, toolListSchema, SITE_NAME, SITE_DESCRIPTION
+  websiteSchema, organizationSchema, toolListSchema, faqSchema,
+  SITE_NAME, SITE_URL,
 } from "../lib/seo.ts";
-import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
+import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
 
+// ─── Data ─────────────────────────────────────────────────────
 const localizedCategories = getLocalizedCategories(CURRENT_LANG);
 const allTools    = getAllTools().map(t => getLocalizedTool(t, CURRENT_LANG));
 const activeTools = allTools.filter(t => t.status === "active");
 const activeCount = getActiveToolsCount();
-const totalCount  = getTotalToolsCount();
-const catCount    = localizedCategories.filter(c => allTools.some(t => t.category === c.id && t.status === "active")).length;
-const schemas     = [websiteSchema(), organizationSchema(), toolListSchema(activeTools, t("category.all_tools"))];
 
-// Tab-hoz szükséges serializable adat
-const tabCategories = localizedCategories.map(c => ({ id: c.id, label: c.label, icon: c.icon, color: c.color, url: categoryUrl(c.id) }));
-const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.h1, description: t.description, status: t.status, url: toolUrl(t) }));
+// ─── Top 10 featured tools ───────────────────────────────────
+const TOP_TOOL_SLUGS = [
+  { category: 'kep',       slug: 'jpg-webp',       icon: '🖼️' },
+  { category: 'kep',       slug: 'tomorites',       icon: '🗜️' },
+  { category: 'kep',       slug: 'atmeretezes',     icon: '📐' },
+  { category: 'pdf',       slug: 'osszeillesztes',  icon: '📄' },
+  { category: 'pdf',       slug: 'szetbontas',      icon: '✂️' },
+  { category: 'pdf',       slug: 'tomoritese',      icon: '🗜️' },
+  { category: 'adat',      slug: 'csv-json',        icon: '📊' },
+  { category: 'kep',       slug: 'png-webp',        icon: '🖼️' },
+  { category: 'fejleszto', slug: 'json-formazas',   icon: '⚙️' },
+  { category: 'kep',       slug: 'fekete-feher',    icon: '🎨' },
+];
+
+const topTools = TOP_TOOL_SLUGS
+  .map(({ category, slug, icon }) => {
+    const raw = getToolBySlug(category, slug);
+    if (!raw) return null;
+    return { tool: getLocalizedTool(raw, CURRENT_LANG), icon };
+  })
+  .filter(Boolean);
+
+// ─── Category blocks ─────────────────────────────────────────
+const categories = getVisibleCategories(CURRENT_LANG);
+
+// ─── FAQ data ────────────────────────────────────────────────
+const faqItems = [1,2,3,4,5,6].map(i => ({
+  q: t(`homepage.faq_q${i}`),
+  a: t(`homepage.faq_a${i}`),
+}));
+
+// ─── Schemas ─────────────────────────────────────────────────
+const softwareAppSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": SITE_NAME,
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": CURRENT_LANG === "hu" ? "HUF" : "RON" },
+  "url": SITE_URL + "/"
+});
+
+const schemas = [
+  websiteSchema(),
+  organizationSchema(),
+  toolListSchema(activeTools, t("category.all_tools")),
+  softwareAppSchema,
+  faqSchema(faqItems),
+].filter(Boolean) as string[];
+
 ---
 
 <BaseLayout
-  title={t("home.title")}
-  description={t("home.description")}
+  title={tpl('homepage.meta_title', { count: String(activeCount) })}
+  description={tpl('homepage.meta_description', { count: String(activeCount) })}
   canonical="/"
   schemaScripts={schemas}
 >
 
   <!-- ═══ HERO ═══════════════════════════════════════════════ -->
-  <section class="hero container">
-    <div class="hero__badge">
-      <span class="hero__badge-dot"></span>
-      {t("home.hero_badge")}
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__inner container">
+      <h1 id="hero-title" class="hero__title">{tpl('homepage.hero_title', { count: String(activeCount) })}</h1>
+      <p class="hero__subtitle">{t('homepage.hero_subtitle')}</p>
+
+      <div class="hero__search">
+        <button type="button" class="hero__search-link" id="hero-search-trigger" aria-label={t('homepage.hero_search_btn')}>
+          <span class="hero__search-icon" aria-hidden="true">🔍</span>
+          <span class="hero__search-placeholder">{t('homepage.hero_search_placeholder')}</span>
+        </button>
+      </div>
+
+      <nav class="hero__categories" aria-label={t('homepage.hero_categories_label')}>
+        {categories.map(rawCat => {
+          const cat = getLocalizedCategory(rawCat, CURRENT_LANG);
+          return (
+            <a href={categoryUrl(rawCat.id)} class="hero__cat-pill">
+              <span aria-hidden="true">{rawCat.icon}</span> {cat.label}
+            </a>
+          );
+        })}
+      </nav>
     </div>
-    <h1 class="hero__title">
-      {t("home.hero_title_line1")}<br/>
-      <span class="hero__accent">{t("home.hero_title_accent")}</span>
-    </h1>
-    <p class="hero__desc">
-      {t("home.hero_desc")}
-      <Fragment set:html={" " + t("home.hero_desc2")} />
-    </p>
-    <div class="hero__stats">
-      <div class="hero-stat">
-        <span class="hero-stat__num">{activeCount}</span>
-        <span class="hero-stat__label">{t("home.stat_active")}</span>
+  </section>
+
+  <!-- ═══ TRUST SIGNALS ══════════════════════════════════════ -->
+  <section class="trust-bar" aria-label={t('homepage.trust_privacy_title')}>
+    <div class="trust-bar__inner container">
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true">🔒</span>
+        <div>
+          <strong>{t('homepage.trust_privacy_title')}</strong>
+          <span>{t('homepage.trust_privacy_desc')}</span>
+        </div>
       </div>
-      <div class="hero-stat">
-        <span class="hero-stat__num">{catCount}</span>
-        <span class="hero-stat__label">{t("home.stat_category")}</span>
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true">🇪🇺</span>
+        <div>
+          <strong>{t('homepage.trust_gdpr_title')}</strong>
+          <span>{t('homepage.trust_gdpr_desc')}</span>
+        </div>
       </div>
-      <div class="hero-stat">
-        <span class="hero-stat__num">0</span>
-        <span class="hero-stat__label">{t("home.stat_upload")}</span>
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true">⚡</span>
+        <div>
+          <strong>{t('homepage.trust_speed_title')}</strong>
+          <span>{t('homepage.trust_speed_desc')}</span>
+        </div>
+      </div>
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true">🆓</span>
+        <div>
+          <strong>{t('homepage.trust_free_title')}</strong>
+          <span>{t('homepage.trust_free_desc')}</span>
+        </div>
+      </div>
+      <div class="trust-bar__item">
+        <span class="trust-bar__icon" aria-hidden="true">📱</span>
+        <div>
+          <strong>{t('homepage.trust_mobile_title')}</strong>
+          <span>{t('homepage.trust_mobile_desc')}</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ TABBED TOOLS ═══════════════════════════════════════ -->
-  <section class="tools-section container" aria-labelledby="tools-title">
-    <h2 id="tools-title" class="section-heading">
-      <span class="section-heading__icon">🔧</span>
-      {t("home.tools_heading")}
-    </h2>
-    <ToolTabs
-      client:visible
-      categories={tabCategories}
-      tools={tabTools}
-    />
+  <!-- ═══ FEATURED TOOLS ═════════════════════════════════════ -->
+  <section class="featured container" aria-labelledby="featured-title">
+    <div class="section-header">
+      <h2 id="featured-title" class="section-header__title">{t('homepage.featured_title')}</h2>
+      <p class="section-header__subtitle">{t('homepage.featured_subtitle')}</p>
+    </div>
+    <ul class="tool-grid tool-grid--featured" role="list">
+      {topTools.map(({ tool, icon }) => (
+        <li class="ftool-card">
+          <a href={toolUrl(tool)} class="ftool-card__link">
+            <span class="ftool-card__icon" aria-hidden="true">{icon}</span>
+            <div class="ftool-card__body">
+              <h3 class="ftool-card__title">{tool.h1}</h3>
+              <p class="ftool-card__desc">{tool.description}</p>
+            </div>
+            <span class="ftool-card__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
-  <!-- ═══ TRUST / FEATURES ═══════════════════════════════════ -->
-  <section class="trust container" aria-labelledby="trust-title">
-    <h2 id="trust-title" class="section-heading">
-      <span class="section-heading__icon">✨</span>
-      {t("home.trust_heading")}
-    </h2>
-    <div class="trust-grid">
-      <div class="trust-card">
-        <div class="trust-card__icon">🔒</div>
-        <h3 class="trust-card__title">{t("home.trust_private_title")}</h3>
-        <p class="trust-card__desc">{t("home.trust_private_desc")}</p>
-      </div>
-      <div class="trust-card">
-        <div class="trust-card__icon">⚡</div>
-        <h3 class="trust-card__title">{t("home.trust_fast_title")}</h3>
-        <p class="trust-card__desc">{t("home.trust_fast_desc")}</p>
-      </div>
-      <div class="trust-card">
-        <div class="trust-card__icon">🆓</div>
-        <h3 class="trust-card__title">{t("home.trust_free_title")}</h3>
-        <p class="trust-card__desc">{t("home.trust_free_desc")}</p>
-      </div>
-      <div class="trust-card">
-        <div class="trust-card__icon">🌍</div>
-        <h3 class="trust-card__title">{t("home.trust_offline_title")}</h3>
-        <p class="trust-card__desc">{t("home.trust_offline_desc")}</p>
-      </div>
+  <!-- ═══ CATEGORY BLOCKS ════════════════════════════════════ -->
+  <section class="categories-section container" aria-labelledby="categories-title">
+    <h2 id="categories-title" class="section-header__title">{t('homepage.categories_title')}</h2>
+    <div class="category-grid">
+      {categories.map(rawCat => {
+        const cat = getLocalizedCategory(rawCat, CURRENT_LANG);
+        const catTools = getToolsByCategory(rawCat.id)
+          .filter(t => t.status === 'active')
+          .map(t => getLocalizedTool(t, CURRENT_LANG));
+        const featured = catTools.slice(0, 4);
+        const remaining = catTools.length - featured.length;
+
+        return (
+          <article class="cat-block">
+            <header class="cat-block__header">
+              <a href={categoryUrl(rawCat.id)} class="cat-block__title-link">
+                <span aria-hidden="true">{rawCat.icon}</span>
+                <h3>{cat.label}</h3>
+                <span class="cat-block__count">{catTools.length}</span>
+              </a>
+              <p class="cat-block__desc">{cat.description}</p>
+            </header>
+            <ul class="cat-block__tools" role="list">
+              {featured.map(tool => (
+                <li><a href={toolUrl(tool)}>{tool.h1}</a></li>
+              ))}
+            </ul>
+            {remaining > 0 && (
+              <a href={categoryUrl(rawCat.id)} class="cat-block__more">
+                +{remaining} {t('homepage.categories_more')}
+              </a>
+            )}
+          </article>
+        );
+      })}
     </div>
   </section>
 
-  <!-- ═══ SEO CONTENT ════════════════════════════════════════ -->
-  <section class="seo-content container" aria-labelledby="about-title">
-    <div class="seo-content__inner">
-
-      <article class="seo-block">
-        <h2 id="about-title" class="seo-block__title">{t("home.seo_about_title")}</h2>
-        <p>{t("home.seo_about_p1")}</p>
-        <p><Fragment set:html={tpl("home.seo_about_p2", { active: String(activeCount), catCount: String(catCount), total: String(totalCount) })} /></p>
-      </article>
-
-      <article class="seo-block">
-        <h2 class="seo-block__title">{t("home.seo_how_title")}</h2>
-        <p>{t("home.seo_how_p1")}</p>
-        <p>{t("home.seo_how_p2")}</p>
-        <p>{t("home.seo_how_p3")}</p>
-      </article>
-
-      <article class="seo-block">
-        <h2 class="seo-block__title">{t("home.seo_who_title")}</h2>
-        <p><Fragment set:html={t("home.seo_who_dev")} /></p>
-        <p><Fragment set:html={t("home.seo_who_content")} /></p>
-        <p><Fragment set:html={t("home.seo_who_office")} /></p>
-        <p><Fragment set:html={t("home.seo_who_privacy")} /></p>
-      </article>
-
-      <article class="seo-block">
-        <h2 class="seo-block__title">{t("home.seo_faq_title")}</h2>
-        <dl class="faq-list">
-          <div class="faq-item">
-            <dt class="faq-item__q">{t("home.faq_upload_q")}</dt>
-            <dd class="faq-item__a">{t("home.faq_upload_a")}</dd>
-          </div>
-          <div class="faq-item">
-            <dt class="faq-item__q">{t("home.faq_free_q")}</dt>
-            <dd class="faq-item__a">{t("home.faq_free_a")}</dd>
-          </div>
-          <div class="faq-item">
-            <dt class="faq-item__q">{t("home.faq_browser_q")}</dt>
-            <dd class="faq-item__a">{t("home.faq_browser_a")}</dd>
-          </div>
-          <div class="faq-item">
-            <dt class="faq-item__q">{t("home.faq_mobile_q")}</dt>
-            <dd class="faq-item__a">{t("home.faq_mobile_a")}</dd>
-          </div>
-          <div class="faq-item">
-            <dt class="faq-item__q">{t("home.faq_batch_q")}</dt>
-            <dd class="faq-item__a">{t("home.faq_batch_a")}</dd>
-          </div>
-        </dl>
-      </article>
-
+  <!-- ═══ ABOUT SECTION ═════════════════════════════════════ -->
+  <section class="about-section container" aria-labelledby="about-title">
+    <h2 id="about-title" class="section-header__title">{t('homepage.about_title')}</h2>
+    <div class="about-content">
+      <p>{tpl('homepage.about_p1', { count: String(activeCount) })}</p>
+      <p>{tpl('homepage.about_p2', { count: String(activeCount) })}</p>
+      <h3>{t('homepage.about_tech_title')}</h3>
+      <p>{t('homepage.about_tech_p1')}</p>
+      <p>{t('homepage.about_tech_p2')}</p>
+      <p>{t('homepage.about_tech_p3')}</p>
     </div>
   </section>
 
-  <!-- ═══ CTA ═════════════════════════════════════════════════ -->
-  <section class="cta-section container">
-    <div class="cta-box">
-      <h2 class="cta-box__title">{t("home.cta_title")}</h2>
-      <p class="cta-box__desc"><Fragment set:html={tpl("home.cta_desc", { active: String(activeCount) })} /></p>
-      <a href="#tools-title" class="btn btn--primary btn--lg cta-box__btn">{t("home.cta_button")}</a>
+  <!-- ═══ WHY SECTION ════════════════════════════════════════ -->
+  <section class="why-section container" aria-labelledby="why-title">
+    <h2 id="why-title" class="section-header__title">{t('homepage.why_title')}</h2>
+    <div class="why-grid">
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">🔒</span>
+        <h3>{t('homepage.why_privacy_title')}</h3>
+        <p>{t('homepage.why_privacy_body')}</p>
+      </article>
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">⚡</span>
+        <h3>{t('homepage.why_speed_title')}</h3>
+        <p>{t('homepage.why_speed_body')}</p>
+      </article>
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">🆓</span>
+        <h3>{t('homepage.why_free_title')}</h3>
+        <p>{t('homepage.why_free_body')}</p>
+      </article>
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">🌍</span>
+        <h3>{t('homepage.why_browser_title')}</h3>
+        <p>{t('homepage.why_browser_body')}</p>
+      </article>
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">📱</span>
+        <h3>{t('homepage.why_mobile_title')}</h3>
+        <p>{t('homepage.why_mobile_body')}</p>
+      </article>
+      <article class="why-card">
+        <span class="why-card__icon" aria-hidden="true">🔧</span>
+        <h3>{tpl('homepage.why_tools_title', { count: String(activeCount) })}</h3>
+        <p>{t('homepage.why_tools_body')}</p>
+      </article>
     </div>
+  </section>
+
+  <!-- ═══ AUDIENCE SECTION ══════════════════════════════════ -->
+  <section class="audience-section container" aria-labelledby="audience-title">
+    <h2 id="audience-title" class="section-header__title">{t('homepage.audience_title')}</h2>
+    <div class="audience-grid">
+      <article class="audience-card">
+        <span class="audience-card__icon" aria-hidden="true">💻</span>
+        <h3>{t('homepage.audience_dev_title')}</h3>
+        <p>{t('homepage.audience_dev_body')}</p>
+      </article>
+      <article class="audience-card">
+        <span class="audience-card__icon" aria-hidden="true">✍️</span>
+        <h3>{t('homepage.audience_content_title')}</h3>
+        <p>{t('homepage.audience_content_body')}</p>
+      </article>
+      <article class="audience-card">
+        <span class="audience-card__icon" aria-hidden="true">🏢</span>
+        <h3>{t('homepage.audience_office_title')}</h3>
+        <p>{t('homepage.audience_office_body')}</p>
+      </article>
+      <article class="audience-card">
+        <span class="audience-card__icon" aria-hidden="true">🔐</span>
+        <h3>{t('homepage.audience_privacy_title')}</h3>
+        <p>{t('homepage.audience_privacy_body')}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══════════════════════════════════════ -->
+  <section class="how-section container" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-header__title">{t('homepage.how_title')}</h2>
+    <p class="how-section__subtitle">{t('homepage.how_subtitle')}</p>
+    <ol class="how-steps" role="list">
+      <li class="how-step">
+        <span class="how-step__number" aria-hidden="true">1</span>
+        <div>
+          <h3>{t('homepage.how_step1_title')}</h3>
+          <p>{tpl('homepage.how_step1_body', { count: String(activeCount) })}</p>
+        </div>
+      </li>
+      <li class="how-step">
+        <span class="how-step__number" aria-hidden="true">2</span>
+        <div>
+          <h3>{t('homepage.how_step2_title')}</h3>
+          <p>{t('homepage.how_step2_body')}</p>
+        </div>
+      </li>
+      <li class="how-step">
+        <span class="how-step__number" aria-hidden="true">3</span>
+        <div>
+          <h3>{t('homepage.how_step3_title')}</h3>
+          <p>{t('homepage.how_step3_body')}</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ═══ FAQ ════════════════════════════════════════════════ -->
+  <section class="faq-section container" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="section-header__title">{t('homepage.faq_title')}</h2>
+    <dl class="faq__list" itemscope itemtype="https://schema.org/FAQPage">
+      {faqItems.map(({ q, a }) => (
+        <div class="faq__item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <dt itemprop="name">{q}</dt>
+          <dd itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <span itemprop="text">{a}</span>
+          </dd>
+        </div>
+      ))}
+    </dl>
   </section>
 
 </BaseLayout>
@@ -176,124 +335,317 @@ const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.
 <style>
 /* ═══ HERO ════════════════════════════════════════════════════ */
 .hero {
-  padding: var(--sp-16) 0 var(--sp-12);
+  padding: var(--sp-16) 0 var(--sp-10);
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg) 100%);
   text-align: center;
+}
+
+.hero__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--sp-5);
 }
 
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-subtle);
-  border: 1px solid var(--accent)40;
-  padding: var(--sp-2) var(--sp-4);
-  border-radius: var(--r-full);
-}
-
-.hero__badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  animation: pulse-dot 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.4; transform: scale(0.8); }
-}
-
 .hero__title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
 }
 
-.hero__accent {
-  color: var(--accent);
-  position: relative;
-}
-
-.hero__desc {
+.hero__subtitle {
   font-size: 1.125rem;
-  max-width: 54ch;
-  text-align: center;
   color: var(--text-muted);
+  max-width: 52ch;
   line-height: 1.6;
+  text-align: center;
 }
 
-.hero__stats {
-  display: flex;
-  gap: var(--sp-8);
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: var(--sp-4);
+/* Hero search link */
+.hero__search {
+  width: 100%;
+  max-width: 540px;
+  margin-top: var(--sp-2);
 }
 
-.hero-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.hero-stat__num {
-  font-family: var(--font-mono);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1;
-}
-
-.hero-stat__label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-subtle);
-}
-
-/* ═══ SECTION HEADING ════════════════════════════════════════ */
-.section-heading {
+.hero__search-link {
+  all: unset;
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  font-size: 1.375rem;
-  margin-bottom: var(--sp-6);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-5);
+  background: var(--bg-input, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  color: var(--text-subtle);
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 180ms ease;
+  box-sizing: border-box;
 }
 
-.section-heading__icon {
-  font-size: 1.25rem;
+.hero__search-link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
 }
 
-/* ═══ TOOLS SECTION ══════════════════════════════════════════ */
-.tools-section {
-  margin-bottom: var(--sp-16);
+.hero__search-icon { font-size: 1rem; flex-shrink: 0; }
+.hero__search-placeholder { opacity: 0.7; }
+
+/* Category pills */
+.hero__categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
 }
 
-/* ═══ TRUST GRID ═════════════════════════════════════════════ */
-.trust {
-  margin-bottom: var(--sp-16);
+.hero__cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 150ms ease;
 }
 
-.trust-grid {
+.hero__cat-pill:hover {
+  color: var(--accent);
+  border-color: var(--accent)40;
+  background: var(--accent-subtle);
+}
+
+/* ═══ TRUST BAR ══════════════════════════════════════════════ */
+.trust-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-5) 0;
+  background: var(--bg-card);
+}
+
+.trust-bar__inner {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+}
+
+.trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: 0.8125rem;
+}
+
+.trust-bar__item strong {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.trust-bar__item span:not(.trust-bar__icon) {
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+}
+
+.trust-bar__icon { font-size: 1.25rem; flex-shrink: 0; }
+
+/* ═══ SECTION HEADERS ════════════════════════════════════════ */
+.section-header {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+
+.section-header__title {
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--sp-2);
+}
+
+.section-header__subtitle {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* ═══ FEATURED TOOLS ═════════════════════════════════════════ */
+.featured {
+  padding-block: var(--sp-12);
+}
+
+.tool-grid--featured {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--sp-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.trust-card {
+.ftool-card {
+  list-style: none;
+}
+
+.ftool-card__link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.ftool-card__link:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.ftool-card__icon { font-size: 1.75rem; flex-shrink: 0; }
+
+.ftool-card__body { flex: 1; min-width: 0; }
+
+.ftool-card__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.ftool-card__desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: none;
+}
+
+.ftool-card__arrow {
+  color: var(--accent);
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  transition: transform 180ms ease;
+}
+
+.ftool-card__link:hover .ftool-card__arrow {
+  transform: translateX(4px);
+}
+
+/* ═══ CATEGORY BLOCKS ════════════════════════════════════════ */
+.categories-section {
+  padding-bottom: var(--sp-12);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.cat-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.cat-block__title-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.cat-block__title-link:hover { color: var(--accent); }
+
+.cat-block__title-link h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cat-block__count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--accent-subtle);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: var(--r-full);
+}
+
+.cat-block__desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: none;
+}
+
+.cat-block__tools {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.cat-block__tools li a {
+  font-size: 0.8125rem;
+  color: var(--text);
+  text-decoration: none;
+  padding: var(--sp-1) 0;
+  display: block;
+  border-bottom: 1px solid var(--border);
+  transition: color 120ms ease;
+}
+
+.cat-block__tools li a:hover { color: var(--accent); }
+
+.cat-block__more {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.cat-block__more:hover { text-decoration: underline; }
+
+/* ═══ WHY SECTION ════════════════════════════════════════════ */
+.why-section {
+  padding-block: var(--sp-12);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.why-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -304,130 +656,196 @@ const tabTools = allTools.map(t => ({ slug: t.slug, category: t.category, h1: t.
   transition: all 180ms ease;
 }
 
-.trust-card:hover {
+.why-card:hover {
   border-color: var(--accent)60;
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
-.trust-card__icon { font-size: 2rem; }
-.trust-card__title { font-size: 1rem; }
-.trust-card__desc {
+.why-card__icon { font-size: 2rem; }
+.why-card h3 { font-size: 1rem; }
+.why-card p {
   font-size: 0.875rem;
   color: var(--text-muted);
   line-height: 1.6;
   max-width: none;
 }
 
-/* ═══ SEO CONTENT ════════════════════════════════════════════ */
-.seo-content {
-  margin-bottom: var(--sp-16);
+/* ═══ HOW IT WORKS ═══════════════════════════════════════════ */
+.how-section {
+  padding-bottom: var(--sp-12);
 }
 
-.seo-content__inner {
-  max-width: 75ch;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-10);
-}
-
-.seo-block__title {
-  font-size: 1.25rem;
-  margin-bottom: var(--sp-4);
-  padding-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--border);
-}
-
-.seo-block p {
-  font-size: 0.9375rem;
-  line-height: 1.75;
+.how-section__subtitle {
   color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-top: var(--sp-2);
 }
 
-.seo-block p + p {
-  margin-top: var(--sp-3);
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
+  list-style: none;
+  padding: 0;
 }
 
-.seo-block strong {
-  color: var(--text);
+.how-step {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: flex-start;
 }
 
-/* FAQ */
-.faq-list {
+.how-step__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent)40;
+  border-radius: var(--r-full);
+}
+
+.how-step h3 {
+  font-size: 1rem;
+  margin-bottom: var(--sp-1);
+}
+
+.how-step p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: none;
+}
+
+/* ═══ FAQ ════════════════════════════════════════════════════ */
+.faq-section {
+  padding-bottom: var(--sp-16);
+}
+
+.faq__list {
   display: flex;
   flex-direction: column;
   gap: var(--sp-4);
+  margin-top: var(--sp-6);
 }
 
-.faq-item {
+.faq__item {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   padding: var(--sp-4) var(--sp-5);
 }
 
-.faq-item__q {
+.faq__item dt {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   color: var(--text);
   margin-bottom: var(--sp-2);
 }
 
-.faq-item__a {
+.faq__item dd {
   font-size: 0.875rem;
   color: var(--text-muted);
   line-height: 1.6;
   margin: 0;
 }
 
-/* ═══ CTA ZÁRÓ ═══════════════════════════════════════════════ */
-.cta-section {
-  margin-bottom: var(--sp-16);
-  content-visibility: auto;
-  contain-intrinsic-size: auto 200px;
+/* ═══ ABOUT SECTION ══════════════════════════════════════════ */
+.about-section {
+  padding-block: var(--sp-12);
+  border-top: 1px solid var(--border);
 }
 
-.cta-box {
-  text-align: center;
-  padding: var(--sp-10) var(--sp-8);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  position: relative;
-  overflow: hidden;
+.about-content {
+  max-width: 72ch;
+  margin: var(--sp-6) auto 0;
 }
 
-.cta-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), #3b82f6, #8b5cf6, var(--accent));
-  animation: gradient-slide 4s linear infinite;
-  will-change: transform;
-}
-
-@keyframes gradient-slide {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.cta-box__title {
-  font-size: 1.375rem;
-  margin-bottom: var(--sp-3);
-}
-
-.cta-box__desc {
+.about-content p {
+  font-size: 0.9375rem;
   color: var(--text-muted);
-  margin-bottom: var(--sp-5);
+  line-height: 1.7;
+  margin-bottom: var(--sp-4);
   max-width: none;
 }
 
-.cta-box__btn {
-  font-family: var(--font-mono);
-  font-weight: 700;
+.about-content h3 {
+  font-size: 1.125rem;
+  margin-top: var(--sp-6);
+  margin-bottom: var(--sp-3);
+}
+
+/* ═══ AUDIENCE SECTION ═══════════════════════════════════════ */
+.audience-section {
+  padding-block: var(--sp-12);
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.audience-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  transition: all 180ms ease;
+}
+
+.audience-card:hover {
+  border-color: var(--accent)60;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.audience-card__icon { font-size: 2rem; }
+.audience-card h3 { font-size: 1rem; }
+.audience-card p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: none;
+}
+
+/* ═══ RESPONSIVE ═════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .trust-bar__inner {
+    flex-direction: column;
+    gap: var(--sp-3);
+    align-items: flex-start;
+    padding: 0 var(--sp-4);
+  }
+
+  .tool-grid--featured {
+    grid-template-columns: 1fr;
+  }
+
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
+
+<script>
+  const heroSearch = document.getElementById("hero-search-trigger");
+  if (heroSearch) {
+    heroSearch.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("toggle-search"));
+    });
+  }
+</script>
