@@ -1,54 +1,65 @@
 <!-- src/components/ui/AdSlot.svelte -->
 <!--
-  AdSense placeholder komponens.
-  Ha show=false: teljesen rejtett, 0 helyet foglal.
-  Ha show=true: megjelenik a slot (téglalap placeholder vagy éles ad).
+  AdSense hirdetési slot komponens.
+  ENV guard: ha PUBLIC_ADSENSE_CLIENT_ID nincs beállítva → semmi nem renderelődik.
+  DEV módban: vizuális placeholder. PROD: valódi AdSense <ins> elem.
 -->
 <script lang="ts">
-  export let show:       boolean = false;
-  export let slot:       "before-convert" | "before-download" | "sidebar" | "bottom" = "before-convert";
-  export let adClient:   string  = "ca-pub-XXXXXXXXXX";
-  export let adSlotId:   string  = "0000000000";
-  export let label:      string  = "Hirdetes";
+  import { onMount } from 'svelte';
 
-  // Suppress unused export warnings – used in production <ins> tag when uncommented
-  $: void adClient, adSlotId;
+  // ─── Props ───────────────────────────────────────────────
+  export let show:  boolean = false;
+  export let slot:  'before-convert' | 'before-download' | 'post-result' = 'before-convert';
 
-  const isDev  = import.meta.env.DEV;
-
-  const SLOT_SIZES = {
-    "before-convert":  { w: "100%", h: "90px",  format: "horizontal" },
-    "before-download": { w: "100%", h: "90px",  format: "horizontal" },
-    "sidebar":         { w: "300px", h: "250px", format: "rectangle" },
-    "bottom":          { w: "100%", h: "90px",  format: "horizontal" },
+  // Ad Slot ID-k – AdSense dashboardból (placeholder amíg nincs jóváhagyva)
+  const AD_SLOT_IDS: Record<string, string> = {
+    'before-convert':  '0000000000',  // TODO: valódi slot ID az AdSense dashboardból
+    'before-download': '0000000000',  // TODO: valódi slot ID az AdSense dashboardból
+    'post-result':     '0000000000',  // TODO: valódi slot ID az AdSense dashboardból
   };
 
-  $: cfg = SLOT_SIZES[slot];
+  // ENV GUARD: Publisher ID build-time beégett értéke
+  const ADSENSE_CLIENT = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? '';
+  const isConfigured = ADSENSE_CLIENT.length > 0;
+
+  // 2. FÁZIS KÖTŐPONT: Premium user nem lát hirdetést
+  const isPremium = false;
+
+  $: shouldRender = show && isConfigured && !isPremium;
+
+  const isDev = import.meta.env.DEV;
+
+  onMount(() => {
+    if (!shouldRender || isDev) return;
+    try {
+      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    } catch (e) {
+      // Csendben kezeljük – DEV módban normális
+    }
+  });
 </script>
 
-{#if show}
-  <div class="ad-slot ad-slot--{slot}" aria-label={label} role="complementary">
+{#if shouldRender}
+  <div class="ad-slot ad-slot--{slot}" aria-label="Hirdetés" role="complementary">
+
     {#if isDev}
-      <div class="ad-slot__placeholder" style="width:{cfg.w}; height:{cfg.h}">
-        <span class="ad-slot__label">{label} [{slot}] - {cfg.w} x {cfg.h}</span>
-        <span class="ad-slot__note">AdSense kod csak production-ban fut</span>
+      <!-- DEV: vizuális placeholder -->
+      <div class="ad-slot__placeholder">
+        <span class="ad-slot__label">AD: {slot}</span>
+        <span class="ad-slot__note">AdSense csak production-ban fut</span>
       </div>
     {:else}
-      <!-- Production: valodi AdSense kod -->
-      <!--
+      <!-- PROD: valódi AdSense ins elem -->
       <ins
         class="adsbygoogle"
-        style="display:block; width:{cfg.w}; height:{cfg.h}"
-        data-ad-client={adClient}
-        data-ad-slot={adSlotId}
-        data-ad-format={cfg.format}
-        data-full-width-responsive="true"
+        style="display:block"
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={AD_SLOT_IDS[slot]}
+        data-ad-format={slot === 'before-download' ? 'rectangle' : 'auto'}
+        data-full-width-responsive={slot !== 'before-download' ? 'true' : 'false'}
       ></ins>
-      -->
-      <div class="ad-slot__placeholder ad-slot__placeholder--live" style="width:{cfg.w}; height:{cfg.h}">
-        <span class="ad-slot__label">{label}</span>
-      </div>
     {/if}
+
   </div>
 {/if}
 
@@ -60,12 +71,30 @@
   margin: var(--sp-4) 0;
 }
 
+.ad-slot--before-convert {
+  min-height: 90px;
+}
+
+.ad-slot--before-download {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 250px;
+}
+
+.ad-slot--post-result {
+  min-height: 250px;
+  margin-top: var(--sp-5);
+}
+
 .ad-slot__placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--sp-1);
+  width: 100%;
+  min-height: inherit;
   background: repeating-linear-gradient(
     45deg,
     var(--bg-card),
@@ -75,12 +104,6 @@
   );
   border: 1px dashed var(--border);
   border-radius: var(--r-sm);
-  max-width: 100%;
-}
-
-.ad-slot__placeholder--live {
-  background: var(--bg-card);
-  border-style: solid;
 }
 
 .ad-slot__label {

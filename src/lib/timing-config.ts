@@ -23,7 +23,7 @@ export const DEFAULT_TIMING: TimingConfig = {
   delayBeforeConvert:  3000,
   delayBeforeDownload: 3000,
   showCountdown:       true,
-  showAdSlot:          false,
+  showAdSlot:          false,  // TODO: true-ra állítani ha AdSense jóváhagyva
 };
 
 /** Eszközönkénti felülírás – csak a különböző értékeket kell megadni */

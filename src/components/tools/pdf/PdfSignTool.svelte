@@ -2,6 +2,7 @@
   import Dropzone from "../../ui/Dropzone.svelte";
   import ConvertButton from "../../ui/ConvertButton.svelte";
   import AdSlot from "../../ui/AdSlot.svelte";
+  import EmailCaptureBar from '../../ui/EmailCaptureBar.svelte';
   import PdfPreview from "./PdfPreview.svelte";
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
@@ -361,6 +362,12 @@
     <div class="alert alert--error" role="alert">{error}</div>
   {/if}
 </div>
+
+<!-- Post-result: hirdetés + email capture -->
+{#if isDone}
+  <AdSlot show={true} slot="post-result" />
+  <EmailCaptureBar />
+{/if}
 
 <style>
 .tool { display: flex; flex-direction: column; gap: var(--sp-5); }

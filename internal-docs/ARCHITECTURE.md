@@ -1,7 +1,7 @@
 # Tool House -- Fejlesztoi Dokumentacio
 
 > **Belso hasznalatra** -- fejlesztoknek es AI asszisztenseknek, akik a kodbazisat modositjak.
-> Utolso frissites: 2026-03-01 (v2 -- cross-linking, performance, analytics defer)
+> Utolso frissites: 2026-03-22 (v3 -- GEO audit fix-ek, AdSense infrastruktura, Email capture, SEO schema javitasok)
 
 ---
 
@@ -17,12 +17,13 @@
 8. [Analytics](#8-analytics)
 9. [Tartalom (Content)](#9-tartalom-content)
 10. [Timing es Delay Rendszer](#10-timing-es-delay-rendszer)
-11. [Middleware es Biztonsag](#11-middleware-es-biztonsag)
-12. [Performance Optimalizacio](#12-performance-optimalizacio)
-13. [Cross-Language Linkeles](#13-cross-language-linkeles)
-14. [Gyakori Hibak es Tanulsagok](#14-gyakori-hibak-es-tanulsagok)
-15. [Uj Nyelv Hozzaadasa (Checklist)](#15-uj-nyelv-hozzaadasa-checklist)
-16. [Uj Eszkoz Hozzaadasa (Checklist)](#16-uj-eszkoz-hozzaadasa-checklist)
+11. [Monetizacio (AdSense + Email Capture)](#11-monetizacio-adsense--email-capture)
+12. [Middleware es Biztonsag](#12-middleware-es-biztonsag)
+13. [Performance Optimalizacio](#13-performance-optimalizacio)
+14. [Cross-Language Linkeles](#14-cross-language-linkeles)
+15. [Gyakori Hibak es Tanulsagok](#15-gyakori-hibak-es-tanulsagok)
+16. [Uj Nyelv Hozzaadasa (Checklist)](#16-uj-nyelv-hozzaadasa-checklist)
+17. [Uj Eszkoz Hozzaadasa (Checklist)](#17-uj-eszkoz-hozzaadasa-checklist)
 
 ---
 
@@ -169,7 +170,8 @@ C:\dev\tool_house\
 |   |   |   |-- SearchOverlay.svelte   # Kereses overlay (Ctrl+K)
 |   |   |   |-- SearchPage.svelte      # Kereses oldal
 |   |   |   |-- ToastNotification.svelte # Toast ertesitesek
-|   |   |   +-- AdSlot.svelte         # AdSense placeholder
+|   |   |   |-- AdSlot.svelte         # AdSense hirdetes slot (env guard-dal)
+|   |   |   +-- EmailCaptureBar.svelte # Email feliratkozo sav (Brevo API)
 |   |   |
 |   |   |-- home/
 |   |   |   +-- ToolTabs.svelte   # Fooldal tabbed eszkozlista
@@ -748,7 +750,8 @@ Pelda a registry-ben:
 | `SearchOverlay.svelte` | Ctrl+K kereses overlay, fuzzy search az osszes tool-on    |
 | `SearchPage.svelte`    | /kereses (vagy /cautare) oldal tartalma                   |
 | `ToastNotification.svelte` | Toast ertesitesek (masolas, letoltes, hiba)           |
-| `AdSlot.svelte`        | AdSense placeholder (jelenleg nem aktiv)                  |
+| `AdSlot.svelte`        | AdSense hirdetes slot (env guard: `PUBLIC_ADSENSE_CLIENT_ID`) |
+| `EmailCaptureBar.svelte` | Email feliratkozo sav (env guard: `PUBLIC_BREVO_API_KEY`) |
 | `ToolTabs.svelte`      | Fooldal -- tabbed tool lista kategoriankett                |
 
 ### Svelte Komponensek -- Altalanos Minta
@@ -791,12 +794,12 @@ A rendszer tobb Schema.org tipust is general minden tool oldalra:
 |-------------------------|-----------------------|----------------------------------------|
 | `toolSoftwareSchema()`  | SoftwareApplication   | Tool mint szoftver alkalmazas          |
 | `faqSchema()`           | FAQPage               | FAQ kerdes-valasz                      |
-| `howToSchema()`         | HowTo                 | Hasznalati utmutato lepesek            |
-| `techArticleSchema()`   | TechArticle           | "Mi ez?" szekcio cikkent               |
+| `techArticleSchema()`   | TechArticle           | "Mi ez?" szekcio cikkent (speakable property-vel) |
 | `useCaseListSchema()`   | ItemList              | Felhasznalasi esetek listaja           |
 | `breadcrumbSchema()`    | BreadcrumbList        | Breadcrumb navigacio                   |
 | `websiteSchema()`       | WebSite               | Fooldal (SearchAction-nel)             |
-| `organizationSchema()`  | Organization          | Ceg/szervezet adatok                   |
+| `organizationSchema()`  | Organization          | Ceg/szervezet adatok (@id referencia)  |
+| `founderPersonSchema()` | Person                | Alapito szemely adatai (sameAs, jobTitle) |
 | `toolListSchema()`      | ItemList              | Eszkozlista (fooldal, kategoria)       |
 
 ### Rating Generalas
@@ -849,6 +852,7 @@ Dinamikus XML sitemap, amely:
 - Kategoria-alapu prioritast es changefreq-et allitt be
 - `tool.updatedAt`-ot hasznalja `lastmod`-kent
 - Csak a latahto (visible) eszkozoket es kategoriakat tartalmazza
+- Minden URL trailing slash-sel generálódik (ensureTrailingSlash) -- egyezik a szerver redirect-ekkel
 
 ### OG Kepek
 
@@ -1005,7 +1009,7 @@ A `ConvertButton` komponens ket fazisban mukodik, konfiguralhato delay-ekkel:
 1. **delayBeforeConvert**: Fajl feltoltes utan ennyi ms mulva valik aktiva a Konvertalas gomb
 2. **delayBeforeDownload**: Konverzio utan ennyi ms mulva valik aktiva a Letoltes gomb
 
-Ez lehetoseget ad reklamok megjelenitesere a varakozas alatt (jelenleg nem aktiv).
+Ez lehetoseget ad reklamok megjelenitesere a varakozas alatt. Az AdSlot infrastruktura felkeszitett, de `showAdSlot: false` amig az AdSense fiok nem lesz jovahagyva. Lasd: [11. Monetizacio](#11-monetizacio-adsense--email-capture).
 
 ### Konfiguracio
 
@@ -1038,7 +1042,86 @@ Altalanos szabaly: szovegalapu es kodolo eszkozoknel nincs delay (azonnali feedb
 
 ---
 
-## 11. Middleware es Biztonsag
+## 11. Monetizacio (AdSense + Email Capture)
+
+### Ket fazisban valosul meg
+
+- **1. fazis** (jelenlegi): AdSense infrastruktura + Email capture → KESZ, de ENV nelkul nem aktiv
+- **2. fazis** (tervezett): Freemium modell, napi hasznalati limit, Premium tier (Lemon Squeezy)
+
+### AdSense Integráció
+
+**ENV valtozo**: `PUBLIC_ADSENSE_CLIENT_ID` (pl. `ca-pub-1234567890123456`)
+
+Ha nincs beallitva → semmi nem toltodik be, semmi nem renderelodik.
+
+**Erintett fajlok:**
+
+| Fajl | Szerep |
+|------|--------|
+| `src/layouts/BaseLayout.astro` | Felteteles `<script async>` tag a `</head>` elott |
+| `src/components/ui/AdSlot.svelte` | Hirdetes slot komponens (3 pozicio) |
+| `src/lib/timing-config.ts` | `showAdSlot` flag (jelenleg `false`) |
+| `public/ads.txt` | AdSense ads.txt (kotelezo Google szamara) |
+
+**3 hirdetesi pozicio:**
+
+```
+[Fajl feltoltve]
+     ↓
+[delayBeforeConvert: 3000ms]  ← "before-convert" slot
+     ↓
+[Konvertalas gomb aktiv → user kattint → feldolgozas]
+     ↓
+[delayBeforeDownload: 3000ms] ← "before-download" slot
+     ↓
+[Letoltes gomb aktiv → user letolt]
+     ↓
+[Eredmeny szekcion alatt]     ← "post-result" slot + EmailCaptureBar
+```
+
+**AdSlot.svelte ENV guard logika:**
+
+```
+PUBLIC_ADSENSE_CLIENT_ID nincs → semmit nem renderel
+PUBLIC_ADSENSE_CLIENT_ID van + DEV mod → vizualis placeholder box
+PUBLIC_ADSENSE_CLIENT_ID van + PROD → valodi <ins class="adsbygoogle"> elem
+```
+
+**Bekapcsolas lepesek:**
+1. AdSense fiok jovahagy a domaint
+2. `PUBLIC_ADSENSE_CLIENT_ID` beallitasa Netlify dashboard-on
+3. `public/ads.txt`-ben `ca-pub-PLACEHOLDER` csereje valodi ID-ra
+4. `timing-config.ts`-ben `showAdSlot: true`-ra allitas
+5. Ad slot ID-k kitoltese az `AdSlot.svelte`-ben
+
+### Email Capture (Brevo)
+
+**ENV valtozo**: `PUBLIC_BREVO_API_KEY`
+
+**Fajl**: `src/components/ui/EmailCaptureBar.svelte`
+
+Ha nincs API key → nem renderelodik. Ha a user mar feliratkozott (localStorage: `ku_email_subscribed`) → szinten rejtett.
+
+- Brevo API: `POST https://api.brevo.com/v3/contacts`
+- Lista ID: HU = 1, RO = 2
+- Megjelenik: fajl-alapu eszkozok eredmeny szekcioja utan (kep, pdf, adat)
+- NEM jelenik meg: szoveg, fejleszto, seo, markdown eszkozoknel
+
+**UI szovegek**: `ui-labels.ts` → `emailBar` szekcion (hu + ro)
+
+### Uj ENV valtozok osszefoglalas
+
+| Valtozo | Hol allitsd be | Mire kell |
+|---------|----------------|-----------|
+| `PUBLIC_ADSENSE_CLIENT_ID` | Netlify env vars | AdSense script + slot-ok |
+| `PUBLIC_BREVO_API_KEY` | Netlify env vars | Email feliratkozas API |
+
+**FONTOS**: Ezek az ertekek NEM kerulnek `.env` fajlba a repo-ban (titok!). Csak `.env.example` van placeholder-ekkel.
+
+---
+
+## 12. Middleware es Biztonsag
 
 ### Fajl: `src/middleware.ts`
 
@@ -1069,7 +1152,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' .
 
 ---
 
-## 12. Performance Optimalizacio
+## 13. Performance Optimalizacio
 
 ### Lighthouse Optimalizaciok
 
@@ -1208,7 +1291,7 @@ A `scroll-behavior: smooth` csak akkor aktiv, ha a felhasznalo nem kerte a reduc
 
 ---
 
-## 13. Cross-Language Linkeles
+## 14. Cross-Language Linkeles
 
 ### Mi ez?
 
@@ -1282,7 +1365,7 @@ Pelda: Ha felveszik az `en` nyelvet a `LANG_CONFIG`-ba:
 
 ---
 
-## 14. Gyakori Hibak es Tanulsagok
+## 15. Gyakori Hibak es Tanulsagok
 
 ### 1. getCategoryInfo() NEM lokalizal
 
@@ -1426,7 +1509,7 @@ Mindig `transform` vagy `opacity` animaciot hasznalj, ezek compositable property
 
 ---
 
-## 15. Uj Nyelv Hozzaadasa (Checklist)
+## 16. Uj Nyelv Hozzaadasa (Checklist)
 
 Pelda: angol (`en`) nyelv hozzaadasa.
 
@@ -1596,7 +1679,7 @@ Ellenorizd:
 
 ---
 
-## 16. Uj Eszkoz Hozzaadasa (Checklist)
+## 17. Uj Eszkoz Hozzaadasa (Checklist)
 
 ### 1. lepes: Tool regisztracia
 
@@ -1668,6 +1751,12 @@ Uj fajl: `src/components/tools/{category}/UjEszkozTool.svelte`
     <div class="tool-result">
       <!-- Eredmeny megjelenites -->
     </div>
+  {/if}
+
+  <!-- Post-result: hirdetes + email capture -->
+  {#if isDone}
+    <AdSlot show={true} slot="post-result" />
+    <EmailCaptureBar />
   {/if}
 </div>
 ```

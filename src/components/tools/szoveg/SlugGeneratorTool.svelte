@@ -144,6 +144,10 @@
 
   <!-- Ad slot: letöltés előtti ablak -->
   <AdSlot show={timing.showAdSlot} slot="before-download" />
+
+  {#if isDone}
+    <AdSlot show={true} slot="post-result" />
+  {/if}
 </div>
 
 <style>

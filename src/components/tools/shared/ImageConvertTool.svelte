@@ -2,6 +2,7 @@
   import Dropzone from "../../ui/Dropzone.svelte";
   import ConvertButton from "../../ui/ConvertButton.svelte";
   import AdSlot from "../../ui/AdSlot.svelte";
+  import EmailCaptureBar from '../../ui/EmailCaptureBar.svelte';
   import ProgressQueue from "../../ui/ProgressQueue.svelte";
   import type { QueueItem } from "../../ui/ProgressQueue.svelte";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
@@ -208,6 +209,12 @@
   <!-- Queue -->
   <ProgressQueue items={queue} onDownload={handleDownload} onReset={handleReset} />
 </div>
+
+<!-- Post-result: hirdetés + email capture -->
+{#if isDone}
+  <AdSlot show={true} slot="post-result" />
+  <EmailCaptureBar />
+{/if}
 
 <style>
 .tool { display: flex; flex-direction: column; gap: var(--sp-5); }

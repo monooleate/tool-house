@@ -238,6 +238,19 @@ const totalCount = getTotalToolsCount();
       } catch(e) {}
     })();
   </script>
+
+  <!-- Google AdSense – csak ha Publisher ID be van állítva -->
+  {(() => {
+    const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID ?? '';
+    return adsenseClient.length > 0 ? true : false;
+  })() && (
+    <script
+      is:inline
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${import.meta.env.PUBLIC_ADSENSE_CLIENT_ID}`}
+      crossorigin="anonymous"
+    ></script>
+  )}
 </head>
 
 <body>

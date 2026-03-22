@@ -594,6 +594,16 @@ const labels = {
     layoutGrid: "Rácsos",
     gap: "Rés (px)",
 
+    // ─── Email capture ─────────────────────────────────────
+    emailBar: {
+      title: 'Értesülj az új eszközökről',
+      placeholder: 'email@cimed.hu',
+      btn: 'Feliratkozom',
+      disclaimer: 'Csak hasznos frissítések. Spam nélkül. Leiratkozhatsz bármikor.',
+      success: 'Feliratkoztál! Értesítünk az újdonságokról.',
+      error: 'Hiba történt. Próbáld újra.',
+    },
+
     // ─── Locale ──────────────────────────────────────────
     locale: "hu",
   },
@@ -1183,6 +1193,16 @@ const labels = {
     layoutVertical: "Vertical",
     layoutGrid: "Grilă",
     gap: "Spațiu (px)",
+
+    // ─── Email capture ─────────────────────────────────────
+    emailBar: {
+      title: 'Află despre noile instrumente',
+      placeholder: 'email@tau.ro',
+      btn: 'Abonează-te',
+      disclaimer: 'Doar actualizări utile. Fără spam. Te poți dezabona oricând.',
+      success: 'Te-ai abonat! Îți vom notifica despre noutăți.',
+      error: 'A apărut o eroare. Încearcă din nou.',
+    },
 
     // ─── Locale ──────────────────────────────────────────
     locale: "ro",
