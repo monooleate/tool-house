@@ -79,11 +79,13 @@ const totalCount = getTotalToolsCount();
   {(() => {
     const huPath = hreflangPaths?.hu ?? (canonical ?? Astro.url.pathname);
     const roPath = hreflangPaths?.ro ?? (canonical ?? Astro.url.pathname);
+    // Trailing slash normalizálás (egyezzen a canonical-lal és sitemap-pel)
+    const norm = (p: string) => p === "/" ? p : (p.endsWith("/") ? p : p + "/");
     return (
       <>
-        <link rel="alternate" hreflang="hu" href={`https://konvertalo.hu${huPath}`} />
-        <link rel="alternate" hreflang="ro" href={`https://instrumenteonline.ro${roPath}`} />
-        <link rel="alternate" hreflang="x-default" href={`https://konvertalo.hu${huPath}`} />
+        <link rel="alternate" hreflang="hu" href={`https://konvertalo.hu${norm(huPath)}`} />
+        <link rel="alternate" hreflang="ro" href={`https://instrumenteonline.ro${norm(roPath)}`} />
+        <link rel="alternate" hreflang="x-default" href={`https://konvertalo.hu${norm(huPath)}`} />
       </>
     );
   })()}
