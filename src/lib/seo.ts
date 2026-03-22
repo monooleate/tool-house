@@ -198,14 +198,18 @@ export function techArticleSchema(tool: Tool): string | null {
       "@type": "WebPage",
       url: buildCanonical(toolUrl(tool)),
     },
-    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    author: { "@type": "Person", "@id": `${SITE_URL}/#founder` },
+    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
     image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
     dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
     datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
     articleBody: about.paragraphs.join(" "),
     proficiencyLevel: "Beginner",
     keywords: tool.keywords.join(", "),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".about-section h2", ".about-section p:first-of-type"],
+    },
   });
 }
 
@@ -267,24 +271,46 @@ export function toolListSchema(tools: Tool[], listName: string): string {
   });
 }
 
+// ─── Person Schema (founder) ─────────────────────────────────
+export function founderPersonSchema(): string {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${SITE_URL}/#founder`,
+    name: "Mészáros János",
+    url: "https://jmeszaros.dev",
+    jobTitle: "Full-Stack Developer",
+    knowsAbout: [
+      "Web Development",
+      "File Format Conversion",
+      "Browser-Based Processing",
+      "Privacy-First Architecture",
+    ],
+    sameAs: [
+      "https://jmeszaros.dev",
+      "https://github.com/monooleate",
+      "https://www.linkedin.com/in/janosmeszaros1/",
+    ],
+  });
+}
+
 // ─── Organization Schema ──────────────────────────────────────
 export function organizationSchema(): string {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     foundingDate: "2026-01-15",
     image: `${SITE_URL}/og-default.png`,
     logo: `${SITE_URL}/og-default.png`,
-    founder: {
-      "@type": "Person",
-      name: "Mészáros János",
-      url: "https://jmeszaros.dev",
-    },
+    founder: { "@type": "Person", "@id": `${SITE_URL}/#founder` },
     sameAs: [
       "https://jmeszaros.dev",
+      "https://github.com/monooleate",
+      "https://www.linkedin.com/in/janosmeszaros1/",
     ],
   });
 }

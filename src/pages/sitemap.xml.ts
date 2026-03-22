@@ -44,6 +44,10 @@ const CHANGEFREQ: Record<CategoryId | "home" | "category", string> = {
   html:       "monthly",
 };
 
+function ensureTrailingSlash(path: string): string {
+  return path.endsWith("/") ? path : path + "/";
+}
+
 function urlEntry(
   base: string,
   path: string,
@@ -52,8 +56,9 @@ function urlEntry(
   lastmod?: string
 ): string {
   const today = new Date().toISOString().split("T")[0];
+  const loc = path === "/" ? `${base}/` : `${base}${ensureTrailingSlash(path)}`;
   return `  <url>
-    <loc>${base}${path}</loc>
+    <loc>${loc}</loc>
     <lastmod>${lastmod ?? today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>

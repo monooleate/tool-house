@@ -23,6 +23,9 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 # Rossz botok tiltása
 User-agent: CCBot
 Disallow: /
@@ -33,4 +36,4 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-Sitemap: https://instrumenteonline.ro/sitemap.xml
+Sitemap: https://konvertalo.hu/sitemap.xml

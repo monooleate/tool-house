@@ -31,6 +31,9 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 # Rossz botok tiltása
 User-agent: CCBot
 Disallow: /

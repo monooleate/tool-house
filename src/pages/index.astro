@@ -12,7 +12,7 @@ import {
 } from "../lib/tool-registry.ts";
 import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import {
-  websiteSchema, organizationSchema, toolListSchema, faqSchema,
+  websiteSchema, organizationSchema, founderPersonSchema, toolListSchema, faqSchema,
   SITE_NAME, SITE_URL,
 } from "../lib/seo.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
@@ -68,6 +68,7 @@ const softwareAppSchema = JSON.stringify({
 const schemas = [
   websiteSchema(),
   organizationSchema(),
+  founderPersonSchema(),
   toolListSchema(activeTools, t("category.all_tools")),
   softwareAppSchema,
   faqSchema(faqItems),

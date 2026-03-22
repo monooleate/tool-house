@@ -17,7 +17,6 @@ import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
 import {
   toolSoftwareSchema,
   faqSchema,
-  howToSchema,
   techArticleSchema,
   useCaseListSchema,
   breadcrumbSchema,
@@ -43,8 +42,6 @@ if (tool.faq.length > 0) {
   const faq = faqSchema(tool.faq);
   if (faq) schemas.push(faq);
 }
-const howTo = howToSchema(tool);
-if (howTo) schemas.push(howTo);
 const techArticle = techArticleSchema(tool);
 if (techArticle) schemas.push(techArticle);
 const useCaseList = useCaseListSchema(tool);
