@@ -10,8 +10,8 @@
     {
       "name": "dev:ro",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["./node_modules/cross-env/dist/bin/cross-env.js", "PUBLIC_SITE_LANG=ro", "PUBLIC_SITE_URL=https://instrumenteonline.ro", "node", "./node_modules/astro/astro.js", "dev"],
-      "port": 4321
+      "runtimeArgs": ["./node_modules/cross-env/dist/bin/cross-env.js", "PUBLIC_SITE_LANG=ro", "PUBLIC_SITE_URL=https://instrumenteonline.ro", "node", "./node_modules/astro/astro.js", "dev", "--port", "4322"],
+      "port": 4322
     }
   ]
 }
