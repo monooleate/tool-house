@@ -15,8 +15,8 @@ import { t, CURRENT_LANG } from "../../i18n/index.ts";
 
 export function getStaticPaths() {
   return CATEGORIES.map((cat) => {
-    const url = categoryUrl(cat.id); // e.g., "/imagine" or "/kep"
-    const catSlug = url.replace(/^\//, "");
+    const url = categoryUrl(cat.id); // e.g., "/imagine/" or "/kep/"
+    const catSlug = url.replace(/^\//, "").replace(/\/$/, ""); // strip leading and trailing slash
     return {
       params: { category: catSlug },
       props: { categoryId: cat.id },

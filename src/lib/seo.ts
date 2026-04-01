@@ -14,8 +14,12 @@ export const SITE_DESCRIPTION = t("meta.site_description");
 // ─── Canonical ───────────────────────────────────────────────
 export function buildCanonical(path: string): string {
   const normalized = path.startsWith("/") ? path : "/" + path;
+  // Fájlkiterjesztéses útvonalakra (pl. .png, .jpg, .xml) NEM adunk trailing slash-t
+  const hasExtension = /\.[a-zA-Z0-9]+$/.test(normalized);
+  // Anchor fragment (#...) esetén NEM adunk trailing slash-t a fragment elé
+  const hasFragment = normalized.includes("#");
   // Trailing slash hozzáadása (egyezzen a sitemap-pel és a szerver redirect-ekkel)
-  const withSlash = normalized === "/" ? normalized : (normalized.endsWith("/") ? normalized : normalized + "/");
+  const withSlash = (normalized === "/" || hasExtension || hasFragment) ? normalized : (normalized.endsWith("/") ? normalized : normalized + "/");
   return `${SITE_URL}${withSlash}`;
 }
 
@@ -71,9 +75,11 @@ function toolRating(slug: string): { ratingValue: string; ratingCount: number } 
 }
 
 // ─── Tool (SoftwareApplication) Schema ───────────────────────
-export function toolSoftwareSchema(tool: Tool): string {
+// rawSlug: a nyers (HU) slug az og/hero képek útvonalához – a fájlok mindig HU slug-gal generálódnak
+export function toolSoftwareSchema(tool: Tool, rawSlug?: string): string {
   const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
   const rating = toolRating(tool.slug);
+  const imageSlug = rawSlug ?? tool.slug;
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": ["SoftwareApplication", "WebApplication"],
@@ -107,8 +113,8 @@ export function toolSoftwareSchema(tool: Tool): string {
       t("schema.feature_worker"),
       t("schema.feature_free"),
     ],
-    screenshot: buildCanonical(`/og/${tool.category}/${tool.slug}.png`),
-    image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
+    screenshot: buildCanonical(`/og/${tool.category}/${imageSlug}.png`),
+    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
   };
 
   // Opcionális mezők ha a registry-ben megadják (ISO 8601 + időzóna)
@@ -184,11 +190,13 @@ export function howToSchema(tool: Tool): string | null {
 }
 
 // ─── TechArticle Schema (aboutSection-hoz) ────────────────────
-export function techArticleSchema(tool: Tool): string | null {
+// rawSlug: a nyers (HU) slug az hero kép útvonalához
+export function techArticleSchema(tool: Tool, rawSlug?: string): string | null {
   const about = tool.content?.aboutSection;
   if (!about) return null;
 
   const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
+  const imageSlug = rawSlug ?? tool.slug;
 
   return JSON.stringify({
     "@context": "https://schema.org",
@@ -203,7 +211,7 @@ export function techArticleSchema(tool: Tool): string | null {
     },
     author: { "@type": "Person", "@id": `${SITE_URL}/#founder` },
     publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
-    image: buildCanonical(`/hero/${tool.category}/${tool.slug}.png`),
+    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
     dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
     datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
     articleBody: about.paragraphs.join(" "),

@@ -8,30 +8,31 @@ import { getCategoryUrl, getStaticUrl } from "./url-map.ts";
 import type { Tool, CategoryId } from "./tool-registry.ts";
 
 /**
- * Tool oldal lokalizált URL-je: /{localizedCategory}/{localizedSlug}
- * Példa HU: /kep/jpg-webp
- * Példa RO: /imagine/convertor-jpg-webp
+ * Tool oldal lokalizált URL-je: /{localizedCategory}/{localizedSlug}/
+ * Példa HU: /kep/jpg-webp/
+ * Példa RO: /imagine/convertor-jpg-webp/
+ * Trailing slash: egyezik a sitemap-pel és a szerver viselkedésével (Netlify index.html redirect)
  */
 export function toolUrl(tool: Tool, lang: SupportedLang = CURRENT_LANG): string {
   const catSlug = getCategoryUrl(tool.category, lang);
   const toolSlug = (lang !== "hu" && tool.i18n?.[lang]?.slug) || tool.slug;
-  return `/${catSlug}/${toolSlug}`;
+  return `/${catSlug}/${toolSlug}/`;
 }
 
 /**
- * Kategória oldal lokalizált URL-je: /{localizedCategory}
- * Példa HU: /kep
- * Példa RO: /imagine
+ * Kategória oldal lokalizált URL-je: /{localizedCategory}/
+ * Példa HU: /kep/
+ * Példa RO: /imagine/
  */
 export function categoryUrl(catId: CategoryId, lang: SupportedLang = CURRENT_LANG): string {
-  return `/${getCategoryUrl(catId, lang)}`;
+  return `/${getCategoryUrl(catId, lang)}/`;
 }
 
 /**
- * Statikus oldal lokalizált URL-je: /{localizedSlug}
- * Példa HU: /rolunk
- * Példa RO: /despre-noi
+ * Statikus oldal lokalizált URL-je: /{localizedSlug}/
+ * Példa HU: /rolunk/
+ * Példa RO: /despre-noi/
  */
 export function staticUrl(key: string, lang: SupportedLang = CURRENT_LANG): string {
-  return `/${getStaticUrl(key, lang)}`;
+  return `/${getStaticUrl(key, lang)}/`;
 }

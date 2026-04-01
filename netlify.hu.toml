@@ -10,12 +10,12 @@
 
 [[redirects]]
   from = "/jpg-to-webp"
-  to = "/kep/jpg-webp"
+  to = "/kep/jpg-webp/"
   status = 301
 
 [[redirects]]
   from = "/csv-to-json"
-  to = "/adat/csv-json"
+  to = "/adat/csv-json/"
   status = 301
 
 [[headers]]

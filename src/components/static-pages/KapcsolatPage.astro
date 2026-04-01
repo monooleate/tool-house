@@ -19,6 +19,7 @@ const schemas = [
   title={tpl("contact.meta_title", { siteName: CURRENT_CONFIG.siteName })}
   description={tpl("contact.meta_desc", { siteName: CURRENT_CONFIG.siteName })}
   canonical={staticUrl("kapcsolat")}
+  hreflangPaths={{ hu: staticUrl("kapcsolat", "hu"), ro: staticUrl("kapcsolat", "ro") }}
   schemaScripts={schemas}
 >
 

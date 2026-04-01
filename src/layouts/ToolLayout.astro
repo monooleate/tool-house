@@ -34,15 +34,16 @@ const related = getRelatedTools(tool).map(t => getLocalizedTool(t, CURRENT_LANG)
 const breadcrumbs = toolBreadcrumbs(tool, category.label);
 
 // JSON-LD schemas
+// rawTool.slug: a nyers (HU) slug – az og/hero képfájlok mindig HU slug-gal generálódnak
 const schemas: string[] = [
-  toolSoftwareSchema(tool),
+  toolSoftwareSchema(tool, rawTool.slug),
   breadcrumbSchema(breadcrumbs),
 ];
 if (tool.faq.length > 0) {
   const faq = faqSchema(tool.faq);
   if (faq) schemas.push(faq);
 }
-const techArticle = techArticleSchema(tool);
+const techArticle = techArticleSchema(tool, rawTool.slug);
 if (techArticle) schemas.push(techArticle);
 const useCaseList = useCaseListSchema(tool);
 if (useCaseList) schemas.push(useCaseList);
@@ -53,7 +54,7 @@ if (useCaseList) schemas.push(useCaseList);
   description={tool.description}
   canonical={toolUrl(rawTool)}
   hreflangPaths={{ hu: toolUrl(rawTool, "hu"), ro: toolUrl(rawTool, "ro") }}
-  ogImage={`/og/${tool.category}/${tool.slug}.png`}
+  ogImage={`/og/${rawTool.category}/${rawTool.slug}.png`}
   ogImageWidth={1200}
   ogImageHeight={630}
   ogType="website"

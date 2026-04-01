@@ -73,6 +73,7 @@ const schemas = [
   title={tpl("about.meta_title", { siteName: CURRENT_CONFIG.siteName })}
   description={tpl("about.meta_desc", { siteName: CURRENT_CONFIG.siteName })}
   canonical={staticUrl("rolunk")}
+  hreflangPaths={{ hu: staticUrl("rolunk", "hu"), ro: staticUrl("rolunk", "ro") }}
   schemaScripts={schemas}
 >
 
