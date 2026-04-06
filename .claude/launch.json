@@ -4,8 +4,8 @@
     {
       "name": "dev",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["./node_modules/astro/astro.js", "dev"],
-      "port": 4321
+      "runtimeArgs": ["./node_modules/astro/astro.js", "dev", "--port", "4323"],
+      "port": 4323
     },
     {
       "name": "dev:ro",

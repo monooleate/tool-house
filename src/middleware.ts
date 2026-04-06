@@ -58,11 +58,11 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy":       "camera=(), microphone=(), geolocation=(), payment=()",
   "Content-Security-Policy": [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagservices.com",
+    "script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagservices.com https://*.adtrafficquality.google",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https:",
-    "connect-src 'self' https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://ep1.adtrafficquality.google",
+    "connect-src 'self' https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.adtrafficquality.google",
     "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
     "worker-src 'self' blob:",
     "frame-ancestors 'none'",

@@ -23,7 +23,7 @@ export const DEFAULT_TIMING: TimingConfig = {
   delayBeforeConvert:  3000,
   delayBeforeDownload: 3000,
   showCountdown:       true,
-  showAdSlot:          false,  // TODO: true-ra állítani ha AdSense jóváhagyva
+  showAdSlot:          false,  // Manuális slot aktiváláshoz: lásd internal-docs/adsense-manual-slots.md
 };
 
 /** Eszközönkénti felülírás – csak a különböző értékeket kell megadni */
