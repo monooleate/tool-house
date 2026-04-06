@@ -62,7 +62,7 @@ const SECURITY_HEADERS: Record<string, string> = {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: blob: https:",
-    "connect-src 'self' https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com",
+    "connect-src 'self' https://googleads.g.doubleclick.net https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://ep1.adtrafficquality.google",
     "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
     "worker-src 'self' blob:",
     "frame-ancestors 'none'",
