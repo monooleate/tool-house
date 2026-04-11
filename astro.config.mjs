@@ -14,6 +14,9 @@ export default defineConfig({
   // Static Site Generation (SSG) – minden oldal pre-rendelt HTML
   output: "static",
 
+  // Trailing slash: mindig legyen / a végén – Google ne kezelje duplikátumként
+  trailingSlash: "always",
+
   // Nyelv-specifikus site URL
   site: SITE_URL,
 
