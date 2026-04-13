@@ -6,26 +6,862 @@
   NODE_VERSION  = "20"
   PNPM_VERSION  = "9"
 
-# ─── Redirects ──────────────────────────────────────────────
+# ─── Cross-domain Language Redirects ────────────────────────
+# Fixes GSC 404 errors: wrong-language URLs on wrong domain.
+# Netlify 301s don't override existing static files,
+# so both directions are safe in the shared netlify.toml.
+
+# ── RO category paths on HU site → instrumenteonline.ro ─────
 [[redirects]]
-  from   = "/jpg-to-webp"
-  to     = "/kep/jpg-webp/"
+  from   = "/imagine/*"
+  to     = "https://instrumenteonline.ro/imagine/:splat"
   status = 301
 
 [[redirects]]
-  from   = "/csv-to-json"
-  to     = "/adat/csv-json/"
+  from   = "/date/*"
+  to     = "https://instrumenteonline.ro/date/:splat"
   status = 301
 
-# SPA fallback – Astro SSG-nél nem kell, de biztonság kedvéért
-# [[redirects]]
-#   from   = "/*"
-#   to     = "/404"
-#   status = 404
+[[redirects]]
+  from   = "/text/*"
+  to     = "https://instrumenteonline.ro/text/:splat"
+  status = 301
 
-# ─── Edge Functions (ha SSR-t akarsz) ────────────────────────
-# [functions]
-#   node_bundler = "esbuild"
+[[redirects]]
+  from   = "/dezvoltator/*"
+  to     = "https://instrumenteonline.ro/dezvoltator/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/fisiere/*"
+  to     = "https://instrumenteonline.ro/fisiere/:splat"
+  status = 301
+
+# ── Shared-category tools (pdf, seo, html, markdown, excel) ─
+[[redirects]]
+  from   = "/pdf/combinare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/combinare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/combinare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/combinare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/osszeillesztes"
+  to     = "https://konvertalo.hu/pdf/osszeillesztes/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/osszeillesztes/"
+  to     = "https://konvertalo.hu/pdf/osszeillesztes/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/separare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/separare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/separare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/separare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/szetbontas"
+  to     = "https://konvertalo.hu/pdf/szetbontas/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/szetbontas/"
+  to     = "https://konvertalo.hu/pdf/szetbontas/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/selectare-pagini-pdf"
+  to     = "https://instrumenteonline.ro/pdf/selectare-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/selectare-pagini-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/selectare-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-kivalasztasa"
+  to     = "https://konvertalo.hu/pdf/oldalak-kivalasztasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-kivalasztasa/"
+  to     = "https://konvertalo.hu/pdf/oldalak-kivalasztasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/reordonare-pagini-pdf"
+  to     = "https://instrumenteonline.ro/pdf/reordonare-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/reordonare-pagini-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/reordonare-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-sorrendje"
+  to     = "https://konvertalo.hu/pdf/oldalak-sorrendje/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-sorrendje/"
+  to     = "https://konvertalo.hu/pdf/oldalak-sorrendje/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/rotire-pagini-pdf"
+  to     = "https://instrumenteonline.ro/pdf/rotire-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/rotire-pagini-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/rotire-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-forgatasa"
+  to     = "https://konvertalo.hu/pdf/oldalak-forgatasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-forgatasa/"
+  to     = "https://konvertalo.hu/pdf/oldalak-forgatasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/stergere-pagini-pdf"
+  to     = "https://instrumenteonline.ro/pdf/stergere-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/stergere-pagini-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/stergere-pagini-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-torlese"
+  to     = "https://konvertalo.hu/pdf/oldalak-torlese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalak-torlese/"
+  to     = "https://konvertalo.hu/pdf/oldalak-torlese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-in-imagine"
+  to     = "https://instrumenteonline.ro/pdf/pdf-in-imagine/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-in-imagine/"
+  to     = "https://instrumenteonline.ro/pdf/pdf-in-imagine/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-keppe"
+  to     = "https://konvertalo.hu/pdf/pdf-keppe/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-keppe/"
+  to     = "https://konvertalo.hu/pdf/pdf-keppe/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/imagini-in-pdf"
+  to     = "https://instrumenteonline.ro/pdf/imagini-in-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/imagini-in-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/imagini-in-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/kepek-pdfbe"
+  to     = "https://konvertalo.hu/pdf/kepek-pdfbe/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/kepek-pdfbe/"
+  to     = "https://konvertalo.hu/pdf/kepek-pdfbe/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/informatii-pdf"
+  to     = "https://instrumenteonline.ro/pdf/informatii-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/informatii-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/informatii-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-informacio"
+  to     = "https://konvertalo.hu/pdf/pdf-informacio/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-informacio/"
+  to     = "https://konvertalo.hu/pdf/pdf-informacio/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/comprimare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/comprimare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/comprimare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/comprimare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/tomoritese"
+  to     = "https://konvertalo.hu/pdf/tomoritese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/tomoritese/"
+  to     = "https://konvertalo.hu/pdf/tomoritese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/watermark-pdf"
+  to     = "https://instrumenteonline.ro/pdf/watermark-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/watermark-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/watermark-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-vizjel"
+  to     = "https://konvertalo.hu/pdf/pdf-vizjel/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/pdf-vizjel/"
+  to     = "https://konvertalo.hu/pdf/pdf-vizjel/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/numerotare-pagini"
+  to     = "https://instrumenteonline.ro/pdf/numerotare-pagini/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/numerotare-pagini/"
+  to     = "https://instrumenteonline.ro/pdf/numerotare-pagini/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalszamok"
+  to     = "https://konvertalo.hu/pdf/oldalszamok/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/oldalszamok/"
+  to     = "https://konvertalo.hu/pdf/oldalszamok/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/extragere-text-pdf"
+  to     = "https://instrumenteonline.ro/pdf/extragere-text-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/extragere-text-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/extragere-text-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/szoveg-kinyerese"
+  to     = "https://konvertalo.hu/pdf/szoveg-kinyerese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/szoveg-kinyerese/"
+  to     = "https://konvertalo.hu/pdf/szoveg-kinyerese/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/semnare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/semnare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/semnare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/semnare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/alairas"
+  to     = "https://konvertalo.hu/pdf/alairas/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/alairas/"
+  to     = "https://konvertalo.hu/pdf/alairas/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/protejare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/protejare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/protejare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/protejare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/jelszo-vedelem"
+  to     = "https://konvertalo.hu/pdf/jelszo-vedelem/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/jelszo-vedelem/"
+  to     = "https://konvertalo.hu/pdf/jelszo-vedelem/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/eliminare-parola-pdf"
+  to     = "https://instrumenteonline.ro/pdf/eliminare-parola-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/eliminare-parola-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/eliminare-parola-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/jelszo-eltavolitasa"
+  to     = "https://konvertalo.hu/pdf/jelszo-eltavolitasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/jelszo-eltavolitasa/"
+  to     = "https://konvertalo.hu/pdf/jelszo-eltavolitasa/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/redactare-pdf"
+  to     = "https://instrumenteonline.ro/pdf/redactare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/redactare-pdf/"
+  to     = "https://instrumenteonline.ro/pdf/redactare-pdf/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/eltakares"
+  to     = "https://konvertalo.hu/pdf/eltakares/"
+  status = 301
+
+[[redirects]]
+  from   = "/pdf/eltakares/"
+  to     = "https://konvertalo.hu/pdf/eltakares/"
+  status = 301
+
+[[redirects]]
+  from   = "/markdown/conversie-markdown-html"
+  to     = "https://instrumenteonline.ro/markdown/conversie-markdown-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/markdown/conversie-markdown-html/"
+  to     = "https://instrumenteonline.ro/markdown/conversie-markdown-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/markdown/markdown-html"
+  to     = "https://konvertalo.hu/markdown/markdown-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/markdown/markdown-html/"
+  to     = "https://konvertalo.hu/markdown/markdown-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/conversie-html-text"
+  to     = "https://instrumenteonline.ro/html/conversie-html-text/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/conversie-html-text/"
+  to     = "https://instrumenteonline.ro/html/conversie-html-text/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/html-szovegge"
+  to     = "https://konvertalo.hu/html/html-szovegge/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/html-szovegge/"
+  to     = "https://konvertalo.hu/html/html-szovegge/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/minificare-html"
+  to     = "https://instrumenteonline.ro/html/minificare-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/minificare-html/"
+  to     = "https://instrumenteonline.ro/html/minificare-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/html-minimalas-html"
+  to     = "https://konvertalo.hu/html/html-minimalas-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/html/html-minimalas-html/"
+  to     = "https://konvertalo.hu/html/html-minimalas-html/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-excel-csv"
+  to     = "https://instrumenteonline.ro/excel/conversie-excel-csv/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-excel-csv/"
+  to     = "https://instrumenteonline.ro/excel/conversie-excel-csv/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-csv"
+  to     = "https://konvertalo.hu/excel/xlsx-csv/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-csv/"
+  to     = "https://konvertalo.hu/excel/xlsx-csv/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-excel-json"
+  to     = "https://instrumenteonline.ro/excel/conversie-excel-json/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-excel-json/"
+  to     = "https://instrumenteonline.ro/excel/conversie-excel-json/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-json"
+  to     = "https://konvertalo.hu/excel/xlsx-json/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-json/"
+  to     = "https://konvertalo.hu/excel/xlsx-json/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-csv-excel"
+  to     = "https://instrumenteonline.ro/excel/conversie-csv-excel/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/conversie-csv-excel/"
+  to     = "https://instrumenteonline.ro/excel/conversie-csv-excel/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/csv-xlsx"
+  to     = "https://konvertalo.hu/excel/csv-xlsx/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/csv-xlsx/"
+  to     = "https://konvertalo.hu/excel/csv-xlsx/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/vizualizator-excel"
+  to     = "https://instrumenteonline.ro/excel/vizualizator-excel/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/vizualizator-excel/"
+  to     = "https://instrumenteonline.ro/excel/vizualizator-excel/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-megtekinto"
+  to     = "https://konvertalo.hu/excel/xlsx-megtekinto/"
+  status = 301
+
+[[redirects]]
+  from   = "/excel/xlsx-megtekinto/"
+  to     = "https://konvertalo.hu/excel/xlsx-megtekinto/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-title-meta"
+  to     = "https://instrumenteonline.ro/seo/verificare-title-meta/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-title-meta/"
+  to     = "https://instrumenteonline.ro/seo/verificare-title-meta/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/title-meta-hossz"
+  to     = "https://konvertalo.hu/seo/title-meta-hossz/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/title-meta-hossz/"
+  to     = "https://konvertalo.hu/seo/title-meta-hossz/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/eliminare-utm"
+  to     = "https://instrumenteonline.ro/seo/eliminare-utm/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/eliminare-utm/"
+  to     = "https://instrumenteonline.ro/seo/eliminare-utm/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/utm-eltavolito"
+  to     = "https://konvertalo.hu/seo/utm-eltavolito/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/utm-eltavolito/"
+  to     = "https://konvertalo.hu/seo/utm-eltavolito/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/normalizare-url"
+  to     = "https://instrumenteonline.ro/seo/normalizare-url/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/normalizare-url/"
+  to     = "https://instrumenteonline.ro/seo/normalizare-url/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/url-normalizalo"
+  to     = "https://konvertalo.hu/seo/url-normalizalo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/url-normalizalo/"
+  to     = "https://konvertalo.hu/seo/url-normalizalo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/generator-canonical"
+  to     = "https://instrumenteonline.ro/seo/generator-canonical/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/generator-canonical/"
+  to     = "https://instrumenteonline.ro/seo/generator-canonical/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/canonical-epito"
+  to     = "https://konvertalo.hu/seo/canonical-epito/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/canonical-epito/"
+  to     = "https://konvertalo.hu/seo/canonical-epito/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/optimizare-nume-fisier"
+  to     = "https://instrumenteonline.ro/seo/optimizare-nume-fisier/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/optimizare-nume-fisier/"
+  to     = "https://instrumenteonline.ro/seo/optimizare-nume-fisier/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/fajlnev-optimalizalo"
+  to     = "https://konvertalo.hu/seo/fajlnev-optimalizalo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/fajlnev-optimalizalo/"
+  to     = "https://konvertalo.hu/seo/fajlnev-optimalizalo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/generator-text-alt"
+  to     = "https://instrumenteonline.ro/seo/generator-text-alt/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/generator-text-alt/"
+  to     = "https://instrumenteonline.ro/seo/generator-text-alt/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/alt-szoveg-sablon"
+  to     = "https://konvertalo.hu/seo/alt-szoveg-sablon/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/alt-szoveg-sablon/"
+  to     = "https://konvertalo.hu/seo/alt-szoveg-sablon/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-robots-txt"
+  to     = "https://instrumenteonline.ro/seo/verificare-robots-txt/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-robots-txt/"
+  to     = "https://instrumenteonline.ro/seo/verificare-robots-txt/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/robots-txt-ellenorzo"
+  to     = "https://konvertalo.hu/seo/robots-txt-ellenorzo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/robots-txt-ellenorzo/"
+  to     = "https://konvertalo.hu/seo/robots-txt-ellenorzo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-sitemap"
+  to     = "https://instrumenteonline.ro/seo/verificare-sitemap/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/verificare-sitemap/"
+  to     = "https://instrumenteonline.ro/seo/verificare-sitemap/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/sitemap-url-ellenorzo"
+  to     = "https://konvertalo.hu/seo/sitemap-url-ellenorzo/"
+  status = 301
+
+[[redirects]]
+  from   = "/seo/sitemap-url-ellenorzo/"
+  to     = "https://konvertalo.hu/seo/sitemap-url-ellenorzo/"
+  status = 301
+
+# ── HU category paths on RO site → konvertalo.hu ────────────
+[[redirects]]
+  from   = "/kep/*"
+  to     = "https://konvertalo.hu/kep/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/adat/*"
+  to     = "https://konvertalo.hu/adat/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/szoveg/*"
+  to     = "https://konvertalo.hu/szoveg/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/fejleszto/*"
+  to     = "https://konvertalo.hu/fejleszto/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/fajl/*"
+  to     = "https://konvertalo.hu/fajl/:splat"
+  status = 301
+
+# ── RO static pages on HU site → instrumenteonline.ro ──────
+[[redirects]]
+  from   = "/despre-noi"
+  to     = "https://instrumenteonline.ro/despre-noi/"
+  status = 301
+
+[[redirects]]
+  from   = "/despre-noi/"
+  to     = "https://instrumenteonline.ro/despre-noi/"
+  status = 301
+
+[[redirects]]
+  from   = "/contact"
+  to     = "https://instrumenteonline.ro/contact/"
+  status = 301
+
+[[redirects]]
+  from   = "/contact/"
+  to     = "https://instrumenteonline.ro/contact/"
+  status = 301
+
+[[redirects]]
+  from   = "/politica-confidentialitate"
+  to     = "https://instrumenteonline.ro/politica-confidentialitate/"
+  status = 301
+
+[[redirects]]
+  from   = "/politica-confidentialitate/"
+  to     = "https://instrumenteonline.ro/politica-confidentialitate/"
+  status = 301
+
+[[redirects]]
+  from   = "/multumim"
+  to     = "https://instrumenteonline.ro/multumim/"
+  status = 301
+
+[[redirects]]
+  from   = "/multumim/"
+  to     = "https://instrumenteonline.ro/multumim/"
+  status = 301
+
+[[redirects]]
+  from   = "/cautare"
+  to     = "https://instrumenteonline.ro/cautare/"
+  status = 301
+
+[[redirects]]
+  from   = "/cautare/"
+  to     = "https://instrumenteonline.ro/cautare/"
+  status = 301
+
+[[redirects]]
+  from   = "/termeni-conditii"
+  to     = "https://instrumenteonline.ro/termeni-conditii/"
+  status = 301
+
+[[redirects]]
+  from   = "/termeni-conditii/"
+  to     = "https://instrumenteonline.ro/termeni-conditii/"
+  status = 301
+
+# ── HU static pages on RO site → konvertalo.hu ──────────────
+[[redirects]]
+  from   = "/rolunk"
+  to     = "https://konvertalo.hu/rolunk/"
+  status = 301
+
+[[redirects]]
+  from   = "/rolunk/"
+  to     = "https://konvertalo.hu/rolunk/"
+  status = 301
+
+[[redirects]]
+  from   = "/kapcsolat"
+  to     = "https://konvertalo.hu/kapcsolat/"
+  status = 301
+
+[[redirects]]
+  from   = "/kapcsolat/"
+  to     = "https://konvertalo.hu/kapcsolat/"
+  status = 301
+
+[[redirects]]
+  from   = "/adatvedelmi-nyilatkozat"
+  to     = "https://konvertalo.hu/adatvedelmi-nyilatkozat/"
+  status = 301
+
+[[redirects]]
+  from   = "/adatvedelmi-nyilatkozat/"
+  to     = "https://konvertalo.hu/adatvedelmi-nyilatkozat/"
+  status = 301
+
+[[redirects]]
+  from   = "/koszonjuk"
+  to     = "https://konvertalo.hu/koszonjuk/"
+  status = 301
+
+[[redirects]]
+  from   = "/koszonjuk/"
+  to     = "https://konvertalo.hu/koszonjuk/"
+  status = 301
+
+[[redirects]]
+  from   = "/kereses"
+  to     = "https://konvertalo.hu/kereses/"
+  status = 301
+
+[[redirects]]
+  from   = "/kereses/"
+  to     = "https://konvertalo.hu/kereses/"
+  status = 301
+
+[[redirects]]
+  from   = "/felhasznalasi-feltetelek"
+  to     = "https://konvertalo.hu/felhasznalasi-feltetelek/"
+  status = 301
+
+[[redirects]]
+  from   = "/felhasznalasi-feltetelek/"
+  to     = "https://konvertalo.hu/felhasznalasi-feltetelek/"
+  status = 301
+
+# ── Hero/OG images: cross-domain category IDs ────────────────
+# HU category IDs (kep, adat, szoveg, fejleszto, fajl) on RO site
+[[redirects]]
+  from   = "/hero/kep/*"
+  to     = "https://konvertalo.hu/hero/kep/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/hero/adat/*"
+  to     = "https://konvertalo.hu/hero/adat/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/hero/szoveg/*"
+  to     = "https://konvertalo.hu/hero/szoveg/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/hero/fejleszto/*"
+  to     = "https://konvertalo.hu/hero/fejleszto/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/hero/fajl/*"
+  to     = "https://konvertalo.hu/hero/fajl/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/hero/excel/*"
+  to     = "https://konvertalo.hu/hero/excel/:splat"
+  status = 301
+
+[[redirects]]
+  from   = "/og/kep/*"
+  to     = "https://konvertalo.hu/og/kep/:splat"
+  status = 301
 
 # ─── Dev server ─────────────────────────────────────────────
 [dev]

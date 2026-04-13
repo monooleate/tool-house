@@ -67,7 +67,8 @@ function urlEntry(
 
 export const GET: APIRoute = ({ site }) => {
   const base  = (site?.toString() ?? "https://konvertalo.hu").replace(/\/$/, "");
-  const tools = getVisibleTools(CURRENT_LANG);
+  // Only include active tools in sitemap – coming-soon pages have no content
+  const tools = getVisibleTools(CURRENT_LANG).filter(t => t.status === "active");
   const visibleCategories = getVisibleCategories(CURRENT_LANG);
   const today = new Date().toISOString().split("T")[0];
   const urls: string[] = [];

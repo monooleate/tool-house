@@ -60,6 +60,7 @@ if (useCaseList) schemas.push(useCaseList);
   ogType="website"
   modifiedAt={(tool as { updatedAt?: string }).updatedAt}
   schemaScripts={schemas}
+  noIndex={tool.status === "coming-soon"}
 >
 
   <div class="tool-page container">

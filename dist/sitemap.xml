@@ -6,67 +6,67 @@
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://konvertalo.hu/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/kep/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/adat/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/szoveg/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/fejleszto/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/markdown/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/html/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/excel/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/fajl/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/seo/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -378,49 +378,49 @@
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/tomoritese/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/pdf-vizjel/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/oldalszamok/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/szoveg-kinyerese/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/alairas/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/jelszo-vedelem/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/jelszo-eltavolitasa/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/pdf/eltakares/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -737,74 +737,32 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://konvertalo.hu/seo/utm-eltavolito/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/url-normalizalo/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/canonical-epito/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/fajlnev-optimalizalo/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/alt-szoveg-sablon/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/robots-txt-ellenorzo/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://konvertalo.hu/seo/sitemap-url-ellenorzo/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://konvertalo.hu/rolunk/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/kapcsolat/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/adatvedelmi-nyilatkozat/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/felhasznalasi-feltetelek/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://konvertalo.hu/kereses/</loc>
-    <lastmod>2026-03-22</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
