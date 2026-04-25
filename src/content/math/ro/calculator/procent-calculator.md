@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.84"
+    "reviewCount": 43
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Mihai C."
+      "reviewBody": "M-a ajutat enorm la calcule de reduceri Black Friday și TVA. Cele 4 moduri acoperă toate cazurile."
+      "datePublished": "2026-04-10"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

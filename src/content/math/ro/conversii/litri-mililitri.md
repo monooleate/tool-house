@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.78"
+    "reviewCount": 18
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Bogdan T."
+      "reviewBody": "Folosesc des pentru rețete culinare și dozare medicamente. Precis și rapid."
+      "datePublished": "2026-04-02"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

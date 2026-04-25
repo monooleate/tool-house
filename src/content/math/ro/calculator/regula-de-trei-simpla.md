@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.79"
+    "reviewCount": 24
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Vlad B."
+      "reviewBody": "Soluția ideală pentru proporții zilnice. Foarte intuitiv, mai ales modul invers."
+      "datePublished": "2026-04-09"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

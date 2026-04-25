@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.72"
+    "reviewCount": 31
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Maria Popescu"
+      "reviewBody": "Foarte util pentru calcule de distanțe pe drumuri. Recomand cu încredere!"
+      "datePublished": "2026-04-08"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

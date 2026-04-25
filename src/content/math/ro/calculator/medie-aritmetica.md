@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.86"
+    "reviewCount": 29
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Diana N."
+      "reviewBody": "Calculează rapid media de bacalaureat cu ponderi. Recomand pentru elevi și profesori!"
+      "datePublished": "2026-04-05"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

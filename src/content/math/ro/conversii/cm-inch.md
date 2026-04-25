@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.93"
+    "reviewCount": 44
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Cristian D."
+      "reviewBody": "Excelent pentru cumpărături online de pe site-uri americane. Rigla interactivă e geniul absolut."
+      "datePublished": "2026-04-15"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

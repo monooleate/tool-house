@@ -13,6 +13,11 @@ const PAGE_GROUPS = [
     dist: "dist/calculator",
     pages: ["procent-calculator", "ecuatie-grad-doi", "ecuatii-exponentiale", "medie-aritmetica", "regula-de-trei-simpla"],
   },
+  {
+    category: "geometrie",
+    dist: "dist/geometrie",
+    pages: ["triunghi-dreptunghic", "functii-trigonometrice", "radiani-grade", "cerc-calculator", "dreptunghi-calculator"],
+  },
 ];
 
 let totalSchemas = 0;

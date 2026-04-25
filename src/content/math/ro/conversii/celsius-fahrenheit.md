@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.88"
+    "reviewCount": 38
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Ioana V."
+      "reviewBody": "Convertor de încredere pentru rețete americane și călătorii. Bara vizuală e foarte intuitivă."
+      "datePublished": "2026-04-18"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

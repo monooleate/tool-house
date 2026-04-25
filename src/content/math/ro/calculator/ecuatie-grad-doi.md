@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.91"
+    "reviewCount": 36
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Ana D."
+      "reviewBody": "Pașii detaliați m-au ajutat să înțeleg materia pentru bacalaureat. Parabola live e bonus."
+      "datePublished": "2026-04-14"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

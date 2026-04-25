@@ -128,6 +128,12 @@
     EcuatieExponentialaCalculator: () => import("../tools/calculator/EcuatieExponentialaCalculator.svelte"),
     MedieCalculator:             () => import("../tools/calculator/MedieCalculator.svelte"),
     RegulaDeTreiCalculator:      () => import("../tools/calculator/RegulaDeTreiCalculator.svelte"),
+    // GEOMETRIE (RO-only) – Fázis 3
+    TriunghiDreptCalculator:     () => import("../tools/geometrie/TriunghiDreptCalculator.svelte"),
+    FunctiiTrigCalculator:       () => import("../tools/geometrie/FunctiiTrigCalculator.svelte"),
+    RadianiGradeCalculator:      () => import("../tools/geometrie/RadianiGradeCalculator.svelte"),
+    CercCalculator:              () => import("../tools/geometrie/CercCalculator.svelte"),
+    DreptunghiCalculator:        () => import("../tools/geometrie/DreptunghiCalculator.svelte"),
   };
 
   onMount(async () => {

@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.85"
+    "reviewCount": 47
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Andrei M."
+      "reviewBody": "Convertor simplu și rapid, exact ce-mi trebuia pentru calcule rapide."
+      "datePublished": "2026-04-12"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

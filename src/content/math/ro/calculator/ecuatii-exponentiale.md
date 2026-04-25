@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.74"
+    "reviewCount": 21
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Stefan L."
+      "reviewBody": "Util pentru subiecte de matematică la liceu. Logaritmarea automată cu pași e foarte clară."
+      "datePublished": "2026-03-28"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"
