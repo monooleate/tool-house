@@ -122,6 +122,12 @@
     KgGramCalculator:        () => import("../tools/conversii/KgGramCalculator.svelte"),
     LiterMlCalculator:       () => import("../tools/conversii/LiterMlCalculator.svelte"),
     ThermometerConverter:    () => import("../tools/conversii/ThermometerConverter.svelte"),
+    // CALCULATOR (RO-only) – Fázis 2
+    ProcentCalculator:           () => import("../tools/calculator/ProcentCalculator.svelte"),
+    EcuatieGradDoiCalculator:    () => import("../tools/calculator/EcuatieGradDoiCalculator.svelte"),
+    EcuatieExponentialaCalculator: () => import("../tools/calculator/EcuatieExponentialaCalculator.svelte"),
+    MedieCalculator:             () => import("../tools/calculator/MedieCalculator.svelte"),
+    RegulaDeTreiCalculator:      () => import("../tools/calculator/RegulaDeTreiCalculator.svelte"),
   };
 
   onMount(async () => {

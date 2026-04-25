@@ -1,17 +1,29 @@
-// Audit all 6 new conversii pages for schema.org JSON-LD presence and validity
+// Audit all RO math pages (conversii + calculator) for schema.org JSON-LD presence and validity
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const PAGES = [
-  "cm-metri", "km-metri", "cm-inch", "kg-grame", "litri-mililitri", "celsius-fahrenheit",
+const PAGE_GROUPS = [
+  {
+    category: "conversii",
+    dist: "dist/conversii",
+    pages: ["cm-metri", "km-metri", "cm-inch", "kg-grame", "litri-mililitri", "celsius-fahrenheit"],
+  },
+  {
+    category: "calculator",
+    dist: "dist/calculator",
+    pages: ["procent-calculator", "ecuatie-grad-doi", "ecuatii-exponentiale", "medie-aritmetica", "regula-de-trei-simpla"],
+  },
 ];
-const DIST = "dist/conversii";
 
 let totalSchemas = 0;
 let totalErrors = 0;
+let totalPages = 0;
 
-for (const slug of PAGES) {
-  const file = join(DIST, slug, "index.html");
+for (const group of PAGE_GROUPS) {
+  console.log(`\n\n========== Category: ${group.category} ==========`);
+  for (const slug of group.pages) {
+    totalPages++;
+    const file = join(group.dist, slug, "index.html");
   let html;
   try {
     html = readFileSync(file, "utf-8");
@@ -87,7 +99,8 @@ for (const slug of PAGES) {
   // OG image
   const ogImg = html.match(/property="og:image" content="([^"]+)"/)?.[1];
   console.log(`  og:image: ${ogImg}`);
+  }
 }
 
 console.log(`\n========================================`);
-console.log(`Summary: ${totalSchemas} schemas across ${PAGES.length} pages, ${totalErrors} errors`);
+console.log(`Summary: ${totalSchemas} schemas across ${totalPages} pages, ${totalErrors} errors`);

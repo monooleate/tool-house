@@ -269,6 +269,18 @@
   "cat_meta.fajl_desc": "ZIP tömörítés, hash ellenőrzés, fájl információk – ingyenes fájlkezelő eszközök böngészőben.",
   "cat_meta.seo_title": "SEO eszközök online | Title, meta, UTM, robots.txt",
   "cat_meta.seo_desc": "SEO segédeszközök: title/meta hossz ellenőrzés, UTM paraméter építő, robots.txt tesztelő – ingyenesen, böngészőben.",
+  "cat_meta.calculator_title": "Kalkulátorok",
+  "cat_meta.calculator_desc": "Matematikai kalkulátorok (RO-only).",
+  "cat_meta.geometrie_title": "Geometria",
+  "cat_meta.geometrie_desc": "Geometriai kalkulátorok (RO-only).",
+  "cat_meta.conversii_title": "Konverziók",
+  "cat_meta.conversii_desc": "Mértékegység-átváltók (RO-only).",
+  "cat_meta.finante_title": "Pénzügy",
+  "cat_meta.finante_desc": "Pénzügyi kalkulátorok (RO-only).",
+  "cat_meta.sanatate_title": "Egészség",
+  "cat_meta.sanatate_desc": "Egészségügyi kalkulátorok (RO-only).",
+  "cat_meta.timp_title": "Idő",
+  "cat_meta.timp_desc": "Idő-kalkulátorok (RO-only).",
 
   "meta.site_description": "Ingyenes online konvertáló és fájlkezelő eszközök képekhez, PDF-ekhez, adatokhoz és szövegekhez – böngészőben, privát.",
 

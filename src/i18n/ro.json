@@ -269,6 +269,18 @@
   "cat_meta.fajl_desc": "Compresie ZIP, verificare hash, informații fișiere – instrumente gratuite de gestionare fișiere în browser.",
   "cat_meta.seo_title": "Instrumente SEO online | Title, meta, UTM, robots.txt",
   "cat_meta.seo_desc": "Instrumente SEO: verificare lungime title/meta, constructor UTM, tester robots.txt – gratuit, în browser.",
+  "cat_meta.calculator_title": "Calculatoare matematice online | Procente, ecuații, medie",
+  "cat_meta.calculator_desc": "Calculatoare matematice gratuite: procent, ecuație de gradul II, ecuații exponențiale, medie aritmetică, regula de trei – cu pași și formule.",
+  "cat_meta.geometrie_title": "Calculatoare geometrice online | Triunghi, cerc, dreptunghi",
+  "cat_meta.geometrie_desc": "Calculatoare geometrice cu vizualizare SVG live: triunghi dreptunghic (Pitagora), cerc, dreptunghi, funcții trigonometrice și conversie radiani-grade.",
+  "cat_meta.conversii_title": "Convertoare unități online | cm-m, kg-g, l-ml, °C-°F",
+  "cat_meta.conversii_desc": "Convertoare unități de măsură: lungime (cm, m, km, inch), masă (kg, grame), volum (litri, ml), temperatură (Celsius, Fahrenheit) – bidirecțional.",
+  "cat_meta.finante_title": "Calculatoare financiare RO | TVA, credit, dobândă, reducere",
+  "cat_meta.finante_desc": "Calculator TVA cu cotele din România (19%, 9%, 5%), credit anuitar, dobândă compusă, reducere și marjă comercială – gratuit, în browser.",
+  "cat_meta.sanatate_title": "Calculatoare de sănătate | IMC, greutate ideală, calorii",
+  "cat_meta.sanatate_desc": "Calculator IMC (BMI) cu clasificarea OMS, greutate ideală cu 4 formule științifice, necesar caloric zilnic Mifflin-St Jeor – gratuit.",
+  "cat_meta.timp_title": "Calculatoare timp | Diferență date, numărători inverse",
+  "cat_meta.timp_desc": "Calculator diferență între date, numărători inverse pentru Crăciun, Paști ortodox, Revelion, zi de naștere și Bacalaureat – live în browser.",
 
   "meta.site_description": "Instrumente online gratuite de conversie și gestionare a fișierelor pentru imagini, PDF-uri, date și texte – în browser, privat.",
 
