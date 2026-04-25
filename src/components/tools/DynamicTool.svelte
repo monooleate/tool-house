@@ -114,6 +114,14 @@
     FajlInfoTool: () => import("../tools/fajl/FajlInfoTool.svelte"),
     // SEO
     TitleMetaHosszTool: () => import("../tools/seo/TitleMetaHosszTool.svelte"),
+    // CONVERSII (RO-only)
+    UnitConverter:           () => import("../tools/shared/UnitConverter.svelte"),
+    CmMeterCalculator:       () => import("../tools/conversii/CmMeterCalculator.svelte"),
+    KmMeterCalculator:       () => import("../tools/conversii/KmMeterCalculator.svelte"),
+    RulerConverter:          () => import("../tools/conversii/RulerConverter.svelte"),
+    KgGramCalculator:        () => import("../tools/conversii/KgGramCalculator.svelte"),
+    LiterMlCalculator:       () => import("../tools/conversii/LiterMlCalculator.svelte"),
+    ThermometerConverter:    () => import("../tools/conversii/ThermometerConverter.svelte"),
   };
 
   onMount(async () => {

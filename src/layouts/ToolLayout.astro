@@ -22,6 +22,7 @@ import {
   breadcrumbSchema,
   toolBreadcrumbs,
 } from "../lib/seo.ts";
+import { getCollection, render } from "astro:content";
 
 export interface Props {
   tool: Tool;
@@ -33,18 +34,79 @@ const category = getLocalizedCategory(getCategoryInfo(tool.category)!, CURRENT_L
 const related = getRelatedTools(tool).map(t => getLocalizedTool(t, CURRENT_LANG));
 const breadcrumbs = toolBreadcrumbs(tool, category.label);
 
+// Nyelv-hozzáférhetőség a hreflang-hoz: ha a tool vagy kategórija language-scoped,
+// a nem-támogatott nyelv hreflang-ja kimarad (elkerüljük a 404-re mutató alternate-eket).
+const categoryInfo = getCategoryInfo(tool.category);
+const allowedLangs = (rawTool.languages && rawTool.languages.length > 0)
+  ? rawTool.languages
+  : (categoryInfo?.languages && categoryInfo.languages.length > 0
+    ? categoryInfo.languages
+    : null);
+const huHref = !allowedLangs || allowedLangs.includes("hu") ? toolUrl(rawTool, "hu") : null;
+const roHref = !allowedLangs || allowedLangs.includes("ro") ? toolUrl(rawTool, "ro") : null;
+
+// Math kategóriák (KaTeX CSS a <head>-be)
+const MATH_CATS = new Set(["calculator", "geometrie", "conversii", "finante", "sanatate", "timp"]);
+const needsKatex = MATH_CATS.has(tool.category);
+
+// ─── Longform Markdown lookup (Astro Content Collection) ─────
+// Ha math-kategória és van egyező toolSlug a math collection-ben (RO-only),
+// betöltjük és renderüljük a tartalmat + a frontmatter schema.org JSON-LD-t.
+let mathEntry: any = null;
+let MathContent: any = null;
+let mathSchemaScripts: string[] = [];
+if (needsKatex && CURRENT_LANG === "ro") {
+  try {
+    const all = await getCollection("math");
+    mathEntry = all.find((e: any) => e.data.toolSlug === rawTool.slug);
+    if (mathEntry) {
+      // Astro 5 Content Layer: render(entry) helyettesíti az entry.render()-t
+      const rendered = await render(mathEntry);
+      MathContent = rendered.Content;
+      // Frontmatter-ben tárolt schema.org objektumok JSON-LD-vé alakítva
+      for (const key of ["articleSchema", "softwareSchema", "faqPageSchema"]) {
+        const s = (mathEntry.data as any)[key];
+        if (s) mathSchemaScripts.push(JSON.stringify(s));
+      }
+    }
+  } catch (e) {
+    // Content collection még nincs / üres — nem fatális
+    console.warn("Math content collection lookup failed:", (e as Error).message);
+  }
+}
+
+// Schema-szkriptekhez hozzáadjuk a math frontmatter schema-it
+// (a beépített schemas változót később használjuk a BaseLayout schemaScripts-ben)
+
 // JSON-LD schemas
+// ─── Schema.org JSON-LD assembly ────────────────────────────
+// Cél: ne legyen duplikáció. Ha van longform (math kategóriák),
+// a longform-frontmatter schemái a canonical → az auto-generált
+// SoftwareApplication / TechArticle / registry-FAQ ki van hagyva.
+// Eredmény math-oldalon: 4 schema (Breadcrumb + Article + Software + FAQ + opcionális ItemList)
+//                non-math: 5 schema (Software + Breadcrumb + FAQ + TechArticle + ItemList)
 // rawTool.slug: a nyers (HU) slug – az og/hero képfájlok mindig HU slug-gal generálódnak
+const hasLongform = mathSchemaScripts.length > 0;
 const schemas: string[] = [
-  toolSoftwareSchema(tool, rawTool.slug),
   breadcrumbSchema(breadcrumbs),
 ];
-if (tool.faq.length > 0) {
-  const faq = faqSchema(tool.faq);
-  if (faq) schemas.push(faq);
+
+if (hasLongform) {
+  // Math longform → a frontmatter schema-i adják az Article + Software + FAQ-t
+  schemas.push(...mathSchemaScripts);
+} else {
+  // Non-math (file tool) → auto-generált schema-k
+  schemas.push(toolSoftwareSchema(tool, rawTool.slug));
+  if (tool.faq.length > 0) {
+    const faq = faqSchema(tool.faq);
+    if (faq) schemas.push(faq);
+  }
+  const techArticle = techArticleSchema(tool, rawTool.slug);
+  if (techArticle) schemas.push(techArticle);
 }
-const techArticle = techArticleSchema(tool, rawTool.slug);
-if (techArticle) schemas.push(techArticle);
+
+// ItemList (use cases) — csak ha a tartalomban tényleg van useCases szekció,
+// és nem ütközik Article-lal (ItemList önálló entitás)
 const useCaseList = useCaseListSchema(tool);
 if (useCaseList) schemas.push(useCaseList);
 ---
@@ -53,7 +115,8 @@ if (useCaseList) schemas.push(useCaseList);
   title={tool.title}
   description={tool.description}
   canonical={toolUrl(rawTool)}
-  hreflangPaths={{ hu: toolUrl(rawTool, "hu"), ro: toolUrl(rawTool, "ro") }}
+  hreflangPaths={{ hu: huHref, ro: roHref }}
+  katex={needsKatex}
   ogImage={`/og/${rawTool.category}/${rawTool.slug}.png`}
   ogImageWidth={1200}
   ogImageHeight={630}
@@ -177,6 +240,16 @@ if (useCaseList) schemas.push(useCaseList);
     <!-- SEO Content szekciók (ToolContent) -->
     {tool.content && (
       <ToolContentSection content={tool.content} toolName={tool.h1} />
+    )}
+
+    <!-- Math longform tartalom (Astro Content Collection) -->
+    {MathContent && (
+      <section class="math-longform" aria-labelledby="math-longform-title">
+        <h2 id="math-longform-title" class="section-title">{mathEntry.data.title}</h2>
+        <article class="math-longform__content">
+          <MathContent />
+        </article>
+      </section>
     )}
 
     <!-- FAQ -->
@@ -390,6 +463,198 @@ if (useCaseList) schemas.push(useCaseList);
   margin-bottom: var(--sp-6);
   padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--border);
+}
+
+/* ─── Math longform tartalom (Astro Content Collection) ─────── */
+.math-longform { margin-bottom: var(--sp-10); }
+.math-longform__content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-8) var(--sp-8);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+@media (max-width: 640px) {
+  .math-longform__content { padding: var(--sp-5); font-size: 0.9375rem; }
+}
+
+/* Headings — fokozat-alapú hierarchia */
+.math-longform__content :global(h2) {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: var(--sp-8) 0 var(--sp-3) 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-left: var(--sp-3);
+  border-left: 4px solid var(--cat-conversii, var(--accent));
+}
+.math-longform__content :global(h2:first-child) { margin-top: 0; }
+.math-longform__content :global(h3) {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: var(--sp-6) 0 var(--sp-2) 0;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+/* Bekezdések */
+.math-longform__content :global(p) {
+  margin: 0 0 var(--sp-4) 0;
+  color: var(--text);
+  max-width: 68ch;
+}
+.math-longform__content :global(p strong) {
+  color: var(--text);
+  font-weight: 700;
+}
+.math-longform__content :global(p em) {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Listák */
+.math-longform__content :global(ul),
+.math-longform__content :global(ol) {
+  margin: 0 0 var(--sp-5) 0;
+  padding-left: var(--sp-6);
+  color: var(--text);
+}
+.math-longform__content :global(li) {
+  margin-bottom: var(--sp-2);
+  line-height: 1.7;
+}
+.math-longform__content :global(li::marker) {
+  color: var(--cat-conversii, var(--accent));
+  font-weight: 700;
+}
+
+/* Linkek */
+.math-longform__content :global(a) {
+  color: var(--cat-conversii, var(--accent));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+  transition: all var(--t-fast);
+}
+.math-longform__content :global(a:hover) {
+  text-decoration-thickness: 2px;
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 10%, transparent);
+}
+
+/* ───── Táblázatok – KÖZÉPRE igazítva, kártyás design ───── */
+.math-longform__content :global(table) {
+  width: auto;
+  min-width: min(100%, 480px);
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: var(--sp-5) auto;
+  font-size: 0.9375rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.math-longform__content :global(thead) {
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 10%, var(--bg));
+}
+.math-longform__content :global(th) {
+  text-align: center;
+  padding: var(--sp-3) var(--sp-4);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid color-mix(in srgb, var(--cat-conversii, var(--accent)) 25%, var(--border));
+}
+.math-longform__content :global(th:first-child) { text-align: left; }
+.math-longform__content :global(td) {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.math-longform__content :global(td:first-child) {
+  text-align: left;
+  color: var(--text-muted);
+}
+.math-longform__content :global(tbody tr:last-child td) { border-bottom: none; }
+.math-longform__content :global(tbody tr:hover td) {
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 6%, transparent);
+}
+
+/* Táblázat horizontális görgethető mobilra */
+@media (max-width: 640px) {
+  .math-longform__content :global(table) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ───── KaTeX képletek – KÖZÉPRE, kártya-stílusban ───── */
+.math-longform__content :global(.katex-display) {
+  margin: var(--sp-5) auto !important;
+  padding: var(--sp-4) var(--sp-5);
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 5%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--cat-conversii, var(--accent)) 20%, var(--border));
+  border-radius: var(--r-md);
+  text-align: center !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-size: 1.125rem;
+  max-width: fit-content;
+  min-width: 280px;
+}
+.math-longform__content :global(.katex-display > .katex) {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+}
+.math-longform__content :global(.katex) {
+  color: var(--text);
+}
+.math-longform__content :global(p .katex) {
+  /* Inline képletek bekezdésen belül */
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 8%, transparent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.9375em;
+}
+
+/* Code (inline + block) */
+.math-longform__content :global(code) {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--text);
+}
+
+/* Blockquote — citátum / tipp box */
+.math-longform__content :global(blockquote) {
+  margin: var(--sp-5) 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: color-mix(in srgb, var(--cat-conversii, var(--accent)) 6%, var(--bg));
+  border-left: 4px solid var(--cat-conversii, var(--accent));
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  color: var(--text);
+}
+.math-longform__content :global(blockquote p:last-child) { margin-bottom: 0; }
+
+/* HR elválasztó */
+.math-longform__content :global(hr) {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: var(--sp-7) 0;
 }
 
 /* ─── Intro section ─────────────────────────────────────────── */

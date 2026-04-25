@@ -19,6 +19,14 @@ export const CATEGORY_URLS: Record<SupportedLang, Record<CategoryId, string>> = 
     excel: "excel",
     fajl: "fajl",
     seo: "seo",
+    // RO-only kategóriák – HU build nem generál oldalt (languages: ["ro"]),
+    // de a Record<CategoryId,string> teljességéhez kell placeholder
+    calculator: "calculator",
+    geometrie: "geometrie",
+    conversii: "conversii",
+    finante: "finante",
+    sanatate: "sanatate",
+    timp: "timp",
   },
   ro: {
     kep: "imagine",
@@ -31,6 +39,13 @@ export const CATEGORY_URLS: Record<SupportedLang, Record<CategoryId, string>> = 
     excel: "excel",
     fajl: "fisiere",
     seo: "seo",
+    // RO matematika / kalkulátor kategóriák
+    calculator: "calculator",
+    geometrie: "geometrie",
+    conversii: "conversii",
+    finante: "finante",
+    sanatate: "sanatate",
+    timp: "timp",
   },
 };
 

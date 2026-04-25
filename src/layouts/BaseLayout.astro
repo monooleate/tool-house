@@ -12,6 +12,14 @@ import { t, tpl, CURRENT_CONFIG, CURRENT_LANG, LANG_CONFIG } from "../i18n/index
 import type { SupportedLang } from "../i18n/index.ts";
 
 const localizedCategories = getVisibleCategories(CURRENT_LANG).map(cat => getLocalizedCategory(cat, CURRENT_LANG));
+
+// ─── Super-categories: nav csoportosítás (16+ kategória nem fér ki sorban) ──
+// "tools": fájl-eszközök (kép, pdf, adat, …) — minden nyelven
+// "math": matematikai kalkulátorok (calculator, geometrie, …) — RO-only
+const MATH_CATS_SET = new Set(["calculator", "geometrie", "conversii", "finante", "sanatate", "timp"]);
+const toolCategories = localizedCategories.filter(c => !MATH_CATS_SET.has(c.id));
+const mathCategories = localizedCategories.filter(c =>  MATH_CATS_SET.has(c.id));
+const hasMathCategories = mathCategories.length > 0;
 const { siteName, siteUrl, siteNameShort, lang: htmlLang, locale } = CURRENT_CONFIG;
 // View Transitions kikapcsolva – link navigáció hibát okozott
 // import { ViewTransitions } from "astro:transitions";
@@ -28,10 +36,12 @@ export interface Props {
   ogImageHeight?: number;
   ogType?: "website" | "article";
   schemaScripts?: string[];  // JSON-LD stringek tömbje
-  hreflangPaths?: { hu: string; ro: string };
+  hreflangPaths?: { hu?: string | null; ro?: string | null };
   noIndex?: boolean;
   publishedAt?: string;
   modifiedAt?: string;
+  /** Ha true, a self-hosted KaTeX CSS is betöltődik (math oldalak) */
+  katex?: boolean;
 }
 
 const {
@@ -49,6 +59,7 @@ const {
   noIndex       = false,
   publishedAt,
   modifiedAt,
+  katex         = false,
 } = Astro.props;
 const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${SITE_URL.replace(/\/$/, "")}${ogImage}`;
 const hasLargeOgImage = ogImageWidth >= 300 && ogImageHeight >= 157;
@@ -77,15 +88,20 @@ const totalCount = getTotalToolsCount();
 
   <!-- hreflang: language alternates -->
   {(() => {
+    // Ha hreflangPaths.hu explicit null, a HU alternate kimarad (pl. RO-only tool).
+    // Hasonló ro-ra. Ha nincs megadva hreflangPaths, a jelenlegi pathname mindkét nyelvhez.
+    const huSet = !hreflangPaths || hreflangPaths.hu !== null;
+    const roSet = !hreflangPaths || hreflangPaths.ro !== null;
     const huPath = hreflangPaths?.hu ?? (canonical ?? Astro.url.pathname);
     const roPath = hreflangPaths?.ro ?? (canonical ?? Astro.url.pathname);
-    // Trailing slash normalizálás (egyezzen a canonical-lal és sitemap-pel)
     const norm = (p: string) => p === "/" ? p : (p.endsWith("/") ? p : p + "/");
+    // x-default: HU alapértelmezett, ha van; különben RO
+    const xDefault = huSet ? `https://konvertalo.hu${norm(huPath!)}` : `https://instrumenteonline.ro${norm(roPath!)}`;
     return (
       <>
-        <link rel="alternate" hreflang="hu" href={`https://konvertalo.hu${norm(huPath)}`} />
-        <link rel="alternate" hreflang="ro" href={`https://instrumenteonline.ro${norm(roPath)}`} />
-        <link rel="alternate" hreflang="x-default" href={`https://konvertalo.hu${norm(huPath)}`} />
+        {huSet && <link rel="alternate" hreflang="hu" href={`https://konvertalo.hu${norm(huPath!)}`} />}
+        {roSet && <link rel="alternate" hreflang="ro" href={`https://instrumenteonline.ro${norm(roPath!)}`} />}
+        <link rel="alternate" hreflang="x-default" href={xDefault} />
       </>
     );
   })()}
@@ -134,6 +150,10 @@ const totalCount = getTotalToolsCount();
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Figtree:wght@400;500;600;700&display=optional" />
   </noscript>
+
+  {katex && (
+    <link rel="stylesheet" href="/katex/katex.min.css" />
+  )}
 
   <!-- View Transitions kikapcsolva – link navigáció hibát okozott -->
   <!-- <ViewTransitions fallback="none" /> -->
@@ -281,77 +301,72 @@ const totalCount = getTotalToolsCount();
         <span class="site-logo__count" title={tpl("nav.active_tools_title", { count: String(activeCount) })}>{activeCount}</span>
       </a>
 
-      <!-- Category nav with mega-menu dropdowns -->
-      <ul class="nav-cats" role="list">
-        {localizedCategories.map((cat) => {
-          const catTools = getToolsByCategory(cat.id).map(t => getLocalizedTool(t, CURRENT_LANG));
-          const activeTools = catTools.filter(t => t.status === "active");
-          const comingTools = catTools.filter(t => t.status === "coming-soon");
-          return (
-            <li class="nav-cat-item">
-              <a href={categoryUrl(cat.id)} class="nav-cat-link" style={`--cat-color: ${cat.color}`}>
-                <span aria-hidden="true">{cat.icon}</span>
-                <span class="nav-cat-label">{cat.label}</span>
-              </a>
+      <!-- Single "Categorii" mega-menu trigger ─────────────────
+           Skálázható: 10 vagy 60 kategória esetén is konzisztens UI.
+           Mobile-first: ugyanaz a mega-panel minden breakpointon.
+           A super-categories (Instrumente / Calculatoare) szekcionálva. -->
+      <div class="nav-megabtn-wrap">
+        <button
+          class="nav-megabtn"
+          id="nav-categories-btn"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="nav-categories-panel"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <span class="nav-megabtn__label">{t("nav.categories")}</span>
+          <svg class="nav-megabtn__caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
 
-              {/* Mega-menu dropdown */}
-              <div class="mega-dropdown">
-                <div class="mega-dropdown__header">
-                  <span class="mega-dropdown__icon">{cat.icon}</span>
-                  <div>
-                    <a href={categoryUrl(cat.id)} class="mega-dropdown__title">{cat.label}</a>
-                    <p class="mega-dropdown__desc">{cat.description}</p>
-                  </div>
-                </div>
+        <div class="nav-megapanel" id="nav-categories-panel" role="menu" aria-hidden="true">
+          {/* Tool kategóriák (file-eszközök) */}
+          <section class="nav-megasection">
+            <h3 class="nav-megasection__title">{t("nav.section_tools") || "Instrumente"}</h3>
+            <ul class="nav-megagrid" role="list">
+              {toolCategories.map((cat) => {
+                const catTools = getToolsByCategory(cat.id);
+                const activeCount = catTools.filter(t => t.status === "active").length;
+                return (
+                  <li>
+                    <a href={categoryUrl(cat.id)} class="nav-megacard" style={`--cat-color: ${cat.color}`}>
+                      <span class="nav-megacard__icon" aria-hidden="true">{cat.icon}</span>
+                      <span class="nav-megacard__label">{cat.label}</span>
+                      <span class="nav-megacard__count">{activeCount}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-                <div class="mega-dropdown__body">
-                  {activeTools.length > 0 && (
-                    <div class="mega-dropdown__section">
-                      <span class="mega-dropdown__label">{t("nav.available_tools")}</span>
-                      <ul class="mega-dropdown__list">
-                        {activeTools.map(tool => (
-                          <li>
-                            <a href={toolUrl(tool)} class="mega-tool mega-tool--active">
-                              <span class="mega-tool__name">{tool.h1}</span>
-                              <span class="mega-tool__arrow">→</span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {comingTools.length > 0 && (
-                    <div class="mega-dropdown__section">
-                      <span class="mega-dropdown__label mega-dropdown__label--dim">{tpl("nav.coming_soon_count", { count: String(comingTools.length) })}</span>
-                      <ul class="mega-dropdown__list mega-dropdown__list--coming">
-                        {comingTools.slice(0, 4).map(tool => (
-                          <li>
-                            <a href={toolUrl(tool)} class="mega-tool mega-tool--coming">
-                              <span class="mega-tool__name">{tool.h1}</span>
-                            </a>
-                          </li>
-                        ))}
-                        {comingTools.length > 4 && (
-                          <li>
-                            <a href={categoryUrl(cat.id)} class="mega-tool mega-tool--more">
-                              {tpl("nav.more_tools", { count: String(comingTools.length - 4) })}
-                            </a>
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-
-                <a href={categoryUrl(cat.id)} class="mega-dropdown__viewall">
-                  {tpl("nav.view_all_tools", { label: cat.label.toLowerCase() })}
-                </a>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+          {hasMathCategories && (
+            <section class="nav-megasection nav-megasection--math">
+              <h3 class="nav-megasection__title">{t("nav.section_math") || "Calculatoare"}</h3>
+              <ul class="nav-megagrid" role="list">
+                {mathCategories.map((cat) => {
+                  const catTools = getToolsByCategory(cat.id);
+                  const activeCount = catTools.filter(t => t.status === "active").length;
+                  return (
+                    <li>
+                      <a href={categoryUrl(cat.id)} class="nav-megacard" style={`--cat-color: ${cat.color}`}>
+                        <span class="nav-megacard__icon" aria-hidden="true">{cat.icon}</span>
+                        <span class="nav-megacard__label">{cat.label}</span>
+                        <span class="nav-megacard__count">{activeCount}</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          )}
+        </div>
+      </div>
 
       <!-- Right controls -->
       <div class="nav-controls">
@@ -378,63 +393,13 @@ const totalCount = getTotalToolsCount();
           <span class="theme-icon theme-icon--moon" aria-hidden="true">🌙</span>
         </button>
 
-        <!-- Mobile hamburger -->
-        <button
-          class="btn btn--ghost btn--sm mobile-menu-btn"
-          id="mobile-menu-toggle"
-          aria-label={t("nav.menu_open")}
-          aria-expanded="false"
-          aria-controls="mobile-drawer"
-          data-open-label={t("nav.menu_open")}
-          data-close-label={t("nav.menu_close")}
-        >
-          <svg class="hamburger-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6" class="ham-top"/>
-            <line x1="3" y1="12" x2="21" y2="12" class="ham-mid"/>
-            <line x1="3" y1="18" x2="21" y2="18" class="ham-bot"/>
-          </svg>
-        </button>
+        {/* Mobile hamburger eltávolítva — a "Categorii" mega-menu helyettesíti minden breakpointon */}
       </div>
     </nav>
   </header>
 
-  <!-- Mobile drawer overlay -->
-  <div class="mobile-overlay" id="mobile-overlay" aria-hidden="true"></div>
-  <aside class="mobile-drawer" id="mobile-drawer" aria-label={t("nav.mobile_menu")} aria-hidden="true">
-    <div class="mobile-drawer__header">
-      <span class="mobile-drawer__title">{t("nav.categories")}</span>
-      <button class="btn btn--ghost btn--sm mobile-drawer__close" id="mobile-drawer-close" aria-label={t("nav.menu_close")}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </div>
-    <nav class="mobile-drawer__nav">
-      <ul class="mobile-drawer__list" role="list">
-        {localizedCategories.map((cat) => {
-          const catTools = getToolsByCategory(cat.id);
-          const activeCount = catTools.filter(t => t.status === "active").length;
-          return (
-            <li>
-              <a href={categoryUrl(cat.id)} class="mobile-drawer__link" style={`--cat-color: ${cat.color}`}>
-                <span class="mobile-drawer__icon" aria-hidden="true">{cat.icon}</span>
-                <span class="mobile-drawer__label">{cat.label}</span>
-                <span class="mobile-drawer__count">{activeCount}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
-    <div class="mobile-drawer__footer">
-      <a href={staticUrl("kereses")} class="mobile-drawer__search-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        {t("nav.search_tools_link")}
-      </a>
-    </div>
-  </aside>
+  {/* A régi mobile drawer eltávolítva — a "Categorii" mega-menu szolgálja
+      a mobil + tablet + desktop nav igényt egységesen. */}
 
   <!-- Main content -->
   <main id="main-content" tabindex="-1">
@@ -597,61 +562,208 @@ const totalCount = getTotalToolsCount();
   vertical-align: super;
 }
 
-/* Category nav */
-.nav-cats {
+/* ─── Új: "Categorii" mega-menu trigger + panel ─────────────── */
+.nav-megabtn-wrap {
+  position: relative;
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 2px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex: 1;
-  overflow: visible;
-  scrollbar-width: none;
 }
-.nav-cats::-webkit-scrollbar { display: none; }
 
-/* Mobile: horizontal scroll, no mega-menu */
+.nav-megabtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  white-space: nowrap;
+}
+.nav-megabtn:hover,
+.nav-megabtn[aria-expanded="true"] {
+  background: var(--bg-card);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.nav-megabtn__label {
+  display: inline;
+}
+.nav-megabtn__caret {
+  transition: transform var(--t-fast);
+}
+.nav-megabtn[aria-expanded="true"] .nav-megabtn__caret {
+  transform: rotate(180deg);
+}
+@media (max-width: 480px) {
+  .nav-megabtn__label { display: none; }
+  .nav-megabtn { padding: var(--sp-2); }
+}
+
+/* Mega-panel: full-width felül, kategória grid alul */
+.nav-megapanel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 880px;
+  max-height: min(80vh, 640px);
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.20), 0 0 0 1px rgba(255,255,255,0.03);
+  padding: var(--sp-5);
+  z-index: 200;
+  animation: mega-panel-in 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-megapanel[data-open="true"] {
+  display: block;
+}
+
 @media (max-width: 768px) {
-  .nav-cats {
-    overflow-x: auto;
-    overflow-y: visible;
+  .nav-megapanel {
+    position: fixed;
+    top: 56px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100vh - 80px);
+    padding: var(--sp-4);
   }
 }
 
-.nav-cat-item {
-  position: relative;
+@keyframes mega-panel-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.nav-cat-link {
+/* Section: Instrumente / Calculatoare */
+.nav-megasection + .nav-megasection {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border);
+}
+.nav-megasection__title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 var(--sp-3) 0;
+}
+
+/* Grid: kategória kártyák — auto-fill, jó kontraszttal dark/light-on */
+.nav-megagrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--sp-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 480px) {
+  .nav-megagrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.nav-megacard {
   display: flex;
   align-items: center;
-  gap: var(--sp-1);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  padding: var(--sp-2) var(--sp-3);
-  border-radius: var(--r-sm);
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
   text-decoration: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
   transition: all var(--t-fast);
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
-
-.nav-cat-link:hover {
+.nav-megacard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cat-color, var(--accent));
+  opacity: 0;
+  transition: opacity var(--t-fast);
+  pointer-events: none;
+}
+.nav-megacard:hover {
+  border-color: var(--cat-color, var(--accent));
   color: var(--cat-color, var(--accent));
-  background: var(--accent-subtle);
-  border-bottom-color: var(--cat-color, var(--accent));
+  transform: translateY(-1px);
+}
+.nav-megacard:hover::before {
+  opacity: 0.06;
+}
+.nav-megacard__icon {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.nav-megacard__label {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-megacard__count {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: var(--r-full);
+  position: relative;
+  z-index: 1;
+}
+.nav-megacard:hover .nav-megacard__count {
+  background: var(--cat-color, var(--accent));
+  color: #fff;
 }
 
-.nav-cat-label {
+/* Backdrop overlay (mobile when panel open) */
+.nav-megabackdrop {
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 150;
+  animation: fade-in 150ms;
+}
+.nav-megabackdrop[data-open="true"] {
+  display: block;
+}
+@media (min-width: 769px) {
+  .nav-megabackdrop[data-open="true"] {
+    display: none;
+  }
+}
+@keyframes fade-in {
+  from { opacity: 0; } to { opacity: 1; }
 }
 
-@media (min-width: 900px) {
-  .nav-cat-label { display: inline; }
-}
+/* ─── Régi nav stílusok kompatibilitásért — már nem használt elemek ─── */
+.nav-cats { display: none; }
 
 /* ─── Mega dropdown ─────────────────────────────────────────── */
 .mega-dropdown {
@@ -968,6 +1080,22 @@ const totalCount = getTotalToolsCount();
   flex: 1;
   overflow-y: auto;
   padding: var(--sp-3) 0;
+}
+
+.mobile-drawer__section + .mobile-drawer__section {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+
+.mobile-drawer__section-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 var(--sp-5) var(--sp-2) var(--sp-5);
 }
 
 .mobile-drawer__list {
@@ -1296,46 +1424,46 @@ if (searchBtn) {
   });
 }
 
-// ─── Mobile drawer toggle ───────────────────────────────────
-const menuToggle = document.getElementById("mobile-menu-toggle");
-const drawer = document.getElementById("mobile-drawer");
-const overlay = document.getElementById("mobile-overlay");
-const drawerClose = document.getElementById("mobile-drawer-close");
+// ─── "Categorii" mega-panel toggle (új) ─────────────────────
+const megaBtn = document.getElementById("nav-categories-btn");
+const megaPanel = document.getElementById("nav-categories-panel");
 
-function openDrawer() {
-  if (!drawer || !overlay || !menuToggle) return;
-  drawer.classList.add("is-open");
-  drawer.setAttribute("aria-hidden", "false");
-  overlay.classList.add("is-open");
-  overlay.setAttribute("aria-hidden", "false");
-  menuToggle.setAttribute("aria-expanded", "true");
-  menuToggle.setAttribute("aria-label", menuToggle.dataset.closeLabel || "Close menu");
-  document.body.style.overflow = "hidden";
+function openMegaPanel() {
+  if (!megaBtn || !megaPanel) return;
+  megaPanel.dataset.open = "true";
+  megaPanel.setAttribute("aria-hidden", "false");
+  megaBtn.setAttribute("aria-expanded", "true");
+}
+function closeMegaPanel() {
+  if (!megaBtn || !megaPanel) return;
+  delete megaPanel.dataset.open;
+  megaPanel.setAttribute("aria-hidden", "true");
+  megaBtn.setAttribute("aria-expanded", "false");
+}
+function toggleMegaPanel() {
+  if (!megaBtn) return;
+  const open = megaBtn.getAttribute("aria-expanded") === "true";
+  open ? closeMegaPanel() : openMegaPanel();
 }
 
-function closeDrawer() {
-  if (!drawer || !overlay || !menuToggle) return;
-  drawer.classList.remove("is-open");
-  drawer.setAttribute("aria-hidden", "true");
-  overlay.classList.remove("is-open");
-  overlay.setAttribute("aria-hidden", "true");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", menuToggle.dataset.openLabel || "Open menu");
-  document.body.style.overflow = "";
-}
-
-if (menuToggle) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-    isOpen ? closeDrawer() : openDrawer();
+if (megaBtn) {
+  megaBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMegaPanel();
   });
 }
-if (overlay) overlay.addEventListener("click", closeDrawer);
-if (drawerClose) drawerClose.addEventListener("click", closeDrawer);
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && drawer?.classList.contains("is-open")) closeDrawer();
+// Click outside → close
+document.addEventListener("click", (e) => {
+  if (!megaPanel || megaPanel.dataset.open !== "true") return;
+  if (megaPanel.contains(e.target) || megaBtn?.contains(e.target)) return;
+  closeMegaPanel();
 });
+// Esc → close
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && megaPanel?.dataset.open === "true") closeMegaPanel();
+});
+
+// (A régi mobile drawer toggle eltávolítva — a "Categorii" mega-menu helyettesíti)
 
 // ─── Cookie consent banner ──────────────────────────────────
 const cookieBanner = document.getElementById("cookie-banner");

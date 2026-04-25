@@ -58,6 +58,13 @@
   --cat-excel:      #22c55e;
   --cat-fajl:       #64748b;
   --cat-seo:        #ec4899;
+  /* RO-only math kategóriák */
+  --cat-calculator: #4f46e5;
+  --cat-geometrie:  #10b981;
+  --cat-conversii:  #8b5cf6;
+  --cat-finante:    #059669;
+  --cat-sanatate:   #e11d48;
+  --cat-timp:       #f97316;
 
   /* Status */
   --success:        #10b981;

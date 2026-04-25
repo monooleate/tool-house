@@ -17,6 +17,12 @@ import { ADAT_RO_CONTENT } from "./content/ro/adat-content.ts";
 import { SZOVEG_RO_CONTENT } from "./content/ro/szoveg-content.ts";
 import { FEJLESZTO_RO_CONTENT } from "./content/ro/fejleszto-content.ts";
 import { PDF_RO_CONTENT, EXCEL_RO_CONTENT, MARKDOWN_RO_CONTENT, HTML_RO_CONTENT, FAJL_RO_CONTENT, SEO_TOOL_RO_CONTENT } from "./content/ro/pdf-excel-other-content.ts";
+import { CALCULATOR_RO_CONTENT } from "./content/ro/calculator-content.ts";
+import { GEOMETRIE_RO_CONTENT } from "./content/ro/geometrie-content.ts";
+import { CONVERSII_RO_CONTENT } from "./content/ro/conversii-content.ts";
+import { FINANTE_RO_CONTENT } from "./content/ro/finante-content.ts";
+import { SANATATE_RO_CONTENT } from "./content/ro/sanatate-content.ts";
+import { TIMP_RO_CONTENT } from "./content/ro/timp-content.ts";
 
 // ─── i18n Imports ────────────────────────────────────────────
 import { ui } from "./ui-labels.ts";
@@ -33,18 +39,29 @@ import { MARKDOWN_RO } from "./i18n/ro-tools-markdown.ts";
 import { HTML_RO } from "./i18n/ro-tools-html.ts";
 import { EXCEL_RO } from "./i18n/ro-tools-excel.ts";
 import { FAJL_RO, SEO_RO } from "./i18n/ro-tools-fajl-seo.ts";
+import { CALCULATOR_RO } from "./i18n/ro-tools-calculator.ts";
+import { GEOMETRIE_RO } from "./i18n/ro-tools-geometrie.ts";
+import { CONVERSII_RO } from "./i18n/ro-tools-conversii.ts";
+import { FINANTE_RO } from "./i18n/ro-tools-finante.ts";
+import { SANATATE_RO } from "./i18n/ro-tools-sanatate.ts";
+import { TIMP_RO } from "./i18n/ro-tools-timp.ts";
 
 const RO_TRANSLATIONS: Record<string, Record<string, { slug: string; title: string; h1: string; description: string; keywords: string[] }>> = {
   kep: KEP_RO, pdf: PDF_RO, adat: ADAT_RO, szoveg: SZOVEG_RO,
   fejleszto: FEJLESZTO_RO, markdown: MARKDOWN_RO, html: HTML_RO,
   excel: EXCEL_RO, fajl: FAJL_RO, seo: SEO_RO,
+  calculator: CALCULATOR_RO, geometrie: GEOMETRIE_RO, conversii: CONVERSII_RO,
+  finante: FINANTE_RO, sanatate: SANATATE_RO, timp: TIMP_RO,
 };
 
 export type ToolStatus = "active" | "coming-soon";
 export type CategoryId =
   | "kep" | "pdf" | "adat" | "szoveg"
   | "fejleszto" | "markdown" | "html" | "excel"
-  | "fajl" | "seo";
+  | "fajl" | "seo"
+  // ─── RO-only: matematikai kalkulátorok és konverterek ─────
+  | "calculator" | "geometrie" | "conversii"
+  | "finante" | "sanatate" | "timp";
 
 export interface ToolFAQ {
   q: string;
@@ -244,6 +261,88 @@ export const CATEGORIES: Category[] = [
     intro: [
       "Az SEO eszközök a keresőoptimalizálás mindennapi feladataihoz nyújtanak segítséget: title és meta description hossz ellenőrzés, UTM paraméter építő, canonical URL generátor, robots.txt elemző és tesztelő.",
       "Ideális SEO szakembereknek, tartalomkezelőknek és webfejlesztőknek, akik gyorsan szeretnék ellenőrizni és optimalizálni az oldalak meta adatait. Nincs szükség fizetős eszközökre az alapfeladatokhoz.",
+    ],
+  },
+
+  // ═══ RO-ONLY: Matematikai kalkulátorok és konverterek ════════════
+  // Minden lentebbi kategória `languages: ["ro"]` – a HU build automatikusan
+  // kiszűri (isCategoryVisibleInLang / getVisibleCategories).
+  {
+    id: "calculator", label: "Calculator", icon: "🧮", color: "var(--cat-calculator, #4f46e5)",
+    description: "Calculatoare matematice: procente, ecuații, medie aritmetică.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Calculator", description: "Calculatoare matematice: procente, ecuații, medie aritmetică, regula de trei.", intro: [
+      "Calculatoarele matematice InstrumenteOnline acoperă cele mai folosite operații din matematica de zi cu zi și din programa școlară: calcul procentual, ecuații de gradul doi și exponențiale, medie aritmetică, mediană, mod și regula de trei simplă. Fiecare calculator afișează pașii de rezolvare, nu doar rezultatul.",
+      "Toate calculatoarele rulează integral în browserul tău – nu se încarcă nimic pe server. Formulele matematice sunt afișate clar cu ajutorul KaTeX, astfel încât notația să fie profesională și ușor de citit.",
+      "Ideal pentru elevi, studenți, profesori și oricine are nevoie de răspunsuri rapide la calcule matematice uzuale, fără a instala aplicații sau a plăti abonamente.",
+    ] } },
+    intro: [
+      "Calculatoare matematice online – procent, ecuații, medie, regula de trei.",
+    ],
+  },
+  {
+    id: "geometrie", label: "Geometrie", icon: "📐", color: "var(--cat-geometrie, #10b981)",
+    description: "Calculatoare geometrice: triunghi, cerc, dreptunghi, trigonometrie.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Geometrie", description: "Calculatoare geometrice: triunghi dreptunghic, cerc, dreptunghi, funcții trigonometrice, radiani-grade.", intro: [
+      "Calculatoarele de geometrie te ajută să rezolvi rapid probleme clasice: arie, perimetru și diagonală pentru dreptunghi, lungimi de laturi și unghiuri pentru triunghi dreptunghic cu teorema lui Pitagora, aria cercului și a sectorului circular, valorile funcțiilor trigonometrice (sin, cos, tan) și conversia între radiani și grade.",
+      "Fiecare calculator include o vizualizare SVG live – modifici un parametru și forma se redesenează în timp real. Formulele sunt afișate cu KaTeX, cu pași detaliați de calcul.",
+      "Util pentru temele de geometrie, pregătirea pentru Evaluarea Națională, Bacalaureat și pentru calcule practice (construcții, amenajări, design).",
+    ] } },
+    intro: [
+      "Instrumente geometrice: triunghi, cerc, dreptunghi, trigonometrie.",
+    ],
+  },
+  {
+    id: "conversii", label: "Conversii", icon: "⇄", color: "var(--cat-conversii, #8b5cf6)",
+    description: "Convertoare unități: lungime, masă, volum, suprafață, temperatură, densitate.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Conversii", description: "Convertoare unități de măsură: lungime, masă, volum, suprafață, temperatură, densitate materiale.", intro: [
+      "Convertoarele noastre de unități transformă instantaneu între cele mai uzuale unități de măsură: lungime (cm, m, km, inch, picior), masă (kg, grame, livre, tone), volum (litri, mililitri, decilitri, metri cubi, galoane), suprafață (metri pătrați, hectare, ari), temperatură (Celsius, Fahrenheit) și densitatea materialelor de construcție (beton, nisip, pietriș, balast).",
+      "Fiecare convertor funcționează bidirecțional – scrii într-un câmp, rezultatul apare imediat în celălalt. Formulele de conversie sunt afișate transparent, astfel încât să înțelegi cum se face calculul.",
+      "Util pentru rețete culinare, DIY, agricultură și sectorul imobiliar (hectare ↔ metri pătrați), construcții (densități) și sport (mile, picioare, livre).",
+    ] } },
+    intro: [
+      "Convertoare unități: lungime, masă, volum, suprafață, temperatură.",
+    ],
+  },
+  {
+    id: "finante", label: "Finanțe", icon: "💰", color: "var(--cat-finante, #059669)",
+    description: "Calculatoare financiare: TVA, credit, dobândă, reducere, adaos.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Finanțe", description: "Calculatoare financiare: TVA (19%, 9%, 5%), credit anuitar, dobândă compusă, reducere, marjă și adaos comercial.", intro: [
+      "Instrumentele financiare acoperă calculele pe care le faci cel mai des: calculator TVA pentru cotele din România (19%, 9%, 5%), calculator credit cu rate anuitare, calculator dobândă compusă pentru economii și investiții, calculator reducere pentru oferte comerciale, calculator marjă și adaos pentru comerț.",
+      "Toate calculele se fac în browserul tău, fără ca datele financiare să ajungă pe server. Rezultatele sunt afișate cu formulele din spate și pașii de calcul.",
+      "Util pentru antreprenori, comercianți, persoane care planifică un credit ipotecar sau o investiție, precum și pentru elevii de la profilul economic.",
+    ] } },
+    intro: [
+      "Calculatoare financiare: TVA, credit, dobândă compusă, reducere.",
+    ],
+  },
+  {
+    id: "sanatate", label: "Sănătate", icon: "⚖️", color: "var(--cat-sanatate, #e11d48)",
+    description: "Calculatoare de sănătate: IMC, greutate ideală, calorii zilnice.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Sănătate", description: "Calculatoare de sănătate: IMC (BMI), greutate ideală, necesar caloric zilnic cu formula Mifflin-St Jeor.", intro: [
+      "Calculatoarele de sănătate sunt bazate pe formulele standard din medicină și nutriție: IMC (Indicele de Masă Corporală) cu clasificarea OMS, greutate ideală calculată după patru formule științifice (Devine, Robinson, Miller, Hamwi), necesar caloric zilnic (BMR și TDEE) cu formula Mifflin-St Jeor și distribuția macronutrienților.",
+      "Rezultatele sunt orientative și nu înlocuiesc sfatul unui medic sau nutriționist, dar oferă un punct de plecare solid pentru planificarea alimentației și a activității fizice.",
+      "Util pentru pasionați de fitness, persoane care urmăresc o dietă, sportivi și oricine dorește să înțeleagă mai bine cifrele din spatele sănătății personale.",
+    ] } },
+    intro: [
+      "IMC, greutate ideală, calorii zilnice – formule medicale standard.",
+    ],
+  },
+  {
+    id: "timp", label: "Timp", icon: "📅", color: "var(--cat-timp, #f97316)",
+    description: "Diferență de date, numărători inverse, câte zile am trăit.",
+    languages: ["ro"],
+    i18n: { ro: { label: "Timp", description: "Calculatoare de timp: diferență între date, numărători inverse (Crăciun, Paști, Revelion, zi de naștere), câte zile am trăit.", intro: [
+      "Instrumentele de timp te ajută cu sarcinile cotidiene legate de date: câte zile între două date, câte zile lucrătoare într-o perioadă, câte zile ai trăit de la naștere, precum și numărători inverse live pentru evenimente importante (Crăciun, Paști ortodox cu algoritmul Gauss, Revelion, zi de naștere personalizabilă, Bacalaureat).",
+      "Fiecare numărătoare inversă se actualizează în timp real și include animații festive și curiozități matematice despre timp. Poți crea și propriile numărători pentru evenimente personale, cu link partajabil.",
+      "Util pentru planificare personală, pedagogi, părinți și orice situație unde contează precizia datelor.",
+    ] } },
+    intro: [
+      "Numărători inverse și calcule cu date – în timp real.",
     ],
   },
 ];
@@ -487,6 +586,16 @@ const rawTools: Tool[] = [
   { slug: "alt-szoveg-sablon", category: "seo", title: "Kép alt szöveg sablon generátor", h1: "Alt szöveg sablon", description: "Tömeges kép alt szöveg generálás sablon alapján, CSV exporttal.", keywords: ["alt text", "alt szöveg seo"], status: "coming-soon", related: ["fajlnev-optimalizalo"], faq: [] },
   { slug: "robots-txt-ellenorzo", category: "seo", title: "robots.txt ellenőrző és tesztelő online", h1: "robots.txt ellenőrzése", description: "robots.txt fájl beillesztése és URL-ek tesztelése: engedélyezett-e a crawling?", keywords: ["robots txt tester", "robots ellenőrző"], status: "coming-soon", related: ["sitemap-url-ellenorzo"], faq: [] },
   { slug: "sitemap-url-ellenorzo", category: "seo", title: "Sitemap URL ellenőrző online", h1: "Sitemap URL-ek ellenőrzése", description: "XML sitemap beillesztése és URL-ek listázása, státusz megjelenítéssel.", keywords: ["sitemap ellenőrző", "xml sitemap check"], status: "coming-soon", related: ["robots-txt-ellenorzo"], faq: [] },
+
+  // ═══ RO-ONLY: CONVERSII – Fázis 1 pilot ═══════════════════════════════════
+  // Minden entry `languages: ["ro"]` – HU build automatikusan kiszűri.
+  // Custom Svelte komponensek a math reference site-ról portolva.
+  { slug: "cm-metri",          category: "conversii", title: "Convertor cm ↔ metri",          h1: "Convertor cm ↔ metri",          description: "Convertor centimetri ↔ metri.",          keywords: [], status: "active", component: "CmMeterCalculator",    languages: ["ro"], related: ["km-metri", "cm-inch"],         updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
+  { slug: "km-metri",          category: "conversii", title: "Convertor km ↔ metri",          h1: "Convertor km ↔ metri",          description: "Convertor kilometri ↔ metri.",           keywords: [], status: "active", component: "KmMeterCalculator",    languages: ["ro"], related: ["cm-metri"],                       updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
+  { slug: "cm-inch",           category: "conversii", title: "Convertor cm ↔ inch",           h1: "Convertor cm ↔ inch",           description: "Convertor centimetri ↔ inch (țoli).",    keywords: [], status: "active", component: "RulerConverter",       languages: ["ro"], related: ["cm-metri"],                       updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
+  { slug: "kg-grame",          category: "conversii", title: "Convertor kg ↔ grame",          h1: "Convertor kg ↔ grame",          description: "Convertor kilograme ↔ grame.",           keywords: [], status: "active", component: "KgGramCalculator",     languages: ["ro"], related: ["litri-mililitri"],                updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
+  { slug: "litri-mililitri",   category: "conversii", title: "Convertor litri ↔ ml",          h1: "Convertor litri ↔ ml",          description: "Convertor litri ↔ mililitri.",           keywords: [], status: "active", component: "LiterMlCalculator",    languages: ["ro"], related: ["kg-grame"],                       updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
+  { slug: "celsius-fahrenheit",category: "conversii", title: "Convertor Celsius ↔ Fahrenheit",h1: "Convertor Celsius ↔ Fahrenheit",description: "Convertor Celsius ↔ Fahrenheit.",        keywords: [], status: "active", component: "ThermometerConverter", languages: ["ro"], related: [],                                 updatedAt: "2026-04-25", launchedAt: "2026-04-25", faq: [] },
 ];
 
 // ─── SEO Content Merge ──────────────────────────────────────────────────────
@@ -545,6 +654,12 @@ const ALL_RO_CONTENT: ContentMap = {
   ...HTML_RO_CONTENT,
   ...FAJL_RO_CONTENT,
   ...SEO_TOOL_RO_CONTENT,
+  ...CALCULATOR_RO_CONTENT,
+  ...GEOMETRIE_RO_CONTENT,
+  ...CONVERSII_RO_CONTENT,
+  ...FINANTE_RO_CONTENT,
+  ...SANATATE_RO_CONTENT,
+  ...TIMP_RO_CONTENT,
 };
 
 for (const tool of rawTools) {

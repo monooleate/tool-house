@@ -27,6 +27,13 @@ const PRIORITY: Record<CategoryId | "home" | "category", string> = {
   fajl:       "0.75",
   markdown:   "0.75",
   html:       "0.75",
+  // RO-only math kategóriák
+  calculator: "0.9",
+  geometrie:  "0.85",
+  conversii:  "0.9",
+  finante:    "0.85",
+  sanatate:   "0.8",
+  timp:       "0.75",
 };
 
 const CHANGEFREQ: Record<CategoryId | "home" | "category", string> = {
@@ -42,6 +49,13 @@ const CHANGEFREQ: Record<CategoryId | "home" | "category", string> = {
   fajl:       "monthly",
   markdown:   "monthly",
   html:       "monthly",
+  // RO-only math kategóriák
+  calculator: "monthly",
+  geometrie:  "monthly",
+  conversii:  "monthly",
+  finante:    "monthly",
+  sanatate:   "monthly",
+  timp:       "weekly",
 };
 
 function ensureTrailingSlash(path: string): string {

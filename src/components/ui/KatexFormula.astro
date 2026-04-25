@@ -1,0 +1,35 @@
+---
+// ============================================================
+// KatexFormula.astro – SSR build-idős KaTeX képlet renderelő
+// Használat:
+//   <KatexFormula tex="ax^2 + bx + c = 0" block />
+//   <KatexFormula tex={"x = 5"} />
+// ============================================================
+import { renderMath } from "../../lib/katex.ts";
+
+interface Props {
+  tex: string;
+  block?: boolean;
+}
+
+const { tex, block = false } = Astro.props;
+const html = renderMath(tex, { displayMode: block });
+---
+
+{block ? (
+  <div class="katex-display-wrap" set:html={html} />
+) : (
+  <span class="katex-inline" set:html={html} />
+)}
+
+<style>
+  .katex-display-wrap {
+    margin: 1rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.5rem 0;
+  }
+  .katex-inline {
+    display: inline;
+  }
+</style>

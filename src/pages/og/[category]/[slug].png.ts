@@ -9,10 +9,10 @@
 // ============================================================
 
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getAllTools, getCategoryInfo } from "../../../lib/tool-registry.ts";
+import { getVisibleTools, getCategoryInfo } from "../../../lib/tool-registry.ts";
 
 export const getStaticPaths: GetStaticPaths = () => {
-  return getAllTools().map((tool) => ({
+  return getVisibleTools().map((tool) => ({
     params: { category: tool.category, slug: tool.slug },
     props:  { tool },
   }));
@@ -43,6 +43,13 @@ const CAT_COLORS: Record<string, string> = {
   excel:     "#22c55e",
   fajl:      "#64748b",
   seo:       "#ec4899",
+  // RO-only math kategóriák
+  calculator: "#4f46e5",
+  geometrie:  "#10b981",
+  conversii:  "#8b5cf6",
+  finante:    "#059669",
+  sanatate:   "#e11d48",
+  timp:       "#f97316",
 };
 
 // ─── React-szerű JSX objektum builder (Satori elfogad) ──────

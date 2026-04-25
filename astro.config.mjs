@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 // pnpm add @astrojs/sitemap – ha külső sitemapet is akarsz (opcionális,
 // a src/pages/sitemap.xml.ts önmagában is elég)
 // import sitemap from "@astrojs/sitemap";
@@ -24,6 +26,14 @@ export default defineConfig({
     svelte(),
     // sitemap(),  // opcionális – ha az @astrojs/sitemap-et akarod
   ],
+
+  // Markdown pipeline: KaTeX képletek LaTeX-szintaxissal ($…$, $$…$$)
+  // a math content collection-ökben. SSR render, nincs client JS (a KaTeX
+  // CSS a BaseLayout-ban, conditional, csak math oldalakon).
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [[rehypeKatex, { output: "html", strict: "ignore", throwOnError: false }]],
+  },
 
   // View Transitions – SPA-szerű navigáció, scroll kezeléssel
   // Egyedi oldalakra is alkalmazható: import { ViewTransitions } from "astro:transitions"

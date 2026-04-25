@@ -5,10 +5,10 @@
 // ============================================================
 
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getAllTools, getCategoryInfo } from "../../../lib/tool-registry.ts";
+import { getVisibleTools, getCategoryInfo } from "../../../lib/tool-registry.ts";
 
 export const getStaticPaths: GetStaticPaths = () => {
-  return getAllTools().map((tool) => ({
+  return getVisibleTools().map((tool) => ({
     params: { category: tool.category, slug: tool.slug },
     props:  { tool },
   }));

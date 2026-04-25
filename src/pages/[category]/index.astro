@@ -9,12 +9,15 @@ import {
   getToolsByCategory,
   getCategoryInfo,
   getLocalizedCategory,
+  getVisibleCategories,
 } from "../../lib/tool-registry.ts";
 import { categoryUrl } from "../../lib/url-utils.ts";
 import { t, CURRENT_LANG } from "../../i18n/index.ts";
 
 export function getStaticPaths() {
-  return CATEGORIES.map((cat) => {
+  // Csak az aktuális nyelven látható kategóriák – a `languages: ["ro"]`
+  // kategóriák (matematika, konverziók, stb.) a HU buildben kiszűrődnek.
+  return getVisibleCategories().map((cat) => {
     const url = categoryUrl(cat.id); // e.g., "/imagine/" or "/kep/"
     const catSlug = url.replace(/^\//, "").replace(/\/$/, ""); // strip leading and trailing slash
     return {

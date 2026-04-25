@@ -33,13 +33,26 @@ const schemas = [
   breadcrumbSchema(breadcrumbs),
   toolListSchema(tools, `${category.label} ${t("category.tools_suffix")}`),
 ];
+
+// Language-scoped kategóriák esetén (pl. math kategóriák RO-only)
+// a nem-támogatott nyelv hreflang-ja kimarad.
+const allowedLangs = (rawCategory.languages && rawCategory.languages.length > 0)
+  ? rawCategory.languages
+  : null;
+const huHref = !allowedLangs || allowedLangs.includes("hu") ? categoryUrl(rawCategory.id, "hu") : null;
+const roHref = !allowedLangs || allowedLangs.includes("ro") ? categoryUrl(rawCategory.id, "ro") : null;
+
+// Math kategóriák KaTeX CSS
+const MATH_CATS = new Set(["calculator", "geometrie", "conversii", "finante", "sanatate", "timp"]);
+const needsKatex = MATH_CATS.has(rawCategory.id);
 ---
 
 <BaseLayout
   title={title}
   description={description}
   canonical={categoryUrl(rawCategory.id)}
-  hreflangPaths={{ hu: categoryUrl(rawCategory.id, "hu"), ro: categoryUrl(rawCategory.id, "ro") }}
+  hreflangPaths={{ hu: huHref, ro: roHref }}
+  katex={needsKatex}
   schemaScripts={schemas}
 >
   <div class="cat-page container">

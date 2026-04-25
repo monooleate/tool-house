@@ -61,6 +61,13 @@ const SUBCATEGORY_MAP: Record<string, string> = {
   fajl:      "UtilitiesApplication",
   markdown:  "UtilitiesApplication",
   html:      "DeveloperApplication",
+  // RO-only math kategóriák
+  calculator: "EducationalApplication",
+  geometrie:  "EducationalApplication",
+  conversii:  "UtilitiesApplication",
+  finante:    "FinanceApplication",
+  sanatate:   "HealthApplication",
+  timp:       "UtilitiesApplication",
 };
 
 // ─── Determinisztikus rating generálás slug-ból ──────────────
