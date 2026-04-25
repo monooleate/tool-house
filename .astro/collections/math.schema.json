@@ -1,0 +1,64 @@
+{
+  "$ref": "#/definitions/math",
+  "definitions": {
+    "math": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "toolSlug": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "calculator",
+            "geometrie",
+            "conversii",
+            "finante",
+            "sanatate",
+            "timp"
+          ]
+        },
+        "published_at": {
+          "type": "string"
+        },
+        "refreshed_at": {
+          "type": "string"
+        },
+        "heroImage": {
+          "type": "string"
+        },
+        "articleSchema": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "softwareSchema": {
+          "$ref": "#/definitions/math/properties/articleSchema"
+        },
+        "faqPageSchema": {
+          "$ref": "#/definitions/math/properties/articleSchema"
+        },
+        "separatePage": {
+          "type": "boolean",
+          "default": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "category",
+        "published_at"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,1 @@
+import{b4 as b,af as t,x as S,ai as h,S as k}from"./template.DWE9IBls.js";function u(r,i){return r===i||r?.[k]===i}function c(r={},i,a,x){return b(()=>{var f,s;return t(()=>{f=s,s=[],S(()=>{r!==a(...s)&&(i(r,...s),f&&u(a(...f),r)&&i(null,...f))})}),()=>{h(()=>{s&&u(a(...s),r)&&i(null,...s)})}}),r}export{c as b};

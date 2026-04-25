@@ -36,4 +36,4 @@ Disallow: /
 User-agent: SemrushBot
 Disallow: /
 
-Sitemap: https://konvertalo.hu/sitemap.xml
+Sitemap: https://instrumenteonline.ro/sitemap.xml
