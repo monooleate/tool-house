@@ -26,6 +26,14 @@ const PAGE_GROUPS = [
     dist: "dist/geometrie",
     pages: ["triunghi-dreptunghic", "functii-trigonometrice", "radiani-grade", "cerc-calculator", "dreptunghi-calculator"],
   },
+  {
+    category: "finante",
+    dist: "dist/finante",
+    pages: [
+      "calculator-tva", "calculator-credit", "dobanda-compusa",
+      "calculator-reducere", "marja-adaos", "calculator-salariu-ora",
+    ],
+  },
 ];
 
 let totalSchemas = 0;

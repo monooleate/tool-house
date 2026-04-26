@@ -146,6 +146,13 @@
     GalonLitriCalculator:        () => import("../tools/conversii/GalonLitriCalculator.svelte"),
     BetonCalculator:             () => import("../tools/conversii/BetonCalculator.svelte"),
     DensitateCalculator:         () => import("../tools/conversii/DensitateCalculator.svelte"),
+    // FINANTE (RO-only) – Fázis 5
+    TvaCalculator:               () => import("../tools/finante/TvaCalculator.svelte"),
+    CreditCalculator:            () => import("../tools/finante/CreditCalculator.svelte"),
+    DobandaCompusaCalculator:    () => import("../tools/finante/DobandaCompusaCalculator.svelte"),
+    ReducereCalculator:          () => import("../tools/finante/ReducereCalculator.svelte"),
+    MarjaCalculator:             () => import("../tools/finante/MarjaCalculator.svelte"),
+    SalariuOraCalculator:        () => import("../tools/finante/SalariuOraCalculator.svelte"),
   };
 
   onMount(async () => {
