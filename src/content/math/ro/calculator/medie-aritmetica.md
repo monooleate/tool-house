@@ -68,27 +68,28 @@ faqPageSchema:
       "name": "Care este formula mediei aritmetice?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Media aritmetică x̄ = (suma valorilor) / (numărul de valori). Notată și cu M sau cu media."
+        "text": "Media aritmetică = (suma valorilor) / (numărul de valori). Notată x̄ (x-bar) sau M."
     - "@type": "Question"
-      "name": "Ce diferență este între medie și mediană?"
+      "name": "Care este diferența între mediană și medie?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Media este suma împărțită la numărul de valori; mediana este valoarea din mijlocul șirului ordonat. Mediana nu este influențată de valori extreme, media da."
+        "text": "Mediana este valoarea din mijlocul șirului ordonat. Spre deosebire de medie, mediana nu este influențată de valori extreme."
     - "@type": "Question"
-      "name": "Ce este modul statistic?"
+      "name": "Ce este modul?"
       "acceptedAnswer":
         "@type": "Answer"
         "text": "Modul este valoarea care apare cel mai des. Un set poate avea un mod, mai multe (multimodal) sau niciun mod dacă toate valorile sunt unice."
     - "@type": "Question"
-      "name": "Cum se calculează media de bacalaureat?"
+      "name": "Cum se calculează media ponderată a notelor?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Media de bacalaureat este media aritmetică simplă a celor 3 probe scrise (proba E.a — limba română, E.c — proba obligatorie a profilului, E.d — proba la alegere): media = (E.a + E.c + E.d) / 3. Trebuie să fie cel puțin 6,00 pentru a promova."
+        "text": "Înmulțești fiecare notă cu numărul de credite (greutatea), aduni produsele și împarți la suma greutăților. Mod «ponderat» face asta automat."
     - "@type": "Question"
-      "name": "Cum interpretez abaterea standard?"
+      "name": "Ce este abaterea standard?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Abaterea standard σ măsoară împrăștierea datelor în jurul mediei. σ mic înseamnă valori apropiate de medie (set omogen); σ mare înseamnă valori dispersate (set eterogen). În distribuții normale, ~68% dintre valori se află în x̄ ± σ."
+        "text": "Abaterea standard (σ) măsoară împrăștierea valorilor în jurul mediei. σ mică = valori apropiate de medie; σ mare = valori dispersate."
+
 ---
 
 Statisticile descriptive sunt instrumentele de bază pentru a rezuma un set de date. Cele 3 cele mai folosite sunt **media**, **mediana** și **modul** (măsuri de tendință centrală), iar pentru împrăștiere folosim **varianța** și **abaterea standard**.

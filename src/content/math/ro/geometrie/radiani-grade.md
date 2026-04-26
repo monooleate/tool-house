@@ -56,22 +56,23 @@ faqPageSchema:
       "name": "De ce folosim radiani și nu doar grade?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Radianii sunt unitatea «naturală» pentru calcul. Derivata lui sin(x) este cos(x) doar dacă x e în radiani; în grade ar apărea factori suplimentari π/180."
+        "text": "Radianii sunt unitatea «naturală» — fac formulele mai simple. Derivata lui sin(x) este cos(x) doar dacă x e în radiani; în grade ar apărea factori suplimentari π/180."
     - "@type": "Question"
       "name": "Cât este π/3 în grade?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "π/3 rad × 180/π = 60°. Folosit la triunghiul echilateral și la triunghiul dreptunghic 30°-60°-90°."
+        "text": "π/3 rad × 180/π = 60°. Folosit la triunghiul echilateral și la 30°-60°-90°."
     - "@type": "Question"
       "name": "Cât este 2π în grade?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "2π rad = 360°, adică un cerc complet. Așa cum 1 cerc are 360°, 2π este măsura sa în radiani."
+        "text": "2π rad = 360°, adică un cerc complet. Așa cum 1 cerc are 360°, 2π este măsura sa în radiani (lungimea cercului unitate)."
     - "@type": "Question"
       "name": "Cum se scriu unghiurile uzuale în radiani?"
       "acceptedAnswer":
         "@type": "Answer"
         "text": "30° = π/6, 45° = π/4, 60° = π/3, 90° = π/2, 120° = 2π/3, 180° = π, 270° = 3π/2, 360° = 2π. La bacalaureat se preferă forma exactă cu π."
+
 ---
 
 Conversia între **radiani** și **grade sexagesimale** este una dintre operațiile fundamentale ale trigonometriei. Cele două unități de măsură pentru unghi au origini foarte diferite: gradele provin din astronomia babiloniană (acum 4.000 de ani), iar radianii sunt definiți pur geometric.

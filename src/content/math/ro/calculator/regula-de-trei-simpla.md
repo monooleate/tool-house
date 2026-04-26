@@ -68,27 +68,23 @@ faqPageSchema:
       "name": "Ce este regula de trei simplă?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Este o metodă de a calcula al patrulea termen al unei proporții când 3 valori sunt cunoscute. Bazată pe relația A/B = C/x (proporție directă) sau A · B = C · x (proporție inversă)."
+        "text": "Este o metodă de a calcula al patrulea termen al unei proporții când 3 dintre ele sunt cunoscute. Bazată pe relația A/B = C/x."
     - "@type": "Question"
       "name": "Care este diferența între proporție directă și inversă?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Directă: ambele cresc/scad împreună (ex: kilometri și ore la viteză constantă). Inversă: una crește când cealaltă scade (ex: muncitori și ore – mai mulți muncitori, mai puține ore)."
+        "text": "Directă: ambele cresc sau scad împreună (ex: km × oră). Inversă: când una crește, cealaltă scade (ex: muncitori × ore)."
     - "@type": "Question"
-      "name": "Cât costă 7 mere dacă 3 mere costă 4,50 lei?"
+      "name": "Cum calculez prețul a 7 mere dacă 3 mere costă 4,50 lei?"
       "acceptedAnswer":
         "@type": "Answer"
         "text": "Proporție directă: 3/4,50 = 7/x → x = 7 × 4,50 / 3 = 10,50 lei."
     - "@type": "Question"
-      "name": "Câte ore îi trebuie la 5 muncitori dacă 3 muncitori termină în 8 ore?"
+      "name": "Cum calculez câte ore îi trebuie la 5 muncitori să facă o lucrare pe care 3 muncitori o fac în 8 ore?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Proporție inversă: 3 × 8 = 5 × x → x = 24 / 5 = 4,8 ore."
-    - "@type": "Question"
-      "name": "Cum recunosc tipul de proporție?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Întreabă: «Dacă o mărime se dublează, cealaltă se dublează (directă) sau se înjumătățește (inversă)?». Cantitate × preț — directă. Muncitori × timp pentru aceeași lucrare — inversă."
+        "text": "Proporție inversă: 3 × 8 = 5 × x → x = 24/5 = 4,8 ore."
+
 ---
 
 **Regula de trei simplă** este una dintre cele mai folosite tehnici de calcul în viața de zi cu zi. Apare la cumpărături, în bucătărie, la lucrări casnice și în problemele de Evaluare Națională sau Bacalaureat (matematică-aplicații).

@@ -199,4 +199,372 @@ export const CONVERSII_RO_CONTENT: ContentMap = {
       },
     },
   },
+
+  // ─── Fázis 4 (set complet de unități) ────────────────────────────────────
+  "picioare-cm": {
+    introText:
+      "Convertorul picioare + țoli ↔ centimetri transformă instantaneu măsuri din sistem imperial (5'10\") în sistem metric. Util pentru înălțime, profiluri sportive (NBA, fotbal american), aviație și haine importate.",
+    guide: [
+      "1. Introdu picioarele (ft) și țolii (in) — sau direct cm.",
+      "2. Toate cele 3 câmpuri se sincronizează în timp real.",
+      "3. Folosește presets pentru înălțimi uzuale (5'4\", 5'9\", 6'0\").",
+    ],
+    faq: [
+      { q: "Cât este 5'10\" în cm?", a: "5 picioare și 10 țoli = (5 × 12 + 10) × 2,54 = 70 × 2,54 = 177,8 cm." },
+      { q: "Cât este 6 picioare în cm?", a: "6 ft × 12 in × 2,54 = 182,88 cm. Aproximativ 1,83 m." },
+      { q: "Care este formula?", a: "cm = (picioare × 12 + țoli) × 2,54. Inversa: total țoli = cm / 2,54, picioare = floor(total/12), țoli = total − picioare × 12." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu picioarele și țolii", description: "Notația 5'10\" înseamnă 5 picioare + 10 țoli." },
+        { title: "2. Vezi rezultatul în cm", description: "Conversia apare automat în câmpul cm." },
+        { title: "3. Sau pornește de la cm", description: "Modifici cm → se calculează picioare + țoli." },
+      ],
+      useCases: [
+        { icon: "📏", title: "Înălțimi", description: "Profil sportiv, profil dating, fișe medicale internaționale." },
+        { icon: "🏀", title: "NBA / sport", description: "Jucători măsurați în 6'2\", 7'0\" — convertit în metri pentru audiență RO." },
+        { icon: "✈️", title: "Aviație", description: "Altitudini și înălțimi piloți măsurate în picioare." },
+      ],
+      aboutSection: {
+        title: "Despre sistemul imperial: picioare și țoli",
+        paragraphs: [
+          "Sistemul imperial de măsură (US customary) folosește picioare și țoli pentru înălțimi și lungimi mici. 1 picior = 12 țoli = 30,48 cm; 1 țol = 2,54 cm exact. Această definiție a fost standardizată internațional în 1959.",
+          "În țările anglofone (SUA, UK), înălțimea unei persoane se exprimă mereu în formatul picioare'țoli\" (apostrof + ghilimele). Exemplu: 5'10\" = cinci picioare și zece țoli = 177,8 cm. În aviație și marină, distanțele verticale (altitudini, adâncimi) se folosesc tot în picioare, indiferent de țară.",
+        ],
+      },
+    },
+  },
+  "inch-cm": {
+    introText:
+      "Convertor bidirecțional inch (țoli) ↔ centimetri. Optimizat pentru diagonale ecran (laptop, monitor, TV) și măsurători DIY.",
+    guide: [
+      "1. Introdu valoarea în inch sau cm.",
+      "2. Rezultatul apare instant în celălalt câmp.",
+      "3. Folosește presets pentru diagonale standard (13\", 24\", 55\").",
+    ],
+    faq: [
+      { q: "Cât este 1 inch în cm?", a: "1 inch = 2,54 cm exact (definit prin standard internațional din 1959)." },
+      { q: "Cât este 27 inch în cm?", a: "27 × 2,54 = 68,58 cm. Diagonala unui monitor 27\" tipic." },
+      { q: "Cum convertesc cm în inch?", a: "Împarte cm la 2,54. Exemplu: 50 cm ÷ 2,54 ≈ 19,69 inch." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu inch sau cm", description: "Oricare câmp acceptă valoarea." },
+        { title: "2. Vezi conversia instant", description: "Celălalt câmp se actualizează automat." },
+        { title: "3. Folosește presets", description: "Click pe diagonale uzuale pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "💻", title: "Diagonale ecran", description: "Laptop 13\"/15,6\", monitor 24\"/27\", TV 55\"/65\"." },
+        { icon: "📱", title: "Telefoane și tablete", description: "iPhone 6,1\", iPad 10\" — măsurat tot în inch." },
+        { icon: "🔧", title: "DIY și unelte", description: "Țevi, șuruburi, dimensiuni americane." },
+      ],
+      aboutSection: {
+        title: "Despre inch (țol)",
+        paragraphs: [
+          "Inch-ul (țolul în română) este unitatea imperială standard pentru lungimi mici. 1 inch = 2,54 cm — această valoare a fost adoptată internațional în 1959 prin acordul \"international yard and pound\". Înainte exista variația britanică ușor diferită (inch englezesc), dar diferența era sub 0,002 cm și nu mai are relevanță practică.",
+          "Inch-ul este folosit predominant pentru a exprima diagonale de ecrane (TV, monitor, laptop, telefon, tabletă), dimensiuni de pneuri, țevi (1\", 1/2\", 3/4\"), șuruburi imperiale (1/4\"-20) și DIY-ul american.",
+        ],
+      },
+    },
+  },
+  "kg-livre": {
+    introText:
+      "Convertor kg ↔ livre (pounds, lb) cu presets pentru greutate corporală uzuală. 1 kg = 2,205 lb (1 lb = 0,4536 kg).",
+    guide: [
+      "1. Introdu greutatea în kg sau lb.",
+      "2. Rezultatul apare automat în celălalt câmp.",
+      "3. Folosește presets pentru greutăți tipice (50–100 kg).",
+    ],
+    faq: [
+      { q: "Cât este 70 kg în livre?", a: "70 × 2,20462 ≈ 154,32 lb. Greutate corporală obișnuită pentru un bărbat adult." },
+      { q: "Cât este 1 livre în kg?", a: "1 lb = 0,45359 kg ≈ 0,454 kg. Reciproca: 1 kg ≈ 2,205 lb." },
+      { q: "Care e diferența între lb și lbs?", a: "lb este abrevierea oficială (libra), lbs este pluralul informal (pounds). Ambele înseamnă același lucru în practică." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu greutatea", description: "În câmpul kg sau în câmpul livre." },
+        { title: "2. Vezi conversia", description: "Apare instant în celălalt câmp." },
+        { title: "3. Sau alege un preset", description: "Click pe 70 kg, 80 kg etc. pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "🏋️", title: "Fitness și greutăți", description: "Echipamente sportive importate au valori în lb." },
+        { icon: "✈️", title: "Bagaj avioane SUA", description: "Limita de bagaj exprimată în pounds (de obicei 50 lb)." },
+        { icon: "📦", title: "Colete internaționale", description: "Tarifare poștă SUA per pound." },
+      ],
+      aboutSection: {
+        title: "Despre livre (pound)",
+        paragraphs: [
+          "Livra (pound, simbol lb) este unitatea de masă din sistemul imperial folosită în SUA și UK. 1 lb = 0,45359237 kg exact. Numele provine din latinescul \"libra pondo\" (\"o livre după greutate\"), de unde și abrevierea lb.",
+          "În viața de zi cu zi din SUA, livrele sunt folosite pentru greutate corporală (un bărbat adult medie 180 lb ≈ 82 kg), greutate alimente la cumpărături (1 lb steak), bagaj la avioane (limita 50 lb la cargo), și echipamente sportive (haltere de 45 lb, 25 lb).",
+        ],
+      },
+    },
+  },
+  "tone-kg": {
+    introText:
+      "Convertor tone metrice ↔ kg cu presets pentru vehicule de transport (camion, TIR, vagon CFR). 1 tonă = 1.000 kg = 1.000.000 g.",
+    guide: [
+      "1. Introdu valoarea în tone sau kg.",
+      "2. Rezultatul apare instant.",
+      "3. Folosește presets pentru clase de vehicule.",
+    ],
+    faq: [
+      { q: "Câte kg are 1 tonă?", a: "1 tonă metrică = 1.000 kg. Prefixul \"kilo-\" în fața tonei nu se folosește; pentru cantități mai mari se folosesc kilotone (1 kt = 1.000 t)." },
+      { q: "Câte tone are un camion?", a: "Depinde: camionetă ~1 t, camion mic 3,5 t (categorie B), camion 7,5 t (categorie C1), TIR 12–24 t." },
+      { q: "Care e diferența între tonă metrică și \"short ton\"?", a: "Tonă metrică = 1.000 kg (sistem SI). Short ton = 907,18 kg (SUA). Long ton = 1.016,05 kg (UK). În Europa se folosește mereu tona metrică." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu cantitatea", description: "În tone sau kg." },
+        { title: "2. Vezi conversia", description: "Apare instant în celălalt câmp." },
+        { title: "3. Folosește presets", description: "Click pe TIR (12 t), camion (7,5 t) etc." },
+      ],
+      useCases: [
+        { icon: "🚚", title: "Transport rutier", description: "Categorii vehicul după tonaj (B, C1, C, CE)." },
+        { icon: "🏗️", title: "Construcții", description: "Comenzi materiale, capacitate macara, betoniere." },
+        { icon: "🌾", title: "Agricultură", description: "Producții cereale, capacitate buncăr combine." },
+      ],
+      aboutSection: {
+        title: "Despre tona metrică",
+        paragraphs: [
+          "Tona metrică este unitatea de masă din Sistemul Internațional, egală cu 1.000 kg. Spre deosebire de unitățile imperiale (short ton = 907 kg, long ton = 1.016 kg), tona metrică este standard în întreaga lume cu excepția SUA.",
+          "În România, categoria de permis auto se diferențiază după tonaj: B până la 3.500 kg (3,5 t), C1 până la 7.500 kg (7,5 t), C peste 7.500 kg, CE pentru ansambluri (cap tractor + remorcă). Limita de tonaj la trecerea peste poduri se exprimă mereu în tone.",
+        ],
+      },
+    },
+  },
+  "hectare-metri-patrati": {
+    introText:
+      "Convertor hectare ↔ metri pătrați cu presets pentru parcele agricole RO. 1 hectar = 10.000 m² = 100 ari.",
+    guide: [
+      "1. Introdu suprafața în ha sau m².",
+      "2. Rezultatul apare automat.",
+      "3. Folosește presets pentru ferme tipice (5 ha, 10 ha, 50 ha).",
+    ],
+    faq: [
+      { q: "Câți metri pătrați are 1 hectar?", a: "1 ha = 10.000 m² (100 m × 100 m). Echivalent: 100 ari." },
+      { q: "Cât este 5 hectare în m²?", a: "5 × 10.000 = 50.000 m²." },
+      { q: "Care e diferența între hectar și pogon?", a: "Pogonul vechi românesc avea ~5.012 m² (jumătate de hectar). Astăzi termenul \"pogon\" e folosit informal ca sinonim pentru hectar (1 ha)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu suprafața", description: "În hectare sau m²." },
+        { title: "2. Vezi conversia", description: "Apare instant în celălalt câmp." },
+        { title: "3. Folosește presets", description: "Click pe categoriile de fermă pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "🌾", title: "Agricultură", description: "Suprafețe parcele, subvenții APIA per hectar." },
+        { icon: "🌳", title: "Silvicultură", description: "Suprafețe păduri, fond forestier." },
+        { icon: "🏞️", title: "Cadastru", description: "Înregistrare terenuri agricole în Cartea Funciară." },
+      ],
+      aboutSection: {
+        title: "Despre hectar",
+        paragraphs: [
+          "Hectarul (ha) este unitatea uzuală pentru suprafețe agricole, egală cu un pătrat de 100 m × 100 m, adică 10.000 m². Numele provine din \"hecto\" (100) + \"ar\" (unitatea de bază = 100 m²).",
+          "În România, hectarul este referința pentru suprafețele agricole în sistemul APIA (subvenții pe hectar), pentru proprietățile rurale și pentru raportările statistice (recoltă pe hectar). Pentru terenurile mai mici (loturi de casă, vii, livezi de vânzare), se folosește mai des arul (1 ar = 100 m²).",
+        ],
+      },
+    },
+  },
+  "ari-metri-patrati": {
+    introText:
+      "Convertor ari ↔ m² uzual la anunțuri imobiliare RO (lot 5 ari, casă + curte). 1 ar = 100 m². 1 hectar = 100 ari.",
+    guide: [
+      "1. Introdu valoarea în ari sau m².",
+      "2. Rezultatul apare instant.",
+      "3. Folosește presets pentru loturi imobiliare uzuale.",
+    ],
+    faq: [
+      { q: "Câți m² are 1 ar?", a: "1 ar = 100 m² (un pătrat de 10 m × 10 m)." },
+      { q: "Cât este 5 ari în m²?", a: "5 × 100 = 500 m². O suprafață uzuală pentru casă + curte în România." },
+      { q: "Câte ari are 1 hectar?", a: "1 ha = 100 ari = 10.000 m²." },
+      { q: "De ce se folosește arul în RO?", a: "În anunțurile imobiliare românești, terenurile mici (sub 1 ha) sunt exprimate uzual în ari pentru lizibilitate (mai ușor de scris \"5 ari\" decât \"500 m²\")." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu suprafața", description: "În ari sau m²." },
+        { title: "2. Vezi conversia", description: "Apare instant." },
+        { title: "3. Folosește presets", description: "Click pe loturile uzuale (3 ari, 5 ari, 10 ari)." },
+      ],
+      useCases: [
+        { icon: "🏠", title: "Imobiliar", description: "Anunțuri vânzare casă + teren, exprimate în ari." },
+        { icon: "🌳", title: "Vii și livezi", description: "Suprafețe sub 1 ha sunt măsurate de obicei în ari." },
+        { icon: "📋", title: "Cadastru", description: "Înregistrare loturi mici în Cartea Funciară." },
+      ],
+      aboutSection: {
+        title: "Despre ar",
+        paragraphs: [
+          "Arul (a) este o unitate de suprafață veche, definită ca un pătrat de 10 m × 10 m = 100 m². A fost introdus în Sistemul Metric în 1795. Astăzi este considerat o unitate \"derivată tolerată\" — recomandarea SI este să folosim m² sau ha, dar arul rămâne în uz pentru cantități între 100 m² și 10.000 m².",
+          "În RO, arul este standardul de facto pentru anunțurile imobiliare cu loturi sub 1 hectar. \"Casă cu 5 ari curte\" este o formulare uzuală, mai compactă decât echivalentul \"500 m²\". 100 ari = 1 hectar — relația e ușor de reținut.",
+        ],
+      },
+    },
+  },
+  "litri-decilitri": {
+    introText:
+      "Convertor litri ↔ decilitri cu presets pentru rețete RO (smântână 2 dl, lapte 5 dl, bere 5 dl). 1 litru = 10 decilitri.",
+    guide: [
+      "1. Introdu volumul în litri sau decilitri.",
+      "2. Rezultatul apare instant în celălalt câmp.",
+      "3. Folosește presets pentru cantități uzuale în bucătărie.",
+    ],
+    faq: [
+      { q: "Câți dl are 1 litru?", a: "1 litru = 10 decilitri = 100 cl = 1.000 ml." },
+      { q: "Cât este 5 dl în litri?", a: "5 dl = 0,5 l (jumătate de litru) — porția uzuală de bere sau bidonul de lapte mic." },
+      { q: "Cât este 1 dl în ml?", a: "1 dl = 100 ml. Adesea folosit ca unitate intermediară între ml și l." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu volumul", description: "În litri sau decilitri." },
+        { title: "2. Vezi rezultatul", description: "Apare instant în celălalt câmp." },
+        { title: "3. Folosește presets", description: "Click pe smântână 2 dl, lapte 5 dl etc." },
+      ],
+      useCases: [
+        { icon: "🍳", title: "Rețete", description: "Cărțile de bucate RO folosesc des dl (smântână, lapte, vin)." },
+        { icon: "🍺", title: "Băuturi", description: "Halba de bere standard = 5 dl." },
+        { icon: "🥛", title: "Produse lactate", description: "Bidon lapte mic = 5 dl, smântână = 2 dl." },
+      ],
+      aboutSection: {
+        title: "Despre decilitru",
+        paragraphs: [
+          "Decilitrul (dl) este o unitate de volum egală cu 1/10 dintr-un litru, adică 100 ml sau 100 cm³. Prefixul \"deci-\" înseamnă \"a zecea parte\". Deși decilitrul nu este unitate de bază în SI (recomandarea oficială este să folosim litri sau ml), rămâne foarte util pentru cantitățile între 100 ml și 1.000 ml.",
+          "În bucătăria românească tradițională, decilitrul este unitatea preferată pentru lichide într-o rețetă. Expresii uzuale: \"2 dl smântână\", \"5 dl lapte\", \"3 dl ulei\". În baruri și restaurante, vinul este servit în pahare de 1 dl (un \"deci\") sau 2 dl.",
+        ],
+      },
+    },
+  },
+  "litri-metri-cubi": {
+    introText:
+      "Convertor litri ↔ metri cubi cu presets pentru consum apă/gaz (factură lunară RO). 1 m³ = 1.000 litri.",
+    guide: [
+      "1. Introdu volumul în litri sau m³.",
+      "2. Rezultatul apare instant.",
+      "3. Folosește presets pentru consumuri tipice (apă/gaz lunar).",
+    ],
+    faq: [
+      { q: "Câți litri are 1 m³?", a: "1 m³ = 1.000 litri = 1.000 dm³. Un metru cub = un cub cu latura de 1 metru." },
+      { q: "Cât consumă o familie/lună?", a: "Apă: 4–8 m³/persoană/lună (consum mediu RO). Gaz: 30–80 m³/lună (variază mult cu sezonul)." },
+      { q: "Cum se citește contorul de apă?", a: "Contoarele de apă afișează metri cubi (m³) cu zecimale. 12,345 m³ = 12.345 litri consumați total." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu valoarea", description: "În litri sau m³." },
+        { title: "2. Vezi conversia", description: "Apare instant în celălalt câmp." },
+        { title: "3. Folosește presets", description: "Click pe consumuri tipice apartament/casă." },
+      ],
+      useCases: [
+        { icon: "💧", title: "Facturi apă", description: "Tarif RO 5–8 lei/m³ (apă rece + canalizare)." },
+        { icon: "🔥", title: "Facturi gaz", description: "Consum afișat în m³ pe contor și factură." },
+        { icon: "🏊", title: "Bazine și piscine", description: "Volum tipic piscină familială: 30–50 m³ = 30.000–50.000 l." },
+      ],
+      aboutSection: {
+        title: "Despre metrul cub",
+        paragraphs: [
+          "Metrul cub (m³) este unitatea SI pentru volum, egală cu un cub de 1 m × 1 m × 1 m. Echivalentul în litri este exact 1.000, pentru că 1 dm³ = 1 litru și 1 m³ = 1.000 dm³.",
+          "În România, metrul cub este unitatea oficială pentru contoarele de apă (tarif lei/m³) și gaz (subvenții, comparare distribuitori). Cunoscând consumul în m³ și prețul unitar, factura totală se calculează direct. Pentru comparații, 1 m³ apă = aproximativ 13 căzi pline (la 75 l fiecare).",
+        ],
+      },
+    },
+  },
+  "galon-litri": {
+    introText:
+      "Convertor galon US (3,785 l) sau UK (4,546 l) ↔ litri. Util la consum auto, prețuri carburant import, rețete americane.",
+    guide: [
+      "1. Selectează tipul (US sau UK gal).",
+      "2. Introdu valoarea în galoane sau litri.",
+      "3. Rezultatul apare automat.",
+    ],
+    faq: [
+      { q: "Care e diferența între US și UK gallon?", a: "1 US gal = 3,785 l (sistem american). 1 UK gal (\"imperial gallon\") = 4,546 l. Diferența ~20%, contează pentru consum auto importat." },
+      { q: "Cât este 1 galon în litri?", a: "1 US gal = 3,78541 l. 1 UK gal = 4,54609 l. În SUA toate prețurile carburant sunt per US gal." },
+      { q: "Cum convertesc consum mpg în l/100 km?", a: "L/100 km = 235,21 / mpg (US). Exemplu: 30 mpg = 235,21/30 ≈ 7,84 l/100 km." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege US sau UK", description: "Toggle deasupra inputului." },
+        { title: "2. Introdu valoarea", description: "În galoane sau litri." },
+        { title: "3. Vezi conversia", description: "Recalculează automat la schimbare." },
+      ],
+      useCases: [
+        { icon: "🚗", title: "Auto importat SUA", description: "Specificații rezervor și consum în US gal." },
+        { icon: "🛢️", title: "Prețuri carburant", description: "Compară $/gal cu lei/l (consideră curs valutar)." },
+        { icon: "🍳", title: "Rețete americane", description: "Conversii la rețete cu măsurători US (ex. 1 gal lapte)." },
+      ],
+      aboutSection: {
+        title: "Despre galon",
+        paragraphs: [
+          "Galonul este o unitate imperială de volum cu două definiții diferite: galonul US (3,78541 l) și galonul imperial UK (4,54609 l). Diferența de ~20% are origini istorice — galonul US derivă din \"queen Anne wine gallon\" (1707), iar cel imperial din \"imperial gallon\" definit în UK în 1824.",
+          "În SUA, toate prețurile carburant la pompă sunt per US gallon. Pentru a compara $/gal american cu prețul RO în lei/l: împarte prețul în $/gal la 3,785 ca să obții $/l, apoi convertește cu cursul leu/dolar. În UK, deși sistemul oficial este metric, oamenii încă folosesc imperial gallon în conversații despre consum auto (\"40 miles per gallon\").",
+        ],
+      },
+    },
+  },
+  "beton-greutate-volum": {
+    introText:
+      "Convertor beton greutate ↔ volum (densitate medie ρ = 2.400 kg/m³). Mod Greutate→Volum sau Volum→Greutate, presets pentru construcții (sac 25 kg, m³, camion).",
+    guide: [
+      "1. Alege modul (greutate→volum sau invers).",
+      "2. Introdu valoarea în câmpul corespunzător.",
+      "3. Folosește presets pentru cantități uzuale construcții.",
+    ],
+    faq: [
+      { q: "Câte kg are 1 m³ de beton?", a: "Aproximativ 2.400 kg pentru beton uzual (ciment + nisip + pietriș + apă). Beton armat ~2.500 kg/m³." },
+      { q: "Câți m³ sunt 1.000 kg de beton?", a: "1.000 / 2.400 ≈ 0,417 m³ ≈ 417 litri." },
+      { q: "Variază densitatea betonului?", a: "Da: 2.200–2.500 kg/m³ în funcție de compoziție. Beton ușor (cu agregate ușoare) sub 2.000 kg/m³, beton armat ~2.500 kg/m³." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul", description: "Tab Greutate→Volum sau Volum→Greutate." },
+        { title: "2. Introdu valoarea", description: "În kg sau m³." },
+        { title: "3. Folosește presets", description: "Click pe sac 25 kg, 1 m³ etc." },
+      ],
+      useCases: [
+        { icon: "🧱", title: "Construcții", description: "Comenzi beton la șantier (m³ → kg pentru transport)." },
+        { icon: "🏗️", title: "Fundații și plăci", description: "Calcul volum betonare, planificare livrare." },
+        { icon: "🔧", title: "DIY", description: "Sac mic ciment 25 kg ≈ 0,01 m³ beton finit." },
+      ],
+      aboutSection: {
+        title: "Despre densitatea betonului",
+        paragraphs: [
+          "Betonul obișnuit are o densitate medie de 2.400 kg/m³, format din ciment (10–15%), nisip (25–30%), pietriș (40–45%) și apă (15–20%). Variațiile densității sunt determinate de tipul de agregat folosit și de prezența armăturii metalice.",
+          "Tipuri principale: beton uzual (2.400 kg/m³), beton armat (2.500 kg/m³ — datorită oțelului care are 7.850 kg/m³), beton ușor cu agregate poroase (1.600–2.000 kg/m³, folosit la pereți non-portanți pentru a reduce greutatea), beton greu cu baritină sau magnetit (3.500–5.000 kg/m³, folosit la ecranare radiologică).",
+        ],
+      },
+    },
+  },
+  "densitate-kg-m3-g-cm3": {
+    introText:
+      "Convertor densitate între kg/m³ și g/cm³ cu tabel materiale uzuale (apă, oțel, aluminiu, beton, lemn, aur). 1 g/cm³ = 1.000 kg/m³.",
+    guide: [
+      "1. Introdu densitatea în kg/m³ sau g/cm³.",
+      "2. Rezultatul apare instant.",
+      "3. Click pe materialele uzuale pentru încărcare automată.",
+    ],
+    faq: [
+      { q: "Care e relația kg/m³ ↔ g/cm³?", a: "1 g/cm³ = 1.000 kg/m³. Înmulțește cu 1.000 pentru a converti g/cm³ în kg/m³, împarte la 1.000 pentru direcția opusă." },
+      { q: "Care e densitatea apei?", a: "Apa pură la 4 °C are densitatea de exact 1.000 kg/m³ = 1 g/cm³ (definiție istorică a kilogramului)." },
+      { q: "Care e densitatea oțelului?", a: "Oțel: ~7.850 kg/m³ = 7,85 g/cm³ (variază 7.700–8.030 după aliaj)." },
+      { q: "Care material e mai dens, aurul sau plumbul?", a: "Aurul (19.300 kg/m³) e aproape de două ori mai dens decât plumbul (11.340 kg/m³). De aici vine expresia \"greu ca aurul\"." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu densitatea", description: "În kg/m³ sau g/cm³." },
+        { title: "2. Vezi conversia", description: "Apare instant în celălalt câmp." },
+        { title: "3. Folosește tabelul", description: "Click pe materialul dorit pentru încărcare automată." },
+      ],
+      useCases: [
+        { icon: "🏗️", title: "Construcții", description: "Calcul greutate structuri din volum (oțel, beton, aluminiu)." },
+        { icon: "🔬", title: "Laborator chimie", description: "Identificare substanțe după densitate." },
+        { icon: "✈️", title: "Inginerie", description: "Selecție materiale după raport rezistență/densitate." },
+      ],
+      aboutSection: {
+        title: "Despre densitate",
+        paragraphs: [
+          "Densitatea (notată ρ, \"rho\") este masa per unitatea de volum: ρ = m/V. Unitatea SI este kg/m³, dar g/cm³ este uzual pentru materiale solide pentru că dă valori mai \"prietenoase\" (1–20 în loc de 1.000–20.000).",
+          "Conversia este simplă: 1 g/cm³ = 1.000 kg/m³. De ce? Pentru că 1 g = 0,001 kg și 1 cm³ = 0,000001 m³. Raportul gramelor și al cm³ ne dă 0,001 / 0,000001 = 1.000.",
+          "Câteva valori de reținut: aer (1,2 kg/m³), lemn de pin (500 kg/m³), apă (1.000 kg/m³), beton (2.400 kg/m³), aluminiu (2.700 kg/m³), oțel (7.850 kg/m³), aur (19.300 kg/m³). Materialele cu densitate sub 1 g/cm³ plutesc pe apă (lemn, ulei), cele peste 1 g/cm³ se scufundă (metale, sticlă).",
+        ],
+      },
+    },
+  },
 };

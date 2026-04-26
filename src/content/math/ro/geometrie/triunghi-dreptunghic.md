@@ -53,30 +53,26 @@ faqPageSchema:
         "@type": "Answer"
         "text": "Pentru un triunghi dreptunghic cu catetele a și b și ipotenuza c, avem c² = a² + b². Folosită pentru a calcula orice latură când celelalte două sunt cunoscute."
     - "@type": "Question"
-      "name": "Cum verific dacă 3, 4 și 5 formează un triunghi pitagoreic?"
+      "name": "Cum verific dacă 3 numere formează un triunghi pitagoreic?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Verifici 3² + 4² = 9 + 16 = 25 = 5². Da, formează triunghi dreptunghic. Tripletul 3-4-5 e cel mai folosit în construcții pentru verificarea unghiurilor drepte."
+        "text": "Verifici dacă suma pătratelor celor mai mici două este egală cu pătratul celui mai mare. Exemplu: 3² + 4² = 9 + 16 = 25 = 5². Da, e pitagoreic."
     - "@type": "Question"
       "name": "Care este formula ariei triunghiului dreptunghic?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "T = (a · b) / 2, unde a și b sunt catetele. Catetele formează unghiul drept și joacă rolul de bază și înălțime una pentru cealaltă."
+        "text": "T = (a · b) / 2, unde a și b sunt catetele (laturile care formează unghiul drept). Diferă de triunghiul oarecare unde T = (bază × înălțime) / 2."
     - "@type": "Question"
       "name": "Ce înseamnă triunghi 30°-60°-90°?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Are unghiurile 30°, 60° și 90°. Laturile sunt în raportul 1 : √3 : 2 — adică dacă cea mai scurtă (opusă lui 30°) e 1, cealaltă cateta e √3 ≈ 1,732 și ipotenuza e 2."
+        "text": "Are unghiurile 30°, 60° și 90°. Laturile sunt în raportul 1 : √3 : 2 — dacă cateta scurtă (opusă lui 30°) e 1, cealaltă e √3 ≈ 1,732 și ipotenuza e 2. Apare frecvent la bacalaureat."
     - "@type": "Question"
       "name": "Cum calculez înălțimea pe ipotenuză?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Formula este h_c = (a · b) / c. Înălțimea pleacă din vârful unghiului drept perpendicular pe ipotenuză și o împarte în două segmente cu proprietăți speciale (teorema înălțimii)."
-    - "@type": "Question"
-      "name": "Care sunt funcțiile trigonometrice ale unui unghi α din triunghiul dreptunghic?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "sin α = cateta opusă / ipotenuză, cos α = cateta alăturată / ipotenuză, tan α = cateta opusă / cateta alăturată, cot α = 1 / tan α."
+        "text": "Formula este h_c = (a · b) / c, unde a și b sunt catetele și c e ipotenuza. Această înălțime cade din vârful unghiului drept perpendicular pe ipotenuză."
+
 ---
 
 Triunghiul dreptunghic este patrulaterul cu un unghi de exact **90°**. Apare frecvent la **bacalaureat** (M1, M2), la **evaluarea națională** și în probleme aplicative din construcții, fizică și inginerie. Latura opusă unghiului drept se numește **ipotenuză** (notată cu c) și este întotdeauna cea mai lungă; celelalte două sunt **catetele** (a și b).

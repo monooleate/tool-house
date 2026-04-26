@@ -56,27 +56,23 @@ faqPageSchema:
       "name": "Care este formula perimetrului dreptunghiului?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "P = 2(a + b) sau echivalent P = 2a + 2b. Suma celor 4 laturi (laturile opuse fiind egale)."
+        "text": "P = 2(a + b) sau echivalent P = 2a + 2b. Suma celor 4 laturi."
     - "@type": "Question"
       "name": "Cum calculez diagonala dreptunghiului?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Cu teorema lui Pitagora: d = √(a² + b²). Diagonala formează cu laturile două triunghiuri dreptunghice congruente."
+        "text": "Cu teorema lui Pitagora: d = √(a² + b²). Diagonala face cu laturile triunghiuri dreptunghice congruente."
     - "@type": "Question"
       "name": "Ce este secțiunea de aur (φ)?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Numărul φ = (1 + √5) / 2 ≈ 1,618. Un dreptunghi cu raportul a/b = φ se numește «dreptunghi de aur» și e considerat estetic plăcut — apare la Parthenon, Mona Lisa și multe logo-uri."
+        "text": "Numărul φ = (1 + √5) / 2 ≈ 1,618. Un dreptunghi cu raportul a/b = φ se numește «dreptunghi de aur» și e considerat estetic plăcut — apare la Parthenon, Mona Lisa, multe logo-uri."
     - "@type": "Question"
       "name": "De ce A4 are dimensiunile 21 × 29,7 cm?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Standardul ISO 216 folosește raportul √2 ≈ 1,414. La împărțirea în două a unei coli A4, obții două A5 cu același raport — eficient pentru tipar și design."
-    - "@type": "Question"
-      "name": "Ce relație există între diagonale într-un dreptunghi?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Diagonalele unui dreptunghi sunt egale ca lungime și se înjumătățesc reciproc. Aceasta este o proprietate caracteristică — la pătrat se adaugă perpendicularitatea diagonalelor."
+        "text": "Standardul ISO 216 folosește raportul √2 ≈ 1,414. Astfel, când împarți o foaie A4 în două, obții A5 cu același raport. Foarte eficient pentru tipar și design."
+
 ---
 
 Dreptunghiul este patrulaterul cu **toate cele 4 unghiuri drepte** (90°). Laturile opuse sunt egale și paralele, iar diagonalele sunt egale și se înjumătățesc reciproc. Cazul particular când toate laturile sunt egale dă **pătratul** — cea mai simetrică formă patrulaterală.

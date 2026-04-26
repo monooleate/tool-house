@@ -68,27 +68,23 @@ faqPageSchema:
       "name": "Cum calculez 20% dintr-un număr?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Înmulțești numărul cu 0,20. Exemplu: 20% din 250 = 250 × 0,20 = 50."
+        "text": "Înmulțești numărul cu 0,20 (sau cu 20 și împarți la 100). Exemplu: 20% din 250 = 250 × 0,20 = 50."
     - "@type": "Question"
       "name": "Ce reprezintă o creștere de 25%?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Înmulțești valoarea inițială cu 1,25. Exemplu: 80 × 1,25 = 100. Creșterea de 25% înseamnă că valoarea finală este de 125% din cea inițială."
+        "text": "Înmulțești valoarea inițială cu 1,25. Exemplu: 80 → 80 × 1,25 = 100."
     - "@type": "Question"
-      "name": "De ce o creștere de 50% urmată de o scădere de 50% nu mă întoarce la valoarea inițială?"
+      "name": "Cum aflu ce procent este X din Y?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Procentul se aplică la valoarea curentă, nu la cea inițială. 100 → +50% → 150 → −50% → 75. Pierzi 25% din valoarea inițială pentru că scăderea de 50% se aplică la 150, nu la 100."
+        "text": "Împarți X la Y și înmulțești cu 100. Exemplu: 30 din 200 = 30/200 × 100 = 15%."
     - "@type": "Question"
-      "name": "Cum aflu ce procent este 30 din 200?"
+      "name": "Care este diferența între «creștere %» și «diferență %»?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Împarți partea la întreg și înmulțești cu 100: 30 / 200 × 100 = 15%."
-    - "@type": "Question"
-      "name": "Care este diferența între creștere procentuală și diferență procentuală?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Creșterea folosește valoarea veche ca bază (asimetrică). Diferența procentuală simetrică folosește media celor două valori, fiind utilă în comparații științifice unde nu există o «valoare de referință»."
+        "text": "Creșterea folosește valoarea veche ca bază (asimetrică). Diferența procentuală folosește media celor două valori (simetrică, utilă în comparații științifice)."
+
 ---
 
 Procentele sunt fracții cu numitorul **100**, marcate cu simbolul `%`. Cele 4 cazuri pe care le acoperă calculatorul nostru sunt cele care apar în peste 95% din situațiile reale: la cumpărături, la salariu, la note și la analize statistice.

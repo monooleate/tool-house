@@ -51,32 +51,28 @@ faqPageSchema:
       "name": "Care sunt valorile sin pentru unghiurile uzuale?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "sin 0° = 0, sin 30° = 1/2, sin 45° = √2/2 ≈ 0,707, sin 60° = √3/2 ≈ 0,866, sin 90° = 1, sin 180° = 0, sin 270° = −1, sin 360° = 0."
+        "text": "sin(0°)=0, sin(30°)=1/2, sin(45°)=√2/2 ≈ 0,707, sin(60°)=√3/2 ≈ 0,866, sin(90°)=1, sin(180°)=0, sin(270°)=−1."
     - "@type": "Question"
       "name": "De ce tan(90°) este nedefinit?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "tan α = sin α / cos α. La 90° avem cos(90°) = 0, deci ar trebui să împărțim la zero — nedefinit. Funcția tan are o asimptotă verticală la 90° + k·180°."
-    - "@type": "Question"
-      "name": "Care e formula fundamentală a trigonometriei?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "sin² α + cos² α = 1, valabilă pentru orice unghi α. Provine direct din Pitagora aplicat în cercul de rază 1."
-    - "@type": "Question"
-      "name": "Ce este cercul trigonometric?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Este cercul de rază 1 centrat în origine. Pentru un unghi α măsurat de la axa Ox (sens trigonometric), punctul de pe cerc are coordonatele (cos α, sin α)."
+        "text": "tan α = sin α / cos α. La 90° avem cos(90°)=0, deci împărțim la zero — nedefinit. Geometric, dreapta tangentă devine paralelă cu axa Ox."
     - "@type": "Question"
       "name": "Cum convertesc grade în radiani?"
       "acceptedAnswer":
         "@type": "Answer"
         "text": "Înmulțești cu π/180. Exemplu: 60° × π/180 = π/3 rad ≈ 1,047 rad. Invers: rad × 180/π pentru grade."
     - "@type": "Question"
-      "name": "Care sunt formulele duplului unghi?"
+      "name": "Ce este cercul trigonometric?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "sin(2α) = 2 sin α cos α; cos(2α) = cos²α − sin²α = 2cos²α − 1 = 1 − 2sin²α; tan(2α) = 2 tan α / (1 − tan²α)."
+        "text": "Cercul de rază 1 centrat în origine. Pentru un unghi α măsurat de la axa Ox, punctul de pe cerc are coordonatele (cos α, sin α). Vizual ajută la înțelegerea valorilor și semnelor."
+    - "@type": "Question"
+      "name": "Care e formula fundamentală a trigonometriei?"
+      "acceptedAnswer":
+        "@type": "Answer"
+        "text": "sin²α + cos²α = 1, valabilă pentru orice α. Provine direct din teorema lui Pitagora aplicată în cercul unitate."
+
 ---
 
 Funcțiile trigonometrice — **sinus** (sin), **cosinus** (cos), **tangentă** (tan) și **cotangentă** (cot) — sunt instrumentele de bază ale trigonometriei. Inițial definite ca rapoarte între laturile unui triunghi dreptunghic, ele au fost extinse la orice unghi prin **cercul trigonometric**.

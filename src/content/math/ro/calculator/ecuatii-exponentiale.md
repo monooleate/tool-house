@@ -65,30 +65,26 @@ faqPageSchema:
   "@type": "FAQPage"
   "mainEntity":
     - "@type": "Question"
-      "name": "Cum rezolv 2 · 3ˣ = 54?"
+      "name": "Cum se rezolvă 2 · 3ˣ = 54?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Împart cu 2: 3ˣ = 27. Logaritmez: x · log(3) = log(27). x = log(27)/log(3) = 3."
+        "text": "Împărțim cu 2: 3ˣ = 27. Logaritmăm: x · log(3) = log(27). x = log(27)/log(3) = 3."
     - "@type": "Question"
-      "name": "Ce condiții trebuie să respecte coeficienții?"
+      "name": "Ce restricții există asupra coeficienților?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Baza b trebuie să fie pozitivă și diferită de 1 (b > 0, b ≠ 1). Coeficientul a trebuie să fie diferit de 0. Raportul c/a trebuie să fie strict pozitiv pentru a avea soluție reală."
+        "text": "Baza b trebuie să fie pozitivă și diferită de 1 (b > 0, b ≠ 1). Coeficientul a nu poate fi zero. Raportul c/a trebuie să fie pozitiv pentru rădăcină reală."
     - "@type": "Question"
-      "name": "De ce nu se acceptă baza b = 1?"
+      "name": "De ce nu se poate baza 1?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Pentru b = 1 expresia 1ˣ este mereu 1 indiferent de x. Ecuația devine a = c, fără să mai fie funcție de x. Nu există metoda standard de logaritmare (log(1) = 0)."
+        "text": "Pentru b = 1, expresia 1ˣ este mereu 1 indiferent de x, deci ecuația fie are infinit de soluții, fie niciuna."
     - "@type": "Question"
       "name": "Pot rezolva eˣ = 7,389?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Da. e ≈ 2,718 (numărul lui Euler). Folosește bază 2,718, coeficient 1, rezultat 7,389. x = ln(7,389) ≈ 2."
-    - "@type": "Question"
-      "name": "Care e diferența între log natural (ln) și log10?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "ln are baza e ≈ 2,718, log10 are baza 10. Pentru rezolvare poți folosi orice bază — important e să o folosești consecvent în ambele părți. Rezultatul final pentru x este același."
+        "text": "Da. Folosește bază b ≈ 2,718 (numărul lui Euler). Rezultat: x = ln(7,389) ≈ 2."
+
 ---
 
 Ecuațiile exponențiale au necunoscuta în **exponent**. Forma standard este:

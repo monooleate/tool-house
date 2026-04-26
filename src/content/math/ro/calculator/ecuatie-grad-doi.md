@@ -65,30 +65,26 @@ faqPageSchema:
   "@type": "FAQPage"
   "mainEntity":
     - "@type": "Question"
-      "name": "Care este formula generală pentru rădăcinile ecuației de gradul II?"
+      "name": "Care este formula pentru rădăcinile ecuației de gradul II?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "x = (−b ± √Δ) / (2a), unde Δ = b² − 4ac este discriminantul. Δ > 0 → două rădăcini reale distincte; Δ = 0 → rădăcină dublă; Δ < 0 → două rădăcini complex conjugate."
+        "text": "x = (−b ± √Δ) / (2a), unde Δ = b² − 4ac este discriminantul."
+    - "@type": "Question"
+      "name": "Ce înseamnă discriminant negativ?"
+      "acceptedAnswer":
+        "@type": "Answer"
+        "text": "Δ < 0 înseamnă că ecuația nu are rădăcini reale, ci două rădăcini complex conjugate de forma α ± βi."
     - "@type": "Question"
       "name": "Cum se rezolvă x² − 5x + 6 = 0?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "a=1, b=−5, c=6. Δ = 25 − 24 = 1. x₁ = (5+1)/2 = 3, x₂ = (5−1)/2 = 2. Verificare: (x − 2)(x − 3) = x² − 5x + 6. ✓"
+        "text": "a=1, b=−5, c=6. Δ = 25 − 24 = 1. x₁ = (5+1)/2 = 3, x₂ = (5−1)/2 = 2."
     - "@type": "Question"
-      "name": "Ce se întâmplă dacă discriminantul este negativ?"
+      "name": "Ce înseamnă rădăcină dublă?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Δ < 0 înseamnă că ecuația nu are rădăcini reale. Rădăcinile sunt două numere complex conjugate de forma α ± βi, unde α = −b/(2a) și β = √(−Δ)/(2a). Geometric, parabola nu intersectează axa Ox."
-    - "@type": "Question"
-      "name": "Pot să folosesc relațiile lui Viète?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Da. Pentru ax² + bx + c = 0: x₁ + x₂ = −b/a și x₁ · x₂ = c/a. Sunt utile la verificare rapidă sau la găsirea rădăcinilor prin descompunere."
-    - "@type": "Question"
-      "name": "Cum recunosc o ecuație incompletă?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "Dacă b = 0: ax² + c = 0 → x = ±√(−c/a). Dacă c = 0: ax² + bx = 0 → x · (ax + b) = 0 → x₁ = 0, x₂ = −b/a. Aceste cazuri se rezolvă mai simplu fără formula generală."
+        "text": "Când Δ = 0, ecuația are o singură soluție repetată: x = −b/(2a). Geometric, parabola atinge axa Ox într-un singur punct (vârful)."
+
 ---
 
 Ecuația de gradul al doilea este forma `ax² + bx + c = 0`, cu `a ≠ 0`. Este una dintre cele mai studiate ecuații în matematică și apare frecvent la **Bacalaureat** (M1, M2), la **Evaluarea Națională** și în problemele aplicative din fizică (cinematică, traiectorii) și inginerie.

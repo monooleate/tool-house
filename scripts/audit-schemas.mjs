@@ -6,7 +6,15 @@ const PAGE_GROUPS = [
   {
     category: "conversii",
     dist: "dist/conversii",
-    pages: ["cm-metri", "km-metri", "cm-inch", "kg-grame", "litri-mililitri", "celsius-fahrenheit"],
+    pages: [
+      // Fázis 1
+      "cm-metri", "km-metri", "cm-inch", "kg-grame", "litri-mililitri", "celsius-fahrenheit",
+      // Fázis 4 (set complet)
+      "picioare-cm", "inch-cm", "kg-livre", "tone-kg",
+      "hectare-metri-patrati", "ari-metri-patrati",
+      "litri-decilitri", "litri-metri-cubi", "galon-litri",
+      "beton-greutate-volum", "densitate-kg-m3-g-cm3",
+    ],
   },
   {
     category: "calculator",

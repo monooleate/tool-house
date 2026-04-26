@@ -134,6 +134,18 @@
     RadianiGradeCalculator:      () => import("../tools/geometrie/RadianiGradeCalculator.svelte"),
     CercCalculator:              () => import("../tools/geometrie/CercCalculator.svelte"),
     DreptunghiCalculator:        () => import("../tools/geometrie/DreptunghiCalculator.svelte"),
+    // CONVERSII (RO-only) – Fázis 4 (set complet de unități)
+    FootCmCalculator:            () => import("../tools/conversii/FootCmCalculator.svelte"),
+    InchCmCalculator:            () => import("../tools/conversii/InchCmCalculator.svelte"),
+    KgLivreCalculator:           () => import("../tools/conversii/KgLivreCalculator.svelte"),
+    ToneKgCalculator:            () => import("../tools/conversii/ToneKgCalculator.svelte"),
+    HectareCalculator:           () => import("../tools/conversii/HectareCalculator.svelte"),
+    AriCalculator:               () => import("../tools/conversii/AriCalculator.svelte"),
+    LitriDlCalculator:           () => import("../tools/conversii/LitriDlCalculator.svelte"),
+    LitriM3Calculator:           () => import("../tools/conversii/LitriM3Calculator.svelte"),
+    GalonLitriCalculator:        () => import("../tools/conversii/GalonLitriCalculator.svelte"),
+    BetonCalculator:             () => import("../tools/conversii/BetonCalculator.svelte"),
+    DensitateCalculator:         () => import("../tools/conversii/DensitateCalculator.svelte"),
   };
 
   onMount(async () => {

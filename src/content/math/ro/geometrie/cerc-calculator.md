@@ -56,27 +56,23 @@ faqPageSchema:
       "name": "Care este formula pentru perimetrul cercului?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "P = 2π · r = π · d, unde r este raza și d diametrul. Numit și circumferință sau lungimea cercului."
+        "text": "P = 2π · r = π · d, unde r este raza și d diametrul. Numit și circumferință sau lungime a cercului."
     - "@type": "Question"
       "name": "Cât este π?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "π (pi) ≈ 3,14159265... este numărul irațional egal cu raportul dintre circumferință și diametru, identic pentru toate cercurile."
+        "text": "π (pi) ≈ 3,14159265... este numărul irațional egal cu raportul dintre circumferință și diametru, indiferent de mărimea cercului."
     - "@type": "Question"
       "name": "Cum calculez aria unui sector circular?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "A_sector = (α / 360°) × π · r², unde α este unghiul central în grade. Echivalent (cu α în radiani): A_sector = (1/2) · r² · α."
+        "text": "A_sector = (α / 360°) × π · r², unde α este unghiul central în grade. Sau echivalent: A_sector = (1/2) · r² · α (cu α în radiani)."
     - "@type": "Question"
       "name": "Care e diferența între sector și segment?"
       "acceptedAnswer":
         "@type": "Answer"
         "text": "Sectorul = «felie de tort» (între 2 raze și un arc). Segmentul = «coajă» (între un arc și o coardă). Aria segmentului = aria sector − aria triunghi format din cele 2 raze."
-    - "@type": "Question"
-      "name": "Cum calculez lungimea unui arc de cerc?"
-      "acceptedAnswer":
-        "@type": "Answer"
-        "text": "ℓ = (α / 360°) × 2π · r (cu α în grade) sau ℓ = r · α (cu α în radiani). De aici și definiția radianului — unghiul care produce un arc egal cu raza."
+
 ---
 
 Cercul este probabil cea mai studiată figură geometrică din matematică. Definit ca **locul geometric al punctelor egal depărtate de un punct fix** (centrul), are o singură măsură primară (raza) din care derivă toate celelalte: diametru, perimetru, arie.
