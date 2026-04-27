@@ -5,7 +5,8 @@
 
 import type { Tool, Category, ToolContent } from "./tool-registry.ts";
 import { t, tpl, CURRENT_CONFIG } from "../i18n/index.ts";
-import { toolUrl, categoryUrl } from "./url-utils.ts";
+import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "./url-utils.ts";
+import type { ConversionSubcat } from "./content/ro/conversii-hubs.ts";
 
 export const SITE_URL = CURRENT_CONFIG.siteUrl;
 export const SITE_NAME = CURRENT_CONFIG.siteName;
@@ -334,12 +335,20 @@ export function organizationSchema(): string {
 }
 
 // ─── Tool breadcrumb items helper ────────────────────────────
-export function toolBreadcrumbs(tool: Tool, categoryLabel: string): BreadcrumbItem[] {
-  return [
+export function toolBreadcrumbs(
+  tool: Tool,
+  categoryLabel: string,
+  subcat?: ConversionSubcat
+): BreadcrumbItem[] {
+  const items: BreadcrumbItem[] = [
     { name: t("nav.home"), href: "/" },
     { name: categoryLabel, href: categoryUrl(tool.category) },
-    { name: tool.h1, href: toolUrl(tool) },
   ];
+  if (subcat) {
+    items.push({ name: subcat.label, href: subcatUrl(subcat.slug) });
+  }
+  items.push({ name: tool.h1, href: toolUrl(tool) });
+  return items;
 }
 
 // ─── Category breadcrumb items helper ────────────────────────
@@ -348,6 +357,85 @@ export function categoryBreadcrumbs(cat: Category): BreadcrumbItem[] {
     { name: t("nav.home"), href: "/" },
     { name: cat.label, href: categoryUrl(cat.id) },
   ];
+}
+
+// ─── Conversii sub-hub breadcrumb items helper ───────────────
+export function subcatBreadcrumbs(
+  subcat: ConversionSubcat,
+  categoryLabel: string
+): BreadcrumbItem[] {
+  return [
+    { name: t("nav.home"), href: "/" },
+    { name: categoryLabel, href: categoryUrl("conversii") },
+    { name: subcat.label, href: subcatUrl(subcat.slug) },
+  ];
+}
+
+// ─── Instant-answer breadcrumb items helper ──────────────────
+export function instantBreadcrumbs(
+  subcat: ConversionSubcat,
+  categoryLabel: string,
+  pageTitle: string,
+  instantSlug: string
+): BreadcrumbItem[] {
+  return [
+    { name: t("nav.home"), href: "/" },
+    { name: categoryLabel, href: categoryUrl("conversii") },
+    { name: subcat.label, href: subcatUrl(subcat.slug) },
+    { name: pageTitle, href: instantAnswerUrl(subcat.slug, instantSlug) },
+  ];
+}
+
+// ─── Sub-hub CollectionPage + ItemList Schema ────────────────
+export function subcatCollectionSchema(
+  subcat: ConversionSubcat,
+  tools: Tool[],
+  instantPages: { slug: string; title: string }[]
+): string {
+  const url = buildCanonical(subcatUrl(subcat.slug));
+  const items: any[] = [];
+  let pos = 1;
+
+  for (const tool of tools) {
+    items.push({
+      "@type": "ListItem",
+      position: pos++,
+      name: tool.h1,
+      url: buildCanonical(toolUrl(tool)),
+      description: tool.description,
+    });
+  }
+
+  for (const ip of instantPages) {
+    items.push({
+      "@type": "ListItem",
+      position: pos++,
+      name: ip.title,
+      url: buildCanonical(instantAnswerUrl(subcat.slug, ip.slug)),
+    });
+  }
+
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: tpl("subcat.title", { label: subcat.label }) || `Conversii ${subcat.label}`,
+    description: subcat.description,
+    url,
+    inLanguage: CURRENT_CONFIG.lang,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+    },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: items.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: items,
+    },
+  });
 }
 
 // ─── OpenGraph helpers ────────────────────────────────────────

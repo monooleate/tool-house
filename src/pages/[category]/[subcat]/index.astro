@@ -1,0 +1,60 @@
+---
+// ============================================================
+// [category]/[subcat]/index.astro
+// Conversii sub-hub landing oldal — generálódik a 6 sub-hub-ra
+// (lungime, masa, volum, suprafata, temperatura, densitate).
+// URL: /conversii/{subcat}/
+// ============================================================
+import ConversionHubLayout from "../../../layouts/ConversionHubLayout.astro";
+import { CONVERSII_HUBS } from "../../../lib/content/ro/conversii-hubs.ts";
+import { getToolBySlug } from "../../../lib/tool-registry.ts";
+import { CURRENT_LANG } from "../../../i18n/index.ts";
+import { getCollection } from "astro:content";
+import { getCategoryUrl } from "../../../lib/url-map.ts";
+
+export async function getStaticPaths() {
+  // Csak RO build-en — HU nem ad ki ilyen oldalakat
+  if (CURRENT_LANG !== "ro") return [];
+
+  const conversiiSlug = getCategoryUrl("conversii", "ro"); // "conversii"
+
+  // Beolvassuk az összes math content collection bejegyzést, hogy a sub-hub-okra
+  // megkapjuk az „instant-answer" oldalakat.
+  const all = await getCollection("math");
+
+  return CONVERSII_HUBS.map(hub => {
+    // Tool entry-k feloldva (a registry-ből)
+    const tools = hub.toolSlugs
+      .map(slug => getToolBySlug("conversii", slug))
+      .filter((t): t is NonNullable<typeof t> => t !== undefined);
+
+    // Instant-answer oldalak ehhez a sub-hub-hoz
+    const instantPages = all
+      .filter(e =>
+        e.data.category === "conversii" &&
+        e.data.subcategory === hub.slug &&
+        e.data.instantSlug
+      )
+      .map(e => ({
+        slug: e.data.instantSlug as string,
+        title: e.data.title,
+        description: e.data.description,
+      }))
+      // Determinisztikus sorrend (sitemap-ban is ezt használjuk)
+      .sort((a, b) => a.slug.localeCompare(b.slug));
+
+    return {
+      params: { category: conversiiSlug, subcat: hub.slug },
+      props: { subcat: hub, tools, instantPages },
+    };
+  });
+}
+
+const { subcat, tools, instantPages } = Astro.props;
+---
+
+<ConversionHubLayout
+  subcat={subcat}
+  tools={tools}
+  instantPages={instantPages}
+/>

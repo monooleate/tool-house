@@ -159,6 +159,10 @@
     ReducereCalculator:          () => import("../tools/finante/ReducereCalculator.svelte"),
     MarjaCalculator:             () => import("../tools/finante/MarjaCalculator.svelte"),
     SalariuOraCalculator:        () => import("../tools/finante/SalariuOraCalculator.svelte"),
+    // SANATATE (RO-only) – Fázis 6
+    ImcCalculator:               () => import("../tools/sanatate/ImcCalculator.svelte"),
+    GreutateIdealaCalculator:    () => import("../tools/sanatate/GreutateIdealaCalculator.svelte"),
+    CaloriiCalculator:           () => import("../tools/sanatate/CaloriiCalculator.svelte"),
   };
 
   onMount(async () => {

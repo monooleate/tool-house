@@ -534,5 +534,5 @@ Recuperare: 15.000 / 1.687 ≈ **8,9 ani**.
 
 - [Calculator regula de trei simplă](/calculator/regula-de-trei-simpla/) — pentru proporții
 - [Calculator procent](/calculator/procent-calculator/) — pentru economii %
-- [Convertor galon ↔ litri](/conversii/galon-litri/) — pentru mpg ↔ l/100 km
-- [Convertor km ↔ metri](/conversii/km-metri/) — pentru distanțe
+- [Convertor galon ↔ litri](/conversii/volum/galon-litri/) — pentru mpg ↔ l/100 km
+- [Convertor km ↔ metri](/conversii/lungime/km-metri/) — pentru distanțe

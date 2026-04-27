@@ -11,12 +11,16 @@ import {
   type Tool,
 } from "../lib/tool-registry.ts";
 import { CURRENT_LANG } from "../i18n/index.ts";
-import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
+import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "../lib/url-utils.ts";
 import { getStaticUrl } from "../lib/url-map.ts";
+import { CONVERSII_HUBS } from "../lib/content/ro/conversii-hubs.ts";
+import { getCollection } from "astro:content";
 
-const PRIORITY: Record<CategoryId | "home" | "category", string> = {
+const PRIORITY: Record<CategoryId | "home" | "category" | "subhub" | "instant", string> = {
   home:       "1.0",
   category:   "0.8",
+  subhub:     "0.85",
+  instant:    "0.7",
   kep:        "0.9",
   adat:       "0.9",
   szoveg:     "0.85",
@@ -36,9 +40,11 @@ const PRIORITY: Record<CategoryId | "home" | "category", string> = {
   timp:       "0.75",
 };
 
-const CHANGEFREQ: Record<CategoryId | "home" | "category", string> = {
+const CHANGEFREQ: Record<CategoryId | "home" | "category" | "subhub" | "instant", string> = {
   home:       "daily",
   category:   "weekly",
+  subhub:     "weekly",
+  instant:    "monthly",
   kep:        "monthly",
   adat:       "monthly",
   szoveg:     "monthly",
@@ -79,7 +85,7 @@ function urlEntry(
   </url>`;
 }
 
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
   const base  = (site?.toString() ?? "https://konvertalo.hu").replace(/\/$/, "");
   // Only include active tools in sitemap – coming-soon pages have no content
   const tools = getVisibleTools(CURRENT_LANG).filter(t => t.status === "active");
@@ -103,6 +109,27 @@ export const GET: APIRoute = ({ site }) => {
     // lastmod: tool.updatedAt ha meg van adva, egyébként mai dátum
     const lastmod   = tool.updatedAt ?? undefined;
     urls.push(urlEntry(base, toolUrl(tool), priority, chfreq, lastmod));
+  }
+
+  // ─── RO-only: Conversii sub-hub-ok ────────────────────────
+  if (CURRENT_LANG === "ro") {
+    for (const hub of CONVERSII_HUBS) {
+      urls.push(urlEntry(base, subcatUrl(hub.slug), PRIORITY.subhub, CHANGEFREQ.subhub, hub.updatedAt));
+    }
+
+    // ─── RO-only: Instant-answer oldalak (programmatic SEO) ──
+    const all = await getCollection("math");
+    const instantEntries = all.filter(
+      e => e.data.category === "conversii" &&
+           e.data.subcategory &&
+           e.data.instantSlug
+    );
+    for (const entry of instantEntries) {
+      const subcat = entry.data.subcategory as string;
+      const slug = entry.data.instantSlug as string;
+      const lastmod = entry.data.refreshed_at ?? entry.data.published_at;
+      urls.push(urlEntry(base, instantAnswerUrl(subcat, slug), PRIORITY.instant, CHANGEFREQ.instant, lastmod));
+    }
   }
 
   // Statikus oldalak

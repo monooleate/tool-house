@@ -13,16 +13,19 @@ import {
   buildCanonical,
 } from "../lib/seo.ts";
 import { t, CURRENT_LANG } from "../i18n/index.ts";
-import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
+import { toolUrl, categoryUrl, subcatUrl } from "../lib/url-utils.ts";
+import type { ConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
 
 export interface Props {
   category: Category;
   tools: Tool[];
   title: string;
   description: string;
+  /** Csak conversii fő hub-on: sub-hub kártyák („Categorii"). */
+  conversionHubs?: ConversionSubcat[];
 }
 
-const { category: rawCategory, tools: rawTools, title, description } = Astro.props;
+const { category: rawCategory, tools: rawTools, title, description, conversionHubs } = Astro.props;
 const category = getLocalizedCategory(rawCategory, CURRENT_LANG);
 const tools = rawTools.map(tool => getLocalizedTool(tool, CURRENT_LANG));
 const activeTools  = tools.filter((t) => t.status === "active");
@@ -98,6 +101,29 @@ const needsKatex = MATH_CATS.has(rawCategory.id);
         {category.intro.map((p) => (
           <p class="cat-intro__para">{p}</p>
         ))}
+      </section>
+    )}
+
+    <!-- Conversii sub-hubs (Categorii) — csak a conversii fő hub-on -->
+    {conversionHubs && conversionHubs.length > 0 && (
+      <section class="hubs-section" aria-labelledby="hubs-title">
+        <h2 id="hubs-title" class="section-label">Categorii de conversii</h2>
+        <ul class="hub-grid" role="list">
+          {conversionHubs.map((hub) => (
+            <li>
+              <a href={subcatUrl(hub.slug)} class="hub-card">
+                <div class="hub-card__icon" aria-hidden="true">{hub.icon}</div>
+                <div class="hub-card__body">
+                  <div class="hub-card__title">{hub.label}</div>
+                  <p class="hub-card__desc">{hub.description}</p>
+                  <span class="hub-card__count">
+                    {hub.toolSlugs.length} convertoare
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
       </section>
     )}
 
@@ -313,5 +339,69 @@ const needsKatex = MATH_CATS.has(rawCategory.id);
   font-weight: 700;
   color: var(--accent);
   margin-top: auto;
+}
+
+/* ─── Conversii sub-hub cards (only on /conversii/) ─────────── */
+.hubs-section {
+  margin-bottom: var(--sp-12);
+}
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.hub-card {
+  display: flex;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--cat-color, var(--accent));
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all var(--t-fast);
+  height: 100%;
+}
+.hub-card:hover {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.hub-card__icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.hub-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hub-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--sp-1);
+}
+.hub-card__desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: var(--sp-2);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hub-card__count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 </style>

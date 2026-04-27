@@ -1,0 +1,119 @@
+---
+// ============================================================
+// [category]/[subcat]/[slug].astro
+// Conversii leaf oldal — KÉT típust generálhat:
+//   1) konverter tool (pl. /conversii/lungime/cm-metri/)
+//   2) instant-answer oldal (pl. /conversii/lungime/170-cm-in-metri/)
+// ============================================================
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import InstantAnswerLayout from "../../../layouts/InstantAnswerLayout.astro";
+import DynamicTool from "../../../components/tools/DynamicTool.svelte";
+import { getVisibleTools, getToolBySlug } from "../../../lib/tool-registry.ts";
+import { CONVERSII_HUBS, getSubcatForTool, getConversionSubcat } from "../../../lib/content/ro/conversii-hubs.ts";
+import { CURRENT_LANG } from "../../../i18n/index.ts";
+import { getCollection, render } from "astro:content";
+import { getCategoryUrl } from "../../../lib/url-map.ts";
+
+export async function getStaticPaths() {
+  if (CURRENT_LANG !== "ro") return [];
+
+  const conversiiSlug = getCategoryUrl("conversii", "ro");
+  const paths: any[] = [];
+
+  // ─── 1) Konverter tool oldalak (3-szegmensű URL-en) ───────
+  const conversiiTools = getVisibleTools().filter(t => t.category === "conversii");
+  for (const tool of conversiiTools) {
+    const subcat = getSubcatForTool(tool.slug);
+    if (!subcat) continue; // védőháló: ha nincs besorolva, nem generálunk
+    paths.push({
+      params: {
+        category: conversiiSlug,
+        subcat,
+        slug: tool.i18n?.ro?.slug ?? tool.slug,
+      },
+      props: {
+        kind: "tool" as const,
+        tool,
+        componentName: tool.component ?? "",
+        componentProps: tool.componentProps ?? {},
+      },
+    });
+  }
+
+  // ─── 2) Instant-answer oldalak (programmatic SEO) ──────────
+  const all = await getCollection("math");
+  const instantEntries = all.filter(
+    e => e.data.category === "conversii" &&
+         e.data.subcategory &&
+         e.data.instantSlug
+  );
+
+  for (const entry of instantEntries) {
+    const subcatSlug = entry.data.subcategory as string;
+    const subcatObj = getConversionSubcat(subcatSlug);
+    if (!subcatObj) continue;
+
+    const rendered = await render(entry);
+
+    // Frontmatter schema-objektumok stringként (BaseLayout schemaScripts)
+    const schemaFromMd: string[] = [];
+    for (const key of ["articleSchema", "softwareSchema", "faqPageSchema"]) {
+      const s = (entry.data as any)[key];
+      if (s) schemaFromMd.push(JSON.stringify(s));
+    }
+
+    paths.push({
+      params: {
+        category: conversiiSlug,
+        subcat: subcatSlug,
+        slug: entry.data.instantSlug as string,
+      },
+      props: {
+        kind: "instant" as const,
+        subcat: subcatObj,
+        instantSlug: entry.data.instantSlug as string,
+        title: entry.data.title,
+        description: entry.data.description,
+        heroAnswer: (entry.data as any).heroAnswer,
+        primaryToolSlug: (entry.data as any).primaryToolSlug,
+        modifiedAt: entry.data.refreshed_at ?? entry.data.published_at,
+        Content: rendered.Content,
+        schemaFromMd,
+      },
+    });
+  }
+
+  return paths;
+}
+
+type Props =
+  | { kind: "tool"; tool: any; componentName: string; componentProps: Record<string, unknown> }
+  | {
+      kind: "instant"; subcat: any; instantSlug: string;
+      title: string; description: string; heroAnswer?: string;
+      primaryToolSlug?: string; modifiedAt?: string;
+      Content: any; schemaFromMd: string[];
+    };
+
+const props = Astro.props as Props;
+---
+
+{props.kind === "tool" ? (
+  <ToolLayout tool={props.tool}>
+    {props.tool.status === "active" && props.componentName && (
+      <DynamicTool client:visible componentName={props.componentName} componentProps={props.componentProps} />
+    )}
+  </ToolLayout>
+) : (
+  <InstantAnswerLayout
+    subcat={props.subcat}
+    instantSlug={props.instantSlug}
+    title={props.title}
+    description={props.description}
+    heroAnswer={props.heroAnswer}
+    primaryToolSlug={props.primaryToolSlug}
+    modifiedAt={props.modifiedAt}
+    Content={props.Content}
+    schemaFromMd={props.schemaFromMd}
+  />
+)}

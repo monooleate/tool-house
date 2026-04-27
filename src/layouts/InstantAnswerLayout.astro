@@ -1,0 +1,306 @@
+---
+// ============================================================
+// InstantAnswerLayout.astro
+// Programmatic SEO „instant-answer" oldal (pl. /conversii/lungime/170-cm-in-metri/)
+// Nincs interaktív kalkulátor – konkrét long-tail kérdésre konkrét válasz.
+// ============================================================
+import BaseLayout from "./BaseLayout.astro";
+import type { ConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
+import {
+  getCategoryInfo,
+  getLocalizedCategory,
+  getToolBySlug,
+  getLocalizedTool,
+} from "../lib/tool-registry.ts";
+import {
+  breadcrumbSchema,
+  instantBreadcrumbs,
+} from "../lib/seo.ts";
+import { CURRENT_LANG } from "../i18n/index.ts";
+import { instantAnswerUrl, subcatUrl, toolUrl } from "../lib/url-utils.ts";
+
+export interface Props {
+  subcat: ConversionSubcat;
+  instantSlug: string;
+  title: string;
+  description: string;
+  /** Az oldalon kiemelendő válasz, pl. „170 cm = 1,70 m" — h1 alatt jelenik meg */
+  heroAnswer?: string;
+  /** Frontmatter schema-objektumok (Article, FAQPage) – stringként emittáljuk */
+  schemaFromMd?: string[];
+  /** A long-form markdown <Content /> komponens (Astro 5 render() output) */
+  Content: any;
+  /** Refresh date (sitemap lastmod-hoz). */
+  modifiedAt?: string;
+  /** Kapcsolódó konverter tool slug (pl. „cm-metri") — full converter CTA-hoz. */
+  primaryToolSlug?: string;
+}
+
+const { subcat, instantSlug, title, description, heroAnswer, schemaFromMd = [], Content, modifiedAt, primaryToolSlug } = Astro.props;
+
+const conversiiCat = getLocalizedCategory(getCategoryInfo("conversii")!, CURRENT_LANG);
+const breadcrumbs = instantBreadcrumbs(subcat, conversiiCat.label, title, instantSlug);
+const canonical = instantAnswerUrl(subcat.slug, instantSlug);
+
+// Primary tool (full converter CTA)
+const primaryTool = primaryToolSlug ? getToolBySlug("conversii", primaryToolSlug) : undefined;
+const primaryToolLocalized = primaryTool ? getLocalizedTool(primaryTool, CURRENT_LANG) : undefined;
+
+const schemas: string[] = [breadcrumbSchema(breadcrumbs)];
+schemas.push(...schemaFromMd);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  hreflangPaths={{ hu: null, ro: canonical }}
+  katex={true}
+  ogType="article"
+  modifiedAt={modifiedAt}
+  schemaScripts={schemas}
+>
+  <article class="instant-page container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb__list" role="list">
+        {breadcrumbs.map((item, i) => (
+          <li class="breadcrumb__item">
+            {i < breadcrumbs.length - 1 ? (
+              <>
+                <a href={item.href} class="breadcrumb__link">{item.name}</a>
+                <span aria-hidden="true"> / </span>
+              </>
+            ) : (
+              <span aria-current="page">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Header (subcat badge + h1) -->
+    <header class="instant-header">
+      <a href={subcatUrl(subcat.slug)} class="subcat-badge">
+        <span aria-hidden="true">{subcat.icon}</span>
+        <span>{subcat.label}</span>
+      </a>
+      <h1 class="instant-h1">{title.split("|")[0].trim()}</h1>
+
+      {heroAnswer && (
+        <div class="instant-hero-answer" aria-label="Răspuns">
+          <span class="instant-hero-answer__label">Răspuns rapid</span>
+          <span class="instant-hero-answer__value">{heroAnswer}</span>
+        </div>
+      )}
+    </header>
+
+    <!-- Long-form content (markdown render) -->
+    <div class="instant-content">
+      <Content />
+    </div>
+
+    <!-- Full converter CTA -->
+    {primaryToolLocalized && (
+      <aside class="full-converter-cta">
+        <div class="full-converter-cta__icon" aria-hidden="true">⚡</div>
+        <div class="full-converter-cta__body">
+          <strong>Ai nevoie de altă valoare?</strong>
+          <p>Folosește calculatorul complet pentru orice valoare — bidirecțional, în timp real.</p>
+        </div>
+        <a href={toolUrl(primaryToolLocalized)} class="btn btn--primary">
+          Deschide convertorul
+        </a>
+      </aside>
+    )}
+
+    <!-- Back to subcat -->
+    <p class="back-link">
+      <a href={subcatUrl(subcat.slug)}>← Toate conversiile {subcat.label.toLowerCase()}</a>
+    </p>
+
+  </article>
+</BaseLayout>
+
+<style>
+.instant-page {
+  padding-top: var(--sp-6);
+  padding-bottom: var(--sp-16);
+  max-width: 720px;
+}
+
+/* Breadcrumb */
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0; margin: 0 0 var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.breadcrumb__link { color: var(--text-muted); text-decoration: none; }
+.breadcrumb__link:hover { color: var(--accent); }
+
+/* Header */
+.instant-header { margin-bottom: var(--sp-8); }
+.subcat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cat-conversii, #8b5cf6);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--sp-3);
+}
+.subcat-badge:hover { text-decoration: underline; }
+
+.instant-h1 {
+  margin-bottom: var(--sp-5);
+  line-height: 1.2;
+}
+
+/* Hero answer card – AI-citability */
+.instant-hero-answer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-5) var(--sp-6);
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-input) 100%);
+  border: 2px solid var(--cat-conversii, #8b5cf6);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--sp-6);
+}
+.instant-hero-answer__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--cat-conversii, #8b5cf6);
+}
+.instant-hero-answer__value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* Long-form markdown content */
+.instant-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+.instant-content h2 {
+  margin-top: var(--sp-8);
+  margin-bottom: var(--sp-3);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.instant-content h3 {
+  margin-top: var(--sp-5);
+  margin-bottom: var(--sp-2);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.instant-content p {
+  margin-bottom: var(--sp-4);
+}
+.instant-content ul,
+.instant-content ol {
+  margin-bottom: var(--sp-4);
+  padding-left: var(--sp-6);
+}
+.instant-content li {
+  margin-bottom: var(--sp-1);
+}
+.instant-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--sp-4);
+  font-size: 0.9rem;
+}
+.instant-content table thead {
+  background: var(--bg-input);
+}
+.instant-content table th,
+.instant-content table td {
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.instant-content table th {
+  font-weight: 700;
+  color: var(--text);
+}
+.instant-content table tr.highlight,
+.instant-content table tr:has(strong:first-child) td {
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 8%, transparent);
+}
+.instant-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.instant-content a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Full converter CTA */
+.full-converter-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-top: var(--sp-10);
+  margin-bottom: var(--sp-6);
+}
+.full-converter-cta__icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.full-converter-cta__body {
+  flex: 1;
+}
+.full-converter-cta__body strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.full-converter-cta__body p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.full-converter-cta .btn {
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .full-converter-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .instant-hero-answer__value {
+    font-size: 1.35rem;
+  }
+}
+
+/* Back link */
+.back-link {
+  margin-top: var(--sp-8);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.back-link a { color: var(--text-muted); text-decoration: none; }
+.back-link a:hover { color: var(--accent); }
+</style>

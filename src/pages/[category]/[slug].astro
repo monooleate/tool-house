@@ -1,7 +1,8 @@
 ---
 // ============================================================
-// [category]/[slug].astro – Dinamikus tool route
-// Egyetlen fájl generálja az összes tool oldalt (93+)
+// [category]/[slug].astro – Dinamikus tool route (NEM conversii)
+// Egyetlen fájl generálja az összes tool oldalt – KIVÉVE a
+// conversii kategóriát, ami /conversii/{subcat}/{slug}/ alatt él.
 // ============================================================
 import ToolLayout from "../../layouts/ToolLayout.astro";
 import DynamicTool from "../../components/tools/DynamicTool.svelte";
@@ -9,9 +10,9 @@ import { getVisibleTools } from "../../lib/tool-registry.ts";
 import { toolUrl } from "../../lib/url-utils.ts";
 
 export function getStaticPaths() {
-  // Csak az aktuális nyelven látható tool-ok – a `languages: ["ro"]`
-  // tool-ok a HU buildben kiszűrődnek, és fordítva.
-  const tools = getVisibleTools();
+  // A `conversii` kategória tool-jai a [subcat]/[slug].astro-ban generálódnak
+  // (3-szegmensű URL hierarchia). Itt csak a többi tool jön létre.
+  const tools = getVisibleTools().filter(t => t.category !== "conversii");
   return tools.map((tool) => {
     const url = toolUrl(tool);
     const parts = url.split("/").filter(Boolean);

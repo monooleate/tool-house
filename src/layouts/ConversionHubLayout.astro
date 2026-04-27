@@ -1,0 +1,408 @@
+---
+// ============================================================
+// ConversionHubLayout.astro
+// Conversii sub-hub landing oldal (pl. /conversii/lungime/)
+// 3-szegmensű URL: /conversii/{subcat}/
+// ============================================================
+import BaseLayout from "./BaseLayout.astro";
+import type { ConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
+import type { Tool } from "../lib/tool-registry.ts";
+import {
+  getCategoryInfo,
+  getLocalizedTool,
+  getLocalizedCategory,
+} from "../lib/tool-registry.ts";
+import {
+  breadcrumbSchema,
+  faqSchema,
+  subcatCollectionSchema,
+  subcatBreadcrumbs,
+} from "../lib/seo.ts";
+import { CURRENT_LANG } from "../i18n/index.ts";
+import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "../lib/url-utils.ts";
+
+export interface Props {
+  subcat: ConversionSubcat;
+  tools: Tool[];
+  instantPages: { slug: string; title: string; description?: string }[];
+}
+
+const { subcat, tools: rawTools, instantPages } = Astro.props;
+const tools = rawTools.map(t => getLocalizedTool(t, CURRENT_LANG));
+const conversiiCat = getLocalizedCategory(getCategoryInfo("conversii")!, CURRENT_LANG);
+const breadcrumbs = subcatBreadcrumbs(subcat, conversiiCat.label);
+
+const schemas: string[] = [
+  breadcrumbSchema(breadcrumbs),
+  subcatCollectionSchema(subcat, rawTools, instantPages),
+];
+const faq = faqSchema(subcat.faq);
+if (faq) schemas.push(faq);
+
+const title = `Convertoare ${subcat.label} – cm, m, kg, °C și altele | InstrumenteOnline`;
+const description = subcat.description;
+const canonical = subcatUrl(subcat.slug);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  hreflangPaths={{ hu: null, ro: canonical }}
+  katex={true}
+  ogType="website"
+  schemaScripts={schemas}
+>
+  <div class="hub-page container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb__list" role="list">
+        {breadcrumbs.map((item, i) => (
+          <li class="breadcrumb__item">
+            {i < breadcrumbs.length - 1 ? (
+              <>
+                <a href={item.href} class="breadcrumb__link">{item.name}</a>
+                <span aria-hidden="true"> / </span>
+              </>
+            ) : (
+              <span aria-current="page">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="hub-header" style={`--cat-color: ${conversiiCat.color}`}>
+      <div class="hub-header__icon" aria-hidden="true">{subcat.icon}</div>
+      <div class="hub-header__content">
+        <h1>Convertoare {subcat.label}</h1>
+        <p>{subcat.description}</p>
+        <div class="hub-header__stats">
+          <span class="stat-pill">
+            <span class="stat-pill__num">{tools.length}</span> convertoare
+          </span>
+          {instantPages.length > 0 && (
+            <span class="stat-pill stat-pill--alt">
+              <span class="stat-pill__num">{instantPages.length}</span> răspunsuri rapide
+            </span>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="hub-intro" aria-label={`Despre convertoarele de ${subcat.label.toLowerCase()}`}>
+      {subcat.intro.map((p) => (
+        <p class="hub-intro__para">{p}</p>
+      ))}
+    </section>
+
+    <!-- Tools grid -->
+    {tools.length > 0 && (
+      <section aria-labelledby="tools-title">
+        <h2 id="tools-title" class="section-label">Convertoare disponibile</h2>
+        <ul class="tool-grid" role="list">
+          {tools.map((tool) => (
+            <li>
+              <a href={toolUrl(tool)} class="tool-card">
+                <div class="tool-card__title">{tool.h1}</div>
+                <p class="tool-card__desc">{tool.description}</p>
+                <span class="tool-card__cta">Deschide convertorul →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Instant-answer index (programmatic SEO) -->
+    {instantPages.length > 0 && (
+      <section class="instant-section" aria-labelledby="instant-title">
+        <h2 id="instant-title" class="section-label">Răspunsuri rapide</h2>
+        <p class="section-lead">Întrebări concrete cu răspuns direct — pentru valorile cele mai des căutate.</p>
+        <ul class="instant-grid" role="list">
+          {instantPages.map((ip) => (
+            <li>
+              <a href={instantAnswerUrl(subcat.slug, ip.slug)} class="instant-card">
+                <span class="instant-card__title">{ip.title}</span>
+                {ip.description && <span class="instant-card__desc">{ip.description}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- FAQ -->
+    {subcat.faq.length > 0 && (
+      <section class="faq-section" aria-labelledby="faq-title">
+        <h2 id="faq-title" class="section-label">Întrebări frecvente</h2>
+        <dl class="faq-list">
+          {subcat.faq.map((item, i) => (
+            <div class="faq-item">
+              <dt class="faq-item__q">
+                <button class="faq-toggle" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+                  <span>{item.q}</span>
+                  <svg class="faq-toggle__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </button>
+              </dt>
+              <dd class="faq-item__a" id={`faq-answer-${i}`} hidden>{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
+    <!-- Back to main hub -->
+    <p class="back-link">
+      <a href={categoryUrl("conversii")}>← Toate categoriile de conversii</a>
+    </p>
+
+  </div>
+</BaseLayout>
+
+<script>
+  // FAQ accordion (egyszerű)
+  document.querySelectorAll<HTMLButtonElement>(".faq-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const answerId = btn.getAttribute("aria-controls");
+      if (answerId) {
+        const ans = document.getElementById(answerId);
+        if (ans) {
+          if (expanded) ans.setAttribute("hidden", "");
+          else ans.removeAttribute("hidden");
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+.hub-page {
+  padding-top: var(--sp-6);
+  padding-bottom: var(--sp-16);
+}
+
+/* Breadcrumb */
+.breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0; margin: 0 0 var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.breadcrumb__link { color: var(--text-muted); text-decoration: none; }
+.breadcrumb__link:hover { color: var(--accent); }
+
+/* Header */
+.hub-header {
+  display: flex;
+  gap: var(--sp-6);
+  align-items: flex-start;
+  padding: var(--sp-8);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  margin-bottom: var(--sp-8);
+  border-left: 4px solid var(--cat-color, var(--accent));
+}
+.hub-header__icon {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.hub-header__content h1 { margin-bottom: var(--sp-2); }
+.hub-header__content p { margin-bottom: var(--sp-4); max-width: 60ch; }
+.hub-header__stats {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 2px 10px;
+  color: var(--text-muted);
+}
+.stat-pill .stat-pill__num { color: var(--accent); }
+.stat-pill--alt .stat-pill__num { color: var(--cat-color, var(--accent)); }
+
+/* Intro */
+.hub-intro {
+  margin-bottom: var(--sp-10);
+  max-width: 75ch;
+}
+.hub-intro__para {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-3);
+}
+
+/* Section labels */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+.section-lead {
+  margin-top: -0.25rem;
+  margin-bottom: var(--sp-5);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.instant-section { margin-top: var(--sp-10); }
+
+/* Tool grid */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-4);
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all var(--t-fast);
+  height: 100%;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.tool-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.tool-card__desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tool-card__cta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: auto;
+}
+
+/* Instant grid (denser) */
+.instant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0; margin: 0 0 var(--sp-8);
+}
+.instant-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+.instant-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-input);
+}
+.instant-card__title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.instant-card__desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* FAQ */
+.faq-section { margin-top: var(--sp-10); }
+.faq-list { margin: 0; padding: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-4) 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.faq-toggle__icon {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.faq-toggle[aria-expanded="true"] .faq-toggle__icon {
+  transform: rotate(180deg);
+}
+.faq-item__a {
+  padding: 0 0 var(--sp-4);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.faq-item__a[hidden] { display: none; }
+
+/* Back link */
+.back-link {
+  margin-top: var(--sp-10);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.back-link a { color: var(--text-muted); text-decoration: none; }
+.back-link a:hover { color: var(--accent); }
+</style>

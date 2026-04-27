@@ -13,7 +13,15 @@ const mathCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /** Ha a tartalom egy létező tool oldalának long-form kiegészítője. */
     toolSlug: z.string().optional(),
+    /** Ha a tartalom egy „instant-answer" programmatic SEO oldal (hidden, nincs a navigációban). */
+    instantSlug: z.string().optional(),
+    /** Conversii sub-kategória (lungime/masa/volum/suprafata/temperatura/densitate). */
+    subcategory: z.enum([
+      "lungime", "masa", "volum",
+      "suprafata", "temperatura", "densitate",
+    ]).optional(),
     category: z.enum([
       "calculator", "geometrie", "conversii",
       "finante", "sanatate", "timp",

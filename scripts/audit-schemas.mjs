@@ -40,6 +40,14 @@ const PAGE_GROUPS = [
       "calculator-reducere", "marja-adaos", "calculator-salariu-ora",
     ],
   },
+  {
+    category: "sanatate",
+    dist: "dist/sanatate",
+    pages: [
+      // Fázis 6
+      "calculator-imc", "greutate-ideala", "calculator-calorii",
+    ],
+  },
 ];
 
 let totalSchemas = 0;

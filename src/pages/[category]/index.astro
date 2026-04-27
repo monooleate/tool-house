@@ -1,7 +1,8 @@
 ---
 // ============================================================
 // [category]/index.astro – Dinamikus kategória route
-// Egyetlen fájl generálja az összes kategória oldalt (10)
+// Egyetlen fájl generálja az összes kategória oldalt (10+).
+// A `conversii` kategória extra szekciót kap: sub-hub kártyák.
 // ============================================================
 import CategoryLayout from "../../layouts/CategoryLayout.astro";
 import {
@@ -12,14 +13,13 @@ import {
   getVisibleCategories,
 } from "../../lib/tool-registry.ts";
 import { categoryUrl } from "../../lib/url-utils.ts";
+import { CONVERSII_HUBS } from "../../lib/content/ro/conversii-hubs.ts";
 import { t, CURRENT_LANG } from "../../i18n/index.ts";
 
 export function getStaticPaths() {
-  // Csak az aktuális nyelven látható kategóriák – a `languages: ["ro"]`
-  // kategóriák (matematika, konverziók, stb.) a HU buildben kiszűrődnek.
   return getVisibleCategories().map((cat) => {
-    const url = categoryUrl(cat.id); // e.g., "/imagine/" or "/kep/"
-    const catSlug = url.replace(/^\//, "").replace(/\/$/, ""); // strip leading and trailing slash
+    const url = categoryUrl(cat.id);
+    const catSlug = url.replace(/^\//, "").replace(/\/$/, "");
     return {
       params: { category: catSlug },
       props: { categoryId: cat.id },
@@ -30,6 +30,11 @@ export function getStaticPaths() {
 const { categoryId } = Astro.props;
 const category = getCategoryInfo(categoryId)!;
 const tools = getToolsByCategory(categoryId);
+
+// Conversii fő hub: sub-hub-ok átadása a layout-nak
+const conversionHubs = (categoryId === "conversii" && CURRENT_LANG === "ro")
+  ? CONVERSII_HUBS
+  : undefined;
 ---
 
 <CategoryLayout
@@ -37,4 +42,5 @@ const tools = getToolsByCategory(categoryId);
   tools={tools}
   title={t(`cat_meta.${categoryId}_title`)}
   description={t(`cat_meta.${categoryId}_desc`)}
+  conversionHubs={conversionHubs}
 />

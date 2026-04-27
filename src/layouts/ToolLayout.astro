@@ -23,6 +23,7 @@ import {
   toolBreadcrumbs,
 } from "../lib/seo.ts";
 import { getCollection, render } from "astro:content";
+import { getSubcatForTool, getConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
 
 export interface Props {
   tool: Tool;
@@ -32,7 +33,12 @@ const { tool: rawTool } = Astro.props;
 const tool = getLocalizedTool(rawTool, CURRENT_LANG);
 const category = getLocalizedCategory(getCategoryInfo(tool.category)!, CURRENT_LANG);
 const related = getRelatedTools(tool).map(t => getLocalizedTool(t, CURRENT_LANG));
-const breadcrumbs = toolBreadcrumbs(tool, category.label);
+
+// Conversii tool-oknál a breadcrumb tartalmazza a sub-hub-ot is.
+const subcatForBreadcrumb = (tool.category === "conversii" && CURRENT_LANG === "ro")
+  ? getConversionSubcat(getSubcatForTool(tool.slug) ?? "")
+  : undefined;
+const breadcrumbs = toolBreadcrumbs(tool, category.label, subcatForBreadcrumb);
 
 // Nyelv-hozzáférhetőség a hreflang-hoz: ha a tool vagy kategórija language-scoped,
 // a nem-támogatott nyelv hreflang-ja kimarad (elkerüljük a 404-re mutató alternate-eket).
