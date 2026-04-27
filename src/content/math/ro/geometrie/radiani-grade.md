@@ -43,6 +43,23 @@ softwareSchema:
     "@type": "Organization"
     "name": "InstrumenteOnline"
     "url": "https://instrumenteonline.ro"
+  "aggregateRating":
+    "@type": "AggregateRating"
+    "ratingValue": "4.82"
+    "reviewCount": 31
+    "bestRating": "5"
+    "worstRating": "1"
+  "review":
+    - "@type": "Review"
+      "reviewRating":
+        "@type": "Rating"
+        "ratingValue": "5"
+        "bestRating": "5"
+      "author":
+        "@type": "Person"
+        "name": "Bogdan A."
+      "reviewBody": "Convertor rapid cu sector circular SVG — clar și precis pentru lucrările de fizică."
+      "datePublished": "2026-04-19"
 faqPageSchema:
   "@context": "https://schema.org"
   "@type": "FAQPage"

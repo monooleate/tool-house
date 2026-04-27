@@ -177,4 +177,51 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
       },
     },
   },
+
+  // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
+  "consum-combustibil": {
+    introText:
+      "Calculator complet pentru consumul de combustibil — l/100 km, mpg, litri necesari pentru un drum, cost total și emisii CO₂. Suportă 3 tipuri de combustibil RO (motorină, benzină, GPL) cu factori de emisie și densități standardizate. Util pentru șoferi care vor să-și monitorizeze fogyasztarea, să compare mașini sau să planifice costul unui drum lung.",
+    guide: [
+      "1. Alege modul: «Calcul consum» (din km + litri folosiți), «Litri necesari» (planificare drum) sau «Cost total» (estimare buget).",
+      "2. Introdu valorile cerute (km, litri, l/100 km, preț/l).",
+      "3. Folosește presets RO (motorină 7,50 lei/l, benzină 95, GPL etc.) sau preset mașini (sedan, SUV, camionetă).",
+      "4. Vezi rezultatul instant: l/100 km, mpg echivalent, total litri și cost final.",
+    ],
+    faq: [
+      { q: "Cum se calculează consumul mașinii?", a: "Consumul mediu (l/100 km) = (litri folosiți ÷ km parcursi) × 100. Exemplu: dacă ai parcurs 600 km cu 42 litri, consumul este (42 ÷ 600) × 100 = 7 l/100 km." },
+      { q: "Ce înseamnă mpg și prin ce diferă de l/100 km?", a: "L/100 km arată câți litri sunt necesari pentru 100 km. Mpg (miles per gallon, sistem SUA) arată câte mile poți parcurge cu 1 galon american (3,785 l). Formula de conversie: mpg = 235,21 ÷ (l/100 km). Exemplu: 7 l/100 km ≈ 33,6 mpg." },
+      { q: "Ce este un consum bun pentru o mașină?", a: "Depinde de categorie: utilitară mică 4-6 l/100 km, sedan mediu 6-8 l/100 km, SUV 8-12 l/100 km, hibrid 3-5 l/100 km. Aceste valori sunt orientative pentru consum mixt (oraș + autostradă). În oraș, consumul e cu 20-30% mai mare." },
+      { q: "Cum reduc consumul de combustibil?", a: "Stil de condus uniform (fără accelerări/frânări bruște), presiune corectă pneuri (verifică lunar), eliminarea greutății inutile (portbagaj, suport sus), folosirea AC doar când e necesar (peste 25°C), service regulat (filtre, ulei). Aceste tehnici pot reduce consumul cu 15–20%." },
+      { q: "Cât emite CO₂ o mașină pe litru?", a: "Benzină: ~2,31 kg CO₂/litru. Motorină: ~2,68 kg CO₂/litru. GPL: ~1,51 kg CO₂/litru. La 7 l/100 km benzină pe un drum de 500 km, emisiile sunt: 35 litri × 2,31 = 80,85 kg CO₂. GPL este cea mai prietenoasă opțiune din punct de vedere ecologic." },
+      { q: "Cât costă un drum de 500 km cu 7 l/100 km la motorină?", a: "Litri necesari: (7 × 500) ÷ 100 = 35 l. Cost: 35 × 7,50 lei = 262,50 lei (la prețul motorinei RO 2026)." },
+      { q: "Cât diferă consumul iarna față de vara?", a: "Iarna consumul este cu 10–15% mai mare din cauza încălzirii habitaclului, motorului rece (combustibil suplimentar pentru îmbogățire), pneurilor de iarnă (rezistență mai mare la rulare) și combustibilului «de iarnă» (densitate diferită)." },
+      { q: "Computerul de bord arată consumul corect?", a: "De obicei NU. Computerul de bord afișează un consum cu 5–10% mai optimist decât valoarea reală măsurată cu plinul. Pentru o valoare exactă, folosește metoda «plin până la plin»: completează rezervorul, resetează kilometrajul, conduce, completează din nou și calculează (litri ÷ km) × 100." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul de calcul", description: "Cele 3 carduri acoperă scenariile uzuale: calcul consum din date reale, planificare litri necesari, estimare cost total al drumului." },
+        { title: "2. Introdu valorile", description: "Km parcursi, litri folosiți, consum mediu (l/100 km), preț pe litru. Câmpurile acceptă atât virgulă, cât și punct ca separator." },
+        { title: "3. Folosește presets RO 2026", description: "Click pe motorină, benzină 95/98 sau GPL pentru prețuri actuale RO. Preset-uri mașini (sedan, SUV) pentru consumul mediu." },
+        { title: "4. Compară și planifică", description: "Folosește rezultatele pentru a compara mașini, a urmări consumul lunar sau a împărți costul cu pasagerii." },
+      ],
+      useCases: [
+        { icon: "🚗", title: "Monitorizare consum", description: "Calculează consumul real al mașinii din datele reale ale plinului." },
+        { icon: "🛣️", title: "Planificare drum", description: "Câți litri ai nevoie pentru un drum de 800 km la 7 l/100 km — și cât te va costa." },
+        { icon: "🤝", title: "Călătorii de grup", description: "Împărțirea costului între pasageri în funcție de distanță și consum." },
+        { icon: "🔍", title: "Comparație mașini", description: "Comparare directă între două mașini cu consum diferit pentru același drum." },
+        { icon: "🌱", title: "Emisii CO₂", description: "Estimare emisii pentru a face alegeri ecologice — GPL emite cu 35% mai puțin CO₂ ca benzina." },
+        { icon: "📊", title: "Bugetare lunară", description: "Estimare cost combustibil lunar pe baza km parcursi și consum mediu." },
+      ],
+      aboutSection: {
+        title: "Despre consumul de combustibil în RO",
+        paragraphs: [
+          "Consumul de combustibil este unul dintre cei mai importanți indicatori economici și ecologici ai unei mașini. În RO, prețurile la pompă pentru 2026 (medii naționale) sunt: motorină ~7,50 lei/l, benzină 95 ~7,40 lei/l, benzină 98 ~7,90 lei/l, GPL auto ~3,80 lei/l. La un consum mediu de 7 l/100 km și 15.000 km/an, costul anual este de ~7.875 lei (motorină) sau ~7.770 lei (benzină 95).",
+          "Consumul real diferă semnificativ de cel din specificațiile WLTP (test standardizat european). În medie, în condiții reale, consumul este cu 10–25% mai mare decât valorile oficiale. Factori care îl influențează: stilul de condus (cea mai mare diferență — agresiv vs. relaxat poate fi 30%), traficul (oraș vs. autostradă), starea mașinii (filtre, presiune pneuri), sezonul (iarna +10–15%) și sarcina (greutate, portbagaj).",
+          "În UE, din 2025 toate mașinile noi trebuie să raporteze consum WLTP și emisii CO₂ pe etichetă (Regulamentul UE 2017/1151). Pentru tracking personal, recomandăm metoda «plin până la plin» — singura metodă care dă valoarea reală, neafectată de calibrarea computerului de bord. Aplicații mobile populare în RO: Fuelio, Drivvo, MyFuelLog2.",
+          "Tendința în RO 2026: piața auto se polarizează între diesel (în declin în orașe mari datorită restricțiilor anti-poluare) și hybrid/electrice (creștere accelerată cu programul Rabla Plus). Consumul mediu al parcului auto din RO scade lent — din 7,8 l/100 km în 2018 la ~7,2 l/100 km estimat 2026, datorită înnoirii cu mașini Euro 6 și hybrid.",
+        ],
+      },
+    },
+  },
 };

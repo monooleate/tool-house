@@ -36,4 +36,13 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Aplică regula de trei simplă: proporții directe și inverse. Util la procente, rețete, prețuri, conversii și probleme școlare.",
     keywords: ["regula de trei", "regula de trei simpla", "proportie directa", "proportie inversa", "calculator proportie"],
   },
+
+  // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
+  "consum-combustibil": {
+    slug: "consum-combustibil",
+    title: "Calculator Consum Combustibil – l/100 km, mpg, cost drum & CO₂",
+    h1: "Calculator Consum Combustibil",
+    description: "Calculator complet consum: l/100 km, mpg, litri necesari, cost total și emisii CO₂. Prețuri RO 2026 (motorină, benzină, GPL) și presets mașini.",
+    keywords: ["consum combustibil", "calculator consum", "l 100 km", "mpg", "cost drum", "consum motorina", "consum benzina", "consum gpl", "co2 masina", "fogyasztas"],
+  },
 };

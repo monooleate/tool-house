@@ -146,6 +146,12 @@
     GalonLitriCalculator:        () => import("../tools/conversii/GalonLitriCalculator.svelte"),
     BetonCalculator:             () => import("../tools/conversii/BetonCalculator.svelte"),
     DensitateCalculator:         () => import("../tools/conversii/DensitateCalculator.svelte"),
+    // CONVERSII (RO-only) – Fázis 4 cleanup (3 convertoare densitate construcții)
+    NisipCalculator:             () => import("../tools/conversii/NisipCalculator.svelte"),
+    PietrisCalculator:           () => import("../tools/conversii/PietrisCalculator.svelte"),
+    BalastCalculator:            () => import("../tools/conversii/BalastCalculator.svelte"),
+    // CALCULATOR (RO-only) – Fázis 4 cleanup (consum combustibil mutat din conversii)
+    ConsumCombustibilCalculator: () => import("../tools/calculator/ConsumCombustibilCalculator.svelte"),
     // FINANTE (RO-only) – Fázis 5
     TvaCalculator:               () => import("../tools/finante/TvaCalculator.svelte"),
     CreditCalculator:            () => import("../tools/finante/CreditCalculator.svelte"),

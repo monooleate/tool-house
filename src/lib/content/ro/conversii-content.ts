@@ -532,6 +532,121 @@ export const CONVERSII_RO_CONTENT: ContentMap = {
       },
     },
   },
+  // ─── Fázis 4 cleanup: convertoare densitate construcții ───────────────────
+  "nisip-greutate-volum": {
+    introText:
+      "Convertor nisip greutate ↔ volum (densitate medie ρ = 1.500 kg/m³, valoare standard pentru nisip de râu uscat). Mod Greutate→Volum sau Volum→Greutate, presets construcții (sac, m³, basculantă, camion). Util la șantier, betonare, rostuire, rețete pentru tencuieli.",
+    guide: [
+      "1. Alege modul (greutate→volum sau invers).",
+      "2. Introdu valoarea în câmpul corespunzător.",
+      "3. Folosește presets pentru cantități uzuale construcții.",
+    ],
+    faq: [
+      { q: "Câte kg are 1 m³ de nisip?", a: "Aproximativ 1.500 kg pentru nisip de râu uscat (valoarea standard). Variază 1.400–1.700 kg/m³ în funcție de umiditate, granulometrie și origine (râu, mare, cariera)." },
+      { q: "Câți m³ sunt 1.000 kg de nisip?", a: "1.000 / 1.500 ≈ 0,667 m³ ≈ 667 litri. Aceasta este cantitatea uzuală pentru o roabă mare sau o sub-comandă." },
+      { q: "De ce variază densitatea nisipului?", a: "Nisipul uscat ~1.400–1.500 kg/m³, nisipul umed ajunge la 1.500–1.600 kg/m³ (apa adăugată), nisipul compactat la 1.600–1.700 kg/m³. Tipul (râu vs cariera) și granulometria (fin 0-2 mm vs grosier 2-4 mm) influențează valoarea." },
+      { q: "Câte tone încape într-un camion?", a: "Camionetă 3,5 t poate încărca ~2,3 m³ nisip; camion mediu 7,5 t → ~5 m³; basculantă 12 t → ~8 m³. Pentru rezervă (5–10%) comandă rotunjit la m³ întreg." },
+      { q: "Cât nisip îmi trebuie pentru o tencuială?", a: "Pentru tencuială standard 2 cm grosime: ~30 l/m² = 0,03 m³/m² = 45 kg/m². Pentru o cameră de 25 m² perete: ~750 kg = 0,5 m³ nisip + ciment + apă." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul", description: "Tab Greutate→Volum sau Volum→Greutate, în funcție de ce ai." },
+        { title: "2. Introdu valoarea", description: "În kg sau m³. Acceptă atât virgulă, cât și punct ca separator zecimal." },
+        { title: "3. Folosește presets", description: "Click pe sac, roabă, big-bag, camion etc. pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "🏗️", title: "Construcții", description: "Comenzi nisip pentru fundații, betonare, rostuire pavaje." },
+        { icon: "🧱", title: "Tencuieli și mortar", description: "Calcul cantitate pentru pereți tencuiți, șape, mortar zidărie." },
+        { icon: "🚚", title: "Transport și logistică", description: "Capacitate camioane, încărcare basculante, comenzi big-bag." },
+        { icon: "🏖️", title: "Amenajări", description: "Cutii cu nisip pentru copii, plaje artificiale, paturi pentru pavaj." },
+      ],
+      aboutSection: {
+        title: "Despre densitatea nisipului",
+        paragraphs: [
+          "Nisipul este un agregat natural folosit masiv în construcții — în beton (alături de pietriș și ciment), în mortar (cu var și apă), la rostuirea pavajelor și ca strat de bază sub plăci de beton. Densitatea depinde de tipul nisipului (râu, mare, cariera), granulometria (fin 0-2 mm vs grosier 2-4 mm) și umiditate.",
+          "Pentru calcule rapide, în RO se folosește valoarea standard de 1.500 kg/m³ pentru nisipul de râu uscat. Această valoare apare în toate normele de proiectare (NE 012:2010 pentru beton, C 17-82 pentru mortare). Pentru calcule de transport sau facturare, această valoare medie este suficient de precisă (eroare ±5–7%).",
+          "Atenție la umiditate: nisipul stocat în aer liber, după ploaie, poate adăuga 5–15% greutate prin apă reținută între granule (efectul «bulk swelling»). Pentru transport, contează greutatea reală, nu doar volumul — un camion de 8 m³ poate ajunge la 12,8 t cu nisip umed, depășind limita de 12 t a unei basculante!",
+        ],
+      },
+    },
+  },
+
+  "pietris-greutate-volum": {
+    introText:
+      "Convertor pietriș greutate ↔ volum (densitate medie ρ = 1.500 kg/m³ pentru pietriș uscat 4-32 mm, valoare standard în construcții RO). Mod bidirecțional, presets pentru saci, big-bag, basculante și camioane.",
+    guide: [
+      "1. Alege modul (greutate→volum sau invers).",
+      "2. Introdu valoarea în câmpul corespunzător.",
+      "3. Folosește presets pentru cantități uzuale.",
+    ],
+    faq: [
+      { q: "Câte kg are 1 m³ de pietriș?", a: "Aproximativ 1.500 kg pentru pietriș uscat 4-32 mm (valoarea standard). Variază 1.400–1.700 kg/m³ în funcție de granulometrie și umiditate (pietriș fin ~1.500, pietriș concasat ~1.600, pietriș umed ~1.700 kg/m³)." },
+      { q: "Câți m³ sunt 1.000 kg de pietriș?", a: "1.000 / 1.500 ≈ 0,667 m³ ≈ 667 litri. Pentru un calcul rapid: 1 tonă pietriș ≈ 0,67 m³." },
+      { q: "Care este diferența între pietriș și sortul 4-8 sau 16-32?", a: "Sorturile sunt clase de granulometrie standardizate (NE 012-1:2007). 4-8 mm = pietriș mărgăritar (rostuire, dale), 8-16 mm = pietriș mediu (beton uzual), 16-32 mm = pietriș grosier (beton armat, fundații). Densitatea variază în jurul 1.500 kg/m³ pentru toate sorturile." },
+      { q: "Câte tone de pietriș îmi trebuie pentru 1 m³ de beton?", a: "Pentru beton C20/25 standard: ~1.000 kg pietriș (0,67 m³) + 700 kg nisip + 300 kg ciment + 180 l apă pe m³ beton finit. Cantitatea de pietriș este aproximativ 50% din masa betonului." },
+      { q: "Cât pietriș încape într-o basculantă?", a: "Basculantă 8 t poate încărca ~5,3 m³ pietriș (limita oficială). Basculantă 12 t → ~8 m³. Pentru cantități mai mari, se folosesc autobasculante de 16 t (~10,5 m³) sau camioane articulate." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul", description: "Tab Greutate→Volum sau Volum→Greutate." },
+        { title: "2. Introdu valoarea", description: "În kg sau m³, virgulă sau punct ca separator." },
+        { title: "3. Folosește presets", description: "Click pe sac, big-bag, basculantă etc. pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "🏗️", title: "Beton și fundații", description: "Comandă pietriș pentru beton C20/25, fundații, plăci, stâlpi." },
+        { icon: "🛣️", title: "Drumuri și pavaje", description: "Strat de bază sub asfalt, sub-pavaj, șanțuri de drenaj." },
+        { icon: "🌳", title: "Amenajări exterioare", description: "Alei cu pietriș, drenaje grădină, paturi pentru pomi fructiferi." },
+        { icon: "💧", title: "Drenaje", description: "Pietriș filtrant pentru drenaje, bazine de stocare apă pluvială." },
+      ],
+      aboutSection: {
+        title: "Despre densitatea pietrișului",
+        paragraphs: [
+          "Pietrișul este un agregat natural rezultat din eroziunea râurilor, de obicei rotunjit (râuri/lacuri) sau concasat din roci dure (cariera). În construcții se folosește masiv în beton (40–45% din masa betonului uzual) și ca strat de drenaj sau de bază pentru pavaje și drumuri.",
+          "Densitatea de 1.500 kg/m³ este valoarea de referință pentru pietrișul uscat în vrac — adică nu compactat, cu spații între granule. Densitatea reală a granulelor de piatră este mult mai mare (~2.700 kg/m³, ca o piatră compactă), dar la calculul cantității folosite în construcții, contează densitatea în vrac (cu spații).",
+          "Sortul (granulometria) influențează ușor densitatea: pietrișul mărgăritar 4-8 mm are densitate ~1.450–1.500 kg/m³, sortul 8-16 mm ~1.500–1.550 kg/m³, sortul grosier 16-32 mm ~1.500–1.600 kg/m³. Pentru calcule de comandă, se folosește mereu valoarea medie de 1.500 kg/m³.",
+        ],
+      },
+    },
+  },
+
+  "balast-greutate-volum": {
+    introText:
+      "Convertor balast greutate ↔ volum (densitate medie ρ = 1.600 kg/m³, amestec natural nisip + pietriș). Util la fundații, drumuri, sub-pavaj, beton de balast — cu presets construcții (big-bag, basculantă, camion).",
+    guide: [
+      "1. Alege modul (greutate→volum sau invers).",
+      "2. Introdu valoarea în câmpul corespunzător.",
+      "3. Folosește presets pentru cantități uzuale.",
+    ],
+    faq: [
+      { q: "Câte kg are 1 m³ de balast?", a: "Aproximativ 1.600 kg pentru balast natural amestec uscat. Variază 1.500–1.700 kg/m³ în funcție de proporția nisip/pietriș (mai mult pietriș = mai dens) și umiditate." },
+      { q: "Câți m³ sunt 1.000 kg de balast?", a: "1.000 / 1.600 = 0,625 m³ ≈ 625 litri. Pentru o regulă rapidă: 1 tonă balast ≈ 0,6 m³." },
+      { q: "Care este diferența între balast și sub-balast?", a: "Balastul este amestecul natural nisip+pietriș (granulometrie 0-63 mm). Sub-balastul are granulometrie mai fină (0-31,5 mm) și se folosește ca strat intermediar la drumuri. Balastul concasat (din cariera) este mai uniform și se folosește la beton de balast." },
+      { q: "Câte tone de balast îmi trebuie pentru o platformă auto?", a: "Pentru o platformă 5×3 m cu strat de 20 cm: 5 × 3 × 0,20 = 3 m³ → 4.800 kg balast (3 × 1.600). Adaugă 5–10% pentru compactare/pierderi → comandă 5,3 t (≈ 3,3 m³)." },
+      { q: "Cât balast încape într-un camion 12 t?", a: "Un camion de 12 t poate încărca ~7,5 m³ balast (12.000 ÷ 1.600). Pentru cantități mai mari, autobasculante 16 t = 10 m³, articulate 24 t = 15 m³." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul", description: "Tab Greutate→Volum sau Volum→Greutate." },
+        { title: "2. Introdu valoarea", description: "În kg sau m³, virgulă sau punct ca separator." },
+        { title: "3. Folosește presets", description: "Click pe big-bag, basculantă, camion pentru încărcare rapidă." },
+      ],
+      useCases: [
+        { icon: "🛣️", title: "Drumuri", description: "Strat de bază pentru drumuri, alei, parcări — sub-balast 0-31,5 mm." },
+        { icon: "🏠", title: "Fundații case", description: "Strat de balast compactat sub plăcile de beton ale fundațiilor." },
+        { icon: "🚗", title: "Platforme auto", description: "Platforme parcare, alei mașină, drumuri private cu strat de 20 cm balast compactat." },
+        { icon: "🏗️", title: "Beton de balast", description: "Beton C8/10 sau C12/15 cu balast în loc de pietriș+nisip separat (rețetă mai economică)." },
+      ],
+      aboutSection: {
+        title: "Despre densitatea balastului",
+        paragraphs: [
+          "Balastul (în maghiară «sóder», în limba franceză «tout-venant») este amestecul natural de nisip și pietriș, scos din albia râurilor sau din cariere. Densitatea de 1.600 kg/m³ reflectă proporția tipică ~40% nisip + 60% pietriș, cu densități individuale de 1.500 kg/m³ fiecare, dar cu mai puține spații între granule (nisipul umple golurile pietrișului).",
+          "În RO, balastul se folosește la 4 categorii principale: (1) **strat de bază drumuri** — sub-balast compactat la 95% Proctor; (2) **fundații case** — strat de 20–30 cm sub plăci, drenaj și uniformizare; (3) **beton de balast** — clase joase C8/10, C12/15 pentru fundații simple, șape; (4) **platforme auto/industriale** — strat compactat de 20–40 cm pentru a transmite încărcările.",
+          "Atenție la umiditate: balastul stocat în aer liber poate adăuga 8–15% greutate prin apă reținută. La transport, asta înseamnă diferența între o basculantă încărcată legal (12 t) și una supraîncărcată (13,5 t = amenzi). La șantier, se acceptă uzual o densitate de calcul 1.700 kg/m³ pentru balast umed proaspăt livrat.",
+        ],
+      },
+    },
+  },
+
   "densitate-kg-m3-g-cm3": {
     introText:
       "Convertor densitate între kg/m³ și g/cm³ cu tabel materiale uzuale (apă, oțel, aluminiu, beton, lemn, aur). 1 g/cm³ = 1.000 kg/m³.",

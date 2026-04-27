@@ -791,6 +791,12 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://instrumenteonline.ro/calculator/consum-combustibil/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://instrumenteonline.ro/geometrie/triunghi-dreptunghic/</loc>
     <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
@@ -919,6 +925,24 @@
   <url>
     <loc>https://instrumenteonline.ro/conversii/densitate-kg-m3-g-cm3/</loc>
     <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/conversii/nisip-greutate-volum/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/conversii/pietris-greutate-volum/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://instrumenteonline.ro/conversii/balast-greutate-volum/</loc>
+    <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

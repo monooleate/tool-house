@@ -14,12 +14,18 @@ const PAGE_GROUPS = [
       "hectare-metri-patrati", "ari-metri-patrati",
       "litri-decilitri", "litri-metri-cubi", "galon-litri",
       "beton-greutate-volum", "densitate-kg-m3-g-cm3",
+      // Fázis 4 cleanup (convertoare densitate construcții)
+      "nisip-greutate-volum", "pietris-greutate-volum", "balast-greutate-volum",
     ],
   },
   {
     category: "calculator",
     dist: "dist/calculator",
-    pages: ["procent-calculator", "ecuatie-grad-doi", "ecuatii-exponentiale", "medie-aritmetica", "regula-de-trei-simpla"],
+    pages: [
+      "procent-calculator", "ecuatie-grad-doi", "ecuatii-exponentiale", "medie-aritmetica", "regula-de-trei-simpla",
+      // Fázis 4 cleanup (consum combustibil mutat din conversii)
+      "consum-combustibil",
+    ],
   },
   {
     category: "geometrie",

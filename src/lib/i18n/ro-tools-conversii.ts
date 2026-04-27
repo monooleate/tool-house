@@ -121,4 +121,27 @@ export const CONVERSII_RO: Record<string, { slug: string; title: string; h1: str
     description: "Convertor densitate între kg/m³ și g/cm³ cu tabel materiale uzuale (apă, oțel, aluminiu, beton, lemn, aur).",
     keywords: ["kg m3 in g cm3", "convertor densitate", "densitate apa", "densitate otel", "g cm3 kg m3", "tabel densitate"],
   },
+
+  // ─── Fázis 4 cleanup: convertoare densitate construcții ───────────────────
+  "nisip-greutate-volum": {
+    slug: "nisip-greutate-volum",
+    title: "Calculator Nisip: Greutate ↔ Volum | InstrumenteOnline",
+    h1: "Calculator Nisip: Greutate ↔ Volum",
+    description: "Convertor nisip greutate ↔ volum (densitate medie ρ = 1.500 kg/m³). Presets construcții, sac, m³, basculantă, tencuieli.",
+    keywords: ["nisip greutate volum", "1 m3 nisip kg", "densitate nisip", "calculator nisip", "kg nisip in m3", "tencuiala nisip", "sac nisip"],
+  },
+  "pietris-greutate-volum": {
+    slug: "pietris-greutate-volum",
+    title: "Calculator Pietriș: Greutate ↔ Volum | InstrumenteOnline",
+    h1: "Calculator Pietriș: Greutate ↔ Volum",
+    description: "Convertor pietriș greutate ↔ volum (densitate medie ρ = 1.500 kg/m³). Sortimente 4-32 mm, beton, drumuri, drenaje.",
+    keywords: ["pietris greutate volum", "1 m3 pietris kg", "densitate pietris", "calculator pietris", "sort 8-16", "kg pietris in m3", "pietris beton"],
+  },
+  "balast-greutate-volum": {
+    slug: "balast-greutate-volum",
+    title: "Calculator Balast: Greutate ↔ Volum | InstrumenteOnline",
+    h1: "Calculator Balast: Greutate ↔ Volum",
+    description: "Convertor balast greutate ↔ volum (densitate medie ρ = 1.600 kg/m³). Fundații, drumuri, sub-pavaj, beton de balast.",
+    keywords: ["balast greutate volum", "1 m3 balast kg", "densitate balast", "calculator balast", "soder kg m3", "balast fundatii", "sub-balast"],
+  },
 };
