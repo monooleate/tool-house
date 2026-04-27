@@ -191,65 +191,198 @@ schemas.push(...schemaFromMd);
   letter-spacing: -0.01em;
 }
 
-/* Long-form markdown content */
+/* Long-form markdown content (Astro scoped CSS — child selectors require :global()) */
 .instant-content {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text);
-}
-.instant-content h2 {
-  margin-top: var(--sp-8);
-  margin-bottom: var(--sp-3);
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-.instant-content h3 {
-  margin-top: var(--sp-5);
-  margin-bottom: var(--sp-2);
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-.instant-content p {
-  margin-bottom: var(--sp-4);
-}
-.instant-content ul,
-.instant-content ol {
-  margin-bottom: var(--sp-4);
-  padding-left: var(--sp-6);
-}
-.instant-content li {
-  margin-bottom: var(--sp-1);
-}
-.instant-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: var(--sp-4);
-  font-size: 0.9rem;
-}
-.instant-content table thead {
-  background: var(--bg-input);
-}
-.instant-content table th,
-.instant-content table td {
-  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  text-align: left;
+  border-radius: var(--r-lg);
+  padding: var(--sp-6) var(--sp-8);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 1rem;
+  margin-bottom: var(--sp-6);
 }
-.instant-content table th {
+@media (max-width: 640px) {
+  .instant-content { padding: var(--sp-5); font-size: 0.9375rem; }
+}
+
+/* Headings — fokozat-alapú hierarchia */
+.instant-content :global(h2) {
+  font-size: 1.4rem;
   font-weight: 700;
+  margin: var(--sp-6) 0 var(--sp-3) 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-left: var(--sp-3);
+  border-left: 4px solid var(--cat-conversii, #8b5cf6);
+}
+.instant-content :global(h2:first-child) { margin-top: 0; }
+.instant-content :global(h3) {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: var(--sp-5) 0 var(--sp-2) 0;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+
+/* Bekezdések */
+.instant-content :global(p) {
+  margin: 0 0 var(--sp-4) 0;
+  color: var(--text);
+  max-width: 68ch;
+}
+.instant-content :global(p strong) {
+  color: var(--text);
+  font-weight: 700;
+}
+.instant-content :global(p em) {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Listák */
+.instant-content :global(ul),
+.instant-content :global(ol) {
+  margin: 0 0 var(--sp-5) 0;
+  padding-left: var(--sp-6);
   color: var(--text);
 }
-.instant-content table tr.highlight,
-.instant-content table tr:has(strong:first-child) td {
-  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 8%, transparent);
+.instant-content :global(li) {
+  margin-bottom: var(--sp-2);
+  line-height: 1.7;
 }
-.instant-content a {
-  color: var(--accent);
+.instant-content :global(li::marker) {
+  color: var(--cat-conversii, #8b5cf6);
+  font-weight: 700;
+}
+
+/* Linkek */
+.instant-content :global(a) {
+  color: var(--cat-conversii, #8b5cf6);
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+  transition: all var(--t-fast);
 }
-.instant-content a:hover {
+.instant-content :global(a:hover) {
   text-decoration-thickness: 2px;
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 10%, transparent);
+}
+
+/* ───── Táblázatok – KÖZÉPRE igazítva, kártyás design ───── */
+.instant-content :global(table) {
+  width: auto;
+  min-width: min(100%, 420px);
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: var(--sp-5) auto;
+  font-size: 0.9375rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.instant-content :global(thead) {
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 10%, var(--bg));
+}
+.instant-content :global(th) {
+  text-align: center;
+  padding: var(--sp-3) var(--sp-4);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid color-mix(in srgb, var(--cat-conversii, #8b5cf6) 25%, var(--border));
+}
+.instant-content :global(th:first-child) { text-align: left; }
+.instant-content :global(td) {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.instant-content :global(td:first-child) {
+  text-align: left;
+  color: var(--text-muted);
+}
+.instant-content :global(tbody tr:last-child td) { border-bottom: none; }
+.instant-content :global(tbody tr:hover td) {
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 6%, transparent);
+}
+/* Az értékre fókuszáló sor (strong-gal jelölt) – kiemelés */
+.instant-content :global(tbody tr:has(strong)) :global(td) {
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 9%, transparent);
+  font-weight: 600;
+}
+
+/* Táblázat horizontális görgethető mobilra */
+@media (max-width: 640px) {
+  .instant-content :global(table) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* ───── KaTeX képletek – KÖZÉPRE, kártya-stílusban ───── */
+.instant-content :global(.katex-display) {
+  margin: var(--sp-5) auto !important;
+  padding: var(--sp-4) var(--sp-5);
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 5%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--cat-conversii, #8b5cf6) 20%, var(--border));
+  border-radius: var(--r-md);
+  text-align: center !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-size: 1.125rem;
+  max-width: fit-content;
+  min-width: 240px;
+}
+.instant-content :global(.katex-display > .katex) {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+}
+.instant-content :global(.katex) { color: var(--text); }
+.instant-content :global(p .katex) {
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 8%, transparent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.9375em;
+}
+
+/* Code */
+.instant-content :global(code) {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--text);
+}
+
+/* Blockquote */
+.instant-content :global(blockquote) {
+  margin: var(--sp-5) 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: color-mix(in srgb, var(--cat-conversii, #8b5cf6) 6%, var(--bg));
+  border-left: 4px solid var(--cat-conversii, #8b5cf6);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  color: var(--text);
+}
+.instant-content :global(blockquote p:last-child) { margin-bottom: 0; }
+
+/* HR */
+.instant-content :global(hr) {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: var(--sp-6) 0;
 }
 
 /* Full converter CTA */
