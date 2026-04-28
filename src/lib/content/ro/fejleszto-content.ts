@@ -884,4 +884,104 @@ export const FEJLESZTO_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ═══ FÁZIS 8 (a): GENERATOR COD DE BARE ═══════════════════════════════════
+  "generator-cod-bare": {
+    introText:
+      "Generator de coduri de bare online care suportă cele mai utilizate 4 standarde: EAN-13 (retail european), CODE-128 (universal), UPC-A (retail SUA/Canada) și ITF-14 (unități logistice). Validare automată a cifrei de control (modulo-10), export SVG vectorial sau PNG raster, totul în browser fără server.",
+    guide: [
+      "1. Selectează formatul potrivit (EAN-13 pentru retail RO, CODE-128 pentru intern, ITF-14 pentru cartoane).",
+      "2. Introdu valoarea — pentru EAN-13/UPC-A/ITF-14 se poate omite ultima cifră (control), care se calculează automat.",
+      "3. Verifică previzualizarea live și statusul de validare (lungime, format, cifră de control).",
+      "4. Personalizează grosimea liniei, înălțimea, culorile (opțional, în meniul avansat).",
+      "5. Descarcă rezultatul ca SVG (recomandat pentru tipar) sau PNG (pentru web și aplicații).",
+    ],
+    faq: [
+      { q: "Care este diferența între EAN-13 și UPC-A?", a: "EAN-13 (European Article Number) are 13 cifre și este standardul retail în Europa (inclusiv România). UPC-A (Universal Product Code) are 12 cifre și se folosește în SUA și Canada. Cele două sunt compatibile la scanare — un EAN-13 cu prefix 0 este echivalent cu un UPC-A." },
+      { q: "Ce este CODE-128 și când se folosește?", a: "CODE-128 este un standard alfanumeric foarte compact, capabil să codeze toate cele 128 caractere ASCII (litere, cifre, simboluri). Se folosește în logistică, depozite, etichete interne și aplicații unde valoarea nu este un cod GS1 standardizat." },
+      { q: "Cum se calculează cifra de control EAN-13?", a: "Se aplică o sumă ponderată modulo 10: cifrele de pe poziții impare (de la dreapta, fără cifra de control) se înmulțesc cu 1, cele pare cu 3. Suma totală se modulo 10, iar diferența până la 10 dă cifra de control. Algoritmul e identic pentru UPC-A (11+1) și ITF-14 (13+1)." },
+      { q: "La ce folosește ITF-14?", a: "ITF-14 (Interleaved 2 of 5, 14 cifre) se folosește pentru ambalaje secundare și terțiare — cartoane comerciale, bax-uri, paleți. Codifică Global Trade Item Number (GTIN-14) și se tipărește direct pe carton fără hârtie albă suplimentară." },
+      { q: "Ce este standardul GS1?", a: "GS1 este organizația globală non-profit care administrează standardele de identificare a produselor (EAN, UPC, GTIN, GLN, SSCC). Pentru a vinde un produs cu cod EAN/UPC unic la nivel mondial, e necesar un prefix companie alocat de GS1 din țara respectivă (în România: GS1 Romania, gs1ro.org)." },
+      { q: "Pot folosi codurile generate aici pentru produse comerciale?", a: "Pentru uz personal, prototipare, testare sau coduri interne răspunsul este da. Pentru distribuție comercială cu produse fizice (în supermarketuri, online retail) e nevoie de licențierea oficială GS1, care îți alocă un prefix companie unic — astfel codurile tale nu se vor suprapune cu ale altor producători." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege formatul", description: "EAN-13 pentru retail RO, CODE-128 pentru intern, UPC-A pentru export SUA, ITF-14 pentru cartoane." },
+        { title: "2. Introdu valoarea", description: "Pentru EAN-13/UPC-A/ITF-14 poți omite cifra de control — calculatorul o adaugă automat." },
+        { title: "3. Verifică validarea", description: "Statusul live arată lungimea, validitatea și cifra de control calculată." },
+        { title: "4. Personalizează vizualul", description: "Grosime linii, înălțime, culori — în meniul avansat." },
+        { title: "5. Descarcă", description: "SVG vectorial pentru tipar profesional sau PNG pentru web și aplicații." },
+      ],
+      useCases: [
+        { icon: "🏷️", title: "Etichete pentru depozit",      description: "Generează rapid coduri CODE-128 pentru rafturi, bin-uri, articole interne — fără licență GS1." },
+        { icon: "📦", title: "Cartoane comerciale (ITF-14)",   description: "Codifică GTIN-14 direct pe ambalajul secundar pentru aprovizionare retail." },
+        { icon: "🛒", title: "Prototipare produse retail",     description: "Testează design-ul de etichetă cu EAN-13/UPC-A înainte de comanda finală la tipografie." },
+        { icon: "🧾", title: "Bonuri și facturi",              description: "Adaugă coduri CODE-128 pentru numere de bon scanabile cu cititor." },
+      ],
+      aboutSection: {
+        title: "Despre standardele GS1 și verificarea cifrei de control",
+        paragraphs: [
+          "Standardele EAN/UPC/ITF (numite în GS1 GTIN — Global Trade Item Number) folosesc o cifră de control calculată cu o sumă ponderată modulo 10. Această cifră protejează împotriva erorilor de transcriere — dacă un singur digit este greșit la introducere manuală, suma de control nu mai dă 0 modulo 10, iar codul e respins.",
+          "EAN-13 are 13 cifre: 3 (prefix țară/regiune) + 9 (cod articol) + 1 (control). Prefixele 590-599 sunt alocate Poloniei, 594 României. UPC-A are 12 cifre: 11 (cod articol) + 1 (control), fără prefix de țară explicit.",
+          "ITF-14 (Interleaved 2 of 5) codifică 14 cifre prin alternarea benzilor late și înguste, fiind extrem de tolerant la imprimare directă pe carton ondulat — motivul pentru care e standardul logistic universal.",
+        ],
+      },
+      tips: [
+        { icon: "✅", tip: "Pentru EAN-13/UPC-A/ITF-14 introdu doar cifrele fără ultima — calculatorul completează cifra de control automat." },
+        { icon: "🖨️", tip: "Pentru tipar pe ambalaj, exportă SVG — scalabil fără pierdere la orice dimensiune." },
+        { icon: "📐", tip: "Înălțimea standard pentru EAN-13 este ~25-30 mm la 100% scale; păstrează rapoartele pentru scanare optimă." },
+        { icon: "🌐", tip: "Pentru distribuție comercială fizică, înregistrează un prefix GS1 oficial (gs1ro.org pentru România)." },
+      ],
+    },
+  },
+
+  // ═══ FÁZIS 8 (b): GENERATOR COD QR ════════════════════════════════════════
+  "generator-cod-qr": {
+    introText:
+      "Generator de coduri QR online cu pictogramă în centru: alege dintr-o galerie de presetări (Wi-Fi, vCard, link, plus 12 emoji amuzante) sau încarcă propria imagine. Suportă șabloane rapide pentru URL, vCard, parolă Wi-Fi, geo-locație, telefon și e-mail. Export PNG + SVG vectorial, nivel de corectare a erorilor (ECC) configurabil, fără tracking.",
+    guide: [
+      "1. Introdu textul, URL-ul sau datele structurate (Wi-Fi, vCard) — sau folosește un șablon rapid.",
+      "2. Activează „Galerie presetări” pentru pictogramă centrală sau „Încarcă imagine” pentru logo propriu.",
+      "3. Reglează mărimea pictogramei (recomandat 18-25% cu nivel ECC H pentru rezistență la scanare).",
+      "4. Personalizează culorile, mărimea modulului și marginea în meniul avansat.",
+      "5. Descarcă PNG (raster) sau SVG (vectorial pentru tipar). Testează scanarea cu telefonul înainte de finalizare.",
+    ],
+    faq: [
+      { q: "Cum funcționează corectarea erorilor (ECC) într-un cod QR?", a: "Codul QR utilizează codarea Reed-Solomon pentru a permite recuperarea informației chiar dacă o parte din cod este deteriorată sau acoperită. Există 4 niveluri: L (~7% recuperare), M (~15%), Q (~25%) și H (~30%). Nivelul H permite o pictogramă în centru (până la ~25% din suprafață) fără pierdere de scanabilitate." },
+      { q: "De ce ECC nivel H este recomandat când adaug o pictogramă?", a: "Pictograma centrală acoperă fizic o parte din modulele de date. Nivelul H tolerează ~30% pierdere, deci o pictogramă de 18-25% (cu margine albă) e încă scanabilă fără erori. La nivel L, aceeași pictogramă ar face codul ilizibil." },
+      { q: "Ce este o capsulă vCard într-un cod QR?", a: "vCard (RFC 6350) este un format text standardizat pentru contacte. Un QR cu vCard permite scanarea cu telefonul și salvarea instantanee în agendă (nume, telefon, e-mail, adresă, organizație). Începe cu BEGIN:VCARD, conține câmpuri FN, TEL, EMAIL, etc., și se închide cu END:VCARD." },
+      { q: "Cum se codează o rețea Wi-Fi într-un QR?", a: "Formatul WIFI:T:WPA;S:NumeReteaWiFi;P:parolaTa;; este standardul de-facto. T este tipul de criptare (WPA/WEP/nopass), S este SSID-ul rețelei, P parola. Telefoanele Android scanează nativ și se conectează cu un singur tap; iOS suportă acest format din iOS 11." },
+      { q: "Care este capacitatea maximă a unui cod QR?", a: "QR de versiune 40 (cea mai mare) acceptă maxim 4296 caractere alfanumerice la ECC nivel L, dar doar 1852 la nivel H. Pentru utilizare practică (cititor mobil, distanță de scanare normală), recomandăm sub 500 caractere și ECC ≥ M pentru fiabilitate." },
+      { q: "Pot scana codul QR generat aici cu orice telefon?", a: "Da. Standardul QR (ISO/IEC 18004) este deschis și suportat nativ de camerele Android și iOS din ultimii 7 ani, plus de toate aplicațiile populare (Google Lens, Apple Camera). Codurile generate respectă specificațiile, fără proprietar." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Pune conținutul",       description: "URL, text simplu, vCard, parolă Wi-Fi, telefon, e-mail sau geo-locație. Folosește butoanele șablon pentru completare rapidă." },
+        { title: "2. Adaugă pictogramă",     description: "Galerie cu 8 presetări comune (Wi-Fi, vCard, link, ❤️) plus 12 amuzante (🤖 👽 🚀 🦄 ...) sau încarcă logo PNG/SVG." },
+        { title: "3. Setează ECC",           description: "Nivel H (30% recuperare) este recomandat când codul are pictogramă. Nivel L permite mai multe date." },
+        { title: "4. Personalizează vizualul", description: "Culoare module, fundal, mărime pixel, margine quiet zone — în meniul avansat." },
+        { title: "5. Descarcă",              description: "PNG pentru web și aplicații, SVG pentru tipar profesional. Testează scanarea înainte de tipar definitiv." },
+      ],
+      useCases: [
+        { icon: "📶", title: "Wi-Fi pentru oaspeți",   description: "Generează un QR cu parola Wi-Fi printat pe etichetă — oaspeții se conectează scanând, fără să introducă parola." },
+        { icon: "👤", title: "Carte de vizită digitală", description: "vCard QR pe spatele cărții de vizită clasice — un singur scan adaugă contactul în agenda telefonului." },
+        { icon: "🍽️", title: "Meniu restaurant",      description: "QR pe masă cu URL spre meniul digital — pictogramă cu 🍕 sau logo propriu pentru personalizare." },
+        { icon: "🎟️", title: "Bilete și evenimente",  description: "QR pentru check-in la evenimente cu logo discret — distinge-ți biletele și previi falsificarea simplă." },
+      ],
+      aboutSection: {
+        title: "Despre codurile QR și pictograma centrală",
+        paragraphs: [
+          "Codul QR (Quick Response Code) a fost inventat în 1994 de compania japoneză Denso Wave pentru urmărirea pieselor auto. Spre deosebire de codurile de bare 1D (EAN, CODE-128), QR este un cod 2D — codează informația în două dimensiuni, ceea ce-i permite o densitate de date mult mai mare (până la 7089 cifre sau 4296 caractere alfanumerice).",
+          "Robustețea codului QR vine din corectarea erorilor Reed-Solomon: codul include redundanță configurabilă (7-30%), permițând recuperarea informației chiar dacă o parte e deteriorată, murdară sau — în cazul nostru — acoperită cu o pictogramă centrală.",
+          "Pentru a păstra scanabilitatea cu pictogramă în centru, recomandăm: (1) ECC nivel H (toleranță 30%), (2) pictograma sub 25% din suprafața totală a codului, (3) fundal alb (sau de culoarea light) în spatele pictogramei pentru contrast, (4) testarea scanării cu cel puțin două telefoane diferite înainte de tipar comercial.",
+        ],
+      },
+      tips: [
+        { icon: "🛡️", tip: "Folosește mereu ECC nivel H când adaugi pictogramă — codul rezistă la pierderea a 30% din suprafață." },
+        { icon: "📏", tip: "Mărimea pictogramei să nu depășească 25% din lățimea codului — peste asta scanarea devine nefiabilă." },
+        { icon: "🎯", tip: "Testează codul cu cel puțin 2 telefoane (Android + iOS) înainte de tipar masiv." },
+        { icon: "📱", tip: "Pentru tipărire pe afișe, folosește SVG — scalează fără pierdere la dimensiuni mari." },
+      ],
+    },
+  },
 };

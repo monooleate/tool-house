@@ -53,7 +53,15 @@ const roHref = !allowedLangs || allowedLangs.includes("ro") ? toolUrl(rawTool, "
 
 // Math kategóriák (KaTeX CSS a <head>-be)
 const MATH_CATS = new Set(["calculator", "geometrie", "conversii", "finante", "sanatate", "timp"]);
-const needsKatex = MATH_CATS.has(tool.category);
+// Fejleszto-ban a RO-only tool-ok (barcode, QR — languages: ["ro"]) szintén
+// használnak longform markdown-t KaTeX formulákkal. Egyetlen-elemű "ro"
+// languages tömb a marker — a HU+RO fejleszto tool-okat (json, base64...) nem érinti.
+const isFejlesztoRoOnly =
+  rawTool.category === "fejleszto" &&
+  Array.isArray(rawTool.languages) &&
+  rawTool.languages.length === 1 &&
+  rawTool.languages[0] === "ro";
+const needsKatex = MATH_CATS.has(tool.category) || isFejlesztoRoOnly;
 
 // ─── Longform Markdown lookup (Astro Content Collection) ─────
 // Ha math-kategória és van egyező toolSlug a math collection-ben (RO-only),

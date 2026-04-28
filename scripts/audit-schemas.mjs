@@ -65,6 +65,16 @@ const PAGE_GROUPS = [
       "bacalaureat-numaratoare",
     ],
   },
+  {
+    category: "fejleszto",
+    // RO build URL: dezvoltator (CATEGORY_URLS mapping)
+    dist: "dist/dezvoltator",
+    pages: [
+      // Fázis 8 (RO-only barcode + QR)
+      "generator-cod-bare",
+      "generator-cod-qr",
+    ],
+  },
 ];
 
 let totalSchemas = 0;

@@ -172,6 +172,9 @@
     CountdownGenerator:          () => import("../tools/timp/CountdownGenerator.svelte"),
     CateZileAmCalculator:        () => import("../tools/timp/CateZileAmCalculator.svelte"),
     BacalaureatCountdown:        () => import("../tools/timp/BacalaureatCountdown.svelte"),
+    // FEJLESZTO (RO-only barcode + QR) – Fázis 8
+    CodBareGenerator:            () => import("../tools/fejleszto/CodBareGenerator.svelte"),
+    CodQrGenerator:              () => import("../tools/fejleszto/CodQrGenerator.svelte"),
   };
 
   onMount(async () => {

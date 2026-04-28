@@ -266,4 +266,42 @@ export const FEJLESZTO_RO: Record<
       "html entities online",
     ],
   },
+
+  // ── Fázis 8: cod de bare + cod QR (RO-only) ──────────────────
+  "generator-cod-bare": {
+    slug: "generator-cod-bare",
+    title: "Generator Cod de Bare – EAN-13, CODE-128, UPC-A, ITF-14 | InstrumenteOnline",
+    h1: "Generator Cod de Bare",
+    description:
+      "Generator coduri de bare online: EAN-13, CODE-128, UPC-A, ITF-14. Export SVG și PNG. Validare automată cu cifră de control modulo-10.",
+    keywords: [
+      "generator cod bare",
+      "EAN-13",
+      "CODE-128",
+      "UPC-A",
+      "ITF-14",
+      "barcode generator",
+      "cod bare online",
+      "GS1",
+    ],
+  },
+
+  "generator-cod-qr": {
+    slug: "generator-cod-qr",
+    title: "Generator Cod QR cu Pictogramă Centrală – PNG și SVG | InstrumenteOnline",
+    h1: "Generator Cod QR cu Pictogramă",
+    description:
+      "Generator coduri QR online cu pictogramă în centru: galerie presetări (Wi-Fi, vCard, link, amuzante) sau încărcare imagine proprie. Export PNG + SVG, ECC nivel H.",
+    keywords: [
+      "generator qr",
+      "cod qr cu logo",
+      "qr code online",
+      "qr code generator romana",
+      "qr cu pictograma",
+      "qr cu poza in centru",
+      "qr code wifi",
+      "qr vcard",
+      "qr png svg",
+    ],
+  },
 };

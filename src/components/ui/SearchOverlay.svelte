@@ -5,7 +5,7 @@
   // Statikus keresés – nincs backend, nincs API call
   // ============================================================
   import { onMount, onDestroy } from "svelte";
-  import { getAllTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
+  import { getAllTools, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
   import { toolUrl } from "../../lib/url-utils.ts";
 
   export let open = false;
@@ -114,6 +114,7 @@
   });
 
   onDestroy(() => {
+    if (typeof window === "undefined") return;
     window.removeEventListener("keydown", onGlobalKey);
     window.removeEventListener("toggle-search", onToggleSearch);
   });

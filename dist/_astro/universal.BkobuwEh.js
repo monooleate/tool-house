@@ -1,0 +1,1 @@
+import{a4 as s,av as n}from"./branches.DB0QOmlw.js";function v(o,a,r,f,i){var d=()=>{f(r[o])};r.addEventListener(a,d),i?s(()=>{r[o]=i()}):d(),(r===document.body||r===window||r===document)&&n(()=>{r.removeEventListener(a,d)})}export{v as b};
