@@ -13,6 +13,20 @@
         "toolSlug": {
           "type": "string"
         },
+        "instantSlug": {
+          "type": "string"
+        },
+        "subcategory": {
+          "type": "string",
+          "enum": [
+            "lungime",
+            "masa",
+            "volum",
+            "suprafata",
+            "temperatura",
+            "densitate"
+          ]
+        },
         "category": {
           "type": "string",
           "enum": [

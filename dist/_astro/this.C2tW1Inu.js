@@ -1,0 +1,1 @@
+import{b4 as b,a4 as t,x as S,a7 as h,S as k}from"./branches.BuCdXWuh.js";function u(r,i){return r===i||r?.[k]===i}function c(r={},i,f,x){return b(()=>{var a,s;return t(()=>{a=s,s=[],S(()=>{r!==f(...s)&&(i(r,...s),a&&u(f(...a),r)&&i(null,...a))})}),()=>{h(()=>{s&&u(f(...s),r)&&i(null,...s)})}}),r}export{c as b};

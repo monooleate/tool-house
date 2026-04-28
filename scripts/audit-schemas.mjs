@@ -5,17 +5,23 @@ import { join } from "node:path";
 const PAGE_GROUPS = [
   {
     category: "conversii",
+    // NOTE: conversii now uses sub-categorized routing /conversii/<subcat>/<slug>/
     dist: "dist/conversii",
     pages: [
-      // Fázis 1
-      "cm-metri", "km-metri", "cm-inch", "kg-grame", "litri-mililitri", "celsius-fahrenheit",
-      // Fázis 4 (set complet)
-      "picioare-cm", "inch-cm", "kg-livre", "tone-kg",
-      "hectare-metri-patrati", "ari-metri-patrati",
-      "litri-decilitri", "litri-metri-cubi", "galon-litri",
-      "beton-greutate-volum", "densitate-kg-m3-g-cm3",
-      // Fázis 4 cleanup (convertoare densitate construcții)
-      "nisip-greutate-volum", "pietris-greutate-volum", "balast-greutate-volum",
+      // Fázis 1 + Fázis 4 (lungime)
+      "lungime/cm-metri", "lungime/km-metri", "lungime/cm-inch",
+      "lungime/picioare-cm", "lungime/inch-cm",
+      // Fázis 1 + Fázis 4 (masa)
+      "masa/kg-grame", "masa/kg-livre", "masa/tone-kg",
+      // Fázis 1 + Fázis 4 (volum)
+      "volum/litri-mililitri", "volum/litri-decilitri", "volum/litri-metri-cubi", "volum/galon-litri",
+      // Fázis 1 (temperatură)
+      "temperatura/celsius-fahrenheit",
+      // Fázis 4 (suprafață)
+      "suprafata/hectare-metri-patrati", "suprafata/ari-metri-patrati",
+      // Fázis 4 + cleanup (densitate)
+      "densitate/beton-greutate-volum", "densitate/densitate-kg-m3-g-cm3",
+      "densitate/nisip-greutate-volum", "densitate/pietris-greutate-volum", "densitate/balast-greutate-volum",
     ],
   },
   {
@@ -46,6 +52,17 @@ const PAGE_GROUPS = [
     pages: [
       // Fázis 6
       "calculator-imc", "greutate-ideala", "calculator-calorii",
+    ],
+  },
+  {
+    category: "timp",
+    dist: "dist/timp",
+    pages: [
+      // Fázis 7
+      "diferenta-date",
+      "craciun-numaratoare", "revelion-numaratoare", "pasti-numaratoare",
+      "zi-de-nastere", "generator-numaratoare", "cate-zile-am",
+      "bacalaureat-numaratoare",
     ],
   },
 ];

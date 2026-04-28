@@ -163,6 +163,15 @@
     ImcCalculator:               () => import("../tools/sanatate/ImcCalculator.svelte"),
     GreutateIdealaCalculator:    () => import("../tools/sanatate/GreutateIdealaCalculator.svelte"),
     CaloriiCalculator:           () => import("../tools/sanatate/CaloriiCalculator.svelte"),
+    // TIMP (RO-only) – Fázis 7
+    DiferentaDateCalculator:     () => import("../tools/timp/DiferentaDateCalculator.svelte"),
+    CraciunCountdown:            () => import("../tools/timp/CraciunCountdown.svelte"),
+    RevelionCountdown:           () => import("../tools/timp/RevelionCountdown.svelte"),
+    PastiCountdown:              () => import("../tools/timp/PastiCountdown.svelte"),
+    ZiNastereCountdown:          () => import("../tools/timp/ZiNastereCountdown.svelte"),
+    CountdownGenerator:          () => import("../tools/timp/CountdownGenerator.svelte"),
+    CateZileAmCalculator:        () => import("../tools/timp/CateZileAmCalculator.svelte"),
+    BacalaureatCountdown:        () => import("../tools/timp/BacalaureatCountdown.svelte"),
   };
 
   onMount(async () => {
