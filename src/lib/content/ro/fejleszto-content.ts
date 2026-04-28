@@ -938,12 +938,12 @@ export const FEJLESZTO_RO_CONTENT: ContentMap = {
   // ═══ FÁZIS 8 (b): GENERATOR COD QR ════════════════════════════════════════
   "generator-cod-qr": {
     introText:
-      "Generator de coduri QR online cu pictogramă în centru: alege dintr-o galerie de presetări (Wi-Fi, vCard, link, plus 12 emoji amuzante) sau încarcă propria imagine. Suportă șabloane rapide pentru URL, vCard, parolă Wi-Fi, geo-locație, telefon și e-mail. Export PNG + SVG vectorial, nivel de corectare a erorilor (ECC) configurabil, fără tracking.",
+      "Generator de coduri QR online cu pictogramă în centru: alege dintr-o galerie de presetări (Wi-Fi, vCard, link, plus 12 emoji amuzante) sau încarcă propria imagine. Suportă 3 stiluri de module (pătrat, puncte, rotunjit), șabloane rapide pentru URL, vCard, parolă Wi-Fi, geo-locație, telefon și e-mail. Export PNG + SVG vectorial, nivel de corectare a erorilor (ECC) configurabil, fără tracking.",
     guide: [
       "1. Introdu textul, URL-ul sau datele structurate (Wi-Fi, vCard) — sau folosește un șablon rapid.",
       "2. Activează „Galerie presetări” pentru pictogramă centrală sau „Încarcă imagine” pentru logo propriu.",
-      "3. Reglează mărimea pictogramei (recomandat 18-25% cu nivel ECC H pentru rezistență la scanare).",
-      "4. Personalizează culorile, mărimea modulului și marginea în meniul avansat.",
+      "3. În meniul „Opțiuni avansate” (deschis automat) alege stilul modulelor: pătrat clasic, puncte rotunde sau pătrate rotunjite. Finder patterns-urile rămân întotdeauna pătrate pentru fiabilitate maximă la scanare.",
+      "4. Reglează mărimea pictogramei (recomandat 18-25% cu nivel ECC H), culorile, mărimea pixelului și marginea quiet zone.",
       "5. Descarcă PNG (raster) sau SVG (vectorial pentru tipar). Testează scanarea cu telefonul înainte de finalizare.",
     ],
     faq: [
@@ -958,9 +958,10 @@ export const FEJLESZTO_RO_CONTENT: ContentMap = {
       howToSteps: [
         { title: "1. Pune conținutul",       description: "URL, text simplu, vCard, parolă Wi-Fi, telefon, e-mail sau geo-locație. Folosește butoanele șablon pentru completare rapidă." },
         { title: "2. Adaugă pictogramă",     description: "Galerie cu 8 presetări comune (Wi-Fi, vCard, link, ❤️) plus 12 amuzante (🤖 👽 🚀 🦄 ...) sau încarcă logo PNG/SVG." },
-        { title: "3. Setează ECC",           description: "Nivel H (30% recuperare) este recomandat când codul are pictogramă. Nivel L permite mai multe date." },
-        { title: "4. Personalizează vizualul", description: "Culoare module, fundal, mărime pixel, margine quiet zone — în meniul avansat." },
-        { title: "5. Descarcă",              description: "PNG pentru web și aplicații, SVG pentru tipar profesional. Testează scanarea înainte de tipar definitiv." },
+        { title: "3. Alege stilul modulelor", description: "Pătrat clasic, puncte rotunde sau rotunjite — finder patterns-urile rămân pătrate pentru scanare optimă." },
+        { title: "4. Setează ECC",           description: "Nivel H (30% recuperare) este recomandat când codul are pictogramă. Nivel L permite mai multe date." },
+        { title: "5. Personalizează vizualul", description: "Culoare module, fundal, mărime pixel, margine quiet zone — în meniul avansat." },
+        { title: "6. Descarcă",              description: "PNG pentru web și aplicații, SVG pentru tipar profesional. Testează scanarea înainte de tipar definitiv." },
       ],
       useCases: [
         { icon: "📶", title: "Wi-Fi pentru oaspeți",   description: "Generează un QR cu parola Wi-Fi printat pe etichetă — oaspeții se conectează scanând, fără să introducă parola." },

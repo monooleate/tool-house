@@ -17,7 +17,7 @@
   let displayValue = $state<boolean>(true);
   let lineColor = $state<string>("#000000");
   let background = $state<string>("#ffffff");
-  let advancedOpen = $state<boolean>(false);
+  let advancedOpen = $state<boolean>(true);
 
   let svgContainer: HTMLDivElement | undefined = $state();
   let canvasEl: HTMLCanvasElement | undefined = $state();
@@ -237,29 +237,7 @@
     </div>
   </div>
 
-  <!-- Preview -->
-  <div class="card preview-card" role="img" aria-label={`Previzualizare cod ${format}`}>
-    {#if !JsBarcode}
-      <div class="placeholder">⏳ Se încarcă generatorul...</div>
-    {:else if !validation.ok}
-      <div class="placeholder placeholder--err">⚠️ Corectează valoarea pentru a vedea codul.</div>
-    {:else}
-      <div bind:this={svgContainer} class="svg-host"></div>
-      <canvas bind:this={canvasEl} class="canvas-hidden" aria-hidden="true"></canvas>
-    {/if}
-  </div>
-
-  <!-- Download -->
-  <div class="card download-card">
-    <h3 class="legend">Descărcare</h3>
-    <div class="dl-row">
-      <button type="button" class="btn btn--primary" onclick={downloadPNG} disabled={!validation.ok}>⬇️ PNG</button>
-      <button type="button" class="btn btn--outline" onclick={downloadSVG} disabled={!validation.ok}>⬇️ SVG (vector)</button>
-    </div>
-    <p class="hint">SVG este vectorial — perfect pentru tipar. PNG e ideal pentru web și aplicații.</p>
-  </div>
-
-  <!-- Advanced -->
+  <!-- Advanced settings (above preview for better discoverability) -->
   <details class="card advanced" bind:open={advancedOpen}>
     <summary>⚙️ Opțiuni avansate</summary>
     <div class="adv-grid">
@@ -285,6 +263,28 @@
       </label>
     </div>
   </details>
+
+  <!-- Preview -->
+  <div class="card preview-card" role="img" aria-label={`Previzualizare cod ${format}`}>
+    {#if !JsBarcode}
+      <div class="placeholder">⏳ Se încarcă generatorul...</div>
+    {:else if !validation.ok}
+      <div class="placeholder placeholder--err">⚠️ Corectează valoarea pentru a vedea codul.</div>
+    {:else}
+      <div bind:this={svgContainer} class="svg-host"></div>
+      <canvas bind:this={canvasEl} class="canvas-hidden" aria-hidden="true"></canvas>
+    {/if}
+  </div>
+
+  <!-- Download -->
+  <div class="card download-card">
+    <h3 class="legend">Descărcare</h3>
+    <div class="dl-row">
+      <button type="button" class="btn btn--primary" onclick={downloadPNG} disabled={!validation.ok}>⬇️ PNG</button>
+      <button type="button" class="btn btn--outline" onclick={downloadSVG} disabled={!validation.ok}>⬇️ SVG (vector)</button>
+    </div>
+    <p class="hint">SVG este vectorial — perfect pentru tipar. PNG e ideal pentru web și aplicații.</p>
+  </div>
 
   <p class="disclaimer">
     ℹ️ Codurile generate sunt potrivite pentru uz personal, prototipare și testare. Pentru utilizare comercială cu produse fizice este necesară licențierea oficială

@@ -30,12 +30,17 @@
     { id: "smile",    emoji: "😎", label: "Cool",      group: "amuzante" },
   ];
 
+  // Module shape — best practice: finder patterns always solid squares
+  // (scanner reliability), only data modules are styled.
+  type ModuleStyle = "square" | "dots" | "rounded";
+
   let value = $state<string>("https://instrumenteonline.ro");
   let ecc = $state<EccLevel>("H");
   let pixelSize = $state<number>(8);
   let margin = $state<number>(2);
   let darkColor = $state<string>("#000000");
   let lightColor = $state<string>("#ffffff");
+  let moduleStyle = $state<ModuleStyle>("square");
 
   // Icon state
   let iconKind = $state<"none" | "preset" | "upload">("none");
@@ -44,7 +49,7 @@
   let uploadFileName = $state<string>("");
   let iconScale = $state<number>(0.22); // 22% of QR size — safe with H ECC
 
-  let advancedOpen = $state<boolean>(false);
+  let advancedOpen = $state<boolean>(true);
   let copied = $state<boolean>(false);
 
   let canvasEl: HTMLCanvasElement | undefined = $state();
@@ -140,63 +145,135 @@
     ctx.closePath();
   }
 
-  // Render reactiv
-  $effect(() => {
-    if (!QRCode || !validation.ok || !canvasEl) return;
-    renderError = "";
+  // Finder pattern detection — always render as solid squares for scan reliability.
+  // The 3 corner finder patterns are 7×7 modules in top-left, top-right, bottom-left.
+  function isInFinderPattern(row: number, col: number, size: number): boolean {
+    return (row < 7 && col < 7)
+      || (row < 7 && col >= size - 7)
+      || (row >= size - 7 && col < 7);
+  }
 
-    const v = value.trim();
-    const opts = {
-      errorCorrectionLevel: ecc,
-      margin,
-      scale: pixelSize,
-      color: { dark: darkColor, light: lightColor },
-    };
+  function roundCanvasRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+    const rr = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y,     x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x,     y + h, rr);
+    ctx.arcTo(x,     y + h, x,     y,     rr);
+    ctx.arcTo(x,     y,     x + w, y,     rr);
+    ctx.closePath();
+  }
 
-    QRCode.toCanvas(canvasEl, v, opts, (err: Error | null) => {
-      if (err) { renderError = err.message; return; }
-      drawIconOnCanvas(canvasEl!);
-    });
+  function renderMatrixToCanvas(canvas: HTMLCanvasElement, modules: { size: number; data: Uint8Array }) {
+    const { size, data } = modules;
+    const totalSize = (size + 2 * margin) * pixelSize;
+    canvas.width = totalSize;
+    canvas.height = totalSize;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    // SVG ramură (fără icon — sau cu image embed dacă upload e prezent)
-    QRCode.toString(v, { ...opts, type: "svg" }, (err: Error | null, str: string) => {
-      if (err) { svgString = ""; return; }
-      svgString = injectIconIntoSvg(str);
-    });
-    // referințe reactive — evită warning de unused-deps
-    void iconKind; void presetId; void uploadDataUrl; void iconScale;
-  });
+    ctx.fillStyle = lightColor;
+    ctx.fillRect(0, 0, totalSize, totalSize);
+    ctx.fillStyle = darkColor;
 
-  function injectIconIntoSvg(svg: string): string {
-    if (iconKind === "none") return svg;
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        if (!data[row * size + col]) continue;
+        const x = (col + margin) * pixelSize;
+        const y = (row + margin) * pixelSize;
+        const useSquare = moduleStyle === "square" || isInFinderPattern(row, col, size);
 
-    // Extragem viewBox pentru centrare exactă
-    const m = svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
-    if (!m) return svg;
-    const W = parseFloat(m[1]);
+        if (useSquare) {
+          ctx.fillRect(x, y, pixelSize, pixelSize);
+        } else if (moduleStyle === "dots") {
+          const r = pixelSize / 2;
+          ctx.beginPath();
+          ctx.arc(x + r, y + r, r * 0.85, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (moduleStyle === "rounded") {
+          roundCanvasRect(ctx, x, y, pixelSize, pixelSize, pixelSize * 0.3);
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  function buildSvgFromMatrix(modules: { size: number; data: Uint8Array }): string {
+    const { size, data } = modules;
+    const totalSize = (size + 2 * margin) * pixelSize;
+    const parts: string[] = [];
+    parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalSize} ${totalSize}" width="${totalSize}" height="${totalSize}" shape-rendering="crispEdges">`);
+    parts.push(`<rect width="${totalSize}" height="${totalSize}" fill="${lightColor}"/>`);
+
+    for (let row = 0; row < size; row++) {
+      for (let col = 0; col < size; col++) {
+        if (!data[row * size + col]) continue;
+        const x = (col + margin) * pixelSize;
+        const y = (row + margin) * pixelSize;
+        const useSquare = moduleStyle === "square" || isInFinderPattern(row, col, size);
+
+        if (useSquare) {
+          parts.push(`<rect x="${x}" y="${y}" width="${pixelSize}" height="${pixelSize}" fill="${darkColor}"/>`);
+        } else if (moduleStyle === "dots") {
+          const r = pixelSize / 2;
+          parts.push(`<circle cx="${x + r}" cy="${y + r}" r="${r * 0.85}" fill="${darkColor}"/>`);
+        } else if (moduleStyle === "rounded") {
+          const radius = pixelSize * 0.3;
+          parts.push(`<rect x="${x}" y="${y}" width="${pixelSize}" height="${pixelSize}" rx="${radius}" ry="${radius}" fill="${darkColor}"/>`);
+        }
+      }
+    }
+
+    parts.push(injectIconNode(totalSize));
+    parts.push(`</svg>`);
+    return parts.join("");
+  }
+
+  function injectIconNode(W: number): string {
+    if (iconKind === "none") return "";
     const iconSize = W * iconScale;
     const x = (W - iconSize) / 2;
     const pad = Math.max(2, iconSize * 0.08);
     const r = iconSize * 0.18;
-
     const bg = `<rect x="${x - pad}" y="${x - pad}" width="${iconSize + 2 * pad}" height="${iconSize + 2 * pad}" rx="${r}" ry="${r}" fill="${lightColor}"/>`;
 
-    let iconNode = "";
     if (iconKind === "preset") {
       const preset = PRESETS.find(p => p.id === presetId) ?? PRESETS[0];
       const fontSize = iconSize * 0.85;
-      iconNode = `<text x="${W / 2}" y="${W / 2 + fontSize * 0.34}" font-size="${fontSize}" text-anchor="middle" font-family='Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji,sans-serif'>${preset.emoji}</text>`;
-    } else if (iconKind === "upload" && uploadDataUrl) {
-      iconNode = `<image href="${escapeXml(uploadDataUrl)}" x="${x}" y="${x}" width="${iconSize}" height="${iconSize}" preserveAspectRatio="xMidYMid meet"/>`;
+      return `${bg}<text x="${W / 2}" y="${W / 2 + fontSize * 0.34}" font-size="${fontSize}" text-anchor="middle" font-family='Apple Color Emoji,Segoe UI Emoji,Noto Color Emoji,sans-serif'>${preset.emoji}</text>`;
     }
-
-    // Inserăm înainte de </svg>
-    return svg.replace(/<\/svg>$/, `${bg}${iconNode}</svg>`);
+    if (iconKind === "upload" && uploadDataUrl) {
+      return `${bg}<image href="${escapeXml(uploadDataUrl)}" x="${x}" y="${x}" width="${iconSize}" height="${iconSize}" preserveAspectRatio="xMidYMid meet"/>`;
+    }
+    return "";
   }
 
   function escapeXml(s: string): string {
     return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+
+  // Render reactiv — folosim QRCode.create() pentru a obține matricea de module
+  // și o desenăm manual cu stilul ales (square/dots/rounded).
+  $effect(() => {
+    if (!QRCode || !validation.ok || !canvasEl) return;
+    renderError = "";
+    const v = value.trim();
+
+    let qr: { modules: { size: number; data: Uint8Array } };
+    try {
+      qr = QRCode.create(v, { errorCorrectionLevel: ecc });
+    } catch (e) {
+      renderError = e instanceof Error ? e.message : String(e);
+      return;
+    }
+
+    renderMatrixToCanvas(canvasEl, qr.modules);
+    drawIconOnCanvas(canvasEl);
+    svgString = buildSvgFromMatrix(qr.modules);
+
+    // referințe reactive — make Svelte track these dependencies
+    void moduleStyle; void iconKind; void presetId; void uploadDataUrl; void iconScale; void margin; void pixelSize; void darkColor; void lightColor;
+  });
 
   function onUpload(e: Event) {
     const input = e.currentTarget as HTMLInputElement;
@@ -386,34 +463,76 @@
     {/if}
   </fieldset>
 
-  <!-- Preview -->
-  <div class="card preview-card" role="img" aria-label="Previzualizare cod QR">
-    {#if !QRCode}
-      <div class="placeholder">⏳ Se încarcă generatorul QR...</div>
-    {:else if !validation.ok}
-      <div class="placeholder placeholder--err">⚠️ Corectează conținutul pentru a vedea codul.</div>
-    {:else}
-      <canvas bind:this={canvasEl} class="qr-canvas"></canvas>
-    {/if}
-    {#if renderError}
-      <p class="render-err">⚠️ {renderError}</p>
-    {/if}
-  </div>
-
-  <!-- Download -->
-  <div class="card download-card">
-    <h3 class="legend">Descărcare</h3>
-    <div class="dl-row">
-      <button type="button" class="btn btn--primary" onclick={downloadPNG} disabled={!validation.ok}>⬇️ PNG</button>
-      <button type="button" class="btn btn--outline" onclick={downloadSVG} disabled={!validation.ok || !svgString}>⬇️ SVG (vector)</button>
-    </div>
-    <p class="hint">SVG e ideal pentru tipar mare (afișe, panouri). PNG funcționează în orice aplicație.</p>
-  </div>
-
-  <!-- Advanced -->
+  <!-- Advanced settings (above preview for better discoverability) -->
   <details class="card advanced" bind:open={advancedOpen}>
     <summary>⚙️ Opțiuni avansate</summary>
     <div class="adv-grid">
+      <div class="adv-item adv-item--full">
+        <span>Stil module (forma punctelor)</span>
+        <div class="style-chips">
+          <button
+            type="button"
+            class="style-chip"
+            class:style-chip--active={moduleStyle === "square"}
+            aria-pressed={moduleStyle === "square"}
+            onclick={() => (moduleStyle = "square")}
+            title="Pătrate clasice — compatibilitate maximă"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="2"  y="2"  width="6" height="6" fill="currentColor"/>
+              <rect x="9"  y="2"  width="6" height="6" fill="currentColor"/>
+              <rect x="16" y="2"  width="6" height="6" fill="currentColor"/>
+              <rect x="2"  y="9"  width="6" height="6" fill="currentColor"/>
+              <rect x="16" y="9"  width="6" height="6" fill="currentColor"/>
+              <rect x="2"  y="16" width="6" height="6" fill="currentColor"/>
+              <rect x="9"  y="16" width="6" height="6" fill="currentColor"/>
+              <rect x="16" y="16" width="6" height="6" fill="currentColor"/>
+            </svg>
+            <span>Pătrat</span>
+          </button>
+          <button
+            type="button"
+            class="style-chip"
+            class:style-chip--active={moduleStyle === "dots"}
+            aria-pressed={moduleStyle === "dots"}
+            onclick={() => (moduleStyle = "dots")}
+            title="Puncte rotunde — design modern"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <circle cx="5"  cy="5"  r="2.5" fill="currentColor"/>
+              <circle cx="12" cy="5"  r="2.5" fill="currentColor"/>
+              <circle cx="19" cy="5"  r="2.5" fill="currentColor"/>
+              <circle cx="5"  cy="12" r="2.5" fill="currentColor"/>
+              <circle cx="19" cy="12" r="2.5" fill="currentColor"/>
+              <circle cx="5"  cy="19" r="2.5" fill="currentColor"/>
+              <circle cx="12" cy="19" r="2.5" fill="currentColor"/>
+              <circle cx="19" cy="19" r="2.5" fill="currentColor"/>
+            </svg>
+            <span>Puncte</span>
+          </button>
+          <button
+            type="button"
+            class="style-chip"
+            class:style-chip--active={moduleStyle === "rounded"}
+            aria-pressed={moduleStyle === "rounded"}
+            onclick={() => (moduleStyle = "rounded")}
+            title="Pătrate cu colțuri rotunjite"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="2"  y="2"  width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="9"  y="2"  width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="16" y="2"  width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="2"  y="9"  width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="16" y="9"  width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="2"  y="16" width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="9"  y="16" width="6" height="6" rx="2" fill="currentColor"/>
+              <rect x="16" y="16" width="6" height="6" rx="2" fill="currentColor"/>
+            </svg>
+            <span>Rotunjit</span>
+          </button>
+        </div>
+        <small class="hint">💡 Pătratele finder din colțuri rămân întotdeauna solide pentru fiabilitate maximă la scanare.</small>
+      </div>
       <label class="adv-item">
         <span>Nivel corectare erori (ECC)</span>
         <select bind:value={ecc} class="select">
@@ -441,6 +560,30 @@
       </label>
     </div>
   </details>
+
+  <!-- Preview -->
+  <div class="card preview-card" role="img" aria-label="Previzualizare cod QR">
+    {#if !QRCode}
+      <div class="placeholder">⏳ Se încarcă generatorul QR...</div>
+    {:else if !validation.ok}
+      <div class="placeholder placeholder--err">⚠️ Corectează conținutul pentru a vedea codul.</div>
+    {:else}
+      <canvas bind:this={canvasEl} class="qr-canvas"></canvas>
+    {/if}
+    {#if renderError}
+      <p class="render-err">⚠️ {renderError}</p>
+    {/if}
+  </div>
+
+  <!-- Download -->
+  <div class="card download-card">
+    <h3 class="legend">Descărcare</h3>
+    <div class="dl-row">
+      <button type="button" class="btn btn--primary" onclick={downloadPNG} disabled={!validation.ok}>⬇️ PNG</button>
+      <button type="button" class="btn btn--outline" onclick={downloadSVG} disabled={!validation.ok || !svgString}>⬇️ SVG (vector)</button>
+    </div>
+    <p class="hint">SVG e ideal pentru tipar mare (afișe, panouri). PNG funcționează în orice aplicație.</p>
+  </div>
 
   <p class="disclaimer">
     ℹ️ Codurile QR generate sunt 100% gratuite și fără urmărire. Pentru codare rezistentă cu pictogramă, recomandăm <strong>ECC nivel H</strong> și pictogramă sub 25% din suprafață.
@@ -589,6 +732,28 @@
   .adv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-4); margin-top: var(--sp-4); }
   .adv-item { display: flex; flex-direction: column; gap: var(--sp-2); font-size: .875rem; color: var(--text-muted); }
   .adv-item--icon { margin-top: var(--sp-4); }
+  .adv-item--full { grid-column: 1 / -1; }
+
+  .style-chips { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+  .style-chip {
+    display: inline-flex; align-items: center; gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    background: var(--bg-input);
+    border: 2px solid var(--border);
+    border-radius: var(--r-md, 8px);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--t-fast, 0.15s);
+    font-size: .8125rem;
+    font-weight: 500;
+  }
+  .style-chip:hover { border-color: var(--cat-fejleszto); color: var(--cat-fejleszto); }
+  .style-chip--active {
+    border-color: var(--cat-fejleszto);
+    color: var(--cat-fejleszto);
+    background: color-mix(in srgb, var(--cat-fejleszto) 12%, var(--bg-card));
+  }
+  .style-chip svg { display: block; }
   .adv-item input[type="color"] { height: 40px; width: 100%; border: 1px solid var(--border); border-radius: var(--r-md, 8px); cursor: pointer; padding: 2px; background: var(--bg-input); }
   .adv-item input[type="range"] { accent-color: var(--cat-fejleszto); }
   .select { background: var(--bg-input); color: var(--text); border: 1px solid var(--border); border-radius: var(--r-md, 8px); padding: var(--sp-3); font-size: .875rem; }

@@ -111,6 +111,20 @@ Un cod QR conține mai multe regiuni funcționale, codificate matematic:
 | **Version Information** | (de la versiunea 7) — codifică numărul versiunii |
 | **Data + Error Correction** | Modulele rămase — datele utile codate Reed-Solomon |
 
+## Stil module — pătrate, puncte sau rotunjite
+
+Generatorul nostru permite alegerea formei modulelor de date pentru un design personalizat:
+
+| Stil | Aspect | Compatibilitate la scanare | Recomandare |
+|------|--------|----------------------------|-------------|
+| **Pătrat** (clasic) | Module pătrate uniforme | 100% — standardul ISO/IEC 18004 | Tipar profesional, etichete comerciale |
+| **Puncte** | Cercuri în loc de pătrate | ~99% (cu ECC ≥ M)        | Branding modern, design contemporan |
+| **Rotunjit** | Pătrate cu colțuri rotunjite | ~99.5% | Echilibru între design și fiabilitate |
+
+**Regulă critică (best practice):** indiferent de stilul ales pentru modulele de date, **finder patterns-urile din cele 3 colțuri rămân întotdeauna pătrate solide**. Acestea sunt esențiale pentru ca cititorul (telefon, scanner industrial) să detecteze instantaneu poziția, rotația și perspectiva codului. Dacă finder patterns-urile sunt distorsionate vizual, rata de scanare scade dramatic — chiar și cu ECC nivel H.
+
+Generatorul aplică automat această regulă: când alegi stilul *Puncte* sau *Rotunjit*, modulele de date primesc forma respectivă, dar cele 3 finder patterns rămân pătrate clasice. Așa obții design + fiabilitate maximă.
+
 ## Niveluri de corectare a erorilor (ECC)
 
 Codul QR folosește **codarea Reed-Solomon** — o tehnică matematică din anii 1960, originar dezvoltată pentru transmisii spațiale. Reed-Solomon adaugă bytes redundanți care permit recuperarea informației chiar dacă o parte din cod este deteriorată, murdară sau acoperită cu o pictogramă.
