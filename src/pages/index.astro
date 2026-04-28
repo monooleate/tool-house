@@ -5,6 +5,7 @@
 // ToolTabs, Why, How, FAQ – SEO optimalizált struktúra
 // ============================================================
 import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeCountdown from "../components/sections/HomeCountdown.svelte";
 import {
   CATEGORIES, getAllTools, getActiveToolsCount, getTotalToolsCount,
   getLocalizedCategories, getLocalizedTool, getLocalizedCategory,
@@ -23,8 +24,8 @@ const allTools    = getAllTools().map(t => getLocalizedTool(t, CURRENT_LANG));
 const activeTools = allTools.filter(t => t.status === "active");
 const activeCount = getActiveToolsCount();
 
-// ─── Top 10 featured tools ───────────────────────────────────
-const TOP_TOOL_SLUGS = [
+// ─── Top 10 featured tools (lang-aware) ──────────────────────
+const TOP_TOOL_SLUGS_HU = [
   { category: 'kep',       slug: 'jpg-webp',       icon: '🖼️' },
   { category: 'kep',       slug: 'tomorites',       icon: '🗜️' },
   { category: 'kep',       slug: 'atmeretezes',     icon: '📐' },
@@ -37,6 +38,22 @@ const TOP_TOOL_SLUGS = [
   { category: 'kep',       slug: 'fekete-feher',    icon: '🎨' },
 ];
 
+// RO build: kombinált sokszínű mix — 4 általános + 6 RO-only math/F8
+const TOP_TOOL_SLUGS_RO = [
+  { category: 'fejleszto', slug: 'generator-cod-qr',     icon: '📱' },
+  { category: 'fejleszto', slug: 'generator-cod-bare',   icon: '📊' },
+  { category: 'finante',   slug: 'calculator-tva',       icon: '💶' },
+  { category: 'finante',   slug: 'calculator-credit',    icon: '🏦' },
+  { category: 'sanatate',  slug: 'calculator-imc',       icon: '⚕️' },
+  { category: 'sanatate',  slug: 'calculator-calorii',   icon: '🍎' },
+  { category: 'timp',      slug: 'craciun-numaratoare',  icon: '🎄' },
+  { category: 'timp',      slug: 'diferenta-date',       icon: '📅' },
+  { category: 'kep',       slug: 'jpg-webp',             icon: '🖼️' },
+  { category: 'pdf',       slug: 'osszeillesztes',       icon: '📄' },
+];
+
+const TOP_TOOL_SLUGS = CURRENT_LANG === "ro" ? TOP_TOOL_SLUGS_RO : TOP_TOOL_SLUGS_HU;
+
 const topTools = TOP_TOOL_SLUGS
   .map(({ category, slug, icon }) => {
     const raw = getToolBySlug(category, slug);
@@ -45,11 +62,32 @@ const topTools = TOP_TOOL_SLUGS
   })
   .filter(Boolean);
 
+// ─── RO-only: legújabb tools (F8 + late F7) ──────────────────
+const NEW_TOOL_SLUGS_RO = [
+  { category: 'fejleszto', slug: 'generator-cod-qr',       icon: '📱' },
+  { category: 'fejleszto', slug: 'generator-cod-bare',     icon: '📊' },
+  { category: 'timp',      slug: 'cate-zile-am',           icon: '⏳' },
+  { category: 'timp',      slug: 'generator-numaratoare',  icon: '⏰' },
+  { category: 'timp',      slug: 'bacalaureat-numaratoare',icon: '🎓' },
+  { category: 'timp',      slug: 'pasti-numaratoare',      icon: '🐣' },
+];
+
+const newTools = CURRENT_LANG === "ro"
+  ? NEW_TOOL_SLUGS_RO
+      .map(({ category, slug, icon }) => {
+        const raw = getToolBySlug(category, slug);
+        if (!raw) return null;
+        return { tool: getLocalizedTool(raw, CURRENT_LANG), icon };
+      })
+      .filter(Boolean)
+  : [];
+
 // ─── Category blocks ─────────────────────────────────────────
 const categories = getVisibleCategories(CURRENT_LANG);
 
-// ─── FAQ data ────────────────────────────────────────────────
-const faqItems = [1,2,3,4,5,6].map(i => ({
+// ─── FAQ data (RO has +4 extended questions about math/QR/legal/KaTeX) ─
+const faqRange = CURRENT_LANG === "ro" ? [1,2,3,4,5,6,7,8,9,10] : [1,2,3,4,5,6];
+const faqItems = faqRange.map(i => ({
   q: t(`homepage.faq_q${i}`),
   a: t(`homepage.faq_a${i}`),
 }));
@@ -171,6 +209,41 @@ const schemas = [
       ))}
     </ul>
   </section>
+
+  {newTools.length > 0 && (
+    <!-- ═══ NOI: ÚJ ESZKÖZÖK (RO-only) ═══════════════════════ -->
+    <section class="newest container" aria-labelledby="newest-title">
+      <div class="section-header">
+        <h2 id="newest-title" class="section-header__title">
+          <span class="badge-new" aria-hidden="true">NOU</span> {t('homepage.newest_title')}
+        </h2>
+        <p class="section-header__subtitle">{t('homepage.newest_subtitle')}</p>
+      </div>
+      <ul class="tool-grid tool-grid--featured" role="list">
+        {newTools.map(({ tool, icon }) => (
+          <li class="ftool-card ftool-card--new">
+            <a href={toolUrl(tool)} class="ftool-card__link">
+              <span class="ftool-card__icon" aria-hidden="true">{icon}</span>
+              <div class="ftool-card__body">
+                <h3 class="ftool-card__title">{tool.h1}</h3>
+                <p class="ftool-card__desc">{tool.description}</p>
+              </div>
+              <span class="ftool-card__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ═══ COUNTDOWN WIDGET (RO-only) ════════════════════════ -->
+    <section class="home-countdown-wrap container" aria-labelledby="cd-title">
+      <div class="section-header">
+        <h2 id="cd-title" class="section-header__title">{t('homepage.countdown_title')}</h2>
+        <p class="section-header__subtitle">{t('homepage.countdown_subtitle')}</p>
+      </div>
+      <HomeCountdown client:visible />
+    </section>
+  )}
 
   <!-- ═══ CATEGORY BLOCKS ════════════════════════════════════ -->
   <section class="categories-section container" aria-labelledby="categories-title">
@@ -483,6 +556,41 @@ const schemas = [
 .featured {
   padding-block: var(--sp-12);
 }
+
+/* ═══ NEWEST TOOLS (RO-only) ═════════════════════════════════ */
+.newest { padding-block: var(--sp-8) var(--sp-10); }
+.newest .section-header__title { display: inline-flex; align-items: center; gap: var(--sp-3); }
+
+.badge-new {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border-radius: var(--r-full);
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.ftool-card--new .ftool-card__link {
+  position: relative;
+  border-color: color-mix(in srgb, #ef4444 25%, var(--border));
+}
+.ftool-card--new .ftool-card__link::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ef4444 0%, #f97316 50%, #f59e0b 100%);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+/* Countdown wrap */
+.home-countdown-wrap { padding-block: var(--sp-8) var(--sp-12); }
+
 
 .tool-grid--featured {
   display: grid;

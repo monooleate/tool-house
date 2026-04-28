@@ -1,0 +1,1 @@
+import{a5 as s,aw as n}from"./branches.B1-LXpjb.js";function w(o,a,r,f,i){var d=()=>{f(r[o])};r.addEventListener(a,d),i?s(()=>{r[o]=i()}):d(),(r===document.body||r===window||r===document)&&n(()=>{r.removeEventListener(a,d)})}export{w as b};

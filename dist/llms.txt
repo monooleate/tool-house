@@ -1,47 +1,232 @@
-# Konvertalo.hu
+# InstrumenteOnline.ro
 
-> 111 free online conversion and file processing tools.
-> All processing happens in your browser -- no server uploads, no registration.
-> Privacy-first, GDPR compliant. Available in Hungarian and Romanian.
+> Free online tools, calculators and converters in Romanian
 
-## Image Tools
-- [JPG to WebP](https://konvertalo.hu/kep/jpg-webp): Convert JPEG images to WebP format (25-35% smaller files)
-- [PNG to WebP](https://konvertalo.hu/kep/png-webp): Convert PNG to WebP with transparency
-- [HEIC to JPG](https://konvertalo.hu/kep/heic-jpg): Convert iPhone HEIC photos to JPEG
-- [Image Compression](https://konvertalo.hu/kep/keptomorites): Compress images without visible quality loss
-- [Image Resize](https://konvertalo.hu/kep/kep-atmeretezese): Resize images to exact dimensions
-- [WebP to PNG](https://konvertalo.hu/kep/webp-png): Convert WebP back to PNG
-- [AVIF to JPG](https://konvertalo.hu/kep/avif-jpg): Convert AVIF to JPEG
+Browser-only tools, calculators, converters and generators in Romanian. Math (algebra, geometry), unit conversions, finance (TVA, credit, dobândă compusă, salariu net), health (IMC, calorii, greutate ideală), time (countdowns, working days with RO public holidays), QR + barcode generators. All processing client-side — no server, no tracking, GDPR compliant.
 
-## PDF Tools
-- [PDF Merge](https://konvertalo.hu/pdf/osszeillesztes): Combine multiple PDFs into one
-- [PDF Split](https://konvertalo.hu/pdf/szetvalasztas): Split PDF into individual pages
-- [PDF Compress](https://konvertalo.hu/pdf/tomorites): Reduce PDF file size
-- [PDF Rotate](https://konvertalo.hu/pdf/forgatas): Rotate PDF pages
-- [PDF Watermark](https://konvertalo.hu/pdf/vizjel): Add watermarks to PDFs
-- [PDF Password](https://konvertalo.hu/pdf/jelszo-vedelem): Password-protect PDFs
+## Imagini (42)
+> Conversie, redimensionare, comprimare și editare imagini în browser.
+- [Convertor JPG → WebP](https://instrumenteonline.ro/imagine/convertor-jpg-webp/): Convertește imagini JPG/PNG în format WebP în browser – fără server. Calitate ajustabilă, procesare în lot cu export ZIP.
+- [Convertor PNG → WebP](https://instrumenteonline.ro/imagine/convertor-png-webp/): Convertește imagini PNG în WebP cu păstrarea canalului alfa. Mod lossless și lossy, procesare în browser fără server.
+- [Convertor JPG → PNG](https://instrumenteonline.ro/imagine/convertor-jpg-png/): Convertește imagini JPG în format PNG fără pierderi, direct în browser. Fundal transparent, procesare în lot.
+- [Convertor PNG → JPG](https://instrumenteonline.ro/imagine/convertor-png-jpg/): Convertește imagini PNG în JPG cu setare calitate și alegere culoare fundal. În browser, fără server.
+- [Convertor WebP → JPG](https://instrumenteonline.ro/imagine/convertor-webp-jpg/): Reconvertește imagini WebP în format JPG cu setare calitate. În browser, fără server, procesare în lot.
+- [Convertor WebP → PNG](https://instrumenteonline.ro/imagine/convertor-webp-png/): Reconvertește imagini WebP în format PNG fără pierderi, cu păstrarea canalului alfa. În browser, fără server.
+- [Redimensionare imagini](https://instrumenteonline.ro/imagine/redimensionare-imagini/): Redimensionează imagini după pixeli sau procent, cu păstrarea proporțiilor. Procesare în lot cu export ZIP, în browser.
+- [Comprimare imagini online](https://instrumenteonline.ro/imagine/comprimare-imagini/): Comprimă imagini JPG, PNG și WebP cu pierdere minimă de calitate. În browser, fără server, procesare în lot.
+- [Setare calitate imagine](https://instrumenteonline.ro/imagine/setare-calitate-imagine/): Ajustează valoarea quality pentru imagini JPG/WebP pentru optimizarea dimensiunii fișierului. Previzualizare în timp real.
+- [Calculator rezoluție imagine](https://instrumenteonline.ro/imagine/calculator-rezolutie/): Calculator DPI și dimensiune pixeli pentru tipărire și ecran. Conversie inch, cm, mm cu rezultat în timp real.
+- [Decupare imagine](https://instrumenteonline.ro/imagine/decupare-imagine/): Decupează imagini la dimensiuni sau proporții personalizate, în browser. Previzualizare și coordonate precise în pixeli.
+- [Rotire imagine](https://instrumenteonline.ro/imagine/rotire-imagine/): Rotește imagini la unghi liber sau în pași de 90°, în browser. Cu previzualizare, fără server.
+- [Oglindire imagine](https://instrumenteonline.ro/imagine/oglindire-imagine/): Oglindire orizontală și verticală în browser, fără server. Previzualizare, descărcare cu un singur clic.
+- [Rotire imagine la 90°](https://instrumenteonline.ro/imagine/rotire-90-grade/): Rotire rapidă la 90° stânga sau dreapta cu un singur clic. Procesare în lot, în browser.
+- [Estompare imagine](https://instrumenteonline.ro/imagine/estompare-imagine/): Filtru Gaussian blur pentru imagini cu intensitate ajustabilă. Previzualizare, în browser, fără server.
+- [Pixelare imagine](https://instrumenteonline.ro/imagine/pixelare-imagine/): Efect pixel art și cenzură pentru imagini cu dimensiune pixel ajustabilă. În browser, fără server.
+- [Conversie imagine alb-negru](https://instrumenteonline.ro/imagine/alb-negru/): Transformă imagini color în tonuri de gri cu Canvas API, în browser. Previzualizare, procesare în lot.
+- [Ajustare contrast și luminozitate](https://instrumenteonline.ro/imagine/contrast-luminozitate/): Modifică contrastul și luminozitatea imaginilor cu slidere și previzualizare în timp real. În browser, fără server.
+- [Adaugă watermark](https://instrumenteonline.ro/imagine/watermark-imagine/): Aplică watermark text pe imagini cu setare poziție, font și transparență. În browser, fără server.
+- [Adaugă chenar și padding](https://instrumenteonline.ro/imagine/chenar-padding/): Adaugă chenar colorat în jurul imaginilor cu setare dimensiune și culoare. În browser, fără server.
+- [Afișare EXIF/metadata imagine](https://instrumenteonline.ro/imagine/cititor-metadata-exif/): Afișează date EXIF din JPG: dată, coordonate GPS, model cameră, diafragmă, viteză obturator. În browser, fără server.
+- [Ștergere metadata imagine](https://instrumenteonline.ro/imagine/stergere-metadata/): Elimină EXIF și metadata din imagini pentru confidențialitate. Ștergere GPS, info cameră în browser, fără server.
+- [Conversie imagini în lot](https://instrumenteonline.ro/imagine/conversie-lot-imagini/): Convertește zeci de imagini simultan între diferite formate, cu export ZIP. În browser, fără server.
+- [Redimensionare imagini în lot](https://instrumenteonline.ro/imagine/redimensionare-lot/): Redimensionează mai multe imagini simultan cu aceiași parametri, descărcare ZIP. În browser, fără server.
+- [Comprimare imagini în lot](https://instrumenteonline.ro/imagine/comprimare-lot/): Comprimă mai multe imagini simultan cu setare calitate, descărcare ZIP. În browser, fără server.
+- [Redenumire imagini în lot](https://instrumenteonline.ro/imagine/redenumire-lot/): Redenumește fișiere imagine în lot după șablon (ex. 'produs-{001}.jpg'), descărcare ZIP. În browser.
+- [Împachetare imagini în ZIP](https://instrumenteonline.ro/imagine/impachetare-zip-imagini/): Împachetează imaginile încărcate într-o arhivă ZIP cu un singur clic. În browser, fără server.
+- [Convertor HEIC → JPG](https://instrumenteonline.ro/imagine/convertor-heic-jpg/): Convertește imaginile HEIC de pe iPhone/iPad în format JPG în browser, fără server. Procesare în lot cu export ZIP.
+- [Convertor HEIC → PNG](https://instrumenteonline.ro/imagine/convertor-heic-png/): Convertește imagini HEIC în format PNG fără pierderi în browser. Cu păstrarea canalului alfa, fără server.
+- [Convertor JPG → AVIF](https://instrumenteonline.ro/imagine/convertor-jpg-avif/): Convertește imagini JPG în format AVIF în browser. AVIF oferă cu 40% mai puțin spațiu decât WebP – fără server.
+- [Convertor PNG → AVIF](https://instrumenteonline.ro/imagine/convertor-png-avif/): Convertește imagini PNG în format AVIF în browser, cu păstrarea canalului alfa. Mod lossless și lossy.
+- [Convertor Imagine → Base64 / Data URI](https://instrumenteonline.ro/imagine/imagine-base64/): Transformă imaginile în șiruri Base64 pentru integrare HTML/CSS. JPG, PNG, WebP, SVG – în browser, fără server.
+- [Generator Favicon / Convertor PNG → ICO](https://instrumenteonline.ro/imagine/generator-favicon-ico/): Creează fișier ICO favicon din PNG sau JPG în browser. Conține dimensiunile 16×16, 32×32 și 48×48 px într-un singur fișier.
+- [Redimensionare Imagine la Dimensiune Exactă \(KB\)](https://instrumenteonline.ro/imagine/redimensionare-imagine-kb/): Setează dimensiunea țintă în KB – instrumentul găsește automat calitatea optimă. Ideal pentru aplicații, formulare oficiale.
+- [Creator GIF Animat](https://instrumenteonline.ro/imagine/creator-gif-animat/): Creează GIF-uri animate din imagini JPG, PNG sau WebP în browser. Cu setări de delay și buclă – fără server.
+- [Convertor GIF → WebP Animat](https://instrumenteonline.ro/imagine/convertor-gif-webp-animat/): Convertește animații GIF în format WebP animat în browser. Până la 80% reducere a dimensiunii fișierului.
+- [Convertor SVG → PNG / JPG](https://instrumenteonline.ro/imagine/convertor-svg-png/): Convertește grafică vectorială SVG în imagini PNG sau JPG în browser. Rezoluție personalizabilă, fără server.
+- [Creator Colaj / Combinare Imagini](https://instrumenteonline.ro/imagine/creator-colaj-imagini/): Combină imagini orizontal, vertical sau în grilă într-o singură imagine. În browser, fără server.
+- [Extractor Paletă de Culori din Imagine](https://instrumenteonline.ro/imagine/paleta-culori-imagine/): Extrage culorile dominante dintr-o imagine cu coduri HEX, RGB și HSL. Pentru design brand, UI/UX.
+- [Decupare Automată – Eliminare Margini Albe/Unicolore](https://instrumenteonline.ro/imagine/decupare-automata-imagine/): Elimină automat marginile albe sau unicolore ale imaginilor în browser. Ideal pentru fotografii de produse, scanate.
+- [Vizualizator GPS EXIF – Hartă Interactivă](https://instrumenteonline.ro/imagine/harta-gps-exif-imagine/): Afișează locul de fotografiere dintr-o imagine JPEG pe hartă interactivă OpenStreetMap. În browser, fără server.
+- [Instrument Decupare Sprite Sheet](https://instrumenteonline.ro/imagine/decupare-sprite-sheet/): Taie sprite sheet-ul în imagini individuale după dimensiunea celulei. Export ZIP în browser, fără server.
 
-## Data Tools
-- [CSV to JSON](https://konvertalo.hu/adat/csv-json): Convert CSV files to JSON format
-- [JSON to CSV](https://konvertalo.hu/adat/json-csv): Convert JSON to CSV
-- [Excel to JSON](https://konvertalo.hu/adat/excel-json): Convert Excel spreadsheets to JSON
+## PDF (17)
+> Combinare, separare și gestionare pagini PDF fără încărcare pe server.
+- [Combinare fișiere PDF](https://instrumenteonline.ro/pdf/combinare-pdf/): Combină mai multe fișiere PDF într-un singur document cu ordonare drag & drop, în browser. Fără server, privat, fără limită de mărime.
+- [Separare fișier PDF](https://instrumenteonline.ro/pdf/separare-pdf/): Separă un PDF în pagini individuale sau grupuri de pagini, cu descărcare ZIP. În browser, fără server.
+- [Selectare pagini PDF](https://instrumenteonline.ro/pdf/selectare-pagini-pdf/): Extrage anumite pagini dintr-un PDF prin intervale de pagini. Previzualizare, în browser, fără server.
+- [Reordonare pagini PDF](https://instrumenteonline.ro/pdf/reordonare-pagini-pdf/): Reordonează paginile unui PDF prin drag & drop cu previzualizare miniaturi. În browser, fără server.
+- [Rotire pagini PDF](https://instrumenteonline.ro/pdf/rotire-pagini-pdf/): Rotește pagini individuale dintr-un PDF cu 90, 180 sau 270 de grade. Previzualizare, în browser, fără server.
+- [Ștergere pagini PDF](https://instrumenteonline.ro/pdf/stergere-pagini-pdf/): Șterge anumite pagini dintr-un document PDF cu previzualizare. În browser, fără server, complet privat.
+- [Conversie PDF în imagine](https://instrumenteonline.ro/pdf/pdf-in-imagine/): Exportă paginile PDF ca imagini PNG sau JPG cu setări de rezoluție și descărcare ZIP. În browser, fără server.
+- [Conversie imagini în PDF](https://instrumenteonline.ro/pdf/imagini-in-pdf/): Transformă imagini JPG/PNG într-un document PDF cu setări de dimensiune pagină. Drag & drop, în browser.
+- [Informații fișier PDF](https://instrumenteonline.ro/pdf/informatii-pdf/): Afișează metadatele PDF: număr pagini, dimensiune, autor, data creării, setări de securitate. În browser.
+- [Comprimă PDF](https://instrumenteonline.ro/pdf/comprimare-pdf/): Comprimă fișierele PDF gratuit în browser. Fără încărcare pe server, complet privat. Reducere medie 40-80%.
+- [Adaugă watermark PDF](https://instrumenteonline.ro/pdf/watermark-pdf/): Adaugă watermark textual documentelor PDF în browser. Poziție diagonală, opacitate și culoare configurabile. Fără server.
+- [Numerotare pagini PDF](https://instrumenteonline.ro/pdf/numerotare-pagini/): Adaugă numere de pagină documentelor PDF în browser. Poziție, format și număr de start configurabile. Gratuit, privat.
+- [Extrage text din PDF](https://instrumenteonline.ro/pdf/extragere-text-pdf/): Extrage textul din fișierele PDF în browser. Copiabil și descărcabil ca TXT. Fără încărcare pe server, complet privat.
+- [Semnează PDF online](https://instrumenteonline.ro/pdf/semnare-pdf/): Semnează documente PDF în browser. Semnătură desenată, scrisă sau încărcată ca imagine. Fără server, complet privat.
+- [Adaugă parolă la PDF](https://instrumenteonline.ro/pdf/protejare-pdf/): Protejează fișierele PDF cu parolă în browser. Setare parolă de deschidere și restricții opționale. Fără server.
+- [Elimină parola din PDF](https://instrumenteonline.ro/pdf/eliminare-parola-pdf/): Elimină protecția cu parolă din fișierele PDF în browser. Introdu parola existentă și descarcă versiunea neprotejată.
+- [Redactare PDF](https://instrumenteonline.ro/pdf/redactare-pdf/): Ascunde datele sensibile din documentele PDF. Dreptunghiuri negre arse ireversibil. În browser, fără încărcare pe server.
 
-## Developer Tools
-- [JSON Formatter](https://konvertalo.hu/fejleszto/json-formazas): Format and validate JSON
-- [YAML Formatter](https://konvertalo.hu/fejleszto/yaml-formazas): Format YAML documents
-- [Base64 Encoder](https://konvertalo.hu/fejleszto/base64-kodolas): Encode/decode Base64
-- [URL Encoder](https://konvertalo.hu/fejleszto/url-kodolas): URL encode/decode strings
-- [HTML Minifier](https://konvertalo.hu/fejleszto/html-minifikacio): Minify HTML code
+## Date (11)
+> Conversie CSV, JSON, TSV și curățare date online.
+- [Convertor CSV → JSON](https://instrumenteonline.ro/date/convertor-csv-json/): Convertește fișiere CSV în JSON în browser, fără server. Auto-detectare delimitator, opțiune header, previzualizare.
+- [Convertor JSON → CSV](https://instrumenteonline.ro/date/convertor-json-csv/): Convertește array JSON în tabel CSV în browser, cu alegere delimitator. Fără server, datele rămân private.
+- [Convertor TSV → CSV](https://instrumenteonline.ro/date/convertor-tsv-csv/): Convertește fișiere TSV (tab-separated) în CSV (comma-separated) în browser. Fără server, rapid și privat.
+- [Convertor CSV → TSV](https://instrumenteonline.ro/date/convertor-csv-tsv/): Convertește fișiere CSV în format TSV (tab-separated) în browser. Fără server, procesare rapidă și privată.
+- [Curățare date CSV](https://instrumenteonline.ro/date/curatare-csv/): Ștergere rânduri goale, normalizare spații și eliminare duplicate din CSV. În browser, fără încărcare pe server.
+- [Redenumire antete CSV](https://instrumenteonline.ro/date/redenumire-antete-csv/): Redenumește antetele coloanelor CSV cu editor vizual. Încărcare, editare, descărcare – totul în browser.
+- [Selectare coloane CSV](https://instrumenteonline.ro/date/selectare-coloane-csv/): Păstrează sau elimină coloane din CSV cu checkbox-uri. În browser, fără server, rapid și privat.
+- [Filtrare rânduri CSV](https://instrumenteonline.ro/date/filtrare-randuri-csv/): Filtrează rânduri CSV după condiții: conține, egal, mai mare, mai mic, nu este gol. În browser, privat.
+- [Separare coloană CSV](https://instrumenteonline.ro/date/separare-coloana-csv/): Împarte o coloană CSV în mai multe coloane pe baza unui delimitator. Detectare automată a numărului de coloane.
+- [Normalizare valori CSV](https://instrumenteonline.ro/date/normalizare-valori-csv/): Normalizează coloane numerice pe scara 0–1 (Min-Max) sau z-score. Detectare automată coloane numerice.
+- [Conversie în masă a datelor](https://instrumenteonline.ro/date/conversie-masa-csv-zip/): Convertește mai multe fișiere CSV în JSON simultan, cu descărcare ZIP. În browser, fără server, procesare batch.
 
-## Text Tools
-- [Slug Generator](https://konvertalo.hu/szoveg/slug-generalas): Generate URL-friendly slugs
-- [Text Case Converter](https://konvertalo.hu/szoveg/kis-nagy-betu): Convert text case
-- [Duplicate Remover](https://konvertalo.hu/szoveg/duplikatum-eltavolitas): Remove duplicate lines
+## Text (12)
+> Instrumente de editare text: sortare, curățare, conversie.
+- [Generator slug URL](https://instrumenteonline.ro/text/generator-slug-url/): Generează slug-uri URL din text: eliminare diacritice, litere mici, cratimă. Cu suport pentru caractere românești.
+- [Sortare rânduri text](https://instrumenteonline.ro/text/sortare-randuri/): Sortează rânduri în ordine alfabetică, descrescătoare sau aleatorie – în browser, fără server. Suport diacritice.
+- [Ștergere rânduri duplicate](https://instrumenteonline.ro/text/stergere-duplicate/): Elimină rândurile duplicate din text – mod case-sensitive și case-insensitive. În browser, datele rămân private.
+- [Ștergere rânduri goale](https://instrumenteonline.ro/text/stergere-randuri-goale/): Elimină rândurile goale și cele doar cu spații dintr-un text, cu un singur clic. În browser, privat.
+- [Curățare whitespace](https://instrumenteonline.ro/text/curatare-whitespace/): Normalizează spațiile, taburile și întreruperile de rând în exces – curățare text în browser, fără server.
+- [Eliminare diacritice](https://instrumenteonline.ro/text/eliminare-diacritice/): Convertește caracterele cu diacritice în echivalente latine – ă→a, ș→s, ț→t, â→a. În browser, fără server.
+- [Ștergere caractere speciale](https://instrumenteonline.ro/text/stergere-caractere-speciale/): Elimină caracterele non-ASCII și speciale din text – rămân doar litere, cifre și semne de punctuație de bază.
+- [Înlocuire caractere](https://instrumenteonline.ro/text/inlocuire-caractere/): Înlocuire simplă de caractere și fragmente de text fără regex – mod case-sensitive disponibil. În browser, privat.
+- [Căutare și înlocuire](https://instrumenteonline.ro/text/cautare-inlocuire/): Căutare și înlocuire în text cu opțiuni case-sensitive și potrivire cuvânt întreg – în browser, fără server.
+- [Regex căutare și înlocuire](https://instrumenteonline.ro/text/regex-cautare-inlocuire/): Căutare și înlocuire cu expresii regulate – selectare flag-uri, număr potriviri, modele exemplu. În browser.
+- [Conversie majuscule/minuscule](https://instrumenteonline.ro/text/majuscule-minuscule/): Transformare text în MAJUSCULE, minuscule sau Prima Literă Mare – cu un singur clic, în browser.
+- [Case converter](https://instrumenteonline.ro/text/case-converter/): Transformă text în camelCase, snake_case, PascalCase, kebab-case – util pentru programatori și creatori de conținut.
 
-## SEO Tools
-- [Title/Meta Length](https://konvertalo.hu/seo/title-meta-hossz): Check title and meta description length
+## Dezvoltator (19)
+> Developer tools (JSON/YAML/XML/CSS/JS format+minify, Base64/URL/HTML entity encode-decode, EAN-13/CODE-128/UPC-A/ITF-14 barcode generator with GS1 check digit, QR code generator with center icon and module styles)
+- [Formatare JSON](https://instrumenteonline.ro/dezvoltator/formatare-json/): JSON beautify si minify – indentare, linii noi, evidentierea sintaxei, validare cu raportare erori. In browser, fara server.
+- [Minificare JSON](https://instrumenteonline.ro/dezvoltator/minificare-json/): Eliminarea spatiilor albe din JSON pentru productie – reducere dimensiune cu procentaj. In browser, fara server.
+- [Validare JSON](https://instrumenteonline.ro/dezvoltator/validare-json/): Validare sintaxa JSON cu raportare erori si indicare numar linie – in timp real, in browser.
+- [Validare YAML](https://instrumenteonline.ro/dezvoltator/validare-yaml/): Verificare sintaxa YAML cu raportare detaliata a erorilor – linie si pozitie. In browser, fara server.
+- [Formatare YAML](https://instrumenteonline.ro/dezvoltator/formatare-yaml/): YAML prettify si normalizare cu indentare consistenta – bazat pe js-yaml. In browser, fara server.
+- [Formatare XML](https://instrumenteonline.ro/dezvoltator/formatare-xml/): XML beautify si normalizare indentare – iesire curata, fara evidentierea sintaxei. In browser, gratuit.
+- [Minificare XML](https://instrumenteonline.ro/dezvoltator/minificare-xml/): Eliminare spatii albe si comentarii din XML pentru dimensiune minima. Reducere marime cu procentaj.
+- [Validare XML](https://instrumenteonline.ro/dezvoltator/validare-xml/): Validare sintaxa XML si verificare well-formedness cu DOMParser. In browser, fara server.
+- [Formatare HTML](https://instrumenteonline.ro/dezvoltator/formatare-html/): HTML beautify si normalizare indentare – gestionare elemente void, indent consistent. In browser, gratuit.
+- [Minificare HTML](https://instrumenteonline.ro/dezvoltator/minificare-html/): Eliminare spatii albe si comentarii din HTML pentru productie. Reducere dimensiune cu procentaj.
+- [Formatare CSS](https://instrumenteonline.ro/dezvoltator/formatare-css/): CSS beautify cu indentare consistenta – ordonare proprietati, separare selectori. In browser, gratuit.
+- [Minificare CSS](https://instrumenteonline.ro/dezvoltator/minificare-css/): Eliminare spatii albe si comentarii din CSS, scurtari – dimensiune mai mica pentru productie.
+- [Formatare JavaScript](https://instrumenteonline.ro/dezvoltator/formatare-javascript/): JavaScript prettify si normalizare indentare – string-aware, indent la nivel de bloc. In browser, gratuit.
+- [Minificare JavaScript](https://instrumenteonline.ro/dezvoltator/minificare-javascript/): Minificare cod JavaScript: eliminare comentarii si spatii albe pentru productie.
+- [Codificare si decodificare Base64](https://instrumenteonline.ro/dezvoltator/base64-codificare-decodificare/): Codificare si decodificare text Base64 in browser – suport UTF-8, in timp real. Fara server.
+- [Codificare si decodificare URL](https://instrumenteonline.ro/dezvoltator/url-codificare-decodificare/): URL encode/decode: codificare format %XX si reconversie – mod encodeURIComponent si encodeURI.
+- [Codificare/Decodificare HTML entity](https://instrumenteonline.ro/dezvoltator/html-entity-codificare-decodificare/): Codificare entitati HTML (&amp;, &lt;, &gt;, &quot;) si reconversie – in timp real, in browser.
+- [Generator Cod de Bare](https://instrumenteonline.ro/dezvoltator/generator-cod-bare/): Generator coduri de bare online: EAN-13, CODE-128, UPC-A, ITF-14. Export SVG și PNG. Validare automată cu cifră de control modulo-10.
+- [Generator Cod QR cu Pictogramă](https://instrumenteonline.ro/dezvoltator/generator-cod-qr/): Generator coduri QR online cu pictogramă în centru: galerie presetări (Wi-Fi, vCard, link, amuzante) sau încărcare imagine proprie. Export PNG + SVG, ECC nivel H.
+
+## Markdown (1)
+> Conversie Markdown în HTML și previzualizare.
+- [Conversie Markdown in HTML](https://instrumenteonline.ro/markdown/conversie-markdown-html/): Conversie Markdown in HTML cu previzualizare in timp real si iesire HTML brut. In browser, fara server.
+
+## HTML (2)
+> Conversie HTML în text, minificare.
+- [Conversie HTML in text](https://instrumenteonline.ro/html/conversie-html-text/): Eliminare taguri HTML si extragere text curat cu DOMParser. In browser, fara server, complet privat.
+- [Minificare HTML](https://instrumenteonline.ro/html/minificare-html/): Comprimare cod HTML: eliminare spatii albe, comentarii si linii goale. Reducere dimensiune cu procentaj.
+
+## Excel (4)
+> Conversie și vizualizare Excel (XLSX) în browser.
+- [Conversie Excel in CSV](https://instrumenteonline.ro/excel/conversie-excel-csv/): Conversie Excel in CSV in browser cu selectare foaie de lucru. Bazat pe SheetJS, fara server, privat.
+- [Conversie Excel in JSON](https://instrumenteonline.ro/excel/conversie-excel-json/): Conversie fisier Excel in JSON cu optiuni foaie de lucru si antet. In browser, fara server.
+- [Conversie CSV in Excel](https://instrumenteonline.ro/excel/conversie-csv-excel/): Conversie fisier CSV in format Excel XLSX in browser. Detectare automata delimitator, fara server.
+- [Vizualizare fisier Excel](https://instrumenteonline.ro/excel/vizualizator-excel/): Vizualizare fisiere Excel in browser fara instalare software. Schimbare foaie, cautare, fara server.
+
+## Fișiere (4)
+> ZIP, verificare hash, informații fișiere.
+- [Creare arhiva ZIP](https://instrumenteonline.ro/fisiere/creare-zip/): Impachetare fisiere in arhiva ZIP in browser, fara incarcare pe server. Drag & drop, indicator dimensiune.
+- [Extragere arhiva ZIP](https://instrumenteonline.ro/fisiere/extragere-zip/): Extragere fisiere ZIP in browser cu previzualizare continut si descarcare individuala. Fara server.
+- [Verificare hash fisier](https://instrumenteonline.ro/fisiere/verificare-hash/): Calculare hash SHA-256 si SHA-1 pentru fisiere in browser cu SubtleCrypto API. Sigur, fara server.
+- [Informatii fisier](https://instrumenteonline.ro/fisiere/informatii-fisier/): Nume, dimensiune, tip, MIME type si data modificarii fisierului – cu File API, in browser.
+
+## SEO (1)
+> Instrumente SEO: lungime title/meta, UTM, canonical, robots.txt.
+- [Verificare title si meta description](https://instrumenteonline.ro/seo/verificare-title-meta/): Verificare caractere si latime pixeli pentru SEO title si meta description cu previzualizare SERP. In browser.
+
+## Calculator (6)
+> Romanian math calculators (percentages, quadratic equations, exponential equations, averages, rule of three, fuel consumption)
+- [Calculator Procente](https://instrumenteonline.ro/calculator/procent-calculator/): Calculator procente online: procent dintr-un număr, ce procent reprezintă, creștere/scădere și diferență procentuală. Cu formule și pași.
+- [Calculator Ecuație de Gradul al Doilea](https://instrumenteonline.ro/calculator/ecuatie-grad-doi/): Rezolvă ecuații de gradul doi (ax² + bx + c = 0) cu discriminantul Δ și formula generală. Afișează pașii de rezolvare și rădăcinile reale sau complexe.
+- [Calculator Ecuații Exponențiale](https://instrumenteonline.ro/calculator/ecuatii-exponentiale/): Rezolvă ecuații exponențiale de forma a · bˣ = c cu logaritmi. Afișează pașii detaliați: împărțire, logaritmare și verificare.
+- [Calculator Medie Aritmetică & Statistici](https://instrumenteonline.ro/calculator/medie-aritmetica/): Calculează media aritmetică, mediana, modul, abaterea standard și varianța pentru un set de numere. Adaugă rânduri dinamic, mod ponderat opțional.
+- [Calculator Regula de Trei Simplă](https://instrumenteonline.ro/calculator/regula-de-trei-simpla/): Aplică regula de trei simplă: proporții directe și inverse. Util la procente, rețete, prețuri, conversii și probleme școlare.
+- [Calculator Consum Combustibil](https://instrumenteonline.ro/calculator/consum-combustibil/): Calculator complet consum: l/100 km, mpg, litri necesari, cost total și emisii CO₂. Prețuri RO 2026 (motorină, benzină, GPL) și presets mașini.
+
+## Geometrie (5)
+> Romanian geometry calculators (right triangle, trig functions, radians/degrees, circle, rectangle)
+- [Calculator Triunghi Dreptunghic](https://instrumenteonline.ro/geometrie/triunghi-dreptunghic/): Calculează laturile, unghiurile, aria, perimetrul și înălțimea triunghiului dreptunghic din 6 moduri (catete, ipotenuză, unghi). Cu vizualizare SVG și triunghiuri remarcabile.
+- [Calculator Funcții Trigonometrice](https://instrumenteonline.ro/geometrie/functii-trigonometrice/): Calculează sin, cos, tan și cot pentru orice unghi (în grade sau radiani). Cerc trigonometric live, valori uzuale (30°, 45°, 60°) și formule.
+- [Convertor Radiani ↔ Grade](https://instrumenteonline.ro/geometrie/radiani-grade/): Convertor bidirecțional radiani-grade cu sector circular vizualizat în SVG. Valori uzuale (π/6, π/4, π/3, π/2, π) și formule rapide.
+- [Calculator Cerc](https://instrumenteonline.ro/geometrie/cerc-calculator/): Calculator cerc complet: din rază, diametru, perimetru sau arie obține restul. Mod sector circular și segment cu unghi central. Vizualizare SVG live.
+- [Calculator Dreptunghi](https://instrumenteonline.ro/geometrie/dreptunghi-calculator/): Calculator dreptunghi din laturi, perimetru, arie sau diagonală. Detector pătrat și secțiune de aur (φ). Cu SVG la scară și formule.
+
+## Conversii (20)
+> Romanian unit converters (length, mass, volume, area, temperature, density)
+- [Convertor Centimetri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/cm-metri/): Transformă instantaneu centimetri în metri și invers. Convertor bidirecțional cu formulă și exemple practice.
+- [Convertor Kilometri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/km-metri/): Transformare rapidă între kilometri și metri. Util pentru sport, distanțe rutiere și cursuri școlare.
+- [Convertor Centimetri ↔ Inch \(Țoli\)](https://instrumenteonline.ro/conversii/lungime/cm-inch/): Transformă centimetri în inch (țoli) și invers. Util pentru diagonale ecran, haine, DIY.
+- [Convertor Kilograme ↔ Grame](https://instrumenteonline.ro/conversii/masa/kg-grame/): Transformare bidirecțională între kilograme și grame. Util pentru rețete culinare, farmacie și școală.
+- [Convertor Litri ↔ Mililitri](https://instrumenteonline.ro/conversii/volum/litri-mililitri/): Transformă litri în mililitri și invers. Util pentru rețete, dozare medicamente și laborator.
+- [Convertor Celsius ↔ Fahrenheit](https://instrumenteonline.ro/conversii/temperatura/celsius-fahrenheit/): Transformă grade Celsius în Fahrenheit și invers. Include formula de conversie și tabel cu temperaturi de referință.
+- [Convertor Picioare + Țoli ↔ Centimetri](https://instrumenteonline.ro/conversii/lungime/picioare-cm/): Transformă picioare și țoli (5'10") în centimetri și invers. Util pentru înălțime, profiluri sportive și diagonale.
+- [Convertor Inch \(Țoli\) ↔ Centimetri](https://instrumenteonline.ro/conversii/lungime/inch-cm/): Convertor bidirecțional inch ↔ cm cu presets pentru ecrane (laptop, monitor, TV) și diagonale uzuale.
+- [Convertor Kilograme ↔ Livre / Pound](https://instrumenteonline.ro/conversii/masa/kg-livre/): Convertor kg ↔ livre (pounds, lbs) cu presets pentru greutate corporală uzuală. 1 kg = 2,205 lb.
+- [Convertor Tone ↔ Kilograme](https://instrumenteonline.ro/conversii/masa/tone-kg/): Convertor tone metrice ↔ kg cu presets pentru vehicule de transport (camion, TIR, vagon CFR).
+- [Convertor Hectare ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/hectare-metri-patrati/): Convertor hectare ↔ m² cu presets pentru parcele agricole RO. 1 ha = 10.000 m² = 100 ari.
+- [Convertor Ari ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/ari-metri-patrati/): Convertor ari ↔ m² uzual la anunțuri imobiliare RO (lot 5 ari, casă + curte). 1 ar = 100 m².
+- [Convertor Litri ↔ Decilitri](https://instrumenteonline.ro/conversii/volum/litri-decilitri/): Convertor litri ↔ decilitri cu presets pentru rețete RO (smântână 2 dl, lapte 5 dl). 1 l = 10 dl.
+- [Convertor Litri ↔ Metri Cubi](https://instrumenteonline.ro/conversii/volum/litri-metri-cubi/): Convertor litri ↔ m³ cu presets pentru consum apă/gaz (factură lunară RO). 1 m³ = 1.000 l.
+- [Convertor Galon ↔ Litri](https://instrumenteonline.ro/conversii/volum/galon-litri/): Convertor galon US (3,785 l) sau UK (4,546 l) ↔ litri. Util la consum auto, prețuri carburant import.
+- [Calculator Beton: Greutate ↔ Volum](https://instrumenteonline.ro/conversii/densitate/beton-greutate-volum/): Convertor beton greutate ↔ volum (densitate medie ρ = 2.400 kg/m³). Presets construcții, sac 25 kg, m³.
+- [Convertor Densitate kg/m³ ↔ g/cm³](https://instrumenteonline.ro/conversii/densitate/densitate-kg-m3-g-cm3/): Convertor densitate între kg/m³ și g/cm³ cu tabel materiale uzuale (apă, oțel, aluminiu, beton, lemn, aur).
+- [Calculator Nisip: Greutate ↔ Volum](https://instrumenteonline.ro/conversii/densitate/nisip-greutate-volum/): Convertor nisip greutate ↔ volum (densitate medie ρ = 1.500 kg/m³). Presets construcții, sac, m³, basculantă, tencuieli.
+- [Calculator Pietriș: Greutate ↔ Volum](https://instrumenteonline.ro/conversii/densitate/pietris-greutate-volum/): Convertor pietriș greutate ↔ volum (densitate medie ρ = 1.500 kg/m³). Sortimente 4-32 mm, beton, drumuri, drenaje.
+- [Calculator Balast: Greutate ↔ Volum](https://instrumenteonline.ro/conversii/densitate/balast-greutate-volum/): Convertor balast greutate ↔ volum (densitate medie ρ = 1.600 kg/m³). Fundații, drumuri, sub-pavaj, beton de balast.
+
+## Finanțe (6)
+> Romanian finance calculators (Romanian VAT 19%, credit/loan with APR, compound interest, discount, margin, hourly wage)
+- [Calculator TVA România](https://instrumenteonline.ro/finante/calculator-tva/): Calculator TVA cu cotele oficiale RO (19%, 9%, 5%) și 3 moduri: net→brut, brut→net, extragere TVA. Util pentru facturi și verificare bonuri.
+- [Calculator Credit Anuitar](https://instrumenteonline.ro/finante/calculator-credit/): Calculator credit anuitar cu rate dobândă tipice 2026 pentru BCR, BRD, Raiffeisen, ING. Rata lunară fixă, total dobândă, durată 10–30 ani.
+- [Calculator Dobândă Compusă](https://instrumenteonline.ro/finante/dobanda-compusa/): Calculator dobândă compusă cu compoundare lunară/anuală/zilnică, depuneri lunare opționale. Util pentru depozite, titluri Tezaur, ETF-uri.
+- [Calculator Reducere](https://instrumenteonline.ro/finante/calculator-reducere/): Calculator reducere bidirecțional: preț original→redus și invers. Verifică reducerile reale Black Friday conform Legii 363/2007.
+- [Calculator Marjă & Adaos Comercial](https://instrumenteonline.ro/finante/marja-adaos/): Convertor între marjă brută (margin) și adaos comercial (markup) pentru e-commerce, retail și raportări financiare RO.
+- [Calculator Salariu Lunar → Orar](https://instrumenteonline.ro/finante/calculator-salariu-ora/): Convertor salariu lunar brut în orar, zilnic, săptămânal și anual. Norma RO 168 h/lună, full-time și part-time.
+
+## Sănătate (3)
+> Romanian health calculators (BMI WHO, ideal weight 4 formulas, daily calories Mifflin-St Jeor + macros)
+- [Calculator IMC \(Indice Masă Corporală\)](https://instrumenteonline.ro/sanatate/calculator-imc/): Calculator IMC cu clasificare WHO oficială (subponderal, normal, supraponderal, obezitate I/II/III) și greutate ideală pentru adulți. Bară gradient interactivă.
+- [Calculator Greutate Ideală](https://instrumenteonline.ro/sanatate/greutate-ideala/): Calculator greutate ideală cu 4 formule științifice paralel: Devine (1974), Robinson (1983), Miller (1983), Hamwi (1964). Comparativ + medie + abatere standard.
+- [Calculator Calorii Zilnice \(BMR + TDEE\)](https://instrumenteonline.ro/sanatate/calculator-calorii/): Calculator calorii zilnice cu formula Mifflin-St Jeor (BMR), 5 niveluri de activitate (TDEE) și distribuție macro (proteine/carbohidrați/grăsimi) cu donut chart.
+
+## Timp (8)
+> Romanian time tools (date difference with RO working days, countdowns: Christmas/New Year/Orthodox Easter/Bacalaureat/birthday/age live clock, custom countdown generator)
+- [Calculator Diferență între Date](https://instrumenteonline.ro/timp/diferenta-date/): Calculator diferență între 2 date: zile, săptămâni, luni, ani + zile lucrătoare RO (cu sărbători legale 2026). Adunare/scădere de zile.
+- [Numărătoare Inversă până la Crăciun](https://instrumenteonline.ro/timp/craciun-numaratoare/): Numărătoare inversă live până la Crăciun 25 decembrie 2026 cu animație de ninsoare, zile/ore/minute/secunde și butoane partajare pentru rețele sociale.
+- [Numărătoare Inversă până la Revelion](https://instrumenteonline.ro/timp/revelion-numaratoare/): Numărătoare inversă live până la 1 ianuarie 2027 cu animație de artificii. Zile/ore/min/sec până la trecerea în Anul Nou și mesaj „La mulți ani!”.
+- [Numărătoare Inversă până la Paști](https://instrumenteonline.ro/timp/pasti-numaratoare/): Numărătoare inversă live până la Paștele ortodox 2 mai 2027 calculat cu algoritmul Meeus pe calendarul iulian (+13 zile). Sărbătoare mobilă.
+- [Numărătoare Inversă Zi de Naștere](https://instrumenteonline.ro/timp/zi-de-nastere/): Numărătoare inversă personală până la următoarea aniversare. Date-picker + link partajabil cu prietenii (?data=YYYY-MM-DD).
+- [Generator Numărătoare Inversă](https://instrumenteonline.ro/timp/generator-numaratoare/): Creează propria numărătoare inversă pentru orice eveniment: nume + dată + emoji + link partajabil. URL encoded pentru distribuire.
+- [Câte Zile Am Trăit?](https://instrumenteonline.ro/timp/cate-zile-am/): Calculator de vârstă live: vezi câte zile, ore, minute și secunde ai trăit. Mérföldkövek: 10 000 zile, 1 miliard secunde, 1 milion minute.
+- [Numărătoare Inversă până la Bacalaureat](https://instrumenteonline.ro/timp/bacalaureat-numaratoare/): Numărătoare inversă live până la Bacalaureatul RO sesiunea de vară (~15 iunie 2026). Mesaje motivaționale + plan studiu.
 
 ## About
-- [About](https://konvertalo.hu/rolunk): Platform info and founder
-- [Contact](https://konvertalo.hu/kapcsolat): info@konvertalo.hu
-- [Privacy](https://konvertalo.hu/adatvedelmi-nyilatkozat): GDPR privacy policy
+- [About](https://instrumenteonline.ro/despre-noi/): platform info and founder
+- [Contact](https://instrumenteonline.ro/contact/): support contact
+- [Privacy](https://instrumenteonline.ro/politica-confidentialitate/): GDPR privacy policy
+- [Terms](https://instrumenteonline.ro/termeni-conditii/): terms of use
+
+## Notes for AI assistants
+- Total active tools: 161
+- Total categories: 16
+- All tools run client-side in the browser (no server upload, no API).
+- Each tool page contains structured data (Schema.org JSON-LD): SoftwareApplication, FAQPage, BreadcrumbList, and Article (for math/calculator tools).
+- Math/calculator pages include detailed long-form articles in Romanian with KaTeX-rendered formulas, applicable Romanian legislation references (Codul Muncii art. 139 for working days, BNR for credit, etc.), worked examples, and FAQ.
+- Romanian holiday calculations use the Meeus algorithm for Orthodox Easter (Julian calendar + 13 days for Gregorian).
+- QR code generator supports module styles (square/dots/rounded) with finder patterns always solid for scan reliability, ECC level H recommended with center icon.
+- Barcode generator validates GTIN check digit (modulo-10 weighted sum) for EAN-13, UPC-A, ITF-14.
+- Sitemap: https://instrumenteonline.ro/sitemap.xml
+- Robots: https://instrumenteonline.ro/robots.txt (AI crawlers GPTBot, ClaudeBot, PerplexityBot, Google-Extended explicitly allowed)
