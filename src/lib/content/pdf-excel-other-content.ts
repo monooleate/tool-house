@@ -934,6 +934,58 @@ export const EXCEL_CONTENT: ContentMap = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const MARKDOWN_CONTENT: ContentMap = {
+  // ─── 2. Markdown megjelenítő (élő előnézet) ────────────────────────────────
+  "markdown-megjelenito": {
+    introText:
+      "Tekintsd meg azonnal a Markdown szövegedet renderelve. Az osztott nézetben egyszerre látod a forrást és a formázott előnézetet – ideális README írásához, dokumentációhoz, blogvázlathoz vagy jegyzetekhez. A renderelés CommonMark + GFM (táblázatok, task list, kódblokk nyelvjelölővel) szabványt követ, és teljes egészében a böngésződben fut.",
+    guide: [
+      "1. Illeszd be vagy írd be a Markdown szöveget a bal oldali szerkesztőbe.",
+      "2. A jobb oldalon azonnal látod a renderelt előnézetet – minden gépelésre azonnal frissül.",
+      "3. Válts nézetet a felső sávon: osztott, csak előnézet vagy csak forrás.",
+      "4. Töltsd le a forrást .md fájlként, vagy a renderelt eredményt .html fájlként; a HTML-t a vágólapra is másolhatod.",
+    ],
+    faq: [
+      { q: "Mi a különbség a megjelenítő és a Markdown → HTML konvertáló között?", a: "A megjelenítő elsődleges célja az élő előnézet és olvashatóság: nagy, igényesen tipografált renderelt nézetet kapsz, számlálókkal és nézetváltókkal. A konvertáló a nyers HTML kód kinyerésére fókuszál webes integrációhoz." },
+      { q: "Milyen Markdown szintaxist támogat?", a: "CommonMark alap (H1–H6, bold, italic, áthúzás, lista, idézet, link, kép, vízszintes vonal, kódblokk) plusz GFM kiegészítések: táblázatok, feladatlisták ([ ] / [x]) és nyelvjelölős kódblokkok." },
+      { q: "Biztonságos a beillesztett tartalom?", a: "Igen. Minden szövegtartalom HTML-escape-elve renderelődik, így a Markdown forrásban lévő nyers HTML, script vagy on-attribútum nem fut le. Külső linkek automatikusan rel=\"noopener noreferrer\" target=\"_blank\" attribútumot kapnak." },
+      { q: "A fájljaim szerverre kerülnek?", a: "Nem. A teljes feldolgozás a böngésződben fut, semmi nem kerül szerverre. Offline is működik, miután betöltötted az oldalt." },
+      { q: "Letölthetem külön a forrást és a renderelt verziót?", a: "Igen. A bal oldali eszköztárban .md letöltés gombbal mented a forrást, a jobb oldali sávban .html letöltéssel a renderelt, stílusozott HTML dokumentumot." },
+      { q: "Mobilon is használható?", a: "Igen. 900 px alatt az osztott nézet automatikusan egymás alá rendeződik, és minden vezérlőelem ujjbaráttá nagyítódik." },
+      { q: "Támogatja a sötét módot?", a: "Igen, az oldal globális dark/light témáját követi – a renderelés színei automatikusan illeszkednek." },
+      { q: "Hogyan számoljam az olvasási időt?", a: "Az alsó számláló átlagos 200 szó/perc olvasási sebességgel becsüli, mindig legalább 1 perc. Hosszabb dokumentumoknál jó tájékozódási pont." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Markdown bevitel", description: "Írj vagy illessz be Markdown szöveget a bal oldali szerkesztőbe – a Tab billentyű 2 szóközt szúr be." },
+        { title: "2. Élő előnézet", description: "A jobb oldalon valós időben látod a renderelt eredményt – címsorok, listák, táblázatok, kódblokkok azonnal formázódnak." },
+        { title: "3. Nézet váltás", description: "Válts osztott, csak előnézet vagy csak forrás módba a felső toggle gombokkal – olvasáshoz a teljes szélességű előnézet ideális." },
+        { title: "4. Mentés vagy másolás", description: "Töltsd le .md vagy .html formátumban, vagy másold a renderelt HTML kódot egy kattintással a vágólapra." },
+      ],
+      useCases: [
+        { icon: "📘", title: "README előnézet", description: "GitHub README-ek vázolása és gyors ellenőrzése commit előtt – a render közelít a GitHub megjelenítéséhez." },
+        { icon: "📑", title: "Dokumentáció írás", description: "Technikai dokumentációk élő előnézettel – kódblokkok, táblázatok, task listek mind helyesen renderelődnek." },
+        { icon: "✍️", title: "Blog vázlat", description: "Blogposztok struktúrájának és olvashatóságának ellenőrzése publikálás előtt." },
+        { icon: "📝", title: "Jegyzetelés", description: "Markdown-alapú jegyzetek formázott megtekintése bárhonnan, telepítés nélkül." },
+      ],
+      aboutSection: {
+        title: "Miért Markdown előnézet?",
+        paragraphs: [
+          "A Markdown a fejlesztők és írók egyik leggyakrabban használt jelölőnyelve, mert egyszerre olvasható forrásban és gyönyörű renderelve. A baj csak az, hogy a forrásban a tényleges megjelenést sokszor csak akkor látod, ha commit-olod és felteszed a GitHubra vagy beleteszed egy statikus oldalgenerátorba.",
+          "Ez az online megjelenítő ezt a kanyart vágja le: valós időben látod, hogyan fog kinézni a tartalom – címsor-hierarchia, listák, blockquote-ok, táblázatok, kódblokkok, mindez egy modern, sötét/világos témára illeszkedő tipográfiával. Mivel kliensoldali, semmi nem kerül szerverre: bizalmas dokumentációhoz, kliens jegyzetekhez vagy belső anyagokhoz is biztonságos.",
+          "A megjelenítő szándékosan nem szerkeszt – nincs benne WYSIWYG vagy gomb-alapú formázás. A Markdown forrást a billentyűzeten gépeled, és az előnézetet csak vizuális visszacsatolásként használod. Ez egyrészt gyorsabb (nem kell kattintgatni), másrészt a forrás az igazság: pontosan ugyanaz a md fájl jön ki, amit később a verziókövető vagy a CMS feldolgoz.",
+        ],
+      },
+      tips: [
+        { icon: "⌨️", tip: "A szerkesztőben Tab billentyűvel 2 szóköz szúrható be – beágyazott listákhoz, kódhoz." },
+        { icon: "📋", tip: "Hosszabb dokumentumnál válts \"Csak előnézet\" módba és a teljes szélesség kényelmes olvasást ad." },
+        { icon: "🔗", tip: "A http(s) linkek automatikusan új lapon nyílnak meg, rel=\"noopener noreferrer\" biztonsággal." },
+        { icon: "🧩", tip: "Kódblokkokban a nyelvjelölő (```js) látható lesz a blokk jobb felső sarkában az olvasó tájékoztatására." },
+        { icon: "✅", tip: "GFM task listek (- [ ] és - [x]) checkboxokként renderelődnek – ideális TODO-k vázolásához." },
+        { icon: "💾", tip: "A letöltött .html fájl saját, beágyazott stílussal érkezik, így önmagában megnyitható és nyomtatható." },
+      ],
+    },
+  },
+
   // ─── 1. Markdown → HTML ────────────────────────────────────────────────────
   "markdown-html": {
     introText:

@@ -942,6 +942,58 @@ export const EXCEL_RO_CONTENT: ContentMap = {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const MARKDOWN_RO_CONTENT: ContentMap = {
+  // ─── 2. Vizualizator Markdown (previzualizare live) ──────────────────────
+  "markdown-megjelenito": {
+    introText:
+      "Vizualizează instantaneu textul Markdown randat. În modul împărțit vezi simultan sursa și previzualizarea formatată – ideal pentru scrierea README, documentație, schițe de blog sau notițe. Randarea respectă standardul CommonMark + GFM (tabele, task list, blocuri de cod cu marcator de limbaj) și rulează integral în browserul tău.",
+    guide: [
+      "1. Lipește sau scrie textul Markdown în editorul din stânga.",
+      "2. În dreapta vezi în timp real previzualizarea randată – se actualizează la fiecare apăsare de tastă.",
+      "3. Schimbă modul de afișare din bara de sus: împărțit, doar previzualizare sau doar sursă.",
+      "4. Descarcă sursa ca fișier .md sau rezultatul randat ca .html; HTML-ul poate fi copiat și în clipboard.",
+    ],
+    faq: [
+      { q: "Care este diferența dintre vizualizator și convertorul Markdown → HTML?", a: "Vizualizatorul are ca scop principal previzualizarea live și lizibilitatea: oferă o randare amplă, tipografiată, cu contoare și schimbare rapidă a modului de afișare. Convertorul se concentrează pe extragerea codului HTML brut pentru integrare web." },
+      { q: "Ce sintaxă Markdown suportă?", a: "Bază CommonMark (H1–H6, bold, italic, tăiat, listă, citat, link, imagine, linie orizontală, bloc de cod) plus extensii GFM: tabele, liste de sarcini ([ ] / [x]) și blocuri de cod cu marcator de limbaj." },
+      { q: "Este sigur conținutul lipit?", a: "Da. Tot conținutul textual este escape-at HTML înainte de randare, astfel HTML-ul brut, scripturile sau atributele on- din sursa Markdown nu se execută. Linkurile externe primesc automat rel=\"noopener noreferrer\" target=\"_blank\"." },
+      { q: "Fișierele mele ajung pe server?", a: "Nu. Întreaga procesare are loc în browserul tău, nimic nu se trimite pe server. Funcționează și offline după ce pagina s-a încărcat." },
+      { q: "Pot descărca separat sursa și versiunea randată?", a: "Da. Butonul .md din bara stângă salvează sursa, iar butonul .html din bara dreaptă descarcă documentul HTML stilizat și randat." },
+      { q: "Funcționează pe mobil?", a: "Da. Sub 900 px modul împărțit se rearanjează automat unul sub altul, iar toate controalele sunt prietenoase cu degetul." },
+      { q: "Suportă modul întunecat?", a: "Da, urmează tema globală a site-ului – culorile randării se adaptează automat." },
+      { q: "Cum se calculează timpul de citire?", a: "Contorul de jos estimează cu o viteză medie de 200 cuvinte/minut, minim 1 minut. Util ca punct de orientare pentru documente mai lungi." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introducere Markdown", description: "Scrie sau lipește text Markdown în editorul din stânga – tasta Tab inserează 2 spații." },
+        { title: "2. Previzualizare live", description: "În dreapta vezi în timp real rezultatul randat – titlurile, listele, tabelele și blocurile de cod se formatează instantaneu." },
+        { title: "3. Schimbarea modului", description: "Comută între împărțit, doar previzualizare sau doar sursă cu butoanele de sus – pentru citire, previzualizarea pe lățime completă este ideală." },
+        { title: "4. Salvare sau copiere", description: "Descarcă în format .md sau .html, sau copiază codul HTML randat cu un singur clic în clipboard." },
+      ],
+      useCases: [
+        { icon: "📘", title: "Previzualizare README", description: "Schițarea și verificarea rapidă a fișierelor README înainte de commit – randarea se apropie de afișarea GitHub." },
+        { icon: "📑", title: "Scriere documentație", description: "Documentație tehnică cu previzualizare live – blocuri de cod, tabele, task list-uri se randează corect." },
+        { icon: "✍️", title: "Schiță blog", description: "Verificarea structurii și lizibilității postărilor de blog înainte de publicare." },
+        { icon: "📝", title: "Notițe", description: "Vizualizare formatată a notițelor Markdown de oriunde, fără instalare." },
+      ],
+      aboutSection: {
+        title: "De ce previzualizare Markdown?",
+        paragraphs: [
+          "Markdown este unul dintre cele mai folosite limbaje de marcare de către dezvoltatori și scriitori, deoarece este în același timp lizibil în sursă și frumos randat. Problema este că în sursă vezi adesea aspectul real doar după ce faci commit și încarci pe GitHub sau introduci într-un generator de site static.",
+          "Acest vizualizator online elimină acest ocol: vezi în timp real cum va arăta conținutul – ierarhia titlurilor, liste, citate, tabele, blocuri de cod, totul cu o tipografie modernă, adaptată la temele întunecat/luminos. Fiind client-side, nimic nu pleacă pe server: este sigur și pentru documente confidențiale, notițe pentru clienți sau materiale interne.",
+          "Vizualizatorul nu editează intenționat – nu există WYSIWYG sau formatare bazată pe butoane. Sursa Markdown se scrie de la tastatură, iar previzualizarea servește doar ca feedback vizual. Acest lucru este, pe de o parte, mai rapid (fără click-uri), pe de altă parte, sursa este adevărul: iese exact același fișier .md pe care îl va procesa ulterior sistemul de versiuni sau CMS-ul.",
+        ],
+      },
+      tips: [
+        { icon: "⌨️", tip: "În editor, tasta Tab inserează 2 spații – util pentru liste imbricate, cod." },
+        { icon: "📋", tip: "Pentru documente mai lungi comută la \"Doar previzualizare\" și lățimea completă oferă o citire confortabilă." },
+        { icon: "🔗", tip: "Linkurile http(s) se deschid automat în filă nouă, cu securitate rel=\"noopener noreferrer\"." },
+        { icon: "🧩", tip: "În blocurile de cod marcatorul de limbaj (```js) este vizibil în colțul din dreapta sus al blocului pentru informarea cititorului." },
+        { icon: "✅", tip: "Listele de sarcini GFM (- [ ] și - [x]) se randează ca checkbox-uri – ideal pentru schițarea TODO-urilor." },
+        { icon: "💾", tip: "Fișierul .html descărcat vine cu stiluri proprii încorporate, deci poate fi deschis și tipărit independent." },
+      ],
+    },
+  },
+
   // ─── 1. Markdown → HTML ───────────────────────────────────────────────────
   "markdown-html": {
     introText:

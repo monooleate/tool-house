@@ -59,7 +59,11 @@
       "WebFetch(domain:convertio.co)",
       "WebFetch(domain:freeconvert.com)",
       "WebFetch(domain:onlinetools.com)",
-      "WebFetch(domain:matekmegoldasok.hu)"
+      "WebFetch(domain:matekmegoldasok.hu)",
+      "WebFetch(domain:searchengineland.com)",
+      "Bash(mkdir -p \"/c/Users/Asus Laptop/.claude/projects/C--dev-tool-house/memory/archive\")",
+      "Bash(mv \"/c/Users/Asus Laptop/.claude/projects/C--dev-tool-house/memory/project_math_ro_migration.md\" \"/c/Users/Asus Laptop/.claude/projects/C--dev-tool-house/memory/archive/project_math_ro_migration.md\")",
+      "Read(//c/Users/Asus Laptop/.claude/projects/C--dev-tool-house/memory/**)"
     ]
   }
 }

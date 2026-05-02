@@ -99,6 +99,7 @@
     HtmlEntityTool: () => import("../tools/fejleszto/HtmlEntityTool.svelte"),
     // MARKDOWN
     MarkdownHtmlTool: () => import("../tools/markdown/MarkdownHtmlTool.svelte"),
+    MarkdownViewerTool: () => import("../tools/markdown/MarkdownViewerTool.svelte"),
     // HTML
     HtmlTextTool: () => import("../tools/html/HtmlTextTool.svelte"),
     HtmlMinTool: () => import("../tools/html/HtmlMinTool.svelte"),

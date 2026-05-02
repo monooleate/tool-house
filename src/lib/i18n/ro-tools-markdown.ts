@@ -23,4 +23,20 @@ export const MARKDOWN_RO: Record<
       "markdown converter online free",
     ],
   },
+  "markdown-megjelenito": {
+    slug: "vizualizator-markdown",
+    title: "Vizualizator Markdown online | Previzualizare live | InstrumenteOnline",
+    h1: "Vizualizator Markdown – previzualizare live",
+    description:
+      "Previzualizare instantanee a textului Markdown în vizualizare împărțită. CommonMark + GFM (tabele, task list, blocuri de cod). În browser, fără server.",
+    keywords: [
+      "vizualizator markdown",
+      "markdown viewer online",
+      "previzualizare markdown",
+      "markdown preview romana",
+      "md viewer",
+      "markdown render",
+      "vizualizare md online",
+    ],
+  },
 };
