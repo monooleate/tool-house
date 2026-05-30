@@ -24,7 +24,8 @@
             "volum",
             "suprafata",
             "temperatura",
-            "densitate"
+            "densitate",
+            "viteza"
           ]
         },
         "category": {

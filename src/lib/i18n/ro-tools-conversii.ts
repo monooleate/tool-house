@@ -14,6 +14,20 @@ export const CONVERSII_RO: Record<string, { slug: string; title: string; h1: str
     description: "Transformare rapidă între kilometri și metri. Util pentru sport, distanțe rutiere și cursuri școlare.",
     keywords: ["km in metri", "convertor km m", "kilometri metri", "cati metri are un km"],
   },
+  "mile-kilometri": {
+    slug: "mile-kilometri",
+    title: "Convertor Mile în Kilometri – mile ↔ km | InstrumenteOnline",
+    h1: "Convertor Mile ↔ Kilometri",
+    description: "Transformă mile în kilometri și invers (1 milă = 1,609344 km). Convertor bidirecțional cu formulă, distanțe uzuale și exemple.",
+    keywords: ["mile in km", "mile kilometri", "convertor mile km", "cati km are o mila", "mile to km", "1 mila in km"],
+  },
+  "km-h-m-s": {
+    slug: "km-h-m-s",
+    title: "Convertor Viteză – km/h, m/s, mph, Noduri | InstrumenteOnline",
+    h1: "Convertor Viteză km/h ↔ m/s",
+    description: "Convertor de viteză între km/h, m/s, mph și noduri. Formule (km/h ÷ 3,6 = m/s), viteze uzuale și exemple pentru fizică și condus.",
+    keywords: ["km/h in m/s", "convertor viteza", "m/s in km/h", "mph in km/h", "noduri in km/h", "transformare viteza"],
+  },
   "cm-inch": {
     slug: "cm-inch",
     title: "Convertor Centimetri în Inch (Țoli) – cm ↔ inch | InstrumenteOnline",

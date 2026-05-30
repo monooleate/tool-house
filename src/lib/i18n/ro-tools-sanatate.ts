@@ -21,4 +21,11 @@ export const SANATATE_RO: Record<string, { slug: string; title: string; h1: stri
     description: "Calculator calorii zilnice cu formula Mifflin-St Jeor (BMR), 5 niveluri de activitate (TDEE) și distribuție macro (proteine/carbohidrați/grăsimi) cu donut chart.",
     keywords: ["calculator calorii", "bmr tdee", "mifflin st jeor", "necesar caloric zilnic", "macro calculator", "proteine carbohidrati grasimi", "calorii pentru slabire"],
   },
+  "calculator-sarcina": {
+    slug: "calculator-sarcina",
+    title: "Calculator Sarcină – Data Nașterii și Săptămâna de Sarcină | InstrumenteOnline",
+    h1: "Calculator Sarcină – Data Probabilă a Nașterii",
+    description: "Calculează data probabilă a nașterii (regula Naegele: UM + 280 zile), săptămâna de sarcină, trimestrul și reperele importante, din ultima menstruație sau data concepției.",
+    keywords: ["calculator sarcina", "data nasterii calculator", "in ce saptamana de sarcina sunt", "calculator saptamani sarcina", "regula naegele", "data probabila a nasterii", "trimestru sarcina"],
+  },
 };

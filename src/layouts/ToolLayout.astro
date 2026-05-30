@@ -21,7 +21,10 @@ import {
   useCaseListSchema,
   breadcrumbSchema,
   toolBreadcrumbs,
+  eventSchema,
 } from "../lib/seo.ts";
+import { buildCanonical } from "../lib/seo.ts";
+import { COUNTDOWN_EVENTS } from "../lib/timp-years.ts";
 import { getCollection, render } from "astro:content";
 import { getSubcatForTool, getConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
 
@@ -123,6 +126,18 @@ if (hasLongform) {
 // és nem ütközik Article-lal (ItemList önálló entitás)
 const useCaseList = useCaseListSchema(tool);
 if (useCaseList) schemas.push(useCaseList);
+
+// Event schema (countdown oldalak) — a dátum build-időben számolódik
+// (COUNTDOWN_EVENTS), így törődésmentes: minden rebuild a következő apariție.
+const countdownEvent = COUNTDOWN_EVENTS[rawTool.slug];
+if (countdownEvent) {
+  schemas.push(eventSchema({
+    name: countdownEvent.name,
+    description: countdownEvent.description,
+    startIso: countdownEvent.iso,
+    url: buildCanonical(toolUrl(rawTool)),
+  }));
+}
 ---
 
 <BaseLayout

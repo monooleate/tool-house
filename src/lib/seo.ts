@@ -149,6 +149,28 @@ export function faqSchema(faqs: { q: string; a: string }[]): string | null {
   });
 }
 
+// ─── Event Schema (countdown oldalakra) ──────────────────────
+// startIso build-időben számolódik (timp-years COUNTDOWN_EVENTS) → auto-advance.
+export function eventSchema(opts: {
+  name: string;
+  description: string;
+  startIso: string;
+  url: string;
+}): string {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: opts.name,
+    description: opts.description,
+    startDate: opts.startIso,
+    endDate: opts.startIso,
+    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: { "@type": "Country", name: "România" },
+    url: opts.url,
+  });
+}
+
 // ─── HowTo Schema (használati útmutató) ──────────────────────
 export function howToSchema(tool: Tool): string | null {
   // Prefer content.howToSteps, fallback to guide[]

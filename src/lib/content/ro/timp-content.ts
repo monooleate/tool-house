@@ -151,6 +151,290 @@ export const TIMP_RO_CONTENT: ContentMap = {
     },
   },
 
+  "1-decembrie-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la 1 Decembrie — Ziua Națională a României — afișează în timp real zilele, orele, minutele și secundele rămase, cu un efect discret de confetti tricolor (albastru-galben-roșu). 1 Decembrie marchează Marea Unire de la 1918, când Transilvania, Banatul, Crișana și Maramureșul s-au unit cu Regatul României. Este sărbătoare legală conform Codului Muncii art. 139. Include butoane de partajare pentru Facebook, X, WhatsApp și copy-link.",
+    guide: [
+      "1. Pagina detectează automat data curentă și calculează zilele rămase până la 1 decembrie.",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin anul calendaristic.",
+      "3. Distribuie pagina cu butoanele de share (Facebook / X / WhatsApp / Copiază link).",
+    ],
+    faq: [
+      { q: "Câte zile mai sunt până la 1 Decembrie?", a: "Numărătoarea de mai sus arată exact câte zile, ore, minute și secunde mai sunt până la 1 decembrie, ora 00:00. Se actualizează la fiecare secundă, fără refresh. După ce trece ziua, numărătoarea avansează automat la 1 decembrie din anul următor." },
+      { q: "Ce sărbătorim pe 1 Decembrie?", a: "1 Decembrie este Ziua Națională a României, care comemorează Marea Unire de la 1 decembrie 1918, când Adunarea Națională de la Alba Iulia a votat unirea Transilvaniei, Banatului, Crișanei și Maramureșului cu Regatul României. A devenit zi națională oficială după 1990." },
+      { q: "1 Decembrie este zi liberă (sărbătoare legală)?", a: "Da. Conform Codului Muncii (Legea 53/2003 art. 139), 1 decembrie este zi nelucrătoare cu plată în România. Dacă pică în weekend, legea nu prevede automat o zi liberă compensatorie pentru sectorul privat (spre deosebire de alte sărbători)." },
+      { q: "Cum se calculează câte zile mai sunt până la 1 Decembrie?", a: "Formula este: ΔT = 1 decembrie − data de azi. Diferența în milisecunde se împarte la 86.400.000 (numărul de milisecunde dintr-o zi) pentru a obține zilele. Numărătoarea de pe această pagină face calculul automat, în ora locală a vizitatorului." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Vezi numărătoarea live", description: "Zile/ore/minute/secunde până la 1 decembrie 00:00." },
+        { title: "2. Urmărește progresul", description: "Bara de progres arată cât din anul calendaristic a trecut." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · sau copiază link." },
+      ],
+      useCases: [
+        { icon: "🇷🇴", title: "Evenimente festive", description: "Numărătoare pentru parada militară de la București sau evenimentele locale de Ziua Națională." },
+        { icon: "🏫", title: "Activități școlare", description: "Proiect la perete pentru lecții despre Marea Unire și istoria României." },
+        { icon: "🛍️", title: "Mini-vacanță", description: "Planifică o escapadă în jurul zilei libere de 1 decembrie." },
+        { icon: "📢", title: "Marketing sezonier", description: "Campanii promoționale tematice pentru Ziua Națională în e-commerce." },
+      ],
+      aboutSection: {
+        title: "Despre 1 Decembrie — Ziua Națională a României",
+        paragraphs: [
+          "1 Decembrie 1918 marchează momentul în care Adunarea Națională de la Alba Iulia, formată din 1.228 de delegați, a votat unirea Transilvaniei cu România. Acest act a încheiat procesul de făurire a statului național unitar român, început cu Unirea Principatelor (24 ianuarie 1859) și continuat cu unirea Basarabiei (27 martie 1918) și a Bucovinei (28 noiembrie 1918).",
+          "Ziua de 1 Decembrie a fost stabilită ca Zi Națională a României prin Legea nr. 10/1990, înlocuind data de 23 august folosită în perioada comunistă. În fiecare an, ziua este marcată prin parade militare (cea mai mare fiind la Arcul de Triumf din București), depuneri de coroane, ceremonii oficiale și manifestări populare în toată țara.",
+        ],
+      },
+    },
+  },
+
+  "martisor-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la Mărțișor (1 martie) afișează în timp real zilele, orele, minutele și secundele rămase. Mărțișorul este o tradiție românească și moldovenească: pe 1 martie se oferă un fir împletit roșu-alb, simbol al venirii primăverii. Include butoane de partajare pentru Facebook, X, WhatsApp și copy-link.",
+    guide: [
+      "1. Pagina detectează automat data curentă și calculează zilele rămase până la 1 martie.",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin anul calendaristic.",
+      "3. Distribuie pagina cu butoanele de share (Facebook / X / WhatsApp / Copiază link).",
+    ],
+    faq: [
+      { q: "Câte zile mai sunt până la Mărțișor?", a: "Numărătoarea de mai sus arată exact câte zile, ore, minute și secunde mai sunt până la 1 martie, ora 00:00. Se actualizează la fiecare secundă, fără refresh. După ce trece ziua, avansează automat la 1 martie din anul următor." },
+      { q: "Ce este Mărțișorul?", a: "Mărțișorul este o tradiție de început de primăvară (1 martie), specifică României, Republicii Moldova și zonei balcanice. Constă într-un fir împletit roșu și alb, oferit ca semn de prețuire și urare de bine. Tradiția este înscrisă în patrimoniul cultural imaterial UNESCO (din 2017)." },
+      { q: "Ce simbolizează firul roșu-alb?", a: "Roșul simbolizează vitalitatea, focul și dragostea, iar albul simbolizează puritatea și lumina. Împletite, cele două culori reprezintă echilibrul și renașterea naturii la trecerea de la iarnă la primăvară." },
+      { q: "Mărțișorul este zi liberă?", a: "Nu. 1 martie nu este sărbătoare legală în România, deci este zi lucrătoare normală. Este însă o zi de mare însemnătate culturală și socială, marcată prin oferirea de mărțișoare și flori." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Vezi numărătoarea live", description: "Zile/ore/minute/secunde până la 1 martie 00:00." },
+        { title: "2. Urmărește progresul", description: "Bara de progres arată cât din an a trecut." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · sau copiază link." },
+      ],
+      useCases: [
+        { icon: "🌸", title: "Pregătire cadouri", description: "Câte zile mai ai pentru a cumpăra mărțișoare și flori." },
+        { icon: "🏫", title: "Activități școlare", description: "Confecționarea mărțișoarelor la grădiniță și școală." },
+        { icon: "🛍️", title: "Comerț sezonier", description: "Planificarea standurilor de mărțișoare (mijloc-sfârșit februarie)." },
+        { icon: "📅", title: "Reper de primăvară", description: "1 martie marchează începutul primăverii populare (mărțișor)." },
+      ],
+      aboutSection: {
+        title: "Despre tradiția Mărțișorului",
+        paragraphs: [
+          "Mărțișorul este una dintre cele mai vechi și iubite tradiții românești, cu rădăcini în obiceiurile agrare precreștine de întâmpinare a primăverii. Numele provine din „Mărțișor”, diminutivul lunii martie. În trecut, firul era legat de o monedă; astăzi este însoțit de mici obiecte ornamentale.",
+          "Tradiția este împărtășită de România, Republica Moldova, Bulgaria (Martenița) și alte zone balcanice. Din 2017, „practicile culturale asociate zilei de 1 martie” sunt înscrise pe Lista reprezentativă a patrimoniului cultural imaterial al umanității UNESCO, ca dosar comun a patru țări.",
+        ],
+      },
+    },
+  },
+
+  "8-martie-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la 8 Martie afișează în timp real zilele, orele, minutele și secundele rămase. 8 Martie este Ziua Internațională a Femeii, marcată în România și ca „Ziua Mamei” în tradiția populară. Include butoane de partajare și un efect discret de petale de flori.",
+    guide: [
+      "1. Pagina detectează automat data curentă și calculează zilele rămase până la 8 martie.",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin anul calendaristic.",
+      "3. Distribuie pagina cu butoanele de share (Facebook / X / WhatsApp / Copiază link).",
+    ],
+    faq: [
+      { q: "Câte zile mai sunt până la 8 Martie?", a: "Numărătoarea de mai sus arată exact câte zile, ore, minute și secunde mai sunt până la 8 martie, ora 00:00. Se actualizează la fiecare secundă, fără refresh. După ce trece ziua, avansează automat la 8 martie din anul următor." },
+      { q: "Ce sărbătorim pe 8 Martie?", a: "8 Martie este Ziua Internațională a Femeii, o zi de recunoaștere a drepturilor și realizărilor femeilor la nivel mondial. În România este și o zi în care se omagiază mamele, oferindu-se flori și mici cadouri." },
+      { q: "8 Martie este Ziua Mamei în România?", a: "În tradiția populară românească, 8 Martie a fost multă vreme asociată și cu „Ziua Mamei”. Oficial însă, Ziua Mamei se sărbătorește în prima duminică din luna mai (din 2010, prin lege), separat de 8 Martie." },
+      { q: "8 Martie este zi liberă?", a: "Nu. 8 Martie nu este sărbătoare legală în România, deci este zi lucrătoare. Este o zi cu puternică încărcătură simbolică, marcată prin oferirea de flori (în special mărțișoare târzii, lalele și zambile)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Vezi numărătoarea live", description: "Zile/ore/minute/secunde până la 8 martie 00:00." },
+        { title: "2. Urmărește progresul", description: "Bara de progres arată cât din an a trecut." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · sau copiază link." },
+      ],
+      useCases: [
+        { icon: "💐", title: "Cadouri pentru femei", description: "Câte zile mai ai pentru a alege florile și cadourile." },
+        { icon: "🏫", title: "Serbări școlare", description: "Pregătirea programelor dedicate mamelor și femeilor." },
+        { icon: "🌷", title: "Comerț cu flori", description: "Planificarea stocurilor de flori pentru vârful de cerere." },
+        { icon: "📲", title: "Mesaje de felicitare", description: "Programarea urărilor în grupurile de familie și prieteni." },
+      ],
+      aboutSection: {
+        title: "Despre Ziua Internațională a Femeii",
+        paragraphs: [
+          "Ziua Internațională a Femeii (8 Martie) are origini în mișcările pentru drepturile femeilor de la începutul secolului XX. A fost marcată pentru prima dată la nivel internațional în 1911, iar ONU a oficializat-o în 1977. Ziua celebrează realizările sociale, economice, culturale și politice ale femeilor.",
+          "În România și în alte state din fostul bloc estic, 8 Martie a căpătat și o dimensiune populară, asociată cu omagierea mamelor și a femeilor din viața fiecăruia. În practică, este una dintre cele mai active zile pentru florării și cofetării.",
+        ],
+      },
+    },
+  },
+
+  "dragobete-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la Dragobete (24 februarie) afișează în timp real zilele, orele, minutele și secundele rămase. Dragobete este sărbătoarea tradițională a iubirii la români, considerată echivalentul autohton al Zilei Îndrăgostiților. Include butoane de partajare și un efect discret de inimioare.",
+    guide: [
+      "1. Pagina detectează automat data curentă și calculează zilele rămase până la 24 februarie.",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin anul calendaristic.",
+      "3. Distribuie pagina cu butoanele de share (Facebook / X / WhatsApp / Copiază link).",
+    ],
+    faq: [
+      { q: "Câte zile mai sunt până la Dragobete?", a: "Numărătoarea de mai sus arată exact câte zile, ore, minute și secunde mai sunt până la 24 februarie, ora 00:00. Se actualizează la fiecare secundă, fără refresh. După ce trece ziua, avansează automat la 24 februarie din anul următor." },
+      { q: "Ce este Dragobete?", a: "Dragobete (24 februarie) este sărbătoarea tradițională românească a iubirii și a logodnei păsărilor. Este asociat cu venirea primăverii și cu obiceiuri de curtare între tineri. Este adesea numit „Valentine-ul românesc”." },
+      { q: "Care este diferența dintre Dragobete și Ziua Îndrăgostiților?", a: "Ziua Îndrăgostiților (Valentine's Day, 14 februarie) este o sărbătoare de origine occidentală. Dragobete (24 februarie) este sărbătoarea autohtonă românească a iubirii, cu rădăcini în folclorul și obiceiurile de primăvară românești." },
+      { q: "Dragobete este zi liberă?", a: "Nu. 24 februarie nu este sărbătoare legală în România, deci este zi lucrătoare normală. Este însă o zi populară pentru cupluri, marcată prin gesturi romantice și ieșiri." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Vezi numărătoarea live", description: "Zile/ore/minute/secunde până la 24 februarie 00:00." },
+        { title: "2. Urmărește progresul", description: "Bara de progres arată cât din an a trecut." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · sau copiază link." },
+      ],
+      useCases: [
+        { icon: "❤️", title: "Planificare romantică", description: "Câte zile mai ai pentru a pregăti o surpriză pentru persoana iubită." },
+        { icon: "🍽️", title: "Rezervări", description: "Planificarea unei cine sau escapade de cuplu." },
+        { icon: "🎁", title: "Cadouri", description: "Alegerea din timp a unui cadou tradițional românesc." },
+        { icon: "📲", title: "Mesaje", description: "Programarea urărilor de Dragobete." },
+      ],
+      aboutSection: {
+        title: "Despre sărbătoarea Dragobete",
+        paragraphs: [
+          "Dragobete este o sărbătoare populară românească, ținută pe 24 februarie, dedicată iubirii și începutului primăverii. În mitologia populară, Dragobete era un tânăr frumos, fiul Babei Dochia, ocrotitor al dragostei. Se credea că în această zi „păsările se logodesc”, marcând trezirea naturii.",
+          "Obiceiurile tradiționale includeau ieșitul tinerilor în natură pentru a culege primele flori de primăvară, jocuri de curtare și credința că cei care se întâlnesc de Dragobete vor fi împreună tot anul. În ultimele decenii, sărbătoarea a cunoscut o revigorare ca alternativă autohtonă la Ziua Îndrăgostiților.",
+        ],
+      },
+    },
+  },
+
+  "inceput-primavara-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la începutul primăverii astronomice afișează zilele, orele, minutele și secundele rămase până la echinocțiul de primăvară (~20 martie). La echinocțiu, ziua și noaptea au durate aproximativ egale, iar în emisfera nordică începe primăvara astronomică.",
+    guide: [
+      "1. Pagina calculează automat zilele rămase până la ~20 martie (echinocțiul de primăvară).",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin an.",
+      "3. Distribuie pagina cu butoanele de share.",
+    ],
+    faq: [
+      { q: "Când începe primăvara?", a: "Primăvara astronomică începe la echinocțiul de primăvară, în jurul datei de 20 martie (poate varia între 19 și 21 martie în funcție de an). Primăvara meteorologică (calendaristică) începe însă pe 1 martie, dată asociată și cu Mărțișorul." },
+      { q: "Ce este echinocțiul de primăvară?", a: "Echinocțiul de primăvară este momentul în care Soarele traversează ecuatorul ceresc spre nord, iar ziua și noaptea au durate aproximativ egale (~12 ore fiecare) pe întreg globul. Marchează începutul astronomic al primăverii în emisfera nordică." },
+      { q: "De ce variază data începutului primăverii?", a: "Anul calendaristic (365 zile) nu corespunde exact anului tropic (~365,2422 zile), deci momentul echinocțiului „alunecă” cu câteva ore de la an la an, fiind readus la loc de anii bisecți. De aceea data poate fi 19, 20 sau 21 martie." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Numărătoare live", description: "Până la echinocțiul de primăvară (~20 martie)." },
+        { title: "2. Urmărește progresul", description: "Cât din an a trecut până la primăvară." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · copiază link." },
+      ],
+      useCases: [
+        { icon: "🌱", title: "Grădinărit", description: "Planificarea semănatului și a lucrărilor de primăvară." },
+        { icon: "🧹", title: "Curățenie de primăvară", description: "Reper pentru organizarea sezonieră a locuinței." },
+        { icon: "🏫", title: "Educație", description: "Lecții despre anotimpuri și mișcarea Pământului." },
+        { icon: "📅", title: "Planificare sezonieră", description: "Activități și evenimente legate de venirea primăverii." },
+      ],
+      aboutSection: {
+        title: "Despre echinocțiul de primăvară",
+        paragraphs: [
+          "Echinocțiul de primăvară marchează una dintre cele patru borne astronomice ale anului (alături de solstițiul de vară, echinocțiul de toamnă și solstițiul de iarnă). În acest moment, axa de rotație a Pământului este perpendiculară pe direcția spre Soare, iar lumina cade egal pe cele două emisfere.",
+          "În tradiția românească, începutul primăverii este legat mai degrabă de 1 martie (Mărțișor) și de Baba Dochia, decât de data astronomică exactă. Astronomic însă, primăvara durează de la echinocțiul de primăvară până la solstițiul de vară (~21 iunie).",
+        ],
+      },
+    },
+  },
+
+  "inceput-vara-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la începutul verii astronomice afișează zilele, orele, minutele și secundele rămase până la solstițiul de vară (~21 iunie). Solstițiul de vară este cea mai lungă zi a anului în emisfera nordică, când Soarele atinge cea mai înaltă poziție pe cer.",
+    guide: [
+      "1. Pagina calculează automat zilele rămase până la ~21 iunie (solstițiul de vară).",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin an.",
+      "3. Distribuie pagina cu butoanele de share.",
+    ],
+    faq: [
+      { q: "Când începe vara?", a: "Vara astronomică începe la solstițiul de vară, în jurul datei de 21 iunie (poate varia între 20 și 21 iunie). Vara meteorologică (calendaristică) începe însă pe 1 iunie, dată asociată în România și cu Ziua Copilului." },
+      { q: "Ce este solstițiul de vară?", a: "Solstițiul de vară este momentul în care Soarele atinge cea mai nordică poziție pe cer, iar emisfera nordică are cea mai lungă zi și cea mai scurtă noapte a anului. Marchează începutul astronomic al verii." },
+      { q: "Care este cea mai lungă zi a anului?", a: "Cea mai lungă zi a anului în emisfera nordică este ziua solstițiului de vară (~21 iunie). În România, durata zilei poate depăși 15 ore și 30 de minute, în funcție de latitudine." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Numărătoare live", description: "Până la solstițiul de vară (~21 iunie)." },
+        { title: "2. Urmărește progresul", description: "Cât din an a trecut până la vară." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · copiază link." },
+      ],
+      useCases: [
+        { icon: "🏖️", title: "Planificare concediu", description: "Reper pentru organizarea vacanței de vară." },
+        { icon: "☀️", title: "Activități în aer liber", description: "Planificarea evenimentelor și grătarelor de sezon." },
+        { icon: "🌻", title: "Grădinărit", description: "Lucrările de vârf de sezon din grădină." },
+        { icon: "📅", title: "Evenimente", description: "Festivaluri și concerte de vară." },
+      ],
+      aboutSection: {
+        title: "Despre solstițiul de vară",
+        paragraphs: [
+          "Solstițiul de vară este punctul în care înclinarea axei Pământului spre Soare este maximă pentru emisfera nordică. Rezultatul este ziua cu cea mai lungă durată de lumină a anului. După solstițiu, zilele încep treptat să se scurteze până la solstițiul de iarnă.",
+          "Multe culturi marchează solstițiul de vară prin sărbători ale luminii și ale recoltei (de exemplu, Sânzienele pe 24 iunie în tradiția românească). Astronomic, vara durează de la solstițiul de vară până la echinocțiul de toamnă (~22 septembrie).",
+        ],
+      },
+    },
+  },
+
+  "inceput-toamna-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la începutul toamnei astronomice afișează zilele, orele, minutele și secundele rămase până la echinocțiul de toamnă (~22 septembrie). La echinocțiu, ziua și noaptea au durate aproximativ egale, iar în emisfera nordică începe toamna astronomică.",
+    guide: [
+      "1. Pagina calculează automat zilele rămase până la ~22 septembrie (echinocțiul de toamnă).",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin an.",
+      "3. Distribuie pagina cu butoanele de share.",
+    ],
+    faq: [
+      { q: "Când începe toamna?", a: "Toamna astronomică începe la echinocțiul de toamnă, în jurul datei de 22-23 septembrie. Toamna meteorologică (calendaristică) începe însă pe 1 septembrie, lună asociată și cu începutul anului școlar." },
+      { q: "Ce este echinocțiul de toamnă?", a: "Echinocțiul de toamnă este momentul în care Soarele traversează ecuatorul ceresc spre sud, iar ziua și noaptea au durate aproximativ egale pe întreg globul. Marchează începutul astronomic al toamnei în emisfera nordică." },
+      { q: "De ce variază data începutului toamnei?", a: "Pentru că anul calendaristic nu corespunde exact anului tropic, momentul echinocțiului se deplasează cu câteva ore de la an la an și este readus la loc de anii bisecți. De aceea data poate fi 22 sau 23 septembrie." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Numărătoare live", description: "Până la echinocțiul de toamnă (~22 septembrie)." },
+        { title: "2. Urmărește progresul", description: "Cât din an a trecut până la toamnă." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · copiază link." },
+      ],
+      useCases: [
+        { icon: "🍂", title: "Reper sezonier", description: "Trecerea de la vară la sezonul rece." },
+        { icon: "🍇", title: "Recoltă", description: "Planificarea culesului și a conservelor de toamnă." },
+        { icon: "🏫", title: "An școlar", description: "Toamna coincide cu începutul școlii și al activităților." },
+        { icon: "📅", title: "Planificare", description: "Activități și evenimente de sezon." },
+      ],
+      aboutSection: {
+        title: "Despre echinocțiul de toamnă",
+        paragraphs: [
+          "Echinocțiul de toamnă este una dintre cele două zile ale anului (alături de echinocțiul de primăvară) când ziua și noaptea au durate aproximativ egale. După acest moment, în emisfera nordică nopțile devin mai lungi decât zilele, până la solstițiul de iarnă.",
+          "În tradiția populară, toamna este sezonul recoltei și al pregătirilor pentru iarnă. Astronomic, toamna durează de la echinocțiul de toamnă până la solstițiul de iarnă (~21 decembrie).",
+        ],
+      },
+    },
+  },
+
+  "inceput-iarna-numaratoare": {
+    introText:
+      "Numărătoarea inversă până la începutul iernii astronomice afișează zilele, orele, minutele și secundele rămase până la solstițiul de iarnă (~21 decembrie). Solstițiul de iarnă este cea mai scurtă zi a anului în emisfera nordică, când Soarele atinge cea mai joasă poziție pe cer la amiază.",
+    guide: [
+      "1. Pagina calculează automat zilele rămase până la ~21 decembrie (solstițiul de iarnă).",
+      "2. Vizualizează ceasul live (zile/ore/minute/secunde) cu bară de progres prin an.",
+      "3. Distribuie pagina cu butoanele de share.",
+    ],
+    faq: [
+      { q: "Când începe iarna?", a: "Iarna astronomică începe la solstițiul de iarnă, în jurul datei de 21-22 decembrie. Iarna meteorologică (calendaristică) începe însă pe 1 decembrie, lună asociată în România și cu Ziua Națională și Crăciunul." },
+      { q: "Ce este solstițiul de iarnă?", a: "Solstițiul de iarnă este momentul în care Soarele atinge cea mai sudică poziție pe cer, iar emisfera nordică are cea mai scurtă zi și cea mai lungă noapte a anului. Marchează începutul astronomic al iernii." },
+      { q: "Care este cea mai scurtă zi a anului?", a: "Cea mai scurtă zi a anului în emisfera nordică este ziua solstițiului de iarnă (~21 decembrie). După această dată, zilele încep treptat să se lungească până la solstițiul de vară." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Numărătoare live", description: "Până la solstițiul de iarnă (~21 decembrie)." },
+        { title: "2. Urmărește progresul", description: "Cât din an a trecut până la iarnă." },
+        { title: "3. Distribuie", description: "Facebook · X · WhatsApp · copiază link." },
+      ],
+      useCases: [
+        { icon: "❄️", title: "Sezonul rece", description: "Reper pentru trecerea la iarnă și sărbătorile de iarnă." },
+        { icon: "🎿", title: "Sporturi de iarnă", description: "Planificarea sezonului de schi și a vacanțelor la munte." },
+        { icon: "🎄", title: "Sărbători", description: "Iarna coincide cu Crăciunul și Revelionul." },
+        { icon: "📅", title: "Planificare", description: "Activități și evenimente de sezon rece." },
+      ],
+      aboutSection: {
+        title: "Despre solstițiul de iarnă",
+        paragraphs: [
+          "Solstițiul de iarnă este punctul în care înclinarea axei Pământului dinspre Soare este maximă pentru emisfera nordică, rezultând ziua cu cea mai scurtă durată de lumină a anului. După solstițiu, zilele încep treptat să se lungească — fenomen marcat în multe culturi ca „renașterea luminii”.",
+          "În tradiția românească, solstițiul de iarnă coincide aproximativ cu perioada sărbătorilor de iarnă (Crăciun, Anul Nou). Astronomic, iarna durează de la solstițiul de iarnă până la echinocțiul de primăvară (~20 martie).",
+        ],
+      },
+    },
+  },
+
   "zi-de-nastere": {
     introText:
       "Numărătoarea inversă până la următoarea zi de naștere personală: introduci data ta de naștere, calculatorul determină automat aniversarea următoare și afișează zilele/orele/minutele/secundele rămase. Plus: calculează vârsta exactă (ani trecuți + ziua exactă) și totalul zilelor trăite. Link partajabil cu prietenii (?data=YYYY-MM-DD).",

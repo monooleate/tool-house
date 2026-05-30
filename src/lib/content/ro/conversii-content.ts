@@ -67,6 +67,72 @@ export const CONVERSII_RO_CONTENT: ContentMap = {
       },
     },
   },
+  "mile-kilometri": {
+    introText:
+      "Transformă mile în kilometri și invers cu un convertor bidirecțional rapid. Mila internațională (terestră) este egală cu 1,609344 km. Util pentru distanțe rutiere din SUA/UK, alergare, aviație și conversia valorilor de pe hărți sau aplicații de fitness.",
+    guide: [
+      "1. Scrie valoarea în mile sau în kilometri.",
+      "2. Rezultatul apare automat în celălalt câmp.",
+      "3. Folosește butoanele cu distanțe uzuale pentru valori frecvente.",
+    ],
+    faq: [
+      { q: "Câți kilometri are o milă?", a: "1 milă (internațională/terestră) = 1,609344 km. Formula: km = mile × 1,609344." },
+      { q: "Cum convertesc kilometri în mile?", a: "Împarte numărul de kilometri la 1,609344 (sau înmulțește cu 0,621371). De exemplu: 10 km ÷ 1,609344 ≈ 6,21 mile." },
+      { q: "Mila terestră este la fel cu mila marină?", a: "Nu. Mila terestră (statute mile) = 1,609 km, folosită pe uscat. Mila marină (nautical mile) = 1,852 km, folosită în navigație. Acest convertor folosește mila terestră." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu valoarea", description: "Scrie o valoare în mile sau în kilometri." },
+        { title: "2. Vezi rezultatul", description: "Conversia apare instant, în celălalt câmp." },
+        { title: "3. Distanțe uzuale", description: "Butoane rapide pentru 1, 5, 10, maraton, 100 mile." },
+      ],
+      useCases: [
+        { icon: "🚗", title: "Condus în străinătate", description: "Conversia distanțelor de pe indicatoare (SUA, UK)." },
+        { icon: "🏃", title: "Sport și fitness", description: "Aplicații care afișează distanțe în mile (alergare, ciclism)." },
+        { icon: "✈️", title: "Călătorii", description: "Distanțe de zbor și itinerarii afișate în mile." },
+      ],
+      aboutSection: {
+        title: "Despre conversia mile ↔ km",
+        paragraphs: [
+          "Mila internațională (statute mile) este definită exact ca 1.609,344 metri, adică 1,609344 km. Este unitatea principală de distanță pe uscat în Statele Unite și Regatul Unit, în timp ce restul lumii folosește kilometrul (sistemul metric).",
+          "Conversia este utilă la condusul în străinătate, la aplicațiile de fitness importate, în aviație și în interpretarea distanțelor de pe hărțile anglo-saxone. Pentru viteză, vezi și convertorul km/h ↔ m/s ↔ mph.",
+        ],
+      },
+    },
+  },
+  "km-h-m-s": {
+    introText:
+      "Convertor de viteză între cele mai folosite unități: kilometri pe oră (km/h), metri pe secundă (m/s), mile pe oră (mph) și noduri (knots). Editezi orice câmp, iar celelalte se recalculează instant. Util la fizică, condus, sport, navigație și aviație.",
+    guide: [
+      "1. Scrie viteza într-una dintre unități (km/h, m/s, mph sau noduri).",
+      "2. Celelalte trei valori se actualizează automat.",
+      "3. Folosește butoanele cu viteze uzuale (oraș, autostradă) pentru valori frecvente.",
+    ],
+    faq: [
+      { q: "Cum convertesc km/h în m/s?", a: "Împarte valoarea în km/h la 3,6. De exemplu: 36 km/h ÷ 3,6 = 10 m/s. Pentru invers, înmulțește m/s cu 3,6." },
+      { q: "Cât este 100 km/h în mph?", a: "100 km/h × 0,621371 ≈ 62,14 mph. Formula: mph = km/h × 0,621371 (sau km/h ÷ 1,609344)." },
+      { q: "Ce înseamnă un nod (knot)?", a: "1 nod = 1 milă marină pe oră = 1,852 km/h ≈ 0,5144 m/s. Este unitatea standard de viteză în navigație și aviație." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu viteza", description: "Scrie valoarea într-una dintre cele 4 unități." },
+        { title: "2. Conversie simultană", description: "Celelalte unități se recalculează instant." },
+        { title: "3. Viteze uzuale", description: "Butoane rapide: mers, oraș, drum național, autostradă." },
+      ],
+      useCases: [
+        { icon: "📐", title: "Fizică", description: "Probleme cu viteză, distanță și timp în m/s (SI)." },
+        { icon: "🚗", title: "Condus", description: "Conversia limitelor de viteză între km/h și mph." },
+        { icon: "⛵", title: "Navigație și aviație", description: "Viteze exprimate în noduri." },
+      ],
+      aboutSection: {
+        title: "Despre conversia vitezei",
+        paragraphs: [
+          "Viteza se exprimă în unități diferite în funcție de context: km/h în viața de zi cu zi și pe indicatoarele rutiere europene, m/s în fizică (unitatea SI), mph în SUA și Regatul Unit, iar nodul în navigație și aviație. Relația de bază: 1 m/s = 3,6 km/h.",
+          "Conversiile uzuale: 1 mph = 1,609344 km/h, iar 1 nod = 1,852 km/h. Pentru a trece de la km/h la m/s împarți la 3,6 — operația cel mai des întâlnită în problemele de fizică din gimnaziu și liceu.",
+        ],
+      },
+    },
+  },
   "cm-inch": {
     introText:
       "Transformă centimetri în inch (țoli) și invers. Ideal pentru diagonale ecran TV, monitoare, laptopuri, haine importate sau proiecte DIY.",

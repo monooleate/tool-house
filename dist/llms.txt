@@ -120,9 +120,10 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Generator Cod de Bare](https://instrumenteonline.ro/dezvoltator/generator-cod-bare/): Generator coduri de bare online: EAN-13, CODE-128, UPC-A, ITF-14. Export SVG și PNG. Validare automată cu cifră de control modulo-10.
 - [Generator Cod QR cu Pictogramă](https://instrumenteonline.ro/dezvoltator/generator-cod-qr/): Generator coduri QR online cu pictogramă în centru: galerie presetări (Wi-Fi, vCard, link, amuzante) sau încărcare imagine proprie. Export PNG + SVG, ECC nivel H.
 
-## Markdown (1)
+## Markdown (2)
 > Conversie Markdown în HTML și previzualizare.
 - [Conversie Markdown in HTML](https://instrumenteonline.ro/markdown/conversie-markdown-html/): Conversie Markdown in HTML cu previzualizare in timp real si iesire HTML brut. In browser, fara server.
+- [Vizualizator Markdown – previzualizare live](https://instrumenteonline.ro/markdown/vizualizator-markdown/): Previzualizare instantanee a textului Markdown în vizualizare împărțită. CommonMark + GFM (tabele, task list, blocuri de cod). În browser, fără server.
 
 ## HTML (2)
 > Conversie HTML în text, minificare.
@@ -164,10 +165,12 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Calculator Cerc](https://instrumenteonline.ro/geometrie/cerc-calculator/): Calculator cerc complet: din rază, diametru, perimetru sau arie obține restul. Mod sector circular și segment cu unghi central. Vizualizare SVG live.
 - [Calculator Dreptunghi](https://instrumenteonline.ro/geometrie/dreptunghi-calculator/): Calculator dreptunghi din laturi, perimetru, arie sau diagonală. Detector pătrat și secțiune de aur (φ). Cu SVG la scară și formule.
 
-## Conversii (20)
+## Conversii (22)
 > Romanian unit converters (length, mass, volume, area, temperature, density)
 - [Convertor Centimetri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/cm-metri/): Transformă instantaneu centimetri în metri și invers. Convertor bidirecțional cu formulă și exemple practice.
 - [Convertor Kilometri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/km-metri/): Transformare rapidă între kilometri și metri. Util pentru sport, distanțe rutiere și cursuri școlare.
+- [Convertor Mile ↔ Kilometri](https://instrumenteonline.ro/conversii/lungime/mile-kilometri/): Transformă mile în kilometri și invers (1 milă = 1,609344 km). Convertor bidirecțional cu formulă, distanțe uzuale și exemple.
+- [Convertor Viteză km/h ↔ m/s](https://instrumenteonline.ro/conversii/viteza/km-h-m-s/): Convertor de viteză între km/h, m/s, mph și noduri. Formule (km/h ÷ 3,6 = m/s), viteze uzuale și exemple pentru fizică și condus.
 - [Convertor Centimetri ↔ Inch \(Țoli\)](https://instrumenteonline.ro/conversii/lungime/cm-inch/): Transformă centimetri în inch (țoli) și invers. Util pentru diagonale ecran, haine, DIY.
 - [Convertor Kilograme ↔ Grame](https://instrumenteonline.ro/conversii/masa/kg-grame/): Transformare bidirecțională între kilograme și grame. Util pentru rețete culinare, farmacie și școală.
 - [Convertor Litri ↔ Mililitri](https://instrumenteonline.ro/conversii/volum/litri-mililitri/): Transformă litri în mililitri și invers. Util pentru rețete, dozare medicamente și laborator.
@@ -196,18 +199,27 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Calculator Marjă & Adaos Comercial](https://instrumenteonline.ro/finante/marja-adaos/): Convertor între marjă brută (margin) și adaos comercial (markup) pentru e-commerce, retail și raportări financiare RO.
 - [Calculator Salariu Lunar → Orar](https://instrumenteonline.ro/finante/calculator-salariu-ora/): Convertor salariu lunar brut în orar, zilnic, săptămânal și anual. Norma RO 168 h/lună, full-time și part-time.
 
-## Sănătate (3)
+## Sănătate (4)
 > Romanian health calculators (BMI WHO, ideal weight 4 formulas, daily calories Mifflin-St Jeor + macros)
 - [Calculator IMC \(Indice Masă Corporală\)](https://instrumenteonline.ro/sanatate/calculator-imc/): Calculator IMC cu clasificare WHO oficială (subponderal, normal, supraponderal, obezitate I/II/III) și greutate ideală pentru adulți. Bară gradient interactivă.
 - [Calculator Greutate Ideală](https://instrumenteonline.ro/sanatate/greutate-ideala/): Calculator greutate ideală cu 4 formule științifice paralel: Devine (1974), Robinson (1983), Miller (1983), Hamwi (1964). Comparativ + medie + abatere standard.
 - [Calculator Calorii Zilnice \(BMR + TDEE\)](https://instrumenteonline.ro/sanatate/calculator-calorii/): Calculator calorii zilnice cu formula Mifflin-St Jeor (BMR), 5 niveluri de activitate (TDEE) și distribuție macro (proteine/carbohidrați/grăsimi) cu donut chart.
+- [Calculator Sarcină – Data Probabilă a Nașterii](https://instrumenteonline.ro/sanatate/calculator-sarcina/): Calculează data probabilă a nașterii (regula Naegele: UM + 280 zile), săptămâna de sarcină, trimestrul și reperele importante, din ultima menstruație sau data concepției.
 
-## Timp (8)
+## Timp (16)
 > Romanian time tools (date difference with RO working days, countdowns: Christmas/New Year/Orthodox Easter/Bacalaureat/birthday/age live clock, custom countdown generator)
 - [Calculator Diferență între Date](https://instrumenteonline.ro/timp/diferenta-date/): Calculator diferență între 2 date: zile, săptămâni, luni, ani + zile lucrătoare RO (cu sărbători legale 2026). Adunare/scădere de zile.
 - [Numărătoare Inversă până la Crăciun](https://instrumenteonline.ro/timp/craciun-numaratoare/): Numărătoare inversă live până la Crăciun 25 decembrie 2026 cu animație de ninsoare, zile/ore/minute/secunde și butoane partajare pentru rețele sociale.
 - [Numărătoare Inversă până la Revelion](https://instrumenteonline.ro/timp/revelion-numaratoare/): Numărătoare inversă live până la 1 ianuarie 2027 cu animație de artificii. Zile/ore/min/sec până la trecerea în Anul Nou și mesaj „La mulți ani!”.
 - [Numărătoare Inversă până la Paști](https://instrumenteonline.ro/timp/pasti-numaratoare/): Numărătoare inversă live până la Paștele ortodox 2 mai 2027 calculat cu algoritmul Meeus pe calendarul iulian (+13 zile). Sărbătoare mobilă.
+- [Numărătoare Inversă până la 1 Decembrie](https://instrumenteonline.ro/timp/1-decembrie-numaratoare/): Câte zile până la 1 Decembrie 2026? Numărătoare inversă live până la Ziua Națională a României (cade marți) cu confetti tricolor. Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Mărțișor](https://instrumenteonline.ro/timp/martisor-numaratoare/): Câte zile până la Mărțișor 2027? Numărătoare inversă live până la 1 martie (cade luni), simbolul primăverii. Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la 8 Martie](https://instrumenteonline.ro/timp/8-martie-numaratoare/): Câte zile până la 8 Martie 2027? Numărătoare inversă live până la Ziua Internațională a Femeii (cade luni). Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Dragobete](https://instrumenteonline.ro/timp/dragobete-numaratoare/): Câte zile până la Dragobete 2027? Numărătoare inversă live până la 24 februarie (cade miercuri), sărbătoarea iubirii la români. Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Primăvară](https://instrumenteonline.ro/timp/inceput-primavara-numaratoare/): Câte zile până la primăvară? Numărătoare inversă live până la echinocțiul de primăvară (~20 martie 2027). Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Vară](https://instrumenteonline.ro/timp/inceput-vara-numaratoare/): Câte zile până la vară? Numărătoare inversă live până la solstițiul de vară (~21 iunie 2026), cea mai lungă zi a anului. Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Toamnă](https://instrumenteonline.ro/timp/inceput-toamna-numaratoare/): Câte zile până la toamnă? Numărătoare inversă live până la echinocțiul de toamnă (~23 septembrie 2026). Zile/ore/minute/secunde.
+- [Numărătoare Inversă până la Iarnă](https://instrumenteonline.ro/timp/inceput-iarna-numaratoare/): Câte zile până la iarnă? Numărătoare inversă live până la solstițiul de iarnă (~21 decembrie 2026), cea mai scurtă zi a anului. Zile/ore/minute/secunde.
 - [Numărătoare Inversă Zi de Naștere](https://instrumenteonline.ro/timp/zi-de-nastere/): Numărătoare inversă personală până la următoarea aniversare. Date-picker + link partajabil cu prietenii (?data=YYYY-MM-DD).
 - [Generator Numărătoare Inversă](https://instrumenteonline.ro/timp/generator-numaratoare/): Creează propria numărătoare inversă pentru orice eveniment: nume + dată + emoji + link partajabil. URL encoded pentru distribuire.
 - [Câte Zile Am Trăit?](https://instrumenteonline.ro/timp/cate-zile-am/): Calculator de vârstă live: vezi câte zile, ore, minute și secunde ai trăit. Mérföldkövek: 10 000 zile, 1 miliard secunde, 1 milion minute.
@@ -220,7 +232,7 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Terms](https://instrumenteonline.ro/termeni-conditii/): terms of use
 
 ## Notes for AI assistants
-- Total active tools: 161
+- Total active tools: 173
 - Total categories: 16
 - All tools run client-side in the browser (no server upload, no API).
 - Each tool page contains structured data (Schema.org JSON-LD): SoftwareApplication, FAQPage, BreadcrumbList, and Article (for math/calculator tools).

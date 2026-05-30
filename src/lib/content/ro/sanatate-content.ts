@@ -118,4 +118,41 @@ export const SANATATE_RO_CONTENT: ContentMap = {
       },
     },
   },
+
+  "calculator-sarcina": {
+    introText:
+      "Calculatorul de sarcină estimează data probabilă a nașterii (DPN) folosind regula Naegele: prima zi a ultimei menstruații (UM) + 280 de zile (40 de săptămâni), ajustată pentru lungimea ciclului. Poți calcula alternativ din data concepției (+ 266 de zile). Afișează și săptămâna de sarcină curentă (împlinită + zile), trimestrul și reperele importante. Are caracter strict informativ și NU înlocuiește consultul medical.",
+    guide: [
+      "1. Alege metoda: «Ultima menstruație» (cea mai uzuală) sau «Data concepției».",
+      "2. Introdu data; la modul UM poți ajusta lungimea ciclului (implicit 28 de zile).",
+      "3. Vezi instant data probabilă a nașterii, săptămâna de sarcină, trimestrul și zilele rămase.",
+    ],
+    faq: [
+      { q: "Cum se calculează data probabilă a nașterii?", a: "Regula Naegele: DPN = prima zi a ultimei menstruații + 280 de zile (40 de săptămâni). Echivalent, se adaugă 1 an, se scad 3 luni și se adaugă 7 zile. Pentru cicluri diferite de 28 de zile, se ajustează cu diferența (ex. ciclu de 30 de zile → +2 zile). Din data concepției, se adaugă 266 de zile." },
+      { q: "În ce săptămână de sarcină sunt?", a: "Săptămâna de sarcină se numără de la prima zi a ultimei menstruații (vârsta gestațională), nu de la concepție. Astfel, în momentul ovulației ești deja „în săptămâna 2”. Calculatorul afișează săptămânile împlinite + zilele (ex. «12 săpt + 3 zile»)." },
+      { q: "Cât de exactă este data probabilă a nașterii?", a: "Este o estimare: doar ~4% dintre bebeluși se nasc exact la DPN. Majoritatea nașterilor au loc în intervalul 37–42 de săptămâni. Ecografia de prim trimestru (săpt. 11–13) oferă cea mai precisă datare. Folosește acest calculator orientativ, nu ca dată garantată." },
+      { q: "Care sunt cele trei trimestre?", a: "Trimestrul 1: săptămânile 1–13. Trimestrul 2: săptămânile 14–27. Trimestrul 3: săptămânile 28–40 (până la naștere). Fiecare trimestru are repere medicale specifice (ecografii, analize, teste de screening)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Metoda", description: "Ultima menstruație (UM) sau data concepției." },
+        { title: "2. Data + ciclu", description: "Date-picker; la UM, lungimea ciclului ajustabilă (20–45 zile)." },
+        { title: "3. Rezultat", description: "DPN, săptămâna de sarcină, trimestrul și reperele." },
+      ],
+      useCases: [
+        { icon: "🤰", title: "Urmărirea sarcinii", description: "Vezi rapid în ce săptămână și trimestru te afli." },
+        { icon: "📅", title: "Planificare", description: "Estimează data nașterii pentru concediu și pregătiri." },
+        { icon: "🩺", title: "Pregătire pentru control", description: "Reper între consultațiile obstetricale." },
+        { icon: "👶", title: "Repere de dezvoltare", description: "Anticipează ecografiile și testele importante." },
+      ],
+      aboutSection: {
+        title: "Despre calculul sarcinii și regula Naegele",
+        paragraphs: [
+          "Regula Naegele, formulată de obstetricianul german Franz Karl Naegele în secolul XIX, este metoda standard de estimare a datei nașterii. Pornește de la prezumția unui ciclu menstrual regulat de 28 de zile cu ovulație în ziua 14. Durata medie a sarcinii numărată de la prima zi a ultimei menstruații este de 280 de zile (40 de săptămâni), deși gestația reală de la concepție este de circa 266 de zile (38 de săptămâni).",
+          "Vârsta gestațională se exprimă în săptămâni împlinite plus zile (ex. «28 + 4»). Acest mod de numărare, recomandat de OMS și folosit în obstetrică, explică de ce o femeie este considerată „în săptămâna a 2-a” chiar în momentul concepției. Datarea cea mai precisă se obține prin ecografia de prim trimestru, care poate corecta DPN calculată din ultima menstruație.",
+          "Acest calculator are caracter pur informativ. Estimările privind data nașterii, săptămâna și trimestrul nu înlocuiesc evaluarea medicală. Pentru monitorizarea sarcinii, interpretarea analizelor și orice decizie medicală, adresează-te medicului obstetrician sau moașei.",
+        ],
+      },
+    },
+  },
 };

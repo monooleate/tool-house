@@ -11,7 +11,8 @@ export type ConversionSubcatSlug =
   | "volum"
   | "suprafata"
   | "temperatura"
-  | "densitate";
+  | "densitate"
+  | "viteza";
 
 export interface ConversionSubcat {
   slug: ConversionSubcatSlug;
@@ -42,7 +43,7 @@ export const CONVERSII_HUBS: ConversionSubcat[] = [
       "Fiecare convertor funcționează bidirecțional și afișează formula de conversie, astfel încât să înțelegi exact cum se face calculul. În plus, găsești zeci de pagini cu răspunsuri rapide pentru valorile cele mai căutate (de exemplu „170 cm în metri”, „32 inch în cm”).",
       "Util pentru: documente oficiale (înălțime în buletin/pașaport), achiziții online de monitoare și televizoare, profil medical sau sportiv, lucrări DIY și exerciții școlare la matematică.",
     ],
-    toolSlugs: ["cm-metri", "km-metri", "cm-inch", "inch-cm", "picioare-cm"],
+    toolSlugs: ["cm-metri", "km-metri", "mile-kilometri", "cm-inch", "inch-cm", "picioare-cm"],
     keywords: [
       "convertor lungime",
       "transformare cm in metri",
@@ -305,6 +306,45 @@ export const CONVERSII_HUBS: ConversionSubcat[] = [
       },
     ],
     updatedAt: "2026-04-27",
+  },
+  {
+    slug: "viteza",
+    label: "Viteză",
+    icon: "🚗",
+    description: "Convertoare de viteză: km/h, m/s, mph și noduri. Formule, exemple și viteze uzuale (oraș, autostradă).",
+    intro: [
+      "Convertoarele de viteză transformă între cele mai folosite unități: kilometri pe oră (km/h) din viața de zi cu zi, metri pe secundă (m/s) din fizică, mile pe oră (mph) din spațiul anglo-saxon și noduri (knots) din navigație și aviație.",
+      "Fiecare convertor afișează formula de conversie și funcționează între toate unitățile simultan, astfel încât să poți trece rapid de la limita de viteză rutieră la valoarea echivalentă în m/s pentru un exercițiu de fizică.",
+      "Util pentru: probleme de fizică (viteză, distanță, timp), conversia limitelor de viteză la condus în străinătate, sport (alergare, ciclism), navigație și aviație.",
+    ],
+    toolSlugs: ["km-h-m-s"],
+    keywords: [
+      "convertor viteza",
+      "km/h in m/s",
+      "m/s in km/h",
+      "mph in km/h",
+      "noduri in km/h",
+      "transformare viteza",
+    ],
+    faq: [
+      {
+        q: "Cum convertesc km/h în m/s?",
+        a: "Împarte valoarea în km/h la 3,6. De exemplu: 36 km/h ÷ 3,6 = 10 m/s. Pentru invers, înmulțește m/s cu 3,6.",
+      },
+      {
+        q: "Cât este 1 milă pe oră (mph) în km/h?",
+        a: "1 mph = 1,609344 km/h. De exemplu, o limită de 60 mph ≈ 96,6 km/h. Pentru invers, împarte km/h la 1,609344.",
+      },
+      {
+        q: "Ce este un nod (knot)?",
+        a: "Nodul este unitatea de viteză folosită în navigație și aviație: 1 nod = 1 milă marină pe oră = 1,852 km/h ≈ 0,514 m/s.",
+      },
+      {
+        q: "De ce se folosește m/s în fizică?",
+        a: "Metrul pe secundă este unitatea de viteză din Sistemul Internațional (SI), coerentă cu metrul și secunda. De aceea problemele de fizică (viteză = distanță / timp) folosesc m/s.",
+      },
+    ],
+    updatedAt: "2026-05-31",
   },
 ];
 
