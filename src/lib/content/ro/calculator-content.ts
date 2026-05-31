@@ -250,6 +250,42 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
     },
   },
 
+  "calculator-fractii": {
+    introText:
+      "Calculatorul de fracții efectuează cele patru operații — adunare, scădere, înmulțire și împărțire — cu aducere la numitor comun, simplificare automată prin CMMDC, transformare în număr mixt și pași detaliați. Ideal pentru elevii din clasele V–VIII și pentru verificarea temelor la matematică.",
+    guide: [
+      "1. Alege operația: adunare, scădere, înmulțire sau împărțire.",
+      "2. Introdu numărătorul și numitorul fiecărei fracții.",
+      "3. Vezi rezultatul simplificat, ca număr mixt și zecimal, cu pașii de calcul.",
+    ],
+    faq: [
+      { q: "Cum aduni două fracții cu numitori diferiți?", a: "Aduci fracțiile la același numitor (numitorul comun, de obicei produsul sau CMMMC al numitorilor), apoi aduni numărătorii. Exemplu: 1/2 + 1/3 = 3/6 + 2/6 = 5/6." },
+      { q: "Cum se înmulțesc fracțiile?", a: "Înmulțești numărător cu numărător și numitor cu numitor: (a/b) × (c/d) = (a·c)/(b·d). Exemplu: 2/3 × 3/4 = 6/12 = 1/2 după simplificare." },
+      { q: "Cum se împart fracțiile?", a: "Înmulțești prima fracție cu inversul (răsturnatul) celei de-a doua: (a/b) ÷ (c/d) = (a/b) × (d/c) = (a·d)/(b·c). Exemplu: 1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = 2." },
+      { q: "Cum se simplifică o fracție?", a: "Împarți numărătorul și numitorul la cel mai mare divizor comun (CMMDC). Exemplu: 6/8, CMMDC(6,8)=2 → 3/4. O fracție este ireductibilă când CMMDC = 1." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege operația", description: "Adunare, scădere, înmulțire sau împărțire." },
+        { title: "2. Introdu fracțiile", description: "Numărător și numitor pentru fiecare fracție." },
+        { title: "3. Vezi pașii", description: "Rezultat brut, simplificare cu CMMDC, număr mixt și zecimal." },
+      ],
+      useCases: [
+        { icon: "🧮", title: "Teme la matematică", description: "Verificarea rapidă a exercițiilor cu fracții." },
+        { icon: "🍰", title: "Rețete", description: "Adunarea sau scăderea cantităților fracționare." },
+        { icon: "📏", title: "Măsurători", description: "Operații cu fracții de inch sau de unitate." },
+        { icon: "🎓", title: "Pregătire Evaluare", description: "Exersarea fracțiilor pentru gimnaziu și Evaluarea Națională." },
+      ],
+      aboutSection: {
+        title: "Despre operațiile cu fracții",
+        paragraphs: [
+          "O fracție exprimă o parte dintr-un întreg, prin raportul dintre numărător (câte părți luăm) și numitor (în câte părți este împărțit întregul). Operațiile cu fracții urmează reguli precise: adunarea și scăderea necesită numitor comun, în timp ce înmulțirea și împărțirea se fac direct (împărțirea, prin înmulțire cu inversul).",
+          "Pasul final, simplificarea, transformă fracția în forma ireductibilă, împărțind numărătorul și numitorul la cel mai mare divizor comun (CMMDC). Rezultatele supraunitare se pot scrie și ca număr mixt (parte întreagă + fracție). Aceste deprinderi sunt fundamentale în programa de gimnaziu și apar frecvent la Evaluarea Națională.",
+        ],
+      },
+    },
+  },
+
   // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
   "consum-combustibil": {
     introText:

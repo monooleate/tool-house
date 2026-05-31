@@ -50,6 +50,13 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Calculează cel mai mare divizor comun (CMMDC) și cel mai mic multiplu comun (CMMMC) pentru oricâte numere, cu descompunere în factori primi și algoritmul lui Euclid.",
     keywords: ["calculator cmmdc", "cmmmc calculator", "cel mai mare divizor comun", "cel mai mic multiplu comun", "algoritmul lui euclid", "factori primi", "cmmdc cmmmc"],
   },
+  "calculator-fractii": {
+    slug: "calculator-fractii",
+    title: "Calculator Fracții – Adunare, Scădere, Înmulțire, Împărțire cu Pași | InstrumenteOnline",
+    h1: "Calculator Fracții",
+    description: "Calculează operații cu fracții: adunare, scădere, înmulțire și împărțire, cu aducere la numitor comun, simplificare (CMMDC), număr mixt și pași detaliați.",
+    keywords: ["calculator fractii", "adunare fractii", "scadere fractii", "inmultire fractii", "impartire fractii", "simplificare fractii", "numitor comun"],
+  },
 
   // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
   "consum-combustibil": {
