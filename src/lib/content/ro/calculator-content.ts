@@ -178,6 +178,78 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
     },
   },
 
+  "numere-romane": {
+    introText:
+      "Convertorul de numere romane transformă bidirecțional între cifre romane (I, V, X, L, C, D, M) și numere arabe, în intervalul 1–3999. Editezi oricare câmp, iar celălalt se actualizează instant, cu validare și descompunere pe simboluri. Util pentru ceasuri, capitole, ani, monumente și exerciții școlare.",
+    guide: [
+      "1. Scrie un număr arab (1–3999) sau un număr roman.",
+      "2. Conversia apare instant în celălalt câmp, cu descompunerea pe simboluri.",
+      "3. Apasă pe simbolurile de bază (I, V, X, L, C, D, M) pentru exemple rapide.",
+    ],
+    faq: [
+      { q: "Care sunt simbolurile numerelor romane?", a: "Cele șapte simboluri de bază sunt: I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000. Toate celelalte numere se formează prin combinarea acestora." },
+      { q: "Cum se scrie 2026 cu numere romane?", a: "2026 = MMXXVI. Descompunere: M (1000) + M (1000) + X (10) + X (10) + V (5) + I (1) = 2026." },
+      { q: "Ce este notația substractivă?", a: "Pentru a evita patru simboluri identice la rând, se scade un simbol mai mic pus înaintea unuia mai mare: IV = 4 (5−1), IX = 9, XL = 40, XC = 90, CD = 400, CM = 900." },
+      { q: "Care este cel mai mare număr roman standard?", a: "În notația standard, cel mai mare număr este 3999 = MMMCMXCIX. Peste această valoare se folosesc bare deasupra (vinculum), care înmulțesc cu 1000, dar acestea nu sunt acoperite de convertorul clasic." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu valoarea", description: "Un număr arab (1–3999) sau o secvență romană validă." },
+        { title: "2. Conversie instant", description: "Celălalt câmp se actualizează, cu validare automată." },
+        { title: "3. Vezi descompunerea", description: "Numărul este descompus pe simboluri (ex. MM + XX + VI)." },
+      ],
+      useCases: [
+        { icon: "🕐", title: "Ceasuri", description: "Citirea cadranelor cu cifre romane (I–XII)." },
+        { icon: "📖", title: "Capitole și volume", description: "Numerotarea capitolelor, prefețelor și anexelor." },
+        { icon: "🏛️", title: "Monumente și ani", description: "Anii inscripționați pe clădiri și monumente." },
+        { icon: "🎓", title: "Școală", description: "Exerciții de conversie la matematică și istorie." },
+      ],
+      aboutSection: {
+        title: "Despre numerele romane",
+        paragraphs: [
+          "Numerele romane sunt un sistem de notație din Roma antică, bazat pe șapte simboluri literale. Spre deosebire de sistemul zecimal pozițional, valoarea se obține prin adunarea (și, în notația substractivă, scăderea) simbolurilor citite de la stânga la dreapta.",
+          "Regulile principale: un simbol nu se repetă de mai mult de trei ori la rând (de aici IV în loc de IIII); simbolurile V, L, D nu se repetă; notația substractivă permite doar I înaintea lui V și X, X înaintea lui L și C, C înaintea lui D și M. Sistemul standard acoperă valorile 1–3999.",
+        ],
+      },
+    },
+  },
+
+  "cmmdc-cmmmc": {
+    introText:
+      "Calculatorul CMMDC și CMMMC determină cel mai mare divizor comun și cel mai mic multiplu comun pentru oricâte numere naturale. Folosește algoritmul lui Euclid și afișează descompunerea în factori primi a fiecărui număr. Util la simplificarea fracțiilor, aducerea la același numitor și problemele de gimnaziu.",
+    guide: [
+      "1. Scrie două sau mai multe numere naturale, separate prin virgulă sau spațiu.",
+      "2. Vezi instant CMMDC și CMMMC.",
+      "3. Verifică descompunerea în factori primi a fiecărui număr.",
+    ],
+    faq: [
+      { q: "Ce este CMMDC (c.m.m.d.c.)?", a: "Cel mai mare divizor comun al unor numere este cel mai mare număr natural care le împarte pe toate fără rest. Exemplu: CMMDC(12, 18) = 6, deoarece 6 este cel mai mare număr care împarte și 12, și 18." },
+      { q: "Ce este CMMMC (c.m.m.m.c.)?", a: "Cel mai mic multiplu comun este cel mai mic număr natural diferit de zero care este multiplu al tuturor numerelor date. Exemplu: CMMMC(4, 6) = 12." },
+      { q: "Cum funcționează algoritmul lui Euclid?", a: "Pentru două numere, se împarte cel mare la cel mic și se reține restul; apoi se repetă cu (împărțitorul, restul) până când restul devine 0. Ultimul împărțitor nenul este CMMDC. Exemplu: 18 = 1×12 + 6; 12 = 2×6 + 0 → CMMDC = 6." },
+      { q: "Care este relația dintre CMMDC și CMMMC?", a: "Pentru două numere: CMMDC(a, b) × CMMMC(a, b) = a × b. De aceea CMMMC(a, b) = (a × b) / CMMDC(a, b)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu numerele", description: "Două sau mai multe numere naturale, separate prin virgulă." },
+        { title: "2. Vezi rezultatele", description: "CMMDC și CMMMC, calculate instant." },
+        { title: "3. Factori primi", description: "Descompunerea fiecărui număr pentru verificare." },
+      ],
+      useCases: [
+        { icon: "➗", title: "Simplificarea fracțiilor", description: "Împarte numărătorul și numitorul la CMMDC." },
+        { icon: "🧮", title: "Numitor comun", description: "Aduce fracțiile la același numitor folosind CMMMC." },
+        { icon: "📅", title: "Probleme de coincidență", description: "Când se întâlnesc din nou două evenimente periodice (CMMMC)." },
+        { icon: "🎓", title: "Teme și teze", description: "Exerciții clasice de gimnaziu cu divizori și multipli." },
+      ],
+      aboutSection: {
+        title: "Despre CMMDC, CMMMC și algoritmul lui Euclid",
+        paragraphs: [
+          "Cel mai mare divizor comun (CMMDC) și cel mai mic multiplu comun (CMMMC) sunt noțiuni fundamentale din teoria numerelor, introduse în gimnaziu. CMMDC se folosește la simplificarea fracțiilor, iar CMMMC la aducerea fracțiilor la același numitor și la problemele cu evenimente periodice.",
+          "Algoritmul lui Euclid (sec. III î.Hr.) este cea mai eficientă metodă de calcul al CMMDC: se bazează pe faptul că CMMDC(a, b) = CMMDC(b, a mod b). Alternativ, ambele se pot obține din descompunerea în factori primi: CMMDC ia factorii comuni la puterea minimă, iar CMMMC ia toți factorii la puterea maximă.",
+        ],
+      },
+    },
+  },
+
   // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
   "consum-combustibil": {
     introText:

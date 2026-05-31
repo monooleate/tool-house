@@ -36,6 +36,20 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Aplică regula de trei simplă: proporții directe și inverse. Util la procente, rețete, prețuri, conversii și probleme școlare.",
     keywords: ["regula de trei", "regula de trei simpla", "proportie directa", "proportie inversa", "calculator proportie"],
   },
+  "numere-romane": {
+    slug: "numere-romane",
+    title: "Convertor Numere Romane ↔ Arabe (1–3999) – Tabel și Reguli | InstrumenteOnline",
+    h1: "Convertor Numere Romane ↔ Arabe",
+    description: "Transformă numere romane în arabe și invers (1–3999). Tabel cu simboluri (I, V, X, L, C, D, M), reguli de scriere, descompunere și exemple. Instant, gratis.",
+    keywords: ["numere romane", "convertor numere romane", "cifre romane", "numere romane in arabe", "tabel numere romane", "scriere numere romane"],
+  },
+  "cmmdc-cmmmc": {
+    slug: "cmmdc-cmmmc",
+    title: "Calculator CMMDC și CMMMC – Algoritmul lui Euclid & Factori Primi | InstrumenteOnline",
+    h1: "Calculator C.M.M.D.C. și C.M.M.M.C.",
+    description: "Calculează cel mai mare divizor comun (CMMDC) și cel mai mic multiplu comun (CMMMC) pentru oricâte numere, cu descompunere în factori primi și algoritmul lui Euclid.",
+    keywords: ["calculator cmmdc", "cmmmc calculator", "cel mai mare divizor comun", "cel mai mic multiplu comun", "algoritmul lui euclid", "factori primi", "cmmdc cmmmc"],
+  },
 
   // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
   "consum-combustibil": {

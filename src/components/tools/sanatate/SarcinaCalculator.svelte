@@ -141,42 +141,44 @@
   .sarc { --accent: var(--cat-sanatate, #e11d48); display: flex; flex-direction: column; gap: var(--sp-4, 1rem); }
   .sarc__modes { display: flex; gap: 0.25rem; flex-wrap: wrap; }
   .sarc__modes button {
-    flex: 1; min-width: 140px; padding: 0.6rem 0.75rem; border: 1px solid var(--border, #ddd);
-    background: var(--surface, #fff); border-radius: 0.5rem; cursor: pointer; font: inherit;
+    flex: 1; min-width: 140px; padding: 0.6rem 0.75rem; border: 1px solid var(--border);
+    background: var(--bg-input); color: var(--text); border-radius: 0.5rem; cursor: pointer; font: inherit;
   }
   .sarc__modes button.is-active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .sarc__inputs { display: flex; gap: var(--sp-3, 0.75rem); flex-wrap: wrap; }
   .sarc__field { display: flex; flex-direction: column; gap: 0.35rem; flex: 1; min-width: 200px; }
   .sarc__field--narrow { max-width: 200px; }
-  .sarc__field span { font-size: 0.85rem; color: var(--text-muted, #666); }
+  .sarc__field span { font-size: 0.85rem; color: var(--text-muted); }
   .sarc__field input {
-    padding: 0.6rem 0.75rem; border: 1px solid var(--border, #ddd); border-radius: 0.5rem; font: inherit;
+    padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; font: inherit;
+    background: var(--bg-input); color: var(--text);
   }
+  .sarc__field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
   .sarc__main {
     text-align: center; padding: var(--sp-4, 1rem);
     background: color-mix(in srgb, var(--accent) 10%, transparent);
     border-radius: 0.75rem;
   }
-  .sarc__main-label { font-size: 0.85rem; color: var(--text-muted, #666); margin: 0; }
+  .sarc__main-label { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
   .sarc__main-value { font-size: clamp(1.5rem, 5vw, 2.25rem); font-weight: 700; color: var(--accent); margin: 0.2rem 0; }
-  .sarc__main-sub { font-size: 0.95rem; color: var(--text-muted, #666); margin: 0; text-transform: capitalize; }
+  .sarc__main-sub { font-size: 0.95rem; color: var(--text-muted); margin: 0; text-transform: capitalize; }
   .sarc__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3, 0.75rem); }
   .sarc__card {
     display: flex; flex-direction: column; gap: 0.25rem; padding: var(--sp-3, 0.75rem);
-    background: var(--surface, #fff); border: 1px solid var(--border, #eee); border-radius: 0.5rem; text-align: center;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 0.5rem; text-align: center;
   }
-  .sarc__card-label { font-size: 0.75rem; color: var(--text-muted, #666); }
-  .sarc__card-value { font-size: 1.4rem; font-weight: 700; }
-  .sarc__card-value small { font-size: 0.7rem; font-weight: 500; color: var(--text-muted, #666); }
+  .sarc__card-label { font-size: 0.75rem; color: var(--text-muted); }
+  .sarc__card-value { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+  .sarc__card-value small { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); }
   .sarc__progress { height: 10px; background: color-mix(in srgb, var(--accent) 15%, transparent); border-radius: 999px; overflow: hidden; }
   .sarc__progress-bar { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s; }
-  .sarc__progress-text { text-align: center; font-size: 0.8rem; color: var(--text-muted, #666); margin: 0; }
-  .sarc__hint { padding: var(--sp-4, 1rem); text-align: center; color: var(--text-muted, #666); background: var(--surface, #fafafa); border-radius: 0.5rem; }
+  .sarc__progress-text { text-align: center; font-size: 0.8rem; color: var(--text-muted); margin: 0; }
+  .sarc__hint { padding: var(--sp-4, 1rem); text-align: center; color: var(--text-muted); background: var(--bg-input); border: 1px solid var(--border); border-radius: 0.5rem; }
   .sarc__repere { font-size: 0.9rem; }
   .sarc__repere-title { font-size: 1rem; margin: 0 0 0.5rem; }
   .sarc__repere ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.3rem; }
   .sarc__disclaimer {
-    font-size: 0.82rem; color: var(--text-muted, #555); padding: var(--sp-3, 0.75rem);
+    font-size: 0.82rem; color: var(--text-muted); padding: var(--sp-3, 0.75rem);
     background: color-mix(in srgb, #f59e0b 12%, transparent); border-radius: 0.5rem; margin: 0;
   }
   @media (max-width: 520px) { .sarc__grid { grid-template-columns: 1fr; } }
