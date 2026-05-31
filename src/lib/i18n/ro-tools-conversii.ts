@@ -107,6 +107,20 @@ export const CONVERSII_RO: Record<string, { slug: string; title: string; h1: str
     description: "Convertor ari ↔ m² uzual la anunțuri imobiliare RO (lot 5 ari, casă + curte). 1 ar = 100 m².",
     keywords: ["ari in m2", "1 ar cati m2", "5 ari in metri patrati", "10 ari in m2", "teren ari", "imobiliar ari"],
   },
+  "pogon-metri-patrati": {
+    slug: "pogon-metri-patrati",
+    title: "Convertor Pogon ↔ Metri Pătrați – cât este un pogon | InstrumenteOnline",
+    h1: "Convertor Pogon ↔ Metri Pătrați",
+    description: "Transformă pogon în metri pătrați și invers. 1 pogon = 5.000 m² (valoare uzuală, ≈ ½ hectar). Util pentru terenuri agricole din România.",
+    keywords: ["pogon in metri patrati", "cat este un pogon", "1 pogon cati m2", "pogon m2", "pogon hectar", "teren agricol pogon"],
+  },
+  "jugar-metri-patrati": {
+    slug: "jugar-metri-patrati",
+    title: "Convertor Jugăr ↔ Metri Pătrați – cât este un jugăr (iugăr) | InstrumenteOnline",
+    h1: "Convertor Jugăr ↔ Metri Pătrați",
+    description: "Transformă jugăr (iugăr) în m² și hectare. 1 jugăr cadastral = 5.754,64 m² (≈ 0,5755 ha). Variantă ardelenească 5.775 m².",
+    keywords: ["jugar in metri patrati", "cat este un jugar", "iugar in m2", "1 jugar cati m2", "jugar cadastral", "jugar hectare"],
+  },
   "litri-decilitri": {
     slug: "litri-decilitri",
     title: "Convertor Litri ↔ Decilitri – l ↔ dl | InstrumenteOnline",

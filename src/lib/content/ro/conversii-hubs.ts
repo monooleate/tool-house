@@ -181,7 +181,7 @@ export const CONVERSII_HUBS: ConversionSubcat[] = [
       "În agricultură, hectarul este unitatea standard: o parcelă de 1 ha are 10.000 m² (echivalent cu un teren de 100 × 100 m). În planificarea urbană și amenajări, metrul pătrat rămâne unitatea fundamentală.",
       "Răspunsurile rapide acoperă mărimile uzuale: 1 / 5 / 10 hectare (parcele agricole), 5 / 10 / 20 ari (terenuri intravilan), conversii inverse din m² în ari pentru loturile de casă.",
     ],
-    toolSlugs: ["hectare-metri-patrati", "ari-metri-patrati"],
+    toolSlugs: ["hectare-metri-patrati", "ari-metri-patrati", "pogon-metri-patrati", "jugar-metri-patrati"],
     keywords: [
       "convertor suprafata",
       "hectare in m2",

@@ -148,6 +148,8 @@
     MileKmCalculator:            () => import("../tools/conversii/MileKmCalculator.svelte"),
     VitezaCalculator:            () => import("../tools/conversii/VitezaCalculator.svelte"),
     DateMarimeCalculator:        () => import("../tools/conversii/DateMarimeCalculator.svelte"),
+    PogonCalculator:             () => import("../tools/conversii/PogonCalculator.svelte"),
+    JugarCalculator:             () => import("../tools/conversii/JugarCalculator.svelte"),
     FootCmCalculator:            () => import("../tools/conversii/FootCmCalculator.svelte"),
     InchCmCalculator:            () => import("../tools/conversii/InchCmCalculator.svelte"),
     KgLivreCalculator:           () => import("../tools/conversii/KgLivreCalculator.svelte"),

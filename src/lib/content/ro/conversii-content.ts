@@ -501,6 +501,74 @@ export const CONVERSII_RO_CONTENT: ContentMap = {
       },
     },
   },
+  "pogon-metri-patrati": {
+    introText:
+      "Convertor pogon ↔ metri pătrați pentru terenuri agricole din România. Valoarea uzuală este 1 pogon = 5.000 m² (aproximativ jumătate de hectar). Pogonul a fost folosit mai ales în Țara Românească; în Muntenia, valoarea istorică este 5.011,79 m².",
+    guide: [
+      "1. Introdu valoarea în pogoane sau m².",
+      "2. Rezultatul apare instant în celălalt câmp.",
+      "3. Folosește valorile uzuale (1, 2, 5, 10 pogoane).",
+    ],
+    faq: [
+      { q: "Cât este un pogon în metri pătrați?", a: "Valoarea uzuală este 1 pogon = 5.000 m² (≈ ½ hectar). Varianta istorică munteană este 5.011,79 m². Pentru acte oficiale, verifică valoarea locală." },
+      { q: "Câte pogoane are un hectar?", a: "La valoarea uzuală de 5.000 m²/pogon, 1 hectar (10.000 m²) = 2 pogoane." },
+      { q: "Pogonul este la fel în toată țara?", a: "Nu. Pogonul a variat în funcție de regiune și epocă. Cel muntean = 5.011,79 m², dar în uzul curent se folosește rotunjit 5.000 m². În Moldova s-au folosit alte unități (falcea)." },
+      { q: "Mai este folosit pogonul oficial?", a: "Nu în acte oficiale (acolo se folosesc m² și hectare), dar pogonul rămâne foarte răspândit în limbajul agricol curent." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu suprafața", description: "În pogoane sau m²." },
+        { title: "2. Vezi conversia", description: "Apare instant (1 pogon = 5.000 m²)." },
+        { title: "3. Valori uzuale", description: "Click pe 1, 2, 5, 10 pogoane." },
+      ],
+      useCases: [
+        { icon: "🌾", title: "Terenuri agricole", description: "Suprafețe de teren arabil exprimate tradițional în pogoane." },
+        { icon: "🍇", title: "Vii și livezi", description: "Pogonul era folosit istoric și pentru vii." },
+        { icon: "📋", title: "Tranzacții", description: "Conversia rapidă pogon ↔ m² pentru vânzări de teren." },
+      ],
+      aboutSection: {
+        title: "Despre pogon",
+        paragraphs: [
+          "Pogonul este o unitate de suprafață tradițională românească, folosită mai ales în Țara Românească (Muntenia) pentru terenuri agricole. Valoarea sa a variat în timp și pe regiuni, dar este în general egală cu aproximativ jumătate de hectar. În uzul curent se folosește valoarea rotunjită de 5.000 m².",
+          "Valoarea istorică munteană era de 5.011,79 m² (1.296 stânjeni pătrați). Deși nu mai este o unitate oficială (actele folosesc m² și hectare), pogonul rămâne foarte prezent în limbajul agricol și în tranzacțiile informale de teren. Pentru documente cadastrale, suprafața trebuie exprimată în m².",
+        ],
+      },
+    },
+  },
+  "jugar-metri-patrati": {
+    introText:
+      "Convertor jugăr (iugăr) ↔ metri pătrați și hectare, pentru terenuri din Transilvania și Banat. Jugărul cadastral (de origine austriacă) = 5.754,64 m² (≈ 0,5755 ha). Varianta ardelenească tradițională este 5.775 m².",
+    guide: [
+      "1. Introdu valoarea în jugăre sau m².",
+      "2. Rezultatul apare instant, plus echivalentul în hectare.",
+      "3. Folosește valorile uzuale (1, 2, 5, 10 jugăre).",
+    ],
+    faq: [
+      { q: "Cât este un jugăr în metri pătrați?", a: "Jugărul cadastral = 5.754,64 m² (≈ 0,5755 ha). Varianta ardelenească tradițională este 5.775 m². Pentru acte oficiale, verifică tipul de jugăr menționat." },
+      { q: "Ce înseamnă jugăr cadastral?", a: "Jugărul cadastral provine din sistemul de măsurători austriac (1.600 stânjeni pătrați) și valorează 5.754,64 m². A fost folosit în Transilvania, parte a Imperiului Austro-Ungar." },
+      { q: "Câte jugăre are un hectar?", a: "La jugărul cadastral (5.754,64 m²), 1 hectar (10.000 m²) ≈ 1,74 jugăre. Invers, 1 jugăr ≈ 0,5755 ha." },
+      { q: "Jugăr și iugăr sunt același lucru?", a: "Da. „Iugăr” și „jugăr” sunt variante ortografice ale aceleiași unități de suprafață folosite în Transilvania și Banat." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu suprafața", description: "În jugăre sau m²." },
+        { title: "2. Vezi conversia", description: "Plus echivalentul în hectare." },
+        { title: "3. Valori uzuale", description: "Click pe 1, 2, 5, 10 jugăre." },
+      ],
+      useCases: [
+        { icon: "🌾", title: "Terenuri în Transilvania", description: "Suprafețe agricole exprimate tradițional în jugăre." },
+        { icon: "📜", title: "Documente vechi", description: "Acte și cărți funciare istorice din zona ardeleană." },
+        { icon: "📋", title: "Tranzacții", description: "Conversia jugăr ↔ m²/ha pentru vânzări de teren." },
+      ],
+      aboutSection: {
+        title: "Despre jugăr (iugăr)",
+        paragraphs: [
+          "Jugărul (sau iugărul) este o unitate de suprafață tradițională folosită în Transilvania și Banat, regiuni aflate istoric sub administrație austro-ungară. Reprezenta, conform tradiției, suprafața pe care o puteau ara doi boi într-o zi. Jugărul cadastral, standardizat în sistemul austriac, valorează 5.754,64 m² (1.600 stânjeni pătrați), adică aproximativ 0,5755 hectare.",
+          "Există și varianta ardelenească tradițională, ușor mai mare (5.775 m²). Deși nu mai este o unitate oficială, jugărul apare frecvent în documentele cadastrale vechi și în limbajul curent din Ardeal. La fel ca pogonul în sudul țării, jugărul rămâne un reper cultural pentru suprafețele de teren.",
+        ],
+      },
+    },
+  },
   "litri-decilitri": {
     introText:
       "Convertor litri ↔ decilitri cu presets pentru rețete RO (smântână 2 dl, lapte 5 dl, bere 5 dl). 1 litru = 10 decilitri.",
