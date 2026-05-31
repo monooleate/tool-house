@@ -28,6 +28,13 @@ export const CONVERSII_RO: Record<string, { slug: string; title: string; h1: str
     description: "Convertor de viteză între km/h, m/s, mph și noduri. Formule (km/h ÷ 3,6 = m/s), viteze uzuale și exemple pentru fizică și condus.",
     keywords: ["km/h in m/s", "convertor viteza", "m/s in km/h", "mph in km/h", "noduri in km/h", "transformare viteza"],
   },
+  "octeti": {
+    slug: "octeti",
+    title: "Convertor Mărime Date – B, KB, MB, GB, TB (zecimal vs binar) | InstrumenteOnline",
+    h1: "Convertor Mărime Date (B, KB, MB, GB, TB)",
+    description: "Transformă mărimea datelor între bit, octet, KB, MB, GB, TB. Mod zecimal (1000) și binar (1024), cu explicații, exemple și tabel de referință.",
+    keywords: ["convertor marime date", "mb in gb", "kb mb gb tb", "octeti", "convertor octeti", "1024 vs 1000", "byte kilobyte megabyte"],
+  },
   "cm-inch": {
     slug: "cm-inch",
     title: "Convertor Centimetri în Inch (Țoli) – cm ↔ inch | InstrumenteOnline",

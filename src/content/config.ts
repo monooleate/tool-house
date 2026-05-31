@@ -20,7 +20,7 @@ const mathCollection = defineCollection({
     /** Conversii sub-kategória (lungime/masa/volum/suprafata/temperatura/densitate). */
     subcategory: z.enum([
       "lungime", "masa", "volum",
-      "suprafata", "temperatura", "densitate", "viteza",
+      "suprafata", "temperatura", "densitate", "viteza", "date",
     ]).optional(),
     category: z.enum([
       "calculator", "geometrie", "conversii",

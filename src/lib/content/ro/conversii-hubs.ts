@@ -12,7 +12,8 @@ export type ConversionSubcatSlug =
   | "suprafata"
   | "temperatura"
   | "densitate"
-  | "viteza";
+  | "viteza"
+  | "date";
 
 export interface ConversionSubcat {
   slug: ConversionSubcatSlug;
@@ -342,6 +343,45 @@ export const CONVERSII_HUBS: ConversionSubcat[] = [
       {
         q: "De ce se folosește m/s în fizică?",
         a: "Metrul pe secundă este unitatea de viteză din Sistemul Internațional (SI), coerentă cu metrul și secunda. De aceea problemele de fizică (viteză = distanță / timp) folosesc m/s.",
+      },
+    ],
+    updatedAt: "2026-05-31",
+  },
+  {
+    slug: "date",
+    label: "Mărime date",
+    icon: "💾",
+    description: "Convertoare de mărime a datelor: bit, octet (B), KB, MB, GB, TB. Diferența zecimal (1000) vs binar (1024).",
+    intro: [
+      "Convertoarele de mărime a datelor transformă între unitățile de stocare digitală: bit, octet (byte), kilobyte, megabyte, gigabyte și terabyte. Acoperă atât sistemul zecimal (1 KB = 1000 B), folosit de producătorii de discuri, cât și sistemul binar (1 KiB = 1024 B), folosit de sistemele de operare.",
+      "Această distincție explică de ce un disc vândut ca „1 TB” apare în Windows ca aproximativ 931 GB — diferența dintre cele două convenții. Convertorul afișează ambele moduri, astfel încât să poți compara corect.",
+      "Util pentru: estimarea spațiului de stocare, planuri de date mobile, dimensiuni de fișiere, viteze de transfer și exerciții de informatică.",
+    ],
+    toolSlugs: ["octeti"],
+    keywords: [
+      "convertor marime date",
+      "mb in gb",
+      "kb mb gb tb",
+      "octeti convertor",
+      "byte kilobyte megabyte",
+      "1000 vs 1024",
+    ],
+    faq: [
+      {
+        q: "Câți MB are 1 GB?",
+        a: "În sistem zecimal: 1 GB = 1000 MB. În sistem binar: 1 GiB = 1024 MiB. Producătorii folosesc de obicei zecimal, sistemele de operare binar.",
+      },
+      {
+        q: "Care e diferența dintre KB și KiB?",
+        a: "KB (kilobyte) = 1000 de octeți (sistem zecimal, SI). KiB (kibibyte) = 1024 de octeți (sistem binar). Diferența crește cu fiecare nivel: la TB/TiB ajunge la ~10%.",
+      },
+      {
+        q: "De ce un disc de 1 TB are mai puțin spațiu real?",
+        a: "Producătorul îl etichetează zecimal (1 TB = 10¹² octeți), dar Windows îl afișează binar (1 TiB = 2⁴⁰ octeți). 10¹² / 2⁴⁰ ≈ 0,909, deci 1 TB apare ca ~931 GiB.",
+      },
+      {
+        q: "Câți biți are un octet?",
+        a: "Un octet (byte) are 8 biți. De aceea, pentru a converti octeți în biți se înmulțește cu 8, iar invers se împarte la 8.",
       },
     ],
     updatedAt: "2026-05-31",

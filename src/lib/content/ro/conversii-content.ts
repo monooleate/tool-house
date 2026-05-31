@@ -133,6 +133,41 @@ export const CONVERSII_RO_CONTENT: ContentMap = {
       },
     },
   },
+  "octeti": {
+    introText:
+      "Convertorul de mărime a datelor transformă între bit, octet (B), KB, MB, GB și TB, cu două moduri: zecimal (1 KB = 1000 B, folosit de producători) și binar (1 KiB = 1024 B, folosit de sistemele de operare). Editezi orice câmp, iar restul se recalculează instant. Util pentru spațiu de stocare, fișiere și planuri de date.",
+    guide: [
+      "1. Alege modul: zecimal (1000) sau binar (1024).",
+      "2. Scrie valoarea într-una dintre unități (bit, B, KB/KiB, MB/MiB…).",
+      "3. Celelalte unități se actualizează automat.",
+    ],
+    faq: [
+      { q: "Câți MB are 1 GB?", a: "În sistem zecimal: 1 GB = 1000 MB. În sistem binar: 1 GiB = 1024 MiB. Producătorii folosesc de obicei zecimal, sistemele de operare binar." },
+      { q: "Care e diferența dintre KB și KiB?", a: "KB (kilobyte) = 1000 de octeți (zecimal, SI). KiB (kibibyte) = 1024 de octeți (binar). Diferența crește cu fiecare nivel: la TB/TiB ajunge la ~10%." },
+      { q: "De ce un disc de 1 TB are mai puțin spațiu real?", a: "Producătorul îl etichetează zecimal (1 TB = 10¹² octeți), dar Windows îl afișează binar (1 TiB = 2⁴⁰ octeți). 10¹² / 2⁴⁰ ≈ 0,909, deci 1 TB apare ca ~931 GiB." },
+      { q: "Câți biți are un octet?", a: "Un octet (byte) are 8 biți. Pentru a converti octeți în biți se înmulțește cu 8, iar invers se împarte la 8." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul", description: "Zecimal (1000) sau binar (1024)." },
+        { title: "2. Introdu valoarea", description: "Într-una dintre unitățile afișate." },
+        { title: "3. Conversie simultană", description: "Toate celelalte unități se actualizează." },
+      ],
+      useCases: [
+        { icon: "💾", title: "Spațiu de stocare", description: "Compară capacitatea discurilor (zecimal vs binar)." },
+        { icon: "📱", title: "Planuri de date", description: "Estimează consumul de date mobile în MB/GB." },
+        { icon: "📁", title: "Mărimi fișiere", description: "Conversia rapidă a dimensiunilor de fișiere." },
+        { icon: "🖥️", title: "Informatică", description: "Exerciții despre biți, octeți și multipli." },
+      ],
+      aboutSection: {
+        title: "Despre unitățile de mărime a datelor",
+        paragraphs: [
+          "Unitatea de bază a informației digitale este bitul (0 sau 1), iar octetul (byte) grupează 8 biți. Multiplii se exprimă în două convenții: cea zecimală (SI), unde 1 KB = 1000 octeți, și cea binară, unde 1 KiB = 1024 octeți. Standardul IEC a introdus prefixele binare (KiB, MiB, GiB) tocmai pentru a elimina ambiguitatea.",
+          "În practică, producătorii de discuri și SSD-uri folosesc convenția zecimală (mai avantajoasă la marketing), în timp ce sistemele de operare precum Windows afișează valori binare. De aici provine diferența percepută: un disc de „1 TB” apare ca aproximativ 931 GiB. Acest convertor afișează ambele moduri pentru comparație corectă.",
+        ],
+      },
+    },
+  },
   "cm-inch": {
     introText:
       "Transformă centimetri în inch (țoli) și invers. Ideal pentru diagonale ecran TV, monitoare, laptopuri, haine importate sau proiecte DIY.",
