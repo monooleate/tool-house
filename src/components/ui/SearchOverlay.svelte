@@ -5,7 +5,7 @@
   // Statikus keresés – nincs backend, nincs API call
   // ============================================================
   import { onMount, onDestroy } from "svelte";
-  import { getAllTools, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
+  import { getVisibleTools, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
   import { toolUrl } from "../../lib/url-utils.ts";
 
   export let open = false;
@@ -37,7 +37,8 @@
     tools_count: "{{count}} eszköz",
   };
 
-  const allTools = getAllTools().map(t => getLocalizedTool(t));
+  // Csak az aktuális nyelv (deploy) tooljai — nincs HU↔RO szivárgás a keresőben.
+  const allTools = getVisibleTools().map(t => getLocalizedTool(t));
   const localCats = getLocalizedCategories();
   let query      = "";
   let inputEl: HTMLInputElement;

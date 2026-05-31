@@ -7,7 +7,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeCountdown from "../components/sections/HomeCountdown.svelte";
 import {
-  CATEGORIES, getAllTools, getActiveToolsCount, getTotalToolsCount,
+  CATEGORIES, getVisibleTools, getActiveToolsCount, getTotalToolsCount,
   getLocalizedCategories, getLocalizedTool, getLocalizedCategory,
   getToolBySlug, getToolsByCategory, getVisibleCategories,
 } from "../lib/tool-registry.ts";
@@ -20,7 +20,8 @@ import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
 
 // ─── Data ─────────────────────────────────────────────────────
 const localizedCategories = getLocalizedCategories(CURRENT_LANG);
-const allTools    = getAllTools().map(t => getLocalizedTool(t, CURRENT_LANG));
+// Csak az aktuális nyelv (deploy) tooljai — az ItemList JSON-LD ne listázza a másik nyelv tooljait.
+const allTools    = getVisibleTools(CURRENT_LANG).map(t => getLocalizedTool(t, CURRENT_LANG));
 const activeTools = allTools.filter(t => t.status === "active");
 const activeCount = getActiveToolsCount();
 
@@ -65,6 +66,7 @@ const topTools = TOP_TOOL_SLUGS
 // ─── RO-only: legújabb tools (F8 + late F7) ──────────────────
 const NEW_TOOL_SLUGS_RO = [
   { category: 'sanatate',  slug: 'calculator-sarcina',      icon: '🤰' },
+  { category: 'sanatate',  slug: 'calculator-alcoolemie',   icon: '🍺' },
   { category: 'conversii', slug: 'mile-kilometri',          icon: '🛣️' },
   { category: 'conversii', slug: 'km-h-m-s',                icon: '🚗' },
   { category: 'calculator', slug: 'numere-romane',          icon: '🏛️' },

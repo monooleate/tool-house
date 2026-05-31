@@ -3,7 +3,7 @@
 // Standard: https://llmstxt.org/
 import type { APIRoute } from "astro";
 import {
-  getAllTools,
+  getVisibleActiveTools,
   getVisibleCategories,
   getLocalizedTool,
   getLocalizedCategory,
@@ -47,16 +47,15 @@ export const GET: APIRoute = ({ site }) => {
   const base = (site?.toString() ?? CURRENT_CONFIG.siteUrl).replace(/\/$/, "");
   const meta = SITE_TITLES[lang];
 
-  const allTools = getAllTools();
-  const activeTools = allTools.filter(t => t.status === "active");
-  const localizedActive = activeTools.map(t => getLocalizedTool(t, lang));
+  // Csak az aktuális nyelv (deploy) aktív tooljai — nincs HU↔RO szivárgás az llms.txt-ben.
+  const localizedActive = getVisibleActiveTools(lang).map(t => getLocalizedTool(t, lang));
   const visibleCategories = getVisibleCategories(lang);
 
   // Counts per category (visible only)
   const sectionsBody: string[] = [];
   for (const rawCat of visibleCategories) {
     const cat = getLocalizedCategory(rawCat, lang);
-    const catTools = getToolsByCategory(rawCat.id)
+    const catTools = getToolsByCategory(rawCat.id, lang)
       .filter(t => t.status === "active")
       .map(t => getLocalizedTool(t, lang));
     if (catTools.length === 0) continue;

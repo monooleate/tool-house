@@ -662,6 +662,7 @@ const rawTools: Tool[] = [
   { slug: "greutate-ideala",      category: "sanatate", title: "Calculator Greutate Ideală",    h1: "Calculator Greutate Ideală",              description: "4 formule științifice: Devine, Robinson, Miller, Hamwi.",                  keywords: [], status: "active", component: "GreutateIdealaCalculator", languages: ["ro"], related: ["calculator-imc", "calculator-calorii"],   updatedAt: "2026-04-27", launchedAt: "2026-04-27", faq: [] },
   { slug: "calculator-calorii",   category: "sanatate", title: "Calculator Calorii Zilnice",    h1: "Calculator Calorii Zilnice (BMR + TDEE)", description: "BMR Mifflin-St Jeor + TDEE + macro split (P/C/F) cu donut chart.", keywords: [], status: "active", component: "CaloriiCalculator",        languages: ["ro"], related: ["calculator-imc", "greutate-ideala"],     updatedAt: "2026-04-27", launchedAt: "2026-04-27", faq: [] },
   { slug: "calculator-sarcina",   category: "sanatate", title: "Calculator Sarcină",            h1: "Calculator Sarcină – Data Probabilă a Nașterii", description: "Data probabilă a nașterii (regula Naegele), săptămâna de sarcină și trimestrul, din ultima menstruație.", keywords: [], status: "active", component: "SarcinaCalculator",         languages: ["ro"], related: ["calculator-imc", "calculator-calorii"],   updatedAt: "2026-05-31", launchedAt: "2026-05-31", faq: [] },
+  { slug: "calculator-alcoolemie", category: "sanatate", title: "Calculator Alcoolemie",         h1: "Calculator Alcoolemie (Formula Widmark)", description: "Estimează alcoolemia (g/L) cu formula Widmark: sex, greutate, băuturi și timp. Strict informativ.", keywords: [], status: "active", component: "AlcoolemieCalculator",      languages: ["ro"], related: ["calculator-imc", "calculator-calorii"],   updatedAt: "2026-05-31", launchedAt: "2026-05-31", faq: [] },
 
   // ═══ RO-ONLY: TIMP – Fázis 7 (countdown-uri + diferență date RO) ════════════════
   // 8 tools: diferență date (3 moduri), 4 countdown-uri fixe (Crăciun, Revelion, Paști,
@@ -768,8 +769,14 @@ export function getAllTools(): Tool[] { return tools; }
 export function getToolBySlug(category: string, slug: string): Tool | undefined {
   return tools.find((t) => t.category === category && t.slug === slug);
 }
-export function getToolsByCategory(category: CategoryId): Tool[] {
-  return tools.filter((t) => t.category === category);
+export function getToolsByCategory(
+  category: CategoryId,
+  lang: SupportedLang = CURRENT_LANG,
+): Tool[] {
+  // Nyelv-tudatos: a HU-látható kategóriában lakó RO-only toolokat (és fordítva)
+  // kiszűri, hogy a kategórialapok / nav / homepage / llms.txt ne szivárogtassanak
+  // a másik deploy tooljait. Lásd isToolVisibleInLang.
+  return tools.filter((t) => t.category === category && isToolVisibleInLang(t, lang));
 }
 export function getActiveTools(): Tool[] {
   return tools.filter((t) => t.status === "active");
@@ -783,8 +790,12 @@ export function getRelatedTools(tool: Tool): Tool[] {
 export function getCategoryInfo(id: CategoryId): Category | undefined {
   return CATEGORIES.find((c) => c.id === id);
 }
-export function getActiveToolsCount(): number { return tools.filter((t) => t.status === "active").length; }
-export function getTotalToolsCount(): number { return tools.length; }
+export function getActiveToolsCount(lang: SupportedLang = CURRENT_LANG): number {
+  return getVisibleActiveTools(lang).length;
+}
+export function getTotalToolsCount(lang: SupportedLang = CURRENT_LANG): number {
+  return getVisibleTools(lang).length;
+}
 
 // ─── i18n Helpers ────────────────────────────────────────────────────────────
 

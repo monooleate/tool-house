@@ -4,11 +4,12 @@
   // URL ?q= paraméterből indul, interaktív szűrés
   // ============================================================
   import { onMount } from "svelte";
-  import { getAllTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories, CATEGORIES } from "../../lib/tool-registry.ts";
+  import { getVisibleTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories, CATEGORIES } from "../../lib/tool-registry.ts";
   import { toolUrl, categoryUrl } from "../../lib/url-utils.ts";
   import { ui } from "../../lib/ui-labels.ts";
 
-  const allTools = getAllTools().map(t => getLocalizedTool(t));
+  // Csak az aktuális nyelv (deploy) tooljai — nincs HU↔RO szivárgás a keresőben.
+  const allTools = getVisibleTools().map(t => getLocalizedTool(t));
   const activeTools = allTools.filter(t => t.status === "active");
   const localCats = getLocalizedCategories();
 

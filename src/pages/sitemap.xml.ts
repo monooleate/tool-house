@@ -3,7 +3,6 @@
 // SSG-ben build-time generálódik. SSR-hez: export const prerender = false;
 import type { APIRoute } from "astro";
 import {
-  getAllTools,
   CATEGORIES,
   getVisibleTools,
   getVisibleCategories,
