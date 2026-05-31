@@ -135,6 +135,9 @@
     CombinatoricaCalculator:     () => import("../tools/calculator/CombinatoricaCalculator.svelte"),
     ProgresiiCalculator:         () => import("../tools/calculator/ProgresiiCalculator.svelte"),
     LogaritmiCalculator:         () => import("../tools/calculator/LogaritmiCalculator.svelte"),
+    MedieAdmitereCalculator:     () => import("../tools/calculator/MedieAdmitereCalculator.svelte"),
+    MediiNoteCalculator:         () => import("../tools/calculator/MediiNoteCalculator.svelte"),
+    MedieBacalaureatCalculator:  () => import("../tools/calculator/MedieBacalaureatCalculator.svelte"),
     // GEOMETRIE (RO-only) – Fázis 3
     TriunghiDreptCalculator:     () => import("../tools/geometrie/TriunghiDreptCalculator.svelte"),
     FunctiiTrigCalculator:       () => import("../tools/geometrie/FunctiiTrigCalculator.svelte"),

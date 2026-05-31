@@ -78,6 +78,27 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Calculează logaritmul în orice bază, logaritmul natural (ln), zecimal (lg) și în baza 2, cu formula schimbării de bază și proprietățile logaritmilor.",
     keywords: ["calculator logaritmi", "logaritm natural", "ln calculator", "log baza 10", "schimbarea de baza", "proprietati logaritmi", "log2"],
   },
+  "medie-admitere-liceu": {
+    slug: "medie-admitere-liceu",
+    title: "Calculator Medie Admitere Liceu 2026 – Evaluarea Națională | InstrumenteOnline",
+    h1: "Calculator Medie Admitere Liceu",
+    description: "Calculează media de admitere la liceu: media notelor de la Evaluarea Națională (Limba română + Matematică), cu 2 zecimale, fără rotunjire. Formula oficială din 2024.",
+    keywords: ["calculator medie admitere liceu", "medie evaluare nationala", "cum se calculeaza media de admitere", "admitere liceu 2026", "medie EN", "media de admitere"],
+  },
+  "calculator-medii-note": {
+    slug: "calculator-medii-note",
+    title: "Calculator Medie Note Școlare – Medie Generală | InstrumenteOnline",
+    h1: "Calculator Medie Note Școlare",
+    description: "Calculează media notelor la o materie și media generală. Adaugă oricâte note, vezi media cu 2 zecimale și varianta rotunjită conform regulamentului.",
+    keywords: ["calculator medie note", "calculator medie generala", "cum calculez media", "media notelor", "media scolara", "calcul medie note"],
+  },
+  "medie-bacalaureat": {
+    slug: "medie-bacalaureat",
+    title: "Calculator Medie Bacalaureat 2026 – Promovare și Note | InstrumenteOnline",
+    h1: "Calculator Medie Bacalaureat",
+    description: "Calculează media la Bacalaureat din notele probelor scrise și verifică promovarea (minimum 5 la fiecare probă, medie minimă 6). Cu 2 zecimale, fără rotunjire.",
+    keywords: ["calculator medie bacalaureat", "cum se calculeaza media la bac", "promovare bacalaureat", "medie bac 2026", "nota minima bac", "media de promovare bac"],
+  },
 
   // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
   "consum-combustibil": {

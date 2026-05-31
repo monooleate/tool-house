@@ -394,6 +394,111 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
     },
   },
 
+  "medie-admitere-liceu": {
+    introText:
+      "Calculatorul de medie de admitere la liceu determină media pe baza notelor de la Evaluarea Națională. Începând cu 2024, media de admitere este media aritmetică a notelor de la Limba română și Matematică, calculată cu două zecimale, fără rotunjire. Media claselor V–VIII nu mai intră în calcul — este folosită doar ca prim criteriu de departajare în caz de note egale.",
+    guide: [
+      "1. Introdu nota de la Evaluarea Națională la Limba și literatura română.",
+      "2. Introdu nota de la Matematică.",
+      "3. Opțional, adaugă media claselor V–VIII (relevantă doar la departajare).",
+    ],
+    faq: [
+      { q: "Cum se calculează media de admitere la liceu în 2026?", a: "Media de admitere = (nota EN Limba română + nota EN Matematică) / 2, cu două zecimale, fără rotunjire. Începând cu 2024, media claselor V–VIII nu mai intră în calcul." },
+      { q: "Media de la gimnaziu mai contează la admitere?", a: "Nu direct. Media claselor V–VIII este folosită doar ca prim criteriu de departajare atunci când doi candidați au exact aceeași medie de admitere și concurează pe același loc." },
+      { q: "Cum se face departajarea la note egale?", a: "În ordine: 1) media generală a claselor V–VIII; 2) nota de la Limba română (EN); 3) nota de la Matematică (EN); 4) nota la limba maternă, dacă e cazul." },
+      { q: "Media de admitere se rotunjește?", a: "Nu. Se calculează cu două zecimale, fără rotunjire (de exemplu, 9,456 devine 9,45)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Nota la română (EN)", description: "Nota obținută la proba de Limba și literatura română." },
+        { title: "2. Nota la matematică (EN)", description: "Nota obținută la proba de Matematică." },
+        { title: "3. Media de admitere", description: "Media celor două note, cu 2 zecimale, fără rotunjire." },
+      ],
+      useCases: [
+        { icon: "🎯", title: "Admitere liceu", description: "Estimează media cu care concurezi la repartizarea computerizată." },
+        { icon: "📊", title: "Comparare licee", description: "Compară media ta cu mediile ultimului admis din anii anteriori." },
+        { icon: "📝", title: "După simulare", description: "Calculează media probabilă pe baza notelor de la simulare." },
+      ],
+      aboutSection: {
+        title: "Despre media de admitere la liceu",
+        paragraphs: [
+          "Începând cu sesiunea 2024, sistemul de admitere la liceu din România s-a schimbat: media de admitere este formată exclusiv din rezultatele Evaluării Naționale, ca media aritmetică a notelor de la Limba și literatura română și Matematică. Anterior, media claselor V–VIII avea o pondere (20%), însă aceasta a fost eliminată.",
+          "Media se calculează cu două zecimale, fără rotunjire, și stă la baza repartizării computerizate în funcție de opțiunile exprimate. Media claselor V–VIII rămâne relevantă doar ca prim criteriu de departajare, atunci când mai mulți candidați au aceeași medie de admitere și concurează pentru același loc.",
+        ],
+      },
+    },
+  },
+
+  "calculator-medii-note": {
+    introText:
+      "Calculatorul de medie a notelor școlare calculează media aritmetică a notelor tale la o materie sau media generală. Adaugă oricâte note (între 1 și 10), iar calculatorul afișează media cu două zecimale și varianta rotunjită la cel mai apropiat întreg, conform practicii din regulamentul școlar.",
+    guide: [
+      "1. Scrie notele tale, separate prin virgulă (ex: 8, 9, 7, 10).",
+      "2. Vezi media cu 2 zecimale și varianta rotunjită.",
+      "3. Verifică numărul de note și suma pentru control.",
+    ],
+    faq: [
+      { q: "Cum se calculează media notelor?", a: "Media este media aritmetică: suma tuturor notelor împărțită la numărul lor. Exemplu: (8 + 9 + 7 + 10) / 4 = 8,50." },
+      { q: "Cum se rotunjește media școlară?", a: "Media la o materie se calculează ca media aritmetică a notelor. La consemnarea finală în catalog, regulamentul poate prevedea rotunjirea la cel mai apropiat întreg, unde 0,50 se rotunjește în sus (de exemplu, 8,50 devine 9)." },
+      { q: "Care e diferența față de calculatorul de medie aritmetică?", a: "Acest calculator este gândit pentru note școlare (1–10), cu rotunjirea specifică școlii. Calculatorul de medie aritmetică oferă în plus mediană, mod și abatere standard, pentru context statistic." },
+      { q: "Pot calcula media generală anuală?", a: "Da. Introdu mediile pe materii pentru a obține media generală, sau toate notele dintr-un semestru pentru media semestrială." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introdu notele", description: "Separate prin virgulă, valori între 1 și 10." },
+        { title: "2. Vezi media", description: "Cu 2 zecimale și varianta rotunjită la întreg." },
+        { title: "3. Control", description: "Numărul de note și suma sunt afișate pentru verificare." },
+      ],
+      useCases: [
+        { icon: "📚", title: "Media la o materie", description: "Calculează media notelor la o disciplină." },
+        { icon: "🎓", title: "Media generală", description: "Media mediilor pe materii la final de an." },
+        { icon: "📈", title: "Urmărirea progresului", description: "Vezi cum se schimbă media pe parcursul semestrului." },
+      ],
+      aboutSection: {
+        title: "Despre media notelor școlare",
+        paragraphs: [
+          "Media la o materie se calculează ca media aritmetică a tuturor notelor obținute. Media generală anuală se obține ca media aritmetică a mediilor pe materii. Spre deosebire de contextul statistic, în mediul școlar contează și regula de rotunjire prevăzută de regulament.",
+          "În general, media se consemnează cu două zecimale, iar la nevoie se rotunjește la cel mai apropiat întreg (0,50 se rotunjește în sus). Acest calculator afișează ambele variante, pentru a evita confuziile. Pentru reguli specifice (teze, ponderi), verifică regulamentul în vigoare al școlii tale.",
+        ],
+      },
+    },
+  },
+
+  "medie-bacalaureat": {
+    introText:
+      "Calculatorul de medie la Bacalaureat determină media generală din notele celor trei probe scrise și verifică automat condițiile de promovare: notă minimă 5,00 la fiecare probă și media generală minimă 6,00. Media se calculează cu două zecimale, fără rotunjire (excepție: 5,99 se rotunjește la 6,00).",
+    guide: [
+      "1. Introdu nota de la proba E.a (Limba și literatura română).",
+      "2. Introdu notele de la proba obligatorie (E.c) și proba la alegere (E.d) ale profilului.",
+      "3. Vezi media și dacă ai promovat, cu verificarea condițiilor.",
+    ],
+    faq: [
+      { q: "Cum se calculează media la Bacalaureat?", a: "Media generală = media aritmetică a notelor de la cele trei probe scrise, calculată cu două zecimale, fără rotunjire. Excepție: media 5,99 se rotunjește la 6,00." },
+      { q: "Care sunt condițiile de promovare la Bac?", a: "Trebuie să obții minimum nota 5,00 la fiecare probă scrisă ȘI o medie generală de minimum 6,00. În plus, trebuie susținute probele de evaluare a competențelor." },
+      { q: "Ce se întâmplă dacă am media 5,99?", a: "Conform reglementărilor, media generală de 5,99 se rotunjește la 6,00, deci este suficientă pentru promovare (dacă toate notele sunt cel puțin 5)." },
+      { q: "Probele de competențe afectează media?", a: "Nu. Probele de evaluare a competențelor (lingvistice și digitale) se evaluează prin niveluri, nu prin note, și nu intră în media generală — dar trebuie susținute pentru a promova." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Notele probelor scrise", description: "E.a (română), E.c (obligatorie), E.d (la alegere)." },
+        { title: "2. Media generală", description: "Media aritmetică, cu 2 zecimale, fără rotunjire." },
+        { title: "3. Promovare", description: "Verificare automată: ≥5 la fiecare probă și medie ≥6." },
+      ],
+      useCases: [
+        { icon: "🎓", title: "Estimare medie bac", description: "Calculează media probabilă pe baza notelor." },
+        { icon: "✅", title: "Verificare promovare", description: "Vezi instant dacă îndeplinești condițiile." },
+        { icon: "🏛️", title: "Admitere facultate", description: "Media de la bac contează la admiterea în multe facultăți." },
+      ],
+      aboutSection: {
+        title: "Despre media la Bacalaureat",
+        paragraphs: [
+          "Examenul de Bacalaureat din România cuprinde probe de evaluare a competențelor (evaluate prin niveluri) și trei probe scrise: Limba și literatura română (E.a), proba obligatorie a profilului (E.c) și proba la alegere a profilului și specializării (E.d). Media generală este media aritmetică a notelor de la cele trei probe scrise.",
+          "Pentru promovare sunt necesare două condiții simultan: nota minimă 5,00 la fiecare probă scrisă și media generală minimă 6,00. Media se calculează cu două zecimale, fără rotunjire, cu o singură excepție: media 5,99 se rotunjește la 6,00. Media de la Bacalaureat este folosită și ca criteriu la admiterea în învățământul superior.",
+        ],
+      },
+    },
+  },
+
   // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
   "consum-combustibil": {
     introText:
