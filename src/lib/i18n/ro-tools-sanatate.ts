@@ -28,4 +28,11 @@ export const SANATATE_RO: Record<string, { slug: string; title: string; h1: stri
     description: "Calculează data probabilă a nașterii (regula Naegele: UM + 280 zile), săptămâna de sarcină, trimestrul și reperele importante, din ultima menstruație sau data concepției.",
     keywords: ["calculator sarcina", "data nasterii calculator", "in ce saptamana de sarcina sunt", "calculator saptamani sarcina", "regula naegele", "data probabila a nasterii", "trimestru sarcina"],
   },
+  "calculator-alcoolemie": {
+    slug: "calculator-alcoolemie",
+    title: "Calculator Alcoolemie – Estimare g/L cu Formula Widmark | InstrumenteOnline",
+    h1: "Calculator Alcoolemie (Formula Widmark)",
+    description: "Estimează alcoolemia (g/L, ‰) cu formula Widmark: sex, greutate, băuturi consumate și timp scurs. Strict informativ — nu este o bază pentru a conduce.",
+    keywords: ["calculator alcoolemie", "calculator alcool sange", "formula widmark", "g/l alcool", "cat alcool am in sange", "alcoolemie la volan", "eliminare alcool"],
+  },
 };

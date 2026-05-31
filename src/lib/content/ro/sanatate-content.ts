@@ -155,4 +155,40 @@ export const SANATATE_RO_CONTENT: ContentMap = {
       },
     },
   },
+
+  "calculator-alcoolemie": {
+    introText:
+      "Calculatorul de alcoolemie estimează concentrația de alcool în sânge (g/L, echivalent ‰) cu formula Widmark, pe baza sexului, greutății corporale, băuturilor consumate și timpului scurs. Rezultatul este STRICT ESTIMATIV și depinde de mulți factori individuali (metabolism, alimentație, medicamente). NU este o bază pentru a decide dacă poți conduce — în România, conducerea cu orice alcoolemie este interzisă.",
+    guide: [
+      "1. Alege sexul și introdu greutatea (kg).",
+      "2. Adaugă băuturile consumate (bere, vin, tărie) și orele scurse de la consum.",
+      "3. Vezi estimarea alcoolemiei (g/L), vârful teoretic și timpul aproximativ de eliminare.",
+    ],
+    faq: [
+      { q: "Ce este formula Widmark?", a: "Formula Widmark estimează alcoolemia: BAC (g/L) = A / (r × m) − β × t, unde A = gramele de alcool pur, r = factorul de distribuție (≈0,68 la bărbați, 0,55 la femei), m = masa corporală (kg), β = rata de eliminare (~0,15 g/L pe oră), t = orele de la consum." },
+      { q: "Cât de exactă este estimarea?", a: "Este doar o aproximare. Valoarea reală poate diferi semnificativ în funcție de metabolism, dacă ai mâncat, medicamente, starea ficatului, ritmul consumului și alți factori. Singura măsură exactă o dă etilotestul/analiza de sânge." },
+      { q: "Cât durează să se elimine alcoolul?", a: "Organismul elimină în medie ~0,15 g/L pe oră (interval 0,1–0,2). De exemplu, o alcoolemie de 0,6 g/L scade la 0 în aproximativ 4 ore. Nu există metodă reală de a „grăbi” eliminarea (cafeaua, dușul rece etc. nu ajută)." },
+      { q: "Care este limita legală la volan în România?", a: "Conducerea cu o alcoolemie de până la 0,8 g/L este contravenție, iar peste 0,8 g/L este infracțiune (Codul Rutier). Practic, singura variantă sigură și legală pentru a conduce este 0,00 g/L." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Sex + greutate", description: "Intră în factorul de distribuție Widmark." },
+        { title: "2. Băuturi + timp", description: "Bere/vin/tărie și orele scurse de la consum." },
+        { title: "3. Estimare", description: "Alcoolemie acum, vârf teoretic și timp de eliminare." },
+      ],
+      useCases: [
+        { icon: "📚", title: "Educație", description: "Înțelegerea modului în care alcoolul este eliminat în timp." },
+        { icon: "⏱️", title: "Estimare orientativă", description: "Cât timp ar putea dura eliminarea, ca informație generală." },
+        { icon: "🧪", title: "Curiozitate științifică", description: "Aplicarea formulei Widmark pe date proprii." },
+        { icon: "⚠️", title: "Conștientizare", description: "Cât de repede crește alcoolemia după câteva băuturi." },
+      ],
+      aboutSection: {
+        title: "Despre alcoolemie și formula Widmark",
+        paragraphs: [
+          "Alcoolemia (concentrația de alcool în sânge) se exprimă în România în grame de alcool pur per litru de sânge (g/L), echivalent cu promile (‰). Formula Widmark, dezvoltată de cercetătorul suedez Erik Widmark în anii 1920, rămâne baza estimărilor: alcoolemia depinde de cantitatea de alcool consumată, de masa corporală și de factorul de distribuție care diferă între bărbați și femei (din cauza proporției diferite de apă din organism).",
+          "Eliminarea alcoolului se face aproape liniar, cu o rată medie de 0,15 g/L pe oră, prin metabolizare hepatică. Niciun „truc” (cafea, duș rece, mâncare după consum) nu accelerează acest proces. Important: această estimare nu poate fi folosită ca dovadă sau ca temei pentru a conduce. În România, conducerea unui vehicul cu orice nivel de alcoolemie este interzisă, iar peste 0,8 g/L constituie infracțiune.",
+        ],
+      },
+    },
+  },
 };

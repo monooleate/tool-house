@@ -170,6 +170,7 @@
     GreutateIdealaCalculator:    () => import("../tools/sanatate/GreutateIdealaCalculator.svelte"),
     CaloriiCalculator:           () => import("../tools/sanatate/CaloriiCalculator.svelte"),
     SarcinaCalculator:           () => import("../tools/sanatate/SarcinaCalculator.svelte"),
+    AlcoolemieCalculator:        () => import("../tools/sanatate/AlcoolemieCalculator.svelte"),
     // TIMP (RO-only) – Fázis 7
     DiferentaDateCalculator:     () => import("../tools/timp/DiferentaDateCalculator.svelte"),
     CraciunCountdown:            () => import("../tools/timp/CraciunCountdown.svelte"),
