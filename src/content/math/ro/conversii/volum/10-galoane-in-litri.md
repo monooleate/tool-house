@@ -89,7 +89,7 @@ $$
 ## Conversii înrudite
 
 - [5 galoane în litri](/conversii/volum/5-galoane-in-litri/)
-- [20 galoane în litri](/conversii/volum/20-galoane-in-litri/)
+- [5 galoane în litri](/conversii/volum/5-galoane-in-litri/)
 - [1 galon în litri](/conversii/volum/1-galon-in-litri/)
 - [Convertor galon ↔ litri (calculator complet)](/conversii/volum/galon-litri/)
 - [Conversii volum — toate](/conversii/volum/)

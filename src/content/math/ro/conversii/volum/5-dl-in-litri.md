@@ -97,6 +97,6 @@ Pentru ml → dl:
 - [1 dl](/conversii/volum/litri-decilitri/) — la calculatorul complet
 - [2 dl în ml](/conversii/volum/2-dl-in-ml/)
 - [500 ml în litri](/conversii/volum/500-ml-in-litri/) — aceeași cantitate, alt unit
-- [1 litru în dl](/conversii/volum/1-litru-in-dl/)
+- [1 litru în ml](/conversii/volum/1-litru-in-ml/)
 - [Convertor litri ↔ decilitri (calculator complet)](/conversii/volum/litri-decilitri/)
 - [Conversii volum — toate](/conversii/volum/)

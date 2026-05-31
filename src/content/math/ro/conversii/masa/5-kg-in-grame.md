@@ -91,7 +91,7 @@ Pentru pierdere de greutate corectă:
 ## Conversii înrudite
 
 - [2 kg în grame](/conversii/masa/2-kg-in-grame/)
-- [10 kg în grame](/conversii/masa/10-kg-in-grame/)
+- [2 kg în grame](/conversii/masa/2-kg-in-grame/)
 - [1 kg în grame](/conversii/masa/1-kg-in-grame/)
 - [Convertor kg ↔ grame (calculator complet)](/conversii/masa/kg-grame/)
 - [Conversii masă — toate](/conversii/masa/)

@@ -120,6 +120,6 @@ OMS recomandă 2–3 litri de apă pe zi pentru un adult:
 - [2 litri în ml](/conversii/volum/2-litri-in-ml/)
 - [500 ml în litri](/conversii/volum/500-ml-in-litri/) — invers
 - [750 ml în litri](/conversii/volum/750-ml-in-litri/)
-- [1 litru în dl](/conversii/volum/1-litru-in-dl/)
+- [5 dl în litri](/conversii/volum/5-dl-in-litri/)
 - [Convertor litri ↔ ml (calculator complet)](/conversii/volum/litri-mililitri/)
 - [Conversii volum — toate](/conversii/volum/)

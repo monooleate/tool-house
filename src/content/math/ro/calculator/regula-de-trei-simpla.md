@@ -211,4 +211,4 @@ $$
 
 - [Calculator procente](/calculator/procent-calculator/)
 - [Calculator medie aritmetică](/calculator/medie-aritmetica/)
-- [Convertor cm ↔ inch](/conversii/cm-inch/)
+- [Convertor cm ↔ inch](/conversii/lungime/cm-inch/)

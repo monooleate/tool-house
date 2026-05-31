@@ -84,7 +84,7 @@ Comparat cu volume cunoscute:
 ## Conversii înrudite
 
 - [1 m³ în litri](/conversii/volum/1-m3-in-litri/) — unitate de bază
-- [10 m³ în litri](/conversii/volum/10-m3-in-litri/)
+- [1 m³ în litri](/conversii/volum/1-m3-in-litri/)
 - [1.000 litri în m³](/conversii/volum/1000-litri-in-m3/) — invers
 - [Convertor litri ↔ m³ (calculator complet)](/conversii/volum/litri-metri-cubi/)
 - [Conversii volum — toate](/conversii/volum/)

@@ -407,7 +407,7 @@ unde $C$ = capital împrumutat, $r$ = dobândă lunară zecimală, $n$ = nr. lun
 - $n = 30 \times 12 = 360$
 - $R \approx 1\,663$ RON/lună
 
-Vezi [Calculator credit ipotecar](/finante/credit-ipotecar/) pentru calcul detaliat.
+Vezi [Calculator credit ipotecar](/finante/calculator-credit/) pentru calcul detaliat.
 
 ### Comisioane brokeraj BVB
 
@@ -647,4 +647,4 @@ Sau, prin ecuație: $x + 0{,}20x \cdot \text{(ceva?)}$ — atenție la formulare
 - [Calculator medie aritmetică](/calculator/medie-aritmetica/) — medie simplă, ponderată, geometrică.
 - [Calculator TVA RO](/finante/calculator-tva/) — toate cele 3 cote (5%, 9%, 19%), brut ↔ net.
 - [Calculator dobândă compusă](/finante/dobanda-compusa/) — pentru investiții și depozite bancare.
-- [Calculator credit ipotecar](/finante/credit-ipotecar/) — rata lunară, dobândă totală, DAE.
+- [Calculator credit ipotecar](/finante/calculator-credit/) — rata lunară, dobândă totală, DAE.

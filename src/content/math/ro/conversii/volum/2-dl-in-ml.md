@@ -86,7 +86,7 @@ Sau echivalent: $2 \text{ dl} = 0{,}2 \text{ l} = 200 \text{ ml}$.
 
 ## Conversii înrudite
 
-- [1 dl în ml](/conversii/volum/1-dl-hany-liter/) (din math reference)
+- [5 dl în litri](/conversii/volum/5-dl-in-litri/)
 - [5 dl în litri](/conversii/volum/5-dl-in-litri/)
 - [200 ml în litri](/conversii/volum/100-ml-in-litri/) — apropiat
 - [Convertor litri ↔ decilitri (calculator complet)](/conversii/volum/litri-decilitri/)

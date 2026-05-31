@@ -403,7 +403,7 @@ unde $C$ = capital, $r$ = dobândă lunară, $n$ = numărul de luni. Exponent pr
 - $(1+r)^n \approx 5{,}064$
 - $R \approx 200\,000 \cdot 0{,}005417 \cdot 5{,}064 / 4{,}064 \approx 1\,350$ RON/lună
 
-Vezi și [Calculator credit ipotecar](/finante/credit-ipotecar/).
+Vezi și [Calculator credit ipotecar](/finante/calculator-credit/).
 
 ## Probleme tip BAC — rezolvate
 
@@ -456,5 +456,5 @@ Factorizare: $2^x(1 + 2 + 4) = 56 \Rightarrow 2^x \cdot 7 = 56 \Rightarrow 2^x =
 
 - [Calculator ecuație de gradul II](/calculator/ecuatie-grad-doi/) — pentru substituții pătratice de tip $4^x - 5 \cdot 2^x + 4 = 0$.
 - [Calculator dobândă compusă](/finante/dobanda-compusa/) — aplicația practică principală.
-- [Calculator credit ipotecar](/finante/credit-ipotecar/) — formula anuității utilizează exponenți.
+- [Calculator credit ipotecar](/finante/calculator-credit/) — formula anuității utilizează exponenți.
 - [Calculator procente](/calculator/procent-calculator/) — bazele pentru a interpreta ratele de dobândă.

@@ -88,6 +88,6 @@ Pentru comparație:
 
 - [1 galon în litri](/conversii/volum/1-galon-in-litri/)
 - [10 galoane în litri](/conversii/volum/10-galoane-in-litri/)
-- [20 galoane în litri](/conversii/volum/20-galoane-in-litri/)
+- [10 galoane în litri](/conversii/volum/10-galoane-in-litri/)
 - [Convertor galon ↔ litri (calculator complet)](/conversii/volum/galon-litri/)
 - [Conversii volum — toate](/conversii/volum/)
