@@ -35,4 +35,11 @@ export const SANATATE_RO: Record<string, { slug: string; title: string; h1: stri
     description: "Estimează alcoolemia (g/L, ‰) cu formula Widmark: sex, greutate, băuturi consumate și timp scurs. Strict informativ — nu este o bază pentru a conduce.",
     keywords: ["calculator alcoolemie", "calculator alcool sange", "formula widmark", "g/l alcool", "cat alcool am in sange", "alcoolemie la volan", "eliminare alcool"],
   },
+  "puls-zone-antrenament": {
+    slug: "puls-zone-antrenament",
+    title: "Calculator Puls Maxim și Zone de Antrenament (Karvonen) | InstrumenteOnline",
+    h1: "Calculator Puls Maxim și Zone de Antrenament",
+    description: "Calculează pulsul maxim (220−vârstă și formula Tanaka) și cele 5 zone de antrenament (ardere grăsimi, aerob, anaerob) prin metoda Karvonen, din vârstă și puls de repaus.",
+    keywords: ["puls maxim", "zone de puls", "calculator puls", "metoda karvonen", "zona ardere grasimi", "puls antrenament", "frecventa cardiaca maxima"],
+  },
 };

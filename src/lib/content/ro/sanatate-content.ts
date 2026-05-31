@@ -191,4 +191,40 @@ export const SANATATE_RO_CONTENT: ContentMap = {
       },
     },
   },
+
+  "puls-zone-antrenament": {
+    introText:
+      "Calculatorul de puls determină pulsul maxim (formula clasică 220 − vârstă și formula mai precisă Tanaka) și cele 5 zone de antrenament prin metoda Karvonen, folosind pulsul de repaus. Fiecare zonă (încălzire, ardere grăsimi, aerob, anaerob, maxim) are un interval de bătăi pe minut adaptat la tine. Util pentru alergare, ciclism și fitness.",
+    guide: [
+      "1. Introdu vârsta.",
+      "2. Opțional, adaugă pulsul de repaus (măsurat dimineața) pentru zone calculate prin metoda Karvonen, mai exactă.",
+      "3. Vezi pulsul maxim și intervalele (bpm) ale celor 5 zone de antrenament.",
+    ],
+    faq: [
+      { q: "Cum se calculează pulsul maxim?", a: "Formula clasică este 220 − vârstă. O formulă mai precisă pentru populația generală este Tanaka: 208 − 0,7 × vârstă. De exemplu, la 30 de ani: clasic 190 bpm, Tanaka 187 bpm." },
+      { q: "Ce este metoda Karvonen?", a: "Metoda Karvonen folosește rezerva de puls (RP = puls maxim − puls de repaus) pentru zone personalizate: puls țintă = RP × intensitate% + puls de repaus. Este mai exactă decât simplul procent din pulsul maxim, deoarece ține cont de condiția ta fizică." },
+      { q: "Care zonă arde cel mai mult grăsime?", a: "Zona 2 (60–70%) este numită „zona de ardere a grăsimilor”, deoarece la intensitate moderată organismul folosește un procent mai mare de grăsimi ca sursă de energie. Pentru consum caloric total mai mare, zonele superioare ard mai multe calorii absolute." },
+      { q: "Cum îmi măsor pulsul de repaus?", a: "Măsoară-ți pulsul dimineața, imediat după trezire, înainte de a te ridica din pat, timp de 60 de secunde. Un puls de repaus tipic este 60–80 bpm; la sportivi poate fi 40–60 bpm." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Vârsta", description: "Determină pulsul maxim (220 − vârstă și Tanaka)." },
+        { title: "2. Puls de repaus", description: "Opțional, pentru zone Karvonen personalizate." },
+        { title: "3. Zonele", description: "5 intervale de antrenament în bpm." },
+      ],
+      useCases: [
+        { icon: "🏃", title: "Alergare", description: "Antrenament pe zone pentru rezistență și viteză." },
+        { icon: "🚴", title: "Ciclism", description: "Controlul intensității pe baza pulsului." },
+        { icon: "🔥", title: "Ardere grăsimi", description: "Menținerea în zona 2 pentru consum optim de grăsimi." },
+        { icon: "❤️", title: "Sănătate cardio", description: "Antrenament aerob în siguranță, evitând suprasolicitarea." },
+      ],
+      aboutSection: {
+        title: "Despre pulsul maxim și zonele de antrenament",
+        paragraphs: [
+          "Pulsul maxim este cea mai mare frecvență cardiacă pe care o poate atinge inima în efort. Formula clasică 220 − vârstă este simplă, dar are o eroare relativ mare; formula Tanaka (208 − 0,7 × vârstă), validată în 2001, este mai exactă pentru populația generală. Cea mai precisă valoare se obține printr-un test de efort supravegheat medical.",
+          "Antrenamentul pe zone de puls permite dozarea corectă a efortului: zonele joase (1–2) dezvoltă rezistența de bază și ard grăsimi, zonele medii (3) îmbunătățesc capacitatea aerobă, iar zonele înalte (4–5) cresc viteza și pragul anaerob. Metoda Karvonen personalizează aceste intervale folosind pulsul de repaus, oferind ținte mai relevante decât simplul procent din pulsul maxim.",
+        ],
+      },
+    },
+  },
 };
