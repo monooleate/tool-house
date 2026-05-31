@@ -286,6 +286,42 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
     },
   },
 
+  "combinatorica": {
+    introText:
+      "Calculatorul de combinatorică determină factorialul, permutările, aranjamentele și combinările, cu formulele afișate și calcul exact (numere mari). Acoperă noțiunile cheie din programa de liceu și de la bacalaureat: când contează ordinea (aranjamente) și când nu (combinări).",
+    guide: [
+      "1. Alege tipul: factorial, permutări, aranjamente sau combinări.",
+      "2. Introdu n (și k, la aranjamente și combinări).",
+      "3. Vezi rezultatul exact și formula aplicată.",
+    ],
+    faq: [
+      { q: "Ce este factorialul?", a: "Factorialul lui n (notat n!) este produsul tuturor numerelor naturale de la 1 la n: n! = n × (n−1) × … × 2 × 1. Prin convenție, 0! = 1. Exemplu: 5! = 120." },
+      { q: "Care e diferența dintre aranjamente și combinări?", a: "La aranjamente A(n,k) contează ordinea elementelor (ex. parole, clasamente). La combinări C(n,k) ordinea NU contează (ex. extragerea la loto, alegerea unei echipe). De aceea C(n,k) = A(n,k) / k!." },
+      { q: "Cum se calculează combinările C(n,k)?", a: "C(n,k) = n! / (k! × (n−k)!). Exemplu, la loto 6 din 49: C(49,6) = 49! / (6! × 43!) = 13.983.816 combinații posibile." },
+      { q: "Ce sunt permutările?", a: "Permutările P(n) reprezintă numărul de moduri de a ordona n elemente distincte: P(n) = n!. Exemplu: 4 cărți pot fi aranjate în P(4) = 4! = 24 de moduri." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege tipul", description: "Factorial, permutări, aranjamente sau combinări." },
+        { title: "2. Introdu n și k", description: "k este necesar la aranjamente și combinări (k ≤ n)." },
+        { title: "3. Rezultat + formulă", description: "Valoarea exactă și formula aplicată." },
+      ],
+      useCases: [
+        { icon: "🎰", title: "Probabilități", description: "Numărul de cazuri posibile (ex. loto 6/49)." },
+        { icon: "🎓", title: "Bacalaureat", description: "Probleme de combinatorică din programa de liceu." },
+        { icon: "🔐", title: "Parole și coduri", description: "Numărul de aranjamente posibile." },
+        { icon: "🃏", title: "Jocuri și ordonări", description: "Câte aranjamente sau grupuri se pot forma." },
+      ],
+      aboutSection: {
+        title: "Despre combinatorică",
+        paragraphs: [
+          "Combinatorica studiază modalitățile de a număra, aranja și grupa elementele unei mulțimi. Cele patru noțiuni de bază — factorialul, permutările, aranjamentele și combinările — stau la baza calculului probabilităților și apar constant la bacalaureatul de matematică.",
+          "Distincția esențială este dacă ordinea contează: aranjamentele A(n,k) = n!/(n−k)! numără grupele ordonate de k elemente din n, în timp ce combinările C(n,k) = n!/(k!(n−k)!) numără grupele neordonate. Permutările sunt cazul particular A(n,n) = n!, iar factorialul este blocul de construcție al tuturor formulelor.",
+        ],
+      },
+    },
+  },
+
   // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
   "consum-combustibil": {
     introText:

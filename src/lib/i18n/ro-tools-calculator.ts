@@ -57,6 +57,13 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Calculează operații cu fracții: adunare, scădere, înmulțire și împărțire, cu aducere la numitor comun, simplificare (CMMDC), număr mixt și pași detaliați.",
     keywords: ["calculator fractii", "adunare fractii", "scadere fractii", "inmultire fractii", "impartire fractii", "simplificare fractii", "numitor comun"],
   },
+  "combinatorica": {
+    slug: "combinatorica",
+    title: "Calculator Combinatorică – Factorial, Permutări, Aranjamente, Combinări | InstrumenteOnline",
+    h1: "Calculator Combinatorică",
+    description: "Calculează factorialul, permutările, aranjamentele și combinările (cu și fără formule). Calcul exact pentru bacalaureat și probabilități.",
+    keywords: ["calculator combinatorica", "permutari", "aranjamente", "combinari", "factorial", "n!", "C(n,k)", "A(n,k)"],
+  },
 
   // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
   "consum-combustibil": {

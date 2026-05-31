@@ -132,6 +132,7 @@
     NumereRomaneCalculator:      () => import("../tools/calculator/NumereRomaneCalculator.svelte"),
     CmmdcCmmmcCalculator:        () => import("../tools/calculator/CmmdcCmmmcCalculator.svelte"),
     FractiiCalculator:           () => import("../tools/calculator/FractiiCalculator.svelte"),
+    CombinatoricaCalculator:     () => import("../tools/calculator/CombinatoricaCalculator.svelte"),
     // GEOMETRIE (RO-only) – Fázis 3
     TriunghiDreptCalculator:     () => import("../tools/geometrie/TriunghiDreptCalculator.svelte"),
     FunctiiTrigCalculator:       () => import("../tools/geometrie/FunctiiTrigCalculator.svelte"),
