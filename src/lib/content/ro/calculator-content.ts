@@ -322,6 +322,78 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
     },
   },
 
+  "progresii": {
+    introText:
+      "Calculatorul de progresii determină termenul de rang n și suma primilor n termeni, pentru progresii aritmetice (rație constantă d) și geometrice (rație constantă q). Afișează formulele aplicate și primii termeni. Util pentru clasa a IX-a și bacalaureat.",
+    guide: [
+      "1. Alege tipul: progresie aritmetică sau geometrică.",
+      "2. Introdu primul termen a₁, rația (d sau q) și numărul de termeni n.",
+      "3. Vezi termenul aₙ, suma Sₙ, formulele și primii termeni.",
+    ],
+    faq: [
+      { q: "Care este formula termenului general la progresia aritmetică?", a: "aₙ = a₁ + (n−1)·d, unde a₁ este primul termen și d este rația. Exemplu: a₁=2, d=3 → al 5-lea termen este 2 + 4·3 = 14." },
+      { q: "Cum se calculează suma unei progresii aritmetice?", a: "Sₙ = n·(a₁ + aₙ)/2 = n/2·(2a₁ + (n−1)d). Exemplu: suma primelor 10 numere naturale (a₁=1, d=1): S₁₀ = 10·(1+10)/2 = 55." },
+      { q: "Care este formula la progresia geometrică?", a: "Termenul general: aₙ = a₁·qⁿ⁻¹. Suma: Sₙ = a₁·(qⁿ−1)/(q−1) pentru q≠1, sau Sₙ = n·a₁ când q=1." },
+      { q: "Care e diferența dintre progresia aritmetică și geometrică?", a: "La progresia aritmetică, fiecare termen se obține ADUNÂND rația d la precedentul (creștere liniară). La cea geometrică, fiecare termen se obține ÎNMULȚIND cu rația q (creștere/descreștere exponențială)." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Tipul progresiei", description: "Aritmetică (cu d) sau geometrică (cu q)." },
+        { title: "2. a₁, rația, n", description: "Primul termen, rația și numărul de termeni." },
+        { title: "3. Rezultate", description: "Termenul aₙ, suma Sₙ, formulele și primii termeni." },
+      ],
+      useCases: [
+        { icon: "🎓", title: "Bacalaureat", description: "Probleme cu șiruri din clasa a IX-a și de la bac." },
+        { icon: "💰", title: "Economii", description: "Depuneri constante (aritmetică) sau dobândă compusă (geometrică)." },
+        { icon: "📈", title: "Creștere", description: "Modelarea creșterii liniare sau exponențiale." },
+        { icon: "🧮", title: "Sume rapide", description: "Suma primilor n termeni fără adunare manuală." },
+      ],
+      aboutSection: {
+        title: "Despre progresii (șiruri)",
+        paragraphs: [
+          "O progresie aritmetică este un șir în care diferența dintre doi termeni consecutivi este constantă (rația d): 2, 5, 8, 11, … (d=3). Termenul general este aₙ = a₁ + (n−1)d, iar suma primilor n termeni Sₙ = n(a₁ + aₙ)/2.",
+          "O progresie geometrică este un șir în care raportul dintre doi termeni consecutivi este constant (rația q): 3, 6, 12, 24, … (q=2). Termenul general este aₙ = a₁·qⁿ⁻¹, iar suma Sₙ = a₁(qⁿ−1)/(q−1) pentru q≠1. Progresiile sunt fundamentale în analiza matematică, finanțe (dobândă compusă) și modelarea creșterii.",
+        ],
+      },
+    },
+  },
+
+  "logaritmi": {
+    introText:
+      "Calculatorul de logaritmi determină logaritmul unui număr în orice bază, plus logaritmul natural (ln, baza e), zecimal (lg, baza 10) și în baza 2. Folosește formula schimbării de bază și afișează proprietățile logaritmilor. Util pentru liceu, bacalaureat și calcule științifice.",
+    guide: [
+      "1. Introdu argumentul x (un număr pozitiv).",
+      "2. Introdu baza b (pozitivă și diferită de 1) — implicit 10.",
+      "3. Vezi log_b(x), plus ln, lg și log₂.",
+    ],
+    faq: [
+      { q: "Ce este logaritmul?", a: "Logaritmul în baza b al unui număr x este exponentul la care trebuie ridicată baza b pentru a obține x: dacă b^y = x, atunci log_b(x) = y. Exemplu: log₂(8) = 3, deoarece 2³ = 8." },
+      { q: "Care este formula schimbării de bază?", a: "log_b(x) = ln(x) / ln(b) = lg(x) / lg(b). Această formulă permite calculul logaritmului în orice bază folosind logaritmul natural sau zecimal (disponibili pe orice calculator)." },
+      { q: "Ce diferență e între ln, lg și log?", a: "ln este logaritmul natural (baza e ≈ 2,718), lg este logaritmul zecimal (baza 10), iar log₂ este logaritmul binar (baza 2). „log” fără indice înseamnă de obicei baza 10 (în matematica de liceu) sau baza e (în analiză)." },
+      { q: "Care sunt proprietățile logaritmilor?", a: "log(a·b) = log a + log b (produs → sumă); log(a/b) = log a − log b (cât → diferență); log(aⁿ) = n·log a (putere → înmulțire). Aceste proprietăți transformă înmulțirile în adunări." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Argumentul x", description: "Un număr strict pozitiv (x > 0)." },
+        { title: "2. Baza b", description: "Pozitivă și diferită de 1 (implicit 10)." },
+        { title: "3. Rezultate", description: "log_b(x), plus ln, lg și log₂." },
+      ],
+      useCases: [
+        { icon: "🎓", title: "Liceu și bac", description: "Ecuații logaritmice și exponențiale." },
+        { icon: "🔬", title: "Științe", description: "pH, decibeli, scara Richter — toate logaritmice." },
+        { icon: "💰", title: "Finanțe", description: "Timpul de dublare a unei investiții (dobândă compusă)." },
+        { icon: "💻", title: "Informatică", description: "Complexitatea algoritmilor (log₂ n)." },
+      ],
+      aboutSection: {
+        title: "Despre logaritmi",
+        paragraphs: [
+          "Logaritmul este operația inversă a ridicării la putere: log_b(x) răspunde la întrebarea „la ce putere trebuie ridicată baza b pentru a obține x?”. Logaritmii au fost inventați de John Napier la începutul secolului XVII pentru a simplifica calculele, transformând înmulțirile în adunări — principiul din spatele riglei de calcul.",
+          "Cele mai folosite baze sunt e (logaritmul natural, ln), 10 (logaritmul zecimal, lg) și 2 (binar, în informatică). Formula schimbării de bază, log_b(x) = ln(x)/ln(b), permite calculul în orice bază. Logaritmii apar în numeroase fenomene naturale și tehnice: scara Richter (cutremure), decibeli (sunet), pH (aciditate) și complexitatea algoritmilor.",
+        ],
+      },
+    },
+  },
+
   // ─── Fázis 4 cleanup: Consum combustibil (mutat din /conversii/) ──────────
   "consum-combustibil": {
     introText:

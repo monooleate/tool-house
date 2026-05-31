@@ -64,6 +64,20 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     description: "Calculează factorialul, permutările, aranjamentele și combinările (cu și fără formule). Calcul exact pentru bacalaureat și probabilități.",
     keywords: ["calculator combinatorica", "permutari", "aranjamente", "combinari", "factorial", "n!", "C(n,k)", "A(n,k)"],
   },
+  "progresii": {
+    slug: "progresii",
+    title: "Calculator Progresii Aritmetice și Geometrice – Termen și Sumă | InstrumenteOnline",
+    h1: "Calculator Progresii (Șiruri)",
+    description: "Calculează termenul de rang n și suma primilor n termeni pentru progresii aritmetice (a₁, d) și geometrice (a₁, q), cu formule și primii termeni.",
+    keywords: ["calculator progresii", "progresie aritmetica", "progresie geometrica", "sir aritmetic", "sir geometric", "suma progresie", "termen general"],
+  },
+  "logaritmi": {
+    slug: "logaritmi",
+    title: "Calculator Logaritmi – log în orice bază, ln, lg, log₂ | InstrumenteOnline",
+    h1: "Calculator Logaritmi",
+    description: "Calculează logaritmul în orice bază, logaritmul natural (ln), zecimal (lg) și în baza 2, cu formula schimbării de bază și proprietățile logaritmilor.",
+    keywords: ["calculator logaritmi", "logaritm natural", "ln calculator", "log baza 10", "schimbarea de baza", "proprietati logaritmi", "log2"],
+  },
 
   // ─── Fázis 4 cleanup ────────────────────────────────────────────────────
   "consum-combustibil": {
