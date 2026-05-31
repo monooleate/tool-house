@@ -5,8 +5,9 @@
   // Statikus keresés – nincs backend, nincs API call
   // ============================================================
   import { onMount, onDestroy } from "svelte";
-  import { getVisibleTools, getLocalizedTool, getLocalizedCategories } from "../../lib/tool-registry.ts";
-  import { toolUrl } from "../../lib/url-utils.ts";
+
+  interface SearchTool { slug: string; category: string; h1: string; description: string; keywords: string[]; status: string; url: string; }
+  interface SearchCat { id: string; label: string; icon: string; color: string; url: string; }
 
   export let open = false;
 
@@ -37,9 +38,10 @@
     tools_count: "{{count}} eszköz",
   };
 
-  // Csak az aktuális nyelv (deploy) tooljai — nincs HU↔RO szivárgás a keresőben.
-  const allTools = getVisibleTools().map(t => getLocalizedTool(t));
-  const localCats = getLocalizedCategories();
+  // A keresési index szerver-oldalon, nyelvre szűrve generálódik (/search-index.json),
+  // így a tool-registry (és a másik nyelv tooljai) NEM kerül a kliens bundle-be.
+  let allTools: SearchTool[] = [];
+  let localCats: SearchCat[] = [];
   let query      = "";
   let inputEl: HTMLInputElement;
   let selectedIdx = 0;
@@ -79,8 +81,8 @@
     }
   }
 
-  function navigate(tool: typeof allTools[0]) {
-    window.location.href = toolUrl(tool);
+  function navigate(tool: SearchTool) {
+    window.location.href = tool.url;
   }
 
   function close() {
@@ -112,6 +114,11 @@
   onMount(() => {
     window.addEventListener("keydown", onGlobalKey);
     window.addEventListener("toggle-search", onToggleSearch);
+    // Keresési index betöltése (nyelvre szűrt, deploy-helyes statikus JSON)
+    fetch("/search-index.json")
+      .then(r => r.json())
+      .then((data) => { allTools = data.tools ?? []; localCats = data.categories ?? []; })
+      .catch(() => {});
   });
 
   onDestroy(() => {

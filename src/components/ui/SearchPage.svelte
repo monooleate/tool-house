@@ -4,14 +4,16 @@
   // URL ?q= paraméterből indul, interaktív szűrés
   // ============================================================
   import { onMount } from "svelte";
-  import { getVisibleTools, getCategoryInfo, getLocalizedTool, getLocalizedCategories, CATEGORIES } from "../../lib/tool-registry.ts";
-  import { toolUrl, categoryUrl } from "../../lib/url-utils.ts";
   import { ui } from "../../lib/ui-labels.ts";
 
-  // Csak az aktuális nyelv (deploy) tooljai — nincs HU↔RO szivárgás a keresőben.
-  const allTools = getVisibleTools().map(t => getLocalizedTool(t));
-  const activeTools = allTools.filter(t => t.status === "active");
-  const localCats = getLocalizedCategories();
+  interface SearchTool { slug: string; category: string; h1: string; description: string; keywords: string[]; status: string; url: string; }
+  interface SearchCat { id: string; label: string; icon: string; color: string; url: string; }
+
+  // A keresési index szerver-oldalon, nyelvre szűrve generálódik (/search-index.json),
+  // így a tool-registry (és a másik nyelv tooljai) NEM kerül a kliens bundle-be.
+  let allTools: SearchTool[] = [];
+  let localCats: SearchCat[] = [];
+  $: activeTools = allTools.filter(t => t.status === "active");
 
   let query = "";
   let inputEl: HTMLInputElement;
@@ -22,6 +24,11 @@
     const q = params.get("q");
     if (q) query = q;
     inputEl?.focus();
+    // Keresési index betöltése (nyelvre szűrt, deploy-helyes statikus JSON)
+    fetch("/search-index.json")
+      .then(r => r.json())
+      .then((data) => { allTools = data.tools ?? []; localCats = data.categories ?? []; })
+      .catch(() => {});
   });
 
   // ─── Keresés ────────────────────────────────────────────────
@@ -117,7 +124,7 @@
       <p class="sp-empty__hint">{ui.noResultsHint}</p>
       <div class="sp-empty__cats">
         {#each localCats as cat}
-          <a href={categoryUrl(cat.id)} class="sp-empty__cat-link">{cat.icon} {cat.label}</a>
+          <a href={cat.url} class="sp-empty__cat-link">{cat.icon} {cat.label}</a>
         {/each}
       </div>
     </div>
@@ -125,7 +132,7 @@
     <div class="sp-grid">
       {#each results as tool (tool.slug)}
         {@const cat = localCats.find(c => c.id === tool.category)}
-        <a href={toolUrl(tool)} class="sp-card" class:sp-card--coming={tool.status === "coming-soon"}>
+        <a href={tool.url} class="sp-card" class:sp-card--coming={tool.status === "coming-soon"}>
           <div class="sp-card__top">
             <span class="sp-card__cat" style="color: {cat?.color}">{cat?.icon} {cat?.label}</span>
             {#if tool.status === "coming-soon"}
