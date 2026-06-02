@@ -3,12 +3,13 @@
 // kapcsolat.astro – Kapcsolat oldal (Netlify Forms)
 // ============================================================
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { SITE_NAME, breadcrumbSchema } from "../../lib/seo.ts";
+import { SITE_NAME, breadcrumbNode, buildCanonical, ORG_ID } from "../../lib/seo.ts";
 import { t, tpl, CURRENT_CONFIG } from "../../i18n/index.ts";
 import { staticUrl } from "../../lib/url-utils.ts";
 
-const schemas = [
-  breadcrumbSchema([
+const pageUrl = buildCanonical(staticUrl("kapcsolat"));
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, [
     { name: t("contact.breadcrumb_home"), href: "/" },
     { name: t("contact.breadcrumb"), href: staticUrl("kapcsolat") },
   ]),
@@ -20,7 +21,10 @@ const schemas = [
   description={tpl("contact.meta_desc", { siteName: CURRENT_CONFIG.siteName })}
   canonical={staticUrl("kapcsolat")}
   hreflangPaths={{ hu: staticUrl("kapcsolat", "hu"), ro: staticUrl("kapcsolat", "ro") }}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPageType="ContactPage"
+  graphPrimaryId={ORG_ID}
+  orgFull
 >
 
   <div class="contact-page container">

@@ -4,8 +4,8 @@
 // ============================================================
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
-  SITE_NAME, SITE_URL, SITE_DESCRIPTION,
-  breadcrumbSchema, faqSchema,
+  SITE_NAME, SITE_URL, SITE_DESCRIPTION, ORG_ID,
+  breadcrumbNode, faqNode, buildCanonical,
 } from "../../lib/seo.ts";
 import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../../i18n/index.ts";
 import { getActiveToolsCount, getTotalToolsCount, CATEGORIES } from "../../lib/tool-registry.ts";
@@ -23,50 +23,17 @@ const faqs = [
   { q: t("about.faq4_q"), a: t("about.faq4_a") },
 ];
 
-const personSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Mészáros János",
-  url: "https://jmeszaros.dev",
-  jobTitle: t("about.schema_job"),
-  worksFor: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-  },
-  sameAs: ["https://jmeszaros.dev"],
-});
-
-const aboutSchema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  name: tpl("about.schema_name", { siteName: CURRENT_CONFIG.siteName }),
-  url: `${SITE_URL}${staticUrl("rolunk")}`,
-  description: tpl("about.schema_desc", { siteName: CURRENT_CONFIG.siteName }),
-  mainEntity: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    founder: {
-      "@type": "Person",
-      name: "Mészáros János",
-      url: "https://jmeszaros.dev",
-    },
-  },
-});
-
-const faqSchemaStr = faqSchema(faqs);
-
-const schemas = [
-  breadcrumbSchema([
+// AboutPage: a WebPage maga az AboutPage (mainEntity → Organization), a Person/Org
+// node-okat a base graph adja (orgFull + includeSiblings).
+const pageUrl = buildCanonical(staticUrl("rolunk"));
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, [
     { name: t("about.breadcrumb_home"), href: "/" },
     { name: t("about.breadcrumb_about"), href: staticUrl("rolunk") },
   ]),
-  personSchema,
-  aboutSchema,
-  ...(faqSchemaStr ? [faqSchemaStr] : []),
 ];
+const faqN = faqNode(pageUrl, faqs);
+if (faqN) graphNodes.push(faqN);
 ---
 
 <BaseLayout
@@ -74,7 +41,11 @@ const schemas = [
   description={tpl("about.meta_desc", { siteName: CURRENT_CONFIG.siteName })}
   canonical={staticUrl("rolunk")}
   hreflangPaths={{ hu: staticUrl("rolunk", "hu"), ro: staticUrl("rolunk", "ro") }}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPageType="AboutPage"
+  graphPrimaryId={ORG_ID}
+  orgFull
+  includeSiblings
 >
 
   <div class="about-page container">

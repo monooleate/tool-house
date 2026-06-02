@@ -8,8 +8,8 @@ import type { Category, Tool } from "../lib/tool-registry.ts";
 import { getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import {
   categoryBreadcrumbs,
-  breadcrumbSchema,
-  toolListSchema,
+  breadcrumbNode,
+  itemListNode,
   buildCanonical,
 } from "../lib/seo.ts";
 import { t, CURRENT_LANG } from "../i18n/index.ts";
@@ -32,9 +32,14 @@ const activeTools  = tools.filter((t) => t.status === "active");
 const pendingTools = tools.filter((t) => t.status === "coming-soon");
 const breadcrumbs  = categoryBreadcrumbs(category);
 
-const schemas = [
-  breadcrumbSchema(breadcrumbs),
-  toolListSchema(tools, `${category.label} ${t("category.tools_suffix")}`),
+const pageUrl = buildCanonical(categoryUrl(rawCategory.id));
+const graphNodes = [
+  breadcrumbNode(pageUrl, breadcrumbs),
+  itemListNode(
+    pageUrl,
+    `${category.label} ${t("category.tools_suffix")}`,
+    tools.map((tl) => ({ name: tl.h1, url: buildCanonical(toolUrl(tl)), description: tl.description })),
+  ),
 ];
 
 // Language-scoped kategóriák esetén (pl. math kategóriák RO-only)
@@ -56,7 +61,9 @@ const needsKatex = MATH_CATS.has(rawCategory.id);
   canonical={categoryUrl(rawCategory.id)}
   hreflangPaths={{ hu: huHref, ro: roHref }}
   katex={needsKatex}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPrimaryId="#itemlist"
+  graphPageType="CollectionPage"
 >
   <div class="cat-page container">
 

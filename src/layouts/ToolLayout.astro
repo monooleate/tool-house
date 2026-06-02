@@ -15,15 +15,16 @@ import {
 import { t, tpl, CURRENT_LANG } from "../i18n/index.ts";
 import { toolUrl, categoryUrl } from "../lib/url-utils.ts";
 import {
-  toolSoftwareSchema,
-  faqSchema,
-  techArticleSchema,
-  useCaseListSchema,
-  breadcrumbSchema,
+  breadcrumbNode,
+  calculatorNode,
+  faqNode,
+  articleNode,
+  useCaseNode,
+  eventNode,
+  normalizeFrontmatterSchema,
   toolBreadcrumbs,
-  eventSchema,
+  buildCanonical,
 } from "../lib/seo.ts";
-import { buildCanonical } from "../lib/seo.ts";
 import { COUNTDOWN_EVENTS } from "../lib/timp-years.ts";
 import { getCollection, render } from "astro:content";
 import { getSubcatForTool, getConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
@@ -92,50 +93,49 @@ if (needsKatex && CURRENT_LANG === "ro") {
   }
 }
 
-// Schema-szkriptekhez hozzáadjuk a math frontmatter schema-it
-// (a beépített schemas változót később használjuk a BaseLayout schemaScripts-ben)
-
-// JSON-LD schemas
-// ─── Schema.org JSON-LD assembly ────────────────────────────
-// Cél: ne legyen duplikáció. Ha van longform (math kategóriák),
-// a longform-frontmatter schemái a canonical → az auto-generált
-// SoftwareApplication / TechArticle / registry-FAQ ki van hagyva.
-// Eredmény math-oldalon: 4 schema (Breadcrumb + Article + Software + FAQ + opcionális ItemList)
-//                non-math: 5 schema (Software + Breadcrumb + FAQ + TechArticle + ItemList)
+// ─── Egységes @graph node-ok összeállítása ──────────────────
+// Minden node OBJEKTUM (a base Org/WebSite/Person/WebPage-et a BaseLayout adja).
+// Math longform: a frontmatter schema-i (Article+Software+FAQ) render-időben
+// normalizálva. Non-math: auto-generált calculator + article + faq node-ok.
 // rawTool.slug: a nyers (HU) slug – az og/hero képfájlok mindig HU slug-gal generálódnak
+const pageUrl = buildCanonical(toolUrl(rawTool));
 const hasLongform = mathSchemaScripts.length > 0;
-const schemas: string[] = [
-  breadcrumbSchema(breadcrumbs),
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, breadcrumbs),
 ];
+let graphPrimaryId: string | null = null;
 
 if (hasLongform) {
-  // Math longform → a frontmatter schema-i adják az Article + Software + FAQ-t
-  schemas.push(...mathSchemaScripts);
+  // Math longform → a frontmatter schema-i (Article + Software + FAQ) render-időben
+  // normalizálva kerülnek a graph-ba (@context törlés, author→PERSON_ID, stabil @id).
+  const { nodes, primaryId } = normalizeFrontmatterSchema(mathEntry.data, pageUrl);
+  graphNodes.push(...nodes);
+  graphPrimaryId = primaryId;
 } else {
-  // Non-math (file tool) → auto-generált schema-k
-  schemas.push(toolSoftwareSchema(tool, rawTool.slug));
+  // Non-math (file tool) → auto-generált node-ok
+  graphNodes.push(calculatorNode(tool, pageUrl, rawTool.slug));
+  graphPrimaryId = "#calculator";
   if (tool.faq.length > 0) {
-    const faq = faqSchema(tool.faq);
-    if (faq) schemas.push(faq);
+    const faq = faqNode(pageUrl, tool.faq);
+    if (faq) graphNodes.push(faq);
   }
-  const techArticle = techArticleSchema(tool, rawTool.slug);
-  if (techArticle) schemas.push(techArticle);
+  const article = articleNode(tool, pageUrl, rawTool.slug, true);
+  if (article) graphNodes.push(article);
 }
 
-// ItemList (use cases) — csak ha a tartalomban tényleg van useCases szekció,
-// és nem ütközik Article-lal (ItemList önálló entitás)
-const useCaseList = useCaseListSchema(tool);
-if (useCaseList) schemas.push(useCaseList);
+// ItemList (use cases) — csak ha a tartalomban tényleg van useCases szekció
+const useCaseList = useCaseNode(tool, pageUrl);
+if (useCaseList) graphNodes.push(useCaseList);
 
-// Event schema (countdown oldalak) — a dátum build-időben számolódik
+// Event node (countdown oldalak) — a dátum build-időben számolódik
 // (COUNTDOWN_EVENTS), így törődésmentes: minden rebuild a következő apariție.
 const countdownEvent = COUNTDOWN_EVENTS[rawTool.slug];
 if (countdownEvent) {
-  schemas.push(eventSchema({
+  graphNodes.push(eventNode({
     name: countdownEvent.name,
     description: countdownEvent.description,
     startIso: countdownEvent.iso,
-    url: buildCanonical(toolUrl(rawTool)),
+    pageUrl,
   }));
 }
 ---
@@ -151,7 +151,8 @@ if (countdownEvent) {
   ogImageHeight={630}
   ogType="website"
   modifiedAt={(tool as { updatedAt?: string }).updatedAt}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPrimaryId={graphPrimaryId}
   noIndex={tool.status === "coming-soon"}
 >
 

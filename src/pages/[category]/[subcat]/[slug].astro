@@ -55,11 +55,11 @@ export async function getStaticPaths() {
 
     const rendered = await render(entry);
 
-    // Frontmatter schema-objektumok stringként (BaseLayout schemaScripts)
-    const schemaFromMd: string[] = [];
+    // Frontmatter schema-objektumok NYERSEN (render-időben normalizálva a graph-ba)
+    const mdSchema: Record<string, any> = {};
     for (const key of ["articleSchema", "softwareSchema", "faqPageSchema"]) {
       const s = (entry.data as any)[key];
-      if (s) schemaFromMd.push(JSON.stringify(s));
+      if (s) mdSchema[key] = s;
     }
 
     paths.push({
@@ -78,7 +78,7 @@ export async function getStaticPaths() {
         primaryToolSlug: (entry.data as any).primaryToolSlug,
         modifiedAt: entry.data.refreshed_at ?? entry.data.published_at,
         Content: rendered.Content,
-        schemaFromMd,
+        mdSchema,
       },
     });
   }
@@ -92,7 +92,7 @@ type Props =
       kind: "instant"; subcat: any; instantSlug: string;
       title: string; description: string; heroAnswer?: string;
       primaryToolSlug?: string; modifiedAt?: string;
-      Content: any; schemaFromMd: string[];
+      Content: any; mdSchema: Record<string, any>;
     };
 
 const props = Astro.props as Props;
@@ -114,6 +114,6 @@ const props = Astro.props as Props;
     primaryToolSlug={props.primaryToolSlug}
     modifiedAt={props.modifiedAt}
     Content={props.Content}
-    schemaFromMd={props.schemaFromMd}
+    mdSchema={props.mdSchema}
   />
 )}

@@ -3,15 +3,16 @@
 // AszfPage.astro – Felhasználási feltételek (ÁSZF) / Terms of Service
 // ============================================================
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { SITE_NAME, SITE_URL, breadcrumbSchema } from "../../lib/seo.ts";
+import { SITE_NAME, SITE_URL, breadcrumbNode, buildCanonical } from "../../lib/seo.ts";
 import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../../i18n/index.ts";
 import { staticUrl } from "../../lib/url-utils.ts";
 
 const sn = CURRENT_CONFIG.siteName;
 const contactEmail = t("contact.email_address");
 
-const schemas = [
-  breadcrumbSchema([
+const pageUrl = buildCanonical(staticUrl("aszf"));
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, [
     { name: t("tos.breadcrumb_home"), href: "/" },
     { name: t("tos.breadcrumb"), href: staticUrl("aszf") },
   ]),
@@ -25,7 +26,7 @@ const lastUpdated = "2026-03-22";
   description={tpl("tos.meta_desc", { siteName: sn })}
   canonical={staticUrl("aszf")}
   hreflangPaths={{ hu: staticUrl("aszf", "hu"), ro: staticUrl("aszf", "ro") }}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
 >
 
   <div class="legal-page container">

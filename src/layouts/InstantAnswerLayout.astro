@@ -13,8 +13,10 @@ import {
   getLocalizedTool,
 } from "../lib/tool-registry.ts";
 import {
-  breadcrumbSchema,
+  breadcrumbNode,
+  normalizeFrontmatterSchema,
   instantBreadcrumbs,
+  buildCanonical,
 } from "../lib/seo.ts";
 import { CURRENT_LANG } from "../i18n/index.ts";
 import { instantAnswerUrl, subcatUrl, toolUrl } from "../lib/url-utils.ts";
@@ -26,8 +28,9 @@ export interface Props {
   description: string;
   /** Az oldalon kiemelendő válasz, pl. „170 cm = 1,70 m" — h1 alatt jelenik meg */
   heroAnswer?: string;
-  /** Frontmatter schema-objektumok (Article, FAQPage) – stringként emittáljuk */
-  schemaFromMd?: string[];
+  /** Frontmatter schema-objektumok (Article/Software/FAQPage) – render-időben
+   *  normalizálva a graph-ba (NEM stringként). */
+  mdSchema?: Record<string, any>;
   /** A long-form markdown <Content /> komponens (Astro 5 render() output) */
   Content: any;
   /** Refresh date (sitemap lastmod-hoz). */
@@ -36,18 +39,22 @@ export interface Props {
   primaryToolSlug?: string;
 }
 
-const { subcat, instantSlug, title, description, heroAnswer, schemaFromMd = [], Content, modifiedAt, primaryToolSlug } = Astro.props;
+const { subcat, instantSlug, title, description, heroAnswer, mdSchema, Content, modifiedAt, primaryToolSlug } = Astro.props;
 
 const conversiiCat = getLocalizedCategory(getCategoryInfo("conversii")!, CURRENT_LANG);
 const breadcrumbs = instantBreadcrumbs(subcat, conversiiCat.label, title, instantSlug);
 const canonical = instantAnswerUrl(subcat.slug, instantSlug);
+const pageUrl = buildCanonical(canonical);
 
 // Primary tool (full converter CTA)
 const primaryTool = primaryToolSlug ? getToolBySlug("conversii", primaryToolSlug) : undefined;
 const primaryToolLocalized = primaryTool ? getLocalizedTool(primaryTool, CURRENT_LANG) : undefined;
 
-const schemas: string[] = [breadcrumbSchema(breadcrumbs)];
-schemas.push(...schemaFromMd);
+// Frontmatter schema → graph node-ok (normalizálva)
+const { nodes: mdNodes, primaryId } = mdSchema
+  ? normalizeFrontmatterSchema(mdSchema, pageUrl)
+  : { nodes: [] as Record<string, any>[], primaryId: null as string | null };
+const graphNodes: Record<string, any>[] = [breadcrumbNode(pageUrl, breadcrumbs), ...mdNodes];
 ---
 
 <BaseLayout
@@ -58,7 +65,9 @@ schemas.push(...schemaFromMd);
   katex={true}
   ogType="article"
   modifiedAt={modifiedAt}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPrimaryId={primaryId}
+  graphPageType="ItemPage"
 >
   <article class="instant-page container">
 

@@ -13,10 +13,11 @@ import {
   getLocalizedCategory,
 } from "../lib/tool-registry.ts";
 import {
-  breadcrumbSchema,
-  faqSchema,
-  subcatCollectionSchema,
+  breadcrumbNode,
+  faqNode,
+  itemListNode,
   subcatBreadcrumbs,
+  buildCanonical,
 } from "../lib/seo.ts";
 import { CURRENT_LANG } from "../i18n/index.ts";
 import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "../lib/url-utils.ts";
@@ -32,12 +33,17 @@ const tools = rawTools.map(t => getLocalizedTool(t, CURRENT_LANG));
 const conversiiCat = getLocalizedCategory(getCategoryInfo("conversii")!, CURRENT_LANG);
 const breadcrumbs = subcatBreadcrumbs(subcat, conversiiCat.label);
 
-const schemas: string[] = [
-  breadcrumbSchema(breadcrumbs),
-  subcatCollectionSchema(subcat, rawTools, instantPages),
+const pageUrl = buildCanonical(subcatUrl(subcat.slug));
+const listItems = [
+  ...tools.map((tl) => ({ name: tl.h1, url: buildCanonical(toolUrl(tl)), description: tl.description })),
+  ...instantPages.map((ip) => ({ name: ip.title, url: buildCanonical(instantAnswerUrl(subcat.slug, ip.slug)), description: ip.description })),
 ];
-const faq = faqSchema(subcat.faq);
-if (faq) schemas.push(faq);
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, breadcrumbs),
+  itemListNode(pageUrl, `Conversii ${subcat.label}`, listItems),
+];
+const faq = faqNode(pageUrl, subcat.faq);
+if (faq) graphNodes.push(faq);
 
 const title = `Convertoare ${subcat.label} – cm, m, kg, °C și altele | InstrumenteOnline`;
 const description = subcat.description;
@@ -51,7 +57,9 @@ const canonical = subcatUrl(subcat.slug);
   hreflangPaths={{ hu: null, ro: canonical }}
   katex={true}
   ogType="website"
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPrimaryId="#itemlist"
+  graphPageType="CollectionPage"
 >
   <div class="hub-page container">
 

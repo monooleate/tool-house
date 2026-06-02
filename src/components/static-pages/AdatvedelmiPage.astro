@@ -3,15 +3,16 @@
 // adatvedelmi-nyilatkozat.astro – Adatvédelmi nyilatkozat + Cookie
 // ============================================================
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { SITE_NAME, SITE_URL, breadcrumbSchema } from "../../lib/seo.ts";
+import { SITE_NAME, SITE_URL, breadcrumbNode, buildCanonical } from "../../lib/seo.ts";
 import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../../i18n/index.ts";
 import { staticUrl } from "../../lib/url-utils.ts";
 
 const sn = CURRENT_CONFIG.siteName;
 const contactEmail = t("contact.email_address");
 
-const schemas = [
-  breadcrumbSchema([
+const pageUrl = buildCanonical(staticUrl("adatvedelmi"));
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, [
     { name: t("privacy.breadcrumb_home"), href: "/" },
     { name: t("privacy.breadcrumb"), href: staticUrl("adatvedelmi") },
   ]),
@@ -25,7 +26,7 @@ const lastUpdated = "2025-06-01";
   description={tpl("privacy.meta_desc", { siteName: sn })}
   canonical={staticUrl("adatvedelmi")}
   hreflangPaths={{ hu: staticUrl("adatvedelmi", "hu"), ro: staticUrl("adatvedelmi", "ro") }}
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
 >
 
   <div class="legal-page container">

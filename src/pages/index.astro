@@ -13,7 +13,7 @@ import {
 } from "../lib/tool-registry.ts";
 import { t, tpl, CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import {
-  websiteSchema, organizationSchema, founderPersonSchema, toolListSchema, faqSchema,
+  itemListNode, faqNode, buildCanonical, ORG_ID,
   SITE_NAME, SITE_URL,
 } from "../lib/seo.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
@@ -114,25 +114,28 @@ const faqItems = faqRange.map(i => ({
   a: t(`homepage.faq_a${i}`),
 }));
 
-// ─── Schemas ─────────────────────────────────────────────────
-const softwareAppSchema = JSON.stringify({
-  "@context": "https://schema.org",
+// ─── Egységes @graph node-ok (a base Org/WebSite/Person/WebPage-et a BaseLayout adja) ─
+const pageUrl = buildCanonical("/");
+const homeSoftwareNode = {
   "@type": "SoftwareApplication",
-  "name": SITE_NAME,
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": CURRENT_LANG === "hu" ? "HUF" : "RON" },
-  "url": SITE_URL + "/"
-});
-
-const schemas = [
-  websiteSchema(),
-  organizationSchema(),
-  founderPersonSchema(),
-  toolListSchema(activeTools, t("category.all_tools")),
-  softwareAppSchema,
-  faqSchema(faqItems),
-].filter(Boolean) as string[];
+  "@id": `${SITE_URL}/#software`,
+  name: SITE_NAME,
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: CURRENT_LANG === "hu" ? "HUF" : "RON" },
+  url: SITE_URL + "/",
+  publisher: { "@id": ORG_ID },
+};
+const graphNodes: Record<string, any>[] = [
+  itemListNode(
+    pageUrl,
+    t("category.all_tools"),
+    activeTools.map((tl) => ({ name: tl.h1, url: buildCanonical(toolUrl(tl)), description: tl.description })),
+  ),
+  homeSoftwareNode,
+];
+const faqN = faqNode(pageUrl, faqItems);
+if (faqN) graphNodes.push(faqN);
 
 ---
 
@@ -140,7 +143,10 @@ const schemas = [
   title={tpl('homepage.meta_title', { count: String(activeCount) })}
   description={tpl('homepage.meta_description', { count: String(activeCount) })}
   canonical="/"
-  schemaScripts={schemas}
+  graphNodes={graphNodes}
+  graphPrimaryId="#itemlist"
+  orgFull
+  includeSiblings
 >
 
   <!-- ═══ HERO ═══════════════════════════════════════════════ -->

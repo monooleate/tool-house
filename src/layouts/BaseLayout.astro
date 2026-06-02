@@ -4,7 +4,7 @@
 // Alap layout: HTML skeleton, SEO meta, dark mode, nav, footer
 // ============================================================
 import "../styles/global.css";
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical } from "../lib/seo.ts";
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical, buildPageGraph, serializeGraph } from "../lib/seo.ts";
 import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory, getVisibleCategories, getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
 import { GOOGLE_TAG_ID, GTM_ID, CONSENT_MODE_ENABLED, hasGoogleTag, hasGTM } from "../lib/analytics.ts";
@@ -35,7 +35,15 @@ export interface Props {
   ogImageWidth?: number;
   ogImageHeight?: number;
   ogType?: "website" | "article";
-  schemaScripts?: string[];  // JSON-LD stringek tömbje
+  schemaScripts?: string[];  // LEGACY: JSON-LD stringek tömbje (cutover alatt fallback)
+  /** Egységes @graph: oldal-specifikus node-objektumok. Ha megvan, EZT emittáljuk
+   *  egyetlen <script id="graph">-ként; a base node-okat (Org/WebSite/Person/WebPage)
+   *  a BaseLayout adja hozzá. */
+  graphNodes?: Record<string, any>[];
+  graphPrimaryId?: string | null;   // WebPage.mainEntity fragment @id (pl. "#calculator")
+  graphPageType?: string;           // WebPage altípus (CollectionPage, AboutPage, …)
+  orgFull?: boolean;                // bővített Organization (contactPoint) – főoldal/about
+  includeSiblings?: boolean;        // testvér-brand node-ok – főoldal/about
   hreflangPaths?: { hu?: string | null; ro?: string | null };
   noIndex?: boolean;
   publishedAt?: string;
@@ -55,6 +63,11 @@ const {
   ogImageHeight = 630,
   ogType        = "website",
   schemaScripts = [],
+  graphNodes,
+  graphPrimaryId = null,
+  graphPageType  = "WebPage",
+  orgFull        = false,
+  includeSiblings = false,
   hreflangPaths,
   noIndex       = false,
   publishedAt,
@@ -68,6 +81,22 @@ const canonicalUrl = buildCanonical(canonical ?? Astro.url.pathname);
 const resolvedTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 const activeCount = getActiveToolsCount();
 const totalCount = getTotalToolsCount();
+
+// ─── Egységes @graph összeállítás (ha graphNodes-t kapott) ───
+const serializedGraph = graphNodes
+  ? serializeGraph(buildPageGraph({
+      pageUrl: canonicalUrl,
+      name: resolvedTitle,
+      description,
+      pageType: graphPageType,
+      primaryId: graphPrimaryId,
+      image: ogImageAbsolute,
+      hasBreadcrumb: graphNodes.some((n: any) => n && n["@type"] === "BreadcrumbList"),
+      nodes: graphNodes,
+      orgFull,
+      includeSiblings,
+    }))
+  : null;
 ---
 
 <!doctype html>
@@ -158,10 +187,12 @@ const totalCount = getTotalToolsCount();
   <!-- View Transitions kikapcsolva – link navigáció hibát okozott -->
   <!-- <ViewTransitions fallback="none" /> -->
 
-  <!-- JSON-LD Schemas -->
-  {schemaScripts.map((schema) => (
-    <script type="application/ld+json" set:html={schema} />
-  ))}
+  <!-- JSON-LD: egységes @graph (vagy legacy fallback a cutover alatt) -->
+  {serializedGraph
+    ? <script type="application/ld+json" id="graph" set:html={serializedGraph} />
+    : schemaScripts.map((schema) => (
+        <script type="application/ld+json" set:html={schema} />
+      ))}
 
   <!-- Google Tag Manager (head) – csak production -->
   {import.meta.env.PROD && hasGTM() && (

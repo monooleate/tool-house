@@ -31,23 +31,10 @@ function toISOWithTZ(dateStr: string): string {
   return `${dateStr}T00:00:00+02:00`;
 }
 
-// ─── Breadcrumb Schema ────────────────────────────────────────
+// ─── Breadcrumb item típus ───────────────────────────────────
 export interface BreadcrumbItem {
   name: string;
   href: string;
-}
-
-export function breadcrumbSchema(items: BreadcrumbItem[]): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: item.name,
-      item: buildCanonical(item.href),
-    })),
-  });
 }
 
 // ─── Kategória → Schema applicationSubCategory map ───────────
@@ -80,280 +67,6 @@ function toolRating(slug: string): { ratingValue: string; ratingCount: number } 
   const ratingValue = 4.5 + (Math.abs(hash) % 5) * 0.1; // 4.5–4.9
   const ratingCount = 8 + (Math.abs(hash >> 8) % 73); // 8–80
   return { ratingValue: ratingValue.toFixed(1), ratingCount };
-}
-
-// ─── Tool (SoftwareApplication) Schema ───────────────────────
-// rawSlug: a nyers (HU) slug az og/hero képek útvonalához – a fájlok mindig HU slug-gal generálódnak
-export function toolSoftwareSchema(tool: Tool, rawSlug?: string): string {
-  const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
-  const rating = toolRating(tool.slug);
-  const imageSlug = rawSlug ?? tool.slug;
-  const schema: Record<string, unknown> = {
-    "@context": "https://schema.org",
-    "@type": ["SoftwareApplication", "WebApplication"],
-    name: tool.h1,
-    description: tool.description,
-    url: buildCanonical(toolUrl(tool)),
-    applicationCategory: "UtilitiesApplication",
-    applicationSubCategory: SUBCATEGORY_MAP[tool.category] ?? "UtilitiesApplication",
-    applicationSuite: SITE_NAME,
-    operatingSystem: "Web",
-    browserRequirements: t("schema.browser_req"),
-    inLanguage: CURRENT_CONFIG.lang,
-    isAccessibleForFree: true,
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: t("schema.cost_currency"),
-      availability: tool.status === "active"
-        ? "https://schema.org/InStock"
-        : "https://schema.org/PreOrder",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: rating.ratingValue,
-      ratingCount: rating.ratingCount,
-      bestRating: "5",
-      worstRating: "1",
-    },
-    featureList: [
-      t("schema.feature_private"),
-      t("schema.feature_worker"),
-      t("schema.feature_free"),
-    ],
-    screenshot: buildCanonical(`/og/${tool.category}/${imageSlug}.png`),
-    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
-  };
-
-  // Opcionális mezők ha a registry-ben megadják (ISO 8601 + időzóna)
-  if (toolExt.updatedAt)  schema["dateModified"]  = toISOWithTZ(toolExt.updatedAt);
-  if (toolExt.launchedAt) schema["datePublished"]  = toISOWithTZ(toolExt.launchedAt);
-
-  return JSON.stringify(schema);
-}
-
-// ─── FAQ Schema ───────────────────────────────────────────────
-export function faqSchema(faqs: { q: string; a: string }[]): string | null {
-  if (!faqs.length) return null;
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.a,
-      },
-    })),
-  });
-}
-
-// ─── Event Schema (countdown oldalakra) ──────────────────────
-// startIso build-időben számolódik (timp-years COUNTDOWN_EVENTS) → auto-advance.
-export function eventSchema(opts: {
-  name: string;
-  description: string;
-  startIso: string;
-  url: string;
-}): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: opts.name,
-    description: opts.description,
-    startDate: opts.startIso,
-    endDate: opts.startIso,
-    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    location: { "@type": "Country", name: "România" },
-    url: opts.url,
-  });
-}
-
-// ─── HowTo Schema (használati útmutató) ──────────────────────
-export function howToSchema(tool: Tool): string | null {
-  // Prefer content.howToSteps, fallback to guide[]
-  const contentSteps = tool.content?.howToSteps;
-  if (contentSteps && contentSteps.length > 0) {
-    return JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: tpl("schema.how_to_name", { name: tool.h1 }),
-      description: tool.description,
-      url: buildCanonical(toolUrl(tool)),
-      inLanguage: CURRENT_CONFIG.lang,
-      totalTime: t("schema.total_time"),
-      estimatedCost: {
-        "@type": "MonetaryAmount",
-        currency: t("schema.cost_currency"),
-        value: "0",
-      },
-      tool: [{ "@type": "HowToTool", name: t("schema.browser_tool") }],
-      step: contentSteps.map((s, i) => ({
-        "@type": "HowToStep",
-        position: i + 1,
-        name: s.title.replace(/^\d+\.\s*/, ""),
-        text: s.description,
-        url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_howto")}`),
-      })),
-    });
-  }
-  // Fallback: guide[] array
-  if (!tool.guide || tool.guide.length === 0) return null;
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: tpl("schema.how_to_name", { name: tool.h1 }),
-    description: tool.description,
-    url: buildCanonical(toolUrl(tool)),
-    inLanguage: CURRENT_CONFIG.lang,
-    totalTime: t("schema.total_time"),
-    estimatedCost: { "@type": "MonetaryAmount", currency: t("schema.cost_currency"), value: "0" },
-    tool: [{ "@type": "HowToTool", name: "Böngésző (Chrome, Firefox, Safari, Edge)" }],
-    step: tool.guide.map((text, i) => ({
-      "@type": "HowToStep",
-      position: i + 1,
-      text,
-    })),
-  });
-}
-
-// ─── TechArticle Schema (aboutSection-hoz) ────────────────────
-// rawSlug: a nyers (HU) slug az hero kép útvonalához
-export function techArticleSchema(tool: Tool, rawSlug?: string): string | null {
-  const about = tool.content?.aboutSection;
-  if (!about) return null;
-
-  const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
-  const imageSlug = rawSlug ?? tool.slug;
-
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: about.title,
-    description: about.paragraphs[0]?.slice(0, 160) ?? tool.description,
-    url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_about")}`),
-    inLanguage: CURRENT_CONFIG.lang,
-    isPartOf: {
-      "@type": "WebPage",
-      url: buildCanonical(toolUrl(tool)),
-    },
-    author: { "@type": "Person", "@id": `${SITE_URL}/#founder` },
-    publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization` },
-    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
-    dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
-    datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
-    articleBody: about.paragraphs.join(" "),
-    proficiencyLevel: "Beginner",
-    keywords: tool.keywords.join(", "),
-    speakable: {
-      "@type": "SpeakableSpecification",
-      cssSelector: [".about-section h2", ".about-section p:first-of-type"],
-    },
-  });
-}
-
-// ─── UseCaseList Schema ───────────────────────────────────────
-export function useCaseListSchema(tool: Tool): string | null {
-  const useCases = tool.content?.useCases;
-  if (!useCases || useCases.length === 0) return null;
-
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: tpl("tool.use_cases_title", { name: tool.h1 }),
-    url: buildCanonical(`${toolUrl(tool)}${t("schema.anchor_usecases")}`),
-    numberOfItems: useCases.length,
-    itemListOrder: "https://schema.org/ItemListOrderAscending",
-    itemListElement: useCases.map((uc, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: uc.title,
-      description: uc.description,
-    })),
-  });
-}
-
-// ─── WebSite Schema (főoldalra) ───────────────────────────────
-export function websiteSchema(): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    inLanguage: CURRENT_CONFIG.lang,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}${t("schema.search_path")}?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
-  });
-}
-
-// ─── ItemList Schema (kategória oldal + főoldal) ──────────────
-export function toolListSchema(tools: Tool[], listName: string): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: listName,
-    numberOfItems: tools.length,
-    itemListElement: tools.map((tool, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: tool.h1,
-      url: buildCanonical(toolUrl(tool)),
-      description: tool.description,
-    })),
-  });
-}
-
-// ─── Person Schema (founder) ─────────────────────────────────
-export function founderPersonSchema(): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": `${SITE_URL}/#founder`,
-    name: "Mészáros János",
-    url: "https://jmeszaros.dev",
-    jobTitle: "Full-Stack Developer",
-    knowsAbout: [
-      "Web Development",
-      "File Format Conversion",
-      "Browser-Based Processing",
-      "Privacy-First Architecture",
-    ],
-    sameAs: [
-      "https://jmeszaros.dev",
-      "https://github.com/monooleate",
-      "https://www.linkedin.com/in/janosmeszaros1/",
-    ],
-  });
-}
-
-// ─── Organization Schema ──────────────────────────────────────
-export function organizationSchema(): string {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE_URL}/#organization`,
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    foundingDate: "2026-01-15",
-    image: `${SITE_URL}/og-default.png`,
-    logo: `${SITE_URL}/og-default.png`,
-    founder: { "@type": "Person", "@id": `${SITE_URL}/#founder` },
-    sameAs: [
-      "https://jmeszaros.dev",
-      "https://github.com/monooleate",
-      "https://www.linkedin.com/in/janosmeszaros1/",
-    ],
-  });
 }
 
 // ─── Tool breadcrumb items helper ────────────────────────────
@@ -408,58 +121,6 @@ export function instantBreadcrumbs(
   ];
 }
 
-// ─── Sub-hub CollectionPage + ItemList Schema ────────────────
-export function subcatCollectionSchema(
-  subcat: ConversionSubcat,
-  tools: Tool[],
-  instantPages: { slug: string; title: string }[]
-): string {
-  const url = buildCanonical(subcatUrl(subcat.slug));
-  const items: any[] = [];
-  let pos = 1;
-
-  for (const tool of tools) {
-    items.push({
-      "@type": "ListItem",
-      position: pos++,
-      name: tool.h1,
-      url: buildCanonical(toolUrl(tool)),
-      description: tool.description,
-    });
-  }
-
-  for (const ip of instantPages) {
-    items.push({
-      "@type": "ListItem",
-      position: pos++,
-      name: ip.title,
-      url: buildCanonical(instantAnswerUrl(subcat.slug, ip.slug)),
-    });
-  }
-
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: tpl("subcat.title", { label: subcat.label }) || `Conversii ${subcat.label}`,
-    description: subcat.description,
-    url,
-    inLanguage: CURRENT_CONFIG.lang,
-    isPartOf: {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: SITE_NAME,
-    },
-    publisher: { "@id": `${SITE_URL}/#organization` },
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: items.length,
-      itemListOrder: "https://schema.org/ItemListOrderAscending",
-      itemListElement: items,
-    },
-  });
-}
-
 // ─── OpenGraph helpers ────────────────────────────────────────
 export interface OgMeta {
   title: string;
@@ -476,4 +137,408 @@ export function buildOgMeta(og: OgMeta): OgMeta & { siteName: string } {
     imageUrl: og.imageUrl ?? `${SITE_URL}/og-default.png`,
     siteName: SITE_NAME,
   };
+}
+
+// ============================================================
+// UNIFIED @graph SSOT  (Fázis 3 – schema-graph refaktor)
+// Minden oldal EGYETLEN self-contained @graph-ot kap, stabil
+// @id-kkal. A node-builderek OBJEKTUMOT adnak vissza (nem
+// stringet); a buildPageGraph fűzi össze, a serializeGraph
+// stringesíti. A korábbi *Schema(): string exportok a cutover
+// végéig megmaradnak (legacy fallback a BaseLayout-ban).
+// ============================================================
+
+// ─── Kanonikus @id-k ─────────────────────────────────────────
+export const PERSON_ID  = "https://jmeszaros.dev/#person";   // hálózati, fix (nem per-site)
+export const ORG_ID     = `${SITE_URL}/#organization`;        // per-site
+export const WEBSITE_ID = `${SITE_URL}/#website`;             // per-site
+
+// ─── Hálózati testvér-registry (közös founder, külön brandek) ─
+interface NetworkBrand { url: string; name: string; lang: "hu" | "ro"; }
+export const NETWORK: NetworkBrand[] = [
+  { url: "https://matekmegoldasok.hu",   name: "MatekMegoldások",  lang: "hu" },
+  { url: "https://instrumenteonline.ro", name: "InstrumenteOnline", lang: "ro" },
+  { url: "https://konvertalo.hu",        name: "Konvertalo.hu",    lang: "hu" },
+];
+
+type Node = Record<string, any>;
+
+// ─── Person (founder) – site-invariáns, @id=PERSON_ID ────────
+export function personNode(): Node {
+  return {
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: "Mészáros János",
+    url: "https://jmeszaros.dev",
+    jobTitle: "Full-Stack Developer",
+    knowsAbout: [
+      "Web Development",
+      "File Format Conversion",
+      "Browser-Based Processing",
+      "Privacy-First Architecture",
+    ],
+    sameAs: [
+      "https://jmeszaros.dev",
+      "https://github.com/monooleate",
+      "https://www.linkedin.com/in/janosmeszaros1/",
+    ],
+  };
+}
+
+// ─── Organization – @id=ORG_ID, founder→PERSON_ID ────────────
+export function orgNode(full = false): Node {
+  const node: Node = {
+    "@type": "Organization",
+    "@id": ORG_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    foundingDate: "2026-01-15",
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/og-default.png`,
+      width: 1200,
+      height: 630,
+    },
+    image: `${SITE_URL}/og-default.png`,
+    founder: { "@id": PERSON_ID },
+    sameAs: [
+      "https://jmeszaros.dev",
+      "https://github.com/monooleate",
+      "https://www.linkedin.com/in/janosmeszaros1/",
+    ],
+  };
+  if (full) {
+    node.contactPoint = {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      url: `${SITE_URL}/kapcsolat/`,
+      availableLanguage: [CURRENT_CONFIG.lang],
+    };
+  }
+  return node;
+}
+
+// ─── WebSite – @id=WEBSITE_ID, SearchAction megőrizve ────────
+export function websiteNode(): Node {
+  return {
+    "@type": "WebSite",
+    "@id": WEBSITE_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    inLanguage: CURRENT_CONFIG.lang,
+    publisher: { "@id": ORG_ID },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}${t("schema.search_path")}?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+// ─── Testvér-brand node-ok (csak főoldal/about) ──────────────
+// A TÖBBI brand Organization+WebSite node-ja, mind founder→PERSON_ID.
+// NEM sameAs (külön brandek), NEM hreflang.
+export function siblingSiteNodes(): Node[] {
+  const nodes: Node[] = [];
+  for (const b of NETWORK) {
+    if (b.url === SITE_URL) continue; // saját magunkat kihagyjuk
+    nodes.push({
+      "@type": "Organization",
+      "@id": `${b.url}/#organization`,
+      name: b.name,
+      url: b.url,
+      founder: { "@id": PERSON_ID },
+    });
+    nodes.push({
+      "@type": "WebSite",
+      "@id": `${b.url}/#website`,
+      name: b.name,
+      url: b.url,
+      inLanguage: b.lang,
+      publisher: { "@id": `${b.url}/#organization` },
+    });
+  }
+  return nodes;
+}
+
+// ─── Breadcrumb node (@id=#breadcrumb) ───────────────────────
+export function breadcrumbNode(pageUrl: string, items: BreadcrumbItem[]): Node {
+  return {
+    "@type": "BreadcrumbList",
+    "@id": `${pageUrl}#breadcrumb`,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: buildCanonical(item.href),
+    })),
+  };
+}
+
+// ─── FAQ node (@id=#faq) ─────────────────────────────────────
+export function faqNode(pageUrl: string, faqs: { q: string; a: string }[]): Node | null {
+  if (!faqs.length) return null;
+  return {
+    "@type": "FAQPage",
+    "@id": `${pageUrl}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+}
+
+// ─── Calculator (SoftwareApplication) node (@id=#calculator) ─
+// A toolSoftwareSchema mező-örökségét viszi tovább objektumként,
+// + isPartOf(#webpage) + publisher(ORG_ID). aggregateRating MARAD
+// (tulajdonosi döntés 2026-06-02).
+export function calculatorNode(tool: Tool, pageUrl: string, rawSlug?: string): Node {
+  const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
+  const rating = toolRating(tool.slug);
+  const imageSlug = rawSlug ?? tool.slug;
+  const node: Node = {
+    "@type": ["SoftwareApplication", "WebApplication"],
+    "@id": `${pageUrl}#calculator`,
+    name: tool.h1,
+    description: tool.description,
+    url: pageUrl,
+    applicationCategory: "UtilitiesApplication",
+    applicationSubCategory: SUBCATEGORY_MAP[tool.category] ?? "UtilitiesApplication",
+    applicationSuite: SITE_NAME,
+    operatingSystem: "Web",
+    browserRequirements: t("schema.browser_req"),
+    inLanguage: CURRENT_CONFIG.lang,
+    isAccessibleForFree: true,
+    isPartOf: { "@id": `${pageUrl}#webpage` },
+    publisher: { "@id": ORG_ID },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: t("schema.cost_currency"),
+      availability: tool.status === "active"
+        ? "https://schema.org/InStock"
+        : "https://schema.org/PreOrder",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: rating.ratingValue,
+      ratingCount: rating.ratingCount,
+      bestRating: "5",
+      worstRating: "1",
+    },
+    featureList: [
+      t("schema.feature_private"),
+      t("schema.feature_worker"),
+      t("schema.feature_free"),
+    ],
+    screenshot: buildCanonical(`/og/${tool.category}/${imageSlug}.png`),
+    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
+  };
+  if (toolExt.updatedAt)  node.dateModified  = toISOWithTZ(toolExt.updatedAt);
+  if (toolExt.launchedAt) node.datePublished = toISOWithTZ(toolExt.launchedAt);
+  return node;
+}
+
+// ─── Article (TechArticle) node (@id=#article) ───────────────
+export function articleNode(tool: Tool, pageUrl: string, rawSlug?: string, hasCalculator = false): Node | null {
+  const about = tool.content?.aboutSection;
+  if (!about) return null;
+  const toolExt = tool as Tool & { updatedAt?: string; launchedAt?: string };
+  const imageSlug = rawSlug ?? tool.slug;
+  const node: Node = {
+    "@type": "TechArticle",
+    "@id": `${pageUrl}#article`,
+    headline: about.title,
+    description: about.paragraphs[0]?.slice(0, 160) ?? tool.description,
+    url: `${pageUrl}${t("schema.anchor_about")}`,
+    inLanguage: CURRENT_CONFIG.lang,
+    mainEntityOfPage: { "@id": `${pageUrl}#webpage` },
+    author: { "@id": PERSON_ID },
+    publisher: { "@id": ORG_ID },
+    image: buildCanonical(`/hero/${tool.category}/${imageSlug}.png`),
+    dateModified:  toISOWithTZ(toolExt.updatedAt  ?? new Date().toISOString().split("T")[0]),
+    datePublished: toISOWithTZ(toolExt.launchedAt ?? new Date().toISOString().split("T")[0]),
+    articleBody: about.paragraphs.join(" "),
+    proficiencyLevel: "Beginner",
+    keywords: tool.keywords.join(", "),
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".about-section h2", ".about-section p:first-of-type"],
+    },
+  };
+  if (hasCalculator) node.about = { "@id": `${pageUrl}#calculator` };
+  return node;
+}
+
+// ─── ItemList node (@id=#itemlist) – kategória/főoldal/al-hub ─
+export function itemListNode(
+  pageUrl: string,
+  name: string,
+  items: { name: string; url: string; description?: string }[],
+): Node {
+  return {
+    "@type": "ItemList",
+    "@id": `${pageUrl}#itemlist`,
+    name,
+    numberOfItems: items.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      url: it.url,
+      ...(it.description ? { description: it.description } : {}),
+    })),
+  };
+}
+
+// ─── UseCase ItemList node (@id=#usecases) ───────────────────
+export function useCaseNode(tool: Tool, pageUrl: string): Node | null {
+  const useCases = tool.content?.useCases;
+  if (!useCases || useCases.length === 0) return null;
+  return {
+    "@type": "ItemList",
+    "@id": `${pageUrl}#usecases`,
+    name: tpl("tool.use_cases_title", { name: tool.h1 }),
+    numberOfItems: useCases.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: useCases.map((uc, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: uc.title,
+      description: uc.description,
+    })),
+  };
+}
+
+// ─── Event node (@id=#event) – countdown oldalak ─────────────
+export function eventNode(opts: {
+  name: string; description: string; startIso: string; pageUrl: string;
+}): Node {
+  return {
+    "@type": "Event",
+    "@id": `${opts.pageUrl}#event`,
+    name: opts.name,
+    description: opts.description,
+    startDate: opts.startIso,
+    endDate: opts.startIso,
+    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: { "@type": "Country", name: "România" },
+    url: opts.pageUrl,
+  };
+}
+
+// ─── Render-idejű frontmatter-normalizálás (NEM md-szerkesztés) ─
+// A math/instant oldalak frontmatter schema-objektumait graph-node-okká
+// alakítja: @context törlés, stabil @id, author→PERSON_ID, publisher→ORG_ID,
+// mainEntityOfPage/isPartOf → #webpage. Visszaadja a node-okat (+ jelzi, van-e
+// kalkulátor, hogy a WebPage mainEntity-t arra állíthassuk).
+export function normalizeFrontmatterSchema(
+  data: Record<string, any>,
+  pageUrl: string,
+): { nodes: Node[]; primaryId: string | null } {
+  const nodes: Node[] = [];
+  let primaryId: string | null = null;
+
+  const strip = (o: Record<string, any>) => {
+    const { ["@context"]: _ctx, ...rest } = o;
+    return rest as Node;
+  };
+
+  const sw = data.softwareSchema;
+  if (sw) {
+    const n = strip(sw);
+    n["@id"] = `${pageUrl}#calculator`;
+    n.isPartOf = { "@id": `${pageUrl}#webpage` };
+    n.publisher = { "@id": ORG_ID };
+    nodes.push(n);
+    primaryId = `${pageUrl}#calculator`;
+  }
+
+  const art = data.articleSchema;
+  if (art) {
+    const n = strip(art);
+    n["@id"] = `${pageUrl}#article`;
+    n.author = { "@id": PERSON_ID };
+    n.publisher = { "@id": ORG_ID };
+    n.mainEntityOfPage = { "@id": `${pageUrl}#webpage` };
+    if (sw) n.about = { "@id": `${pageUrl}#calculator` };
+    nodes.push(n);
+    if (!primaryId) primaryId = `${pageUrl}#article`;
+  }
+
+  const faqP = data.faqPageSchema;
+  if (faqP) {
+    const n = strip(faqP);
+    n["@id"] = `${pageUrl}#faq`;
+    nodes.push(n);
+  }
+
+  return { nodes, primaryId };
+}
+
+// ─── A teljes oldal-graph összeállítása ──────────────────────
+export interface PageGraphInput {
+  pageUrl: string;                 // abszolút canonical (trailing slash-sel)
+  name: string;                    // oldal név (title)
+  description: string;
+  inLanguage?: string;
+  pageType?: string;               // "WebPage" | "CollectionPage" | "AboutPage" | "ContactPage" | "ItemPage"
+  primaryId?: string | null;       // WebPage.mainEntity fragment @id (pl. "#calculator")
+  image?: string;                  // abszolút kép URL (primaryImageOfPage)
+  hasBreadcrumb?: boolean;
+  nodes?: Node[];                  // oldal-specifikus extra node-ok
+  orgFull?: boolean;
+  includeSiblings?: boolean;
+}
+
+export function buildPageGraph(input: PageGraphInput): { "@context": string; "@graph": Node[] } {
+  const {
+    pageUrl, name, description, pageType = "WebPage",
+    primaryId, image, hasBreadcrumb = false,
+    nodes = [], orgFull = false, includeSiblings = false,
+  } = input;
+
+  const webpage: Node = {
+    "@type": pageType,
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name,
+    description,
+    inLanguage: input.inLanguage ?? CURRENT_CONFIG.lang,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+  };
+  if (hasBreadcrumb) webpage.breadcrumb = { "@id": `${pageUrl}#breadcrumb` };
+  if (primaryId) webpage.mainEntity = { "@id": primaryId.startsWith("http") ? primaryId : `${pageUrl}${primaryId}` };
+  if (image) {
+    webpage.primaryImageOfPage = {
+      "@type": "ImageObject",
+      url: image.startsWith("http") ? image : buildCanonical(image),
+    };
+  }
+
+  const graph: Node[] = [
+    orgNode(orgFull),
+    websiteNode(),
+    personNode(),
+    webpage,
+    ...nodes.filter(Boolean),
+  ];
+  if (includeSiblings) graph.push(...siblingSiteNodes());
+
+  return { "@context": "https://schema.org", "@graph": graph };
+}
+
+// ─── Szerializálás XSS-guarddal ──────────────────────────────
+export function serializeGraph(graph: unknown): string {
+  return JSON.stringify(graph).replaceAll("<", "\\u003c");
 }
