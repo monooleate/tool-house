@@ -198,6 +198,7 @@
     // FEJLESZTO (RO-only barcode + QR) – Fázis 8
     CodBareGenerator:            () => import("../tools/fejleszto/CodBareGenerator.svelte"),
     CodQrGenerator:              () => import("../tools/fejleszto/CodQrGenerator.svelte"),
+    GeneratorParola:             () => import("../tools/fejleszto/GeneratorParola.svelte"),
   };
 
   onMount(async () => {

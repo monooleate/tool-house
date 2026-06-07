@@ -985,4 +985,66 @@ export const FEJLESZTO_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ═══ GENERATOR DE PAROLE ════════════════════════════════════════════════════
+  "generator-parola": {
+    introText:
+      "Generator de parole sigure care funcționează 100% local, în browserul tău, folosind generatorul criptografic crypto.getRandomValues() — nicio parolă nu este trimisă, salvată sau înregistrată pe vreun server. Alege dintre patru moduri: parolă aleatorie (entropie maximă), frază de acces memorabilă din cuvinte, parolă pronunțabilă (ușor de rostit la telefon) sau cod PIN numeric. Reglează lungimea, tipurile de caractere (litere mici, mari, cifre, simboluri), exclude caracterele ambigue și generează mai multe variante deodată. Indicatorul de tărie îți arată entropia în biți și timpul estimat de spargere în timp real.",
+    guide: [
+      "1. Alege tipul parolei: Aleatorie, Frază de acces, Pronunțabilă sau Cod PIN.",
+      "2. Reglează lungimea cu glisorul și bifează tipurile de caractere dorite (mici, mari, cifre, simboluri).",
+      "3. Opțional: exclude caracterele ambigue (I, l, 1, O, 0) și cere cel puțin un caracter din fiecare tip pentru robustețe.",
+      "4. Alege câte variante să fie generate simultan (1–12) și urmărește indicatorul de tărie și entropia în biți.",
+      "5. Copiază parola dorită cu un clic (sau „Copiază tot”) și apasă „Regenerează” pentru un set nou. Reîncărcarea paginii șterge totul definitiv.",
+    ],
+    faq: [
+      { q: "Cât de sigure sunt parolele generate aici?", a: "Parolele sunt generate cu crypto.getRandomValues(), generatorul de numere aleatorii criptografic al browserului, folosind eșantionare cu respingere (rejection sampling) pentru a evita orice bias statistic. Totul rulează local: nicio parolă nu părăsește dispozitivul tău, nu este transmisă prin rețea și nu este stocată. Reîncărcarea paginii elimină definitiv parolele afișate." },
+      { q: "Ce înseamnă entropia măsurată în biți?", a: "Entropia exprimă imprevizibilitatea parolei. Se calculează ca lungime × log₂(numărul de simboluri posibile). O parolă de 16 caractere din toate cele 4 tipuri (~90 simboluri) are circa 104 biți de entropie. Sub 28 de biți parola e foarte slabă; peste 60 de biți e puternică, iar peste 128 de biți e considerată practic de nespart cu tehnologia actuală." },
+      { q: "Parolă aleatorie sau frază de acces — ce să aleg?", a: "O frază de acces din 4–6 cuvinte aleatorii (de exemplu Munte-Soare-Floare-42) oferă entropie ridicată și este mult mai ușor de memorat decât un șir de caractere haotic. Pentru conturile pe care le scrii rar și le stochezi într-un manager de parole, alege modul aleatoriu cu lungime mare. Pentru o parolă-master pe care o tastezi des, fraza de acces e alegerea practică." },
+      { q: "De ce să exclud caracterele ambigue?", a: "Caracterele I (i mare), l (L mic), 1 (cifra unu), O (o mare) și 0 (cifra zero) se confundă vizual ușor, mai ales la fonturi fără serife sau pe hârtie tipărită. Dacă transcrii parola manual sau o dictezi, excluderea lor reduce erorile. Pierderea de entropie este neglijabilă la lungimi de 14+ caractere." },
+      { q: "Câte caractere ar trebui să aibă o parolă bună?", a: "Recomandarea curentă (NIST SP 800-63B) este minim 12 caractere, ideal 16 sau mai mult pentru conturi importante. Lungimea contează mai mult decât complexitatea: o parolă lungă din litere mici e mai greu de spart decât una scurtă cu simboluri. Pentru o frază de acces, 4 cuvinte sunt minimul rezonabil, 6 fiind recomandate pentru conturi critice." },
+      { q: "Pot folosi același generator pentru coduri PIN?", a: "Da. Modul „Cod PIN” produce secvențe pur numerice de 4–12 cifre, generate criptografic — fără tipare previzibile precum 1234, 0000 sau ani de naștere. Este ideal pentru carduri bancare, seifuri, telefoane sau lacăte digitale. Reține că un PIN de 4 cifre are doar ~13 biți de entropie, deci folosește 6+ cifre acolo unde sistemul permite." },
+      { q: "Ce este timpul de spargere afișat?", a: "Este o estimare a duratei necesare pentru a ghici parola printr-un atac de tip brute-force offline, presupunând 10¹¹ (o sută de miliarde) de încercări pe secundă — capacitatea aproximativă a unui cluster GPU modern atacând un hash rapid. În medie, atacatorul găsește parola după ce parcurge jumătate din spațiul posibil, de aceea estimarea folosește jumătate din numărul total de combinații." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alege modul",          description: "Aleatorie (entropie maximă), Frază de acces (memorabilă), Pronunțabilă (ușor de rostit) sau Cod PIN (numeric)." },
+        { title: "2. Setează lungimea",      description: "Glisorul reglează numărul de caractere sau de cuvinte. Mai lung = exponențial mai sigur." },
+        { title: "3. Alege caracterele",     description: "Bifează litere mici, mari, cifre și simboluri. Exclude opțional caracterele ambigue I/l/1/O/0." },
+        { title: "4. Garantează diversitatea", description: "Opțiunea „cel puțin unul din fiecare tip” asigură că parola respectă politicile de complexitate ale site-urilor." },
+        { title: "5. Generează în lot",       description: "Produce până la 12 variante simultan și alege-o pe cea care îți place — toate sunt la fel de sigure." },
+        { title: "6. Copiază în siguranță",   description: "Un clic copiază parola; „Copiază tot” le ia pe toate. Reîncărcarea paginii le șterge definitiv." },
+      ],
+      useCases: [
+        { icon: "🔐", title: "Conturi online",        description: "Parole unice și lungi pentru e-mail, banking și rețele sociale — stocate într-un manager de parole." },
+        { icon: "💬", title: "Parolă-master memorabilă", description: "O frază de acces din 5–6 cuvinte pentru managerul de parole sau criptarea de disc — ușor de reținut, greu de spart." },
+        { icon: "🗣️", title: "Parole dictate la telefon", description: "Modul pronunțabil produce parole care se rostesc clar, fără confuzii de litere, pentru suport tehnic." },
+        { icon: "🔢", title: "Coduri PIN sigure",      description: "PIN-uri de 6+ cifre fără tipare previzibile pentru carduri, seifuri sau dispozitive IoT." },
+      ],
+      formatComparison: {
+        title: "Tipuri de parole comparate",
+        columns: ["Mod", "Memorabilitate", "Entropie tipică", "Caz de utilizare ideal"],
+        rows: [
+          { feature: "Aleatorie (16)",    values: ["Scăzută", "~104 biți", "Conturi în manager de parole"] },
+          { feature: "Frază de acces (5)", values: ["Ridicată", "~58 biți", "Parolă-master, criptare disc"] },
+          { feature: "Pronunțabilă (12)",  values: ["Medie", "~46 biți", "Dictare verbală, conturi temporare"] },
+          { feature: "Cod PIN (6)",        values: ["Ridicată", "~20 biți", "Carduri, seifuri, dispozitive"] },
+        ],
+      },
+      aboutSection: {
+        title: "Despre parolele sigure și entropie",
+        paragraphs: [
+          "O parolă este sigură nu pentru că pare complicată, ci pentru că este imprevizibilă. Măsura matematică a acestei imprevizibilități este entropia, exprimată în biți: fiecare bit adăugat dublează numărul de încercări necesare pentru a o ghici. Formula este simplă — entropie = lungime × log₂(număr de simboluri posibile). De aceea o parolă lungă din litere mici poate fi mai sigură decât una scurtă presărată cu simboluri.",
+          "Cheia securității reale este aleatoriul de calitate. Acest generator folosește crypto.getRandomValues() — sursa de entropie criptografică a browserului — combinată cu eșantionare cu respingere pentru a elimina biasul modulo, astfel încât fiecare caracter are exact aceeași probabilitate de apariție. Metodele naive bazate pe Math.random() nu oferă garanții criptografice și nu trebuie folosite pentru parole.",
+          "Recomandările moderne (NIST SP 800-63B) pun accent pe lungime, nu pe reguli arbitrare de complexitate: minim 12 caractere, fără expirare forțată periodică și fără reguli care duc la tipare previzibile (Parola1!). Combină acest generator cu un manager de parole, activează autentificarea în doi pași (2FA) și nu reutiliza niciodată aceeași parolă pe mai multe site-uri — astfel, o singură breșă nu compromite toate conturile tale.",
+        ],
+      },
+      tips: [
+        { icon: "📏", tip: "Lungimea bate complexitatea: 16 caractere din litere mici sunt mai sigure decât 8 caractere cu simboluri." },
+        { icon: "🗄️", tip: "Folosește un manager de parole — generează lung și aleatoriu, nu trebuie să memorezi nimic." },
+        { icon: "🔁", tip: "Nu reutiliza niciodată o parolă. O breșă pe un site nu trebuie să-ți expună celelalte conturi." },
+        { icon: "🛡️", tip: "Activează autentificarea în doi pași (2FA) acolo unde e disponibilă — chiar și o parolă spartă rămâne insuficientă." },
+      ],
+    },
+  },
 };
