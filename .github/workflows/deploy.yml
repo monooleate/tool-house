@@ -14,15 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build:hu
+          cache: npm
+      - run: npm ci
+      - run: npm run build:hu
         env:
           SITE_LANG: hu
           PUBLIC_SITE_URL: https://konvertalo.hu
@@ -37,15 +34,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build:ro
+          cache: npm
+      - run: npm ci
+      - run: npm run build:ro
         env:
           SITE_LANG: ro
           PUBLIC_SITE_URL: https://instrumenteonline.ro
