@@ -25,7 +25,8 @@
             "suprafata",
             "temperatura",
             "densitate",
-            "viteza"
+            "viteza",
+            "date"
           ]
         },
         "category": {

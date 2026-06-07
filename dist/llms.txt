@@ -98,7 +98,7 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Conversie majuscule/minuscule](https://instrumenteonline.ro/text/majuscule-minuscule/): Transformare text în MAJUSCULE, minuscule sau Prima Literă Mare – cu un singur clic, în browser.
 - [Case converter](https://instrumenteonline.ro/text/case-converter/): Transformă text în camelCase, snake_case, PascalCase, kebab-case – util pentru programatori și creatori de conținut.
 
-## Dezvoltator (19)
+## Dezvoltator (20)
 > Developer tools (JSON/YAML/XML/CSS/JS format+minify, Base64/URL/HTML entity encode-decode, EAN-13/CODE-128/UPC-A/ITF-14 barcode generator with GS1 check digit, QR code generator with center icon and module styles)
 - [Formatare JSON](https://instrumenteonline.ro/dezvoltator/formatare-json/): JSON beautify si minify – indentare, linii noi, evidentierea sintaxei, validare cu raportare erori. In browser, fara server.
 - [Minificare JSON](https://instrumenteonline.ro/dezvoltator/minificare-json/): Eliminarea spatiilor albe din JSON pentru productie – reducere dimensiune cu procentaj. In browser, fara server.
@@ -119,6 +119,7 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Codificare/Decodificare HTML entity](https://instrumenteonline.ro/dezvoltator/html-entity-codificare-decodificare/): Codificare entitati HTML (&amp;, &lt;, &gt;, &quot;) si reconversie – in timp real, in browser.
 - [Generator Cod de Bare](https://instrumenteonline.ro/dezvoltator/generator-cod-bare/): Generator coduri de bare online: EAN-13, CODE-128, UPC-A, ITF-14. Export SVG și PNG. Validare automată cu cifră de control modulo-10.
 - [Generator Cod QR cu Pictogramă](https://instrumenteonline.ro/dezvoltator/generator-cod-qr/): Generator coduri QR online cu pictogramă în centru: galerie presetări (Wi-Fi, vCard, link, amuzante) sau încărcare imagine proprie. Export PNG + SVG, ECC nivel H.
+- [Generator de Parole Sigure](https://instrumenteonline.ro/dezvoltator/generator-parola/): Generează parole puternice în browser: aleatorii, fraze de acces memorabile, coduri PIN și pronunțabile. Indicator de tărie cu entropie, 100% local.
 
 ## Markdown (2)
 > Conversie Markdown în HTML și previzualizare.
@@ -148,13 +149,22 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 > Instrumente SEO: lungime title/meta, UTM, canonical, robots.txt.
 - [Verificare title si meta description](https://instrumenteonline.ro/seo/verificare-title-meta/): Verificare caractere si latime pixeli pentru SEO title si meta description cu previzualizare SERP. In browser.
 
-## Calculator (6)
+## Calculator (15)
 > Romanian math calculators (percentages, quadratic equations, exponential equations, averages, rule of three, fuel consumption)
 - [Calculator Procente](https://instrumenteonline.ro/calculator/procent-calculator/): Calculator procente online: procent dintr-un număr, ce procent reprezintă, creștere/scădere și diferență procentuală. Cu formule și pași.
 - [Calculator Ecuație de Gradul al Doilea](https://instrumenteonline.ro/calculator/ecuatie-grad-doi/): Rezolvă ecuații de gradul doi (ax² + bx + c = 0) cu discriminantul Δ și formula generală. Afișează pașii de rezolvare și rădăcinile reale sau complexe.
 - [Calculator Ecuații Exponențiale](https://instrumenteonline.ro/calculator/ecuatii-exponentiale/): Rezolvă ecuații exponențiale de forma a · bˣ = c cu logaritmi. Afișează pașii detaliați: împărțire, logaritmare și verificare.
 - [Calculator Medie Aritmetică & Statistici](https://instrumenteonline.ro/calculator/medie-aritmetica/): Calculează media aritmetică, mediana, modul, abaterea standard și varianța pentru un set de numere. Adaugă rânduri dinamic, mod ponderat opțional.
 - [Calculator Regula de Trei Simplă](https://instrumenteonline.ro/calculator/regula-de-trei-simpla/): Aplică regula de trei simplă: proporții directe și inverse. Util la procente, rețete, prețuri, conversii și probleme școlare.
+- [Convertor Numere Romane ↔ Arabe](https://instrumenteonline.ro/calculator/numere-romane/): Transformă numere romane în arabe și invers (1–3999). Tabel cu simboluri (I, V, X, L, C, D, M), reguli de scriere, descompunere și exemple. Instant, gratis.
+- [Calculator C.M.M.D.C. și C.M.M.M.C.](https://instrumenteonline.ro/calculator/cmmdc-cmmmc/): Calculează cel mai mare divizor comun (CMMDC) și cel mai mic multiplu comun (CMMMC) pentru oricâte numere, cu descompunere în factori primi și algoritmul lui Euclid.
+- [Calculator Fracții](https://instrumenteonline.ro/calculator/calculator-fractii/): Calculează operații cu fracții: adunare, scădere, înmulțire și împărțire, cu aducere la numitor comun, simplificare (CMMDC), număr mixt și pași detaliați.
+- [Calculator Combinatorică](https://instrumenteonline.ro/calculator/combinatorica/): Calculează factorialul, permutările, aranjamentele și combinările (cu și fără formule). Calcul exact pentru bacalaureat și probabilități.
+- [Calculator Progresii \(Șiruri\)](https://instrumenteonline.ro/calculator/progresii/): Calculează termenul de rang n și suma primilor n termeni pentru progresii aritmetice (a₁, d) și geometrice (a₁, q), cu formule și primii termeni.
+- [Calculator Logaritmi](https://instrumenteonline.ro/calculator/logaritmi/): Calculează logaritmul în orice bază, logaritmul natural (ln), zecimal (lg) și în baza 2, cu formula schimbării de bază și proprietățile logaritmilor.
+- [Calculator Medie Admitere Liceu](https://instrumenteonline.ro/calculator/medie-admitere-liceu/): Calculează media de admitere la liceu: media notelor de la Evaluarea Națională (Limba română + Matematică), cu 2 zecimale, fără rotunjire. Formula oficială din 2024.
+- [Calculator Medie Note Școlare](https://instrumenteonline.ro/calculator/calculator-medii-note/): Calculează media notelor la o materie și media generală. Adaugă oricâte note, vezi media cu 2 zecimale și varianta rotunjită conform regulamentului.
+- [Calculator Medie Bacalaureat](https://instrumenteonline.ro/calculator/medie-bacalaureat/): Calculează media la Bacalaureat din notele probelor scrise și verifică promovarea (minimum 5 la fiecare probă, medie minimă 6). Cu 2 zecimale, fără rotunjire.
 - [Calculator Consum Combustibil](https://instrumenteonline.ro/calculator/consum-combustibil/): Calculator complet consum: l/100 km, mpg, litri necesari, cost total și emisii CO₂. Prețuri RO 2026 (motorină, benzină, GPL) și presets mașini.
 
 ## Geometrie (5)
@@ -165,12 +175,13 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Calculator Cerc](https://instrumenteonline.ro/geometrie/cerc-calculator/): Calculator cerc complet: din rază, diametru, perimetru sau arie obține restul. Mod sector circular și segment cu unghi central. Vizualizare SVG live.
 - [Calculator Dreptunghi](https://instrumenteonline.ro/geometrie/dreptunghi-calculator/): Calculator dreptunghi din laturi, perimetru, arie sau diagonală. Detector pătrat și secțiune de aur (φ). Cu SVG la scară și formule.
 
-## Conversii (22)
+## Conversii (25)
 > Romanian unit converters (length, mass, volume, area, temperature, density)
 - [Convertor Centimetri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/cm-metri/): Transformă instantaneu centimetri în metri și invers. Convertor bidirecțional cu formulă și exemple practice.
 - [Convertor Kilometri ↔ Metri](https://instrumenteonline.ro/conversii/lungime/km-metri/): Transformare rapidă între kilometri și metri. Util pentru sport, distanțe rutiere și cursuri școlare.
 - [Convertor Mile ↔ Kilometri](https://instrumenteonline.ro/conversii/lungime/mile-kilometri/): Transformă mile în kilometri și invers (1 milă = 1,609344 km). Convertor bidirecțional cu formulă, distanțe uzuale și exemple.
 - [Convertor Viteză km/h ↔ m/s](https://instrumenteonline.ro/conversii/viteza/km-h-m-s/): Convertor de viteză între km/h, m/s, mph și noduri. Formule (km/h ÷ 3,6 = m/s), viteze uzuale și exemple pentru fizică și condus.
+- [Convertor Mărime Date \(B, KB, MB, GB, TB\)](https://instrumenteonline.ro/conversii/date/octeti/): Transformă mărimea datelor între bit, octet, KB, MB, GB, TB. Mod zecimal (1000) și binar (1024), cu explicații, exemple și tabel de referință.
 - [Convertor Centimetri ↔ Inch \(Țoli\)](https://instrumenteonline.ro/conversii/lungime/cm-inch/): Transformă centimetri în inch (țoli) și invers. Util pentru diagonale ecran, haine, DIY.
 - [Convertor Kilograme ↔ Grame](https://instrumenteonline.ro/conversii/masa/kg-grame/): Transformare bidirecțională între kilograme și grame. Util pentru rețete culinare, farmacie și școală.
 - [Convertor Litri ↔ Mililitri](https://instrumenteonline.ro/conversii/volum/litri-mililitri/): Transformă litri în mililitri și invers. Util pentru rețete, dozare medicamente și laborator.
@@ -181,6 +192,8 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Convertor Tone ↔ Kilograme](https://instrumenteonline.ro/conversii/masa/tone-kg/): Convertor tone metrice ↔ kg cu presets pentru vehicule de transport (camion, TIR, vagon CFR).
 - [Convertor Hectare ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/hectare-metri-patrati/): Convertor hectare ↔ m² cu presets pentru parcele agricole RO. 1 ha = 10.000 m² = 100 ari.
 - [Convertor Ari ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/ari-metri-patrati/): Convertor ari ↔ m² uzual la anunțuri imobiliare RO (lot 5 ari, casă + curte). 1 ar = 100 m².
+- [Convertor Pogon ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/pogon-metri-patrati/): Transformă pogon în metri pătrați și invers. 1 pogon = 5.000 m² (valoare uzuală, ≈ ½ hectar). Util pentru terenuri agricole din România.
+- [Convertor Jugăr ↔ Metri Pătrați](https://instrumenteonline.ro/conversii/suprafata/jugar-metri-patrati/): Transformă jugăr (iugăr) în m² și hectare. 1 jugăr cadastral = 5.754,64 m² (≈ 0,5755 ha). Variantă ardelenească 5.775 m².
 - [Convertor Litri ↔ Decilitri](https://instrumenteonline.ro/conversii/volum/litri-decilitri/): Convertor litri ↔ decilitri cu presets pentru rețete RO (smântână 2 dl, lapte 5 dl). 1 l = 10 dl.
 - [Convertor Litri ↔ Metri Cubi](https://instrumenteonline.ro/conversii/volum/litri-metri-cubi/): Convertor litri ↔ m³ cu presets pentru consum apă/gaz (factură lunară RO). 1 m³ = 1.000 l.
 - [Convertor Galon ↔ Litri](https://instrumenteonline.ro/conversii/volum/galon-litri/): Convertor galon US (3,785 l) sau UK (4,546 l) ↔ litri. Util la consum auto, prețuri carburant import.
@@ -199,12 +212,14 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Calculator Marjă & Adaos Comercial](https://instrumenteonline.ro/finante/marja-adaos/): Convertor între marjă brută (margin) și adaos comercial (markup) pentru e-commerce, retail și raportări financiare RO.
 - [Calculator Salariu Lunar → Orar](https://instrumenteonline.ro/finante/calculator-salariu-ora/): Convertor salariu lunar brut în orar, zilnic, săptămânal și anual. Norma RO 168 h/lună, full-time și part-time.
 
-## Sănătate (4)
+## Sănătate (6)
 > Romanian health calculators (BMI WHO, ideal weight 4 formulas, daily calories Mifflin-St Jeor + macros)
 - [Calculator IMC \(Indice Masă Corporală\)](https://instrumenteonline.ro/sanatate/calculator-imc/): Calculator IMC cu clasificare WHO oficială (subponderal, normal, supraponderal, obezitate I/II/III) și greutate ideală pentru adulți. Bară gradient interactivă.
 - [Calculator Greutate Ideală](https://instrumenteonline.ro/sanatate/greutate-ideala/): Calculator greutate ideală cu 4 formule științifice paralel: Devine (1974), Robinson (1983), Miller (1983), Hamwi (1964). Comparativ + medie + abatere standard.
 - [Calculator Calorii Zilnice \(BMR + TDEE\)](https://instrumenteonline.ro/sanatate/calculator-calorii/): Calculator calorii zilnice cu formula Mifflin-St Jeor (BMR), 5 niveluri de activitate (TDEE) și distribuție macro (proteine/carbohidrați/grăsimi) cu donut chart.
 - [Calculator Sarcină – Data Probabilă a Nașterii](https://instrumenteonline.ro/sanatate/calculator-sarcina/): Calculează data probabilă a nașterii (regula Naegele: UM + 280 zile), săptămâna de sarcină, trimestrul și reperele importante, din ultima menstruație sau data concepției.
+- [Calculator Alcoolemie \(Formula Widmark\)](https://instrumenteonline.ro/sanatate/calculator-alcoolemie/): Estimează alcoolemia (g/L, ‰) cu formula Widmark: sex, greutate, băuturi consumate și timp scurs. Strict informativ — nu este o bază pentru a conduce.
+- [Calculator Puls Maxim și Zone de Antrenament](https://instrumenteonline.ro/sanatate/puls-zone-antrenament/): Calculează pulsul maxim (220−vârstă și formula Tanaka) și cele 5 zone de antrenament (ardere grăsimi, aerob, anaerob) prin metoda Karvonen, din vârstă și puls de repaus.
 
 ## Timp (16)
 > Romanian time tools (date difference with RO working days, countdowns: Christmas/New Year/Orthodox Easter/Bacalaureat/birthday/age live clock, custom countdown generator)
@@ -232,7 +247,7 @@ Browser-only tools, calculators, converters and generators in Romanian. Math (al
 - [Terms](https://instrumenteonline.ro/termeni-conditii/): terms of use
 
 ## Notes for AI assistants
-- Total active tools: 173
+- Total active tools: 188
 - Total categories: 16
 - All tools run client-side in the browser (no server upload, no API).
 - Each tool page contains structured data (Schema.org JSON-LD): SoftwareApplication, FAQPage, BreadcrumbList, and Article (for math/calculator tools).
