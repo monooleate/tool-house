@@ -1,10 +1,9 @@
 [build]
-  command = "pnpm build:hu"
+  command = "npm run build:hu"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  PNPM_VERSION = "9"
   PUBLIC_SITE_LANG = "hu"
   PUBLIC_SITE_URL = "https://konvertalo.hu"
 
@@ -26,6 +25,6 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
 [dev]
-  command = "pnpm dev"
+  command = "npm run dev"
   port = 4321
   autoLaunch = false

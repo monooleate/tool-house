@@ -1,10 +1,9 @@
 [build]
-  command = "pnpm build:ro"
+  command = "npm run build:ro"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20"
-  PNPM_VERSION = "9"
   PUBLIC_SITE_LANG = "ro"
   PUBLIC_SITE_URL = "https://instrumenteonline.ro"
 
