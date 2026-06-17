@@ -9,7 +9,7 @@ import {
   type CategoryId,
   type Tool,
 } from "../lib/tool-registry.ts";
-import { CURRENT_LANG } from "../i18n/index.ts";
+import { CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "../lib/url-utils.ts";
 import { getStaticUrl } from "../lib/url-map.ts";
 import { CONVERSII_HUBS } from "../lib/content/ro/conversii-hubs.ts";
@@ -84,8 +84,12 @@ function urlEntry(
   </url>`;
 }
 
-export const GET: APIRoute = async ({ site }) => {
-  const base  = (site?.toString() ?? "https://konvertalo.hu").replace(/\/$/, "");
+export const GET: APIRoute = async () => {
+  // A base URL UGYANABBÓL a forrásból jön, mint a canonical:
+  // CURRENT_CONFIG.siteUrl ← CURRENT_LANG ← import.meta.env.PUBLIC_SITE_LANG.
+  // NEM az Astro.site-ból (az process.env-függő, és az RO buildnél csendben
+  // konvertalo.hu-ra esett vissza → idegen domain a sitemapban, lásd GSC bug).
+  const base  = CURRENT_CONFIG.siteUrl.replace(/\/$/, "");
   // Only include active tools in sitemap – coming-soon pages have no content
   const tools = getVisibleTools(CURRENT_LANG).filter(t => t.status === "active");
   const visibleCategories = getVisibleCategories(CURRENT_LANG);
@@ -150,7 +154,7 @@ ${urls.join("\n")}
   return new Response(xml, {
     headers: {
       "Content-Type":  "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=600, s-maxage=3600, stale-while-revalidate=86400",
+      "Cache-Control": "public, max-age=600, s-maxage=600",
     },
   });
 };
