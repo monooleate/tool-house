@@ -171,4 +171,116 @@ export const SZINEK_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Szín-harmónia generátor ──────────────────────────────────────────────
+  "szin-harmonia": {
+    introText:
+      "A szín-harmónia generátor egyetlen alapszínből állít elő összeillő színsémákat a színelmélet szabályai szerint: komplementer, analóg, triád, osztott-komplementer, tetrád és monokromatikus harmóniát. Minden sémához megkapod a kész HEX értékeket, egy kattintással másolhatóan. Webdesignereknek és tartalomkészítőknek, akik kiegyensúlyozott, harmonikus színpalettát keresnek – kísérletezgetés nélkül.",
+    guide: [
+      "1. Add meg az alapszínt HEX kóddal vagy a színpipettával.",
+      "2. Az eszköz azonnal legenerálja a hat harmónia-sémát.",
+      "3. Kattints bármelyik színmintára a HEX érték másolásához.",
+      "4. A «Sor másolása» gombbal az egész séma színeit egyszerre kimásolod.",
+    ],
+    faq: [
+      { q: "Mi az a komplementer szín?", a: "A színkörön szemközti, 180°-ra lévő szín. Ez adja a legnagyobb kontrasztot, ezért figyelemfelkeltő, de nagy felületen fárasztó lehet – jól működik kiemelésekhez." },
+      { q: "Mi a különbség az analóg és a triád séma között?", a: "Az analóg séma a színkörön egymás melletti (±30°) színeket használ, ami nyugodt, összhangzó hatást ad. A triád három, egyenlő távolságra (120°) lévő színt használ – élénk, mégis kiegyensúlyozott." },
+      { q: "Hogyan számolja a harmóniákat?", a: "Az alapszínt HSL színmodellbe alakítja, majd a színárnyalatot (hue) forgatja a séma szögével, miközben a telítettséget és a világosságot megtartja. A monokromatikus séma az árnyalatot tartja, és a világosságot lépteti." },
+      { q: "Melyik sémát mikor használjam?", a: "Komplementer: erős kontraszthoz, kiemeléshez. Analóg: nyugodt, egységes felülethez. Triád és tetrád: játékos, színes designhoz. Monokromatikus: letisztult, elegáns, egyszínű megjelenéshez." },
+      { q: "Szerverre kerül a szín?", a: "Nem, a teljes generálás a böngésződben történik – a szín nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alapszín megadása", description: "Írd be HEX kóddal vagy válaszd ki a színpipettával az alapszínt." },
+        { title: "2. Sémák megtekintése", description: "A hat harmónia-séma azonnal megjelenik, mindegyik a saját színmintáival." },
+        { title: "3. Szín másolása", description: "Kattints egy színmintára a HEX érték vágólapra másolásához." },
+        { title: "4. Teljes séma", description: "A «Sor másolása» gombbal egy séma összes színét egyszerre kimásolod." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Designrendszer", description: "Kiegyensúlyozott színpaletta felépítése egy márka- vagy kiemelőszín köré." },
+        { icon: "🖌️", title: "Illusztráció", description: "Összeillő színek gyors kiválasztása grafikákhoz és illusztrációkhoz." },
+        { icon: "💻", title: "UI-színek", description: "Harmonikus háttér-, kiemelő- és állapotszínek webes felületekhez." },
+        { icon: "📊", title: "Diagramok", description: "Jól megkülönböztethető, mégis összhangzó színek adatvizualizációhoz." },
+      ],
+      formatComparison: {
+        title: "Harmónia-sémák",
+        columns: ["Séma", "Szögek", "Hatás"],
+        rows: [
+          { feature: "Komplementer", values: ["0°, 180°", "Erős kontraszt"] },
+          { feature: "Analóg", values: ["−30°, 0°, +30°", "Nyugodt, egységes"] },
+          { feature: "Triád", values: ["0°, 120°, 240°", "Élénk, kiegyensúlyozott"] },
+          { feature: "Osztott-komplementer", values: ["0°, 150°, 210°", "Kontraszt, lágyabban"] },
+          { feature: "Tetrád (négyzet)", values: ["0°, 90°, 180°, 270°", "Gazdag, színes"] },
+          { feature: "Monokromatikus", values: ["azonos szín, eltérő világosság", "Letisztult, elegáns"] },
+        ],
+      },
+      aboutSection: {
+        title: "A színharmóniáról",
+        paragraphs: [
+          "A színharmónia azt írja le, mely színek illenek össze esztétikusan. Az alapja a színkör (color wheel), amelyen a színek az árnyalatuk szerint, 0 és 360 fok között helyezkednek el. A klasszikus harmónia-sémák a színkörön elfoglalt pozíció (szög) alapján határoznak meg összeillő színeket – például a szemközti színek komplementerek, a szomszédosak analógok.",
+          "Ezek a szabályok nem önkényesek: az emberi szem és agy bizonyos színviszonyokat kiegyensúlyozottnak, másokat feszültnek érzékel. A harmónia-sémák kiindulópontot adnak – nem kötelező szabályok, de megbízható alapot nyújtanak egy kellemes, professzionális színpaletta felépítéséhez, amelyet aztán a telítettség és világosság finomhangolásával tovább alakíthatsz.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Kezdj egy erős márka- vagy kiemelőszínnel, és arra építsd a sémát – ne fordítva." },
+        { icon: "⚖️", tip: "Egy palettában általában egy domináns szín, egy-két kiegészítő és egy kiemelő szín működik a legjobban (60-30-10 szabály)." },
+        { icon: "♿", tip: "A kiválasztott színpárok kontrasztját ellenőrizd a kontraszt-ellenőrzővel az olvashatóságért." },
+      ],
+    },
+  },
+
+  // ─── Színvakság-szimulátor ────────────────────────────────────────────────
+  "szinvaksag-szimulator": {
+    introText:
+      "A színvakság-szimulátor megmutatja, hogyan jelenik meg egy szín a leggyakoribb színlátászavarokkal élő emberek számára: protanópia (vörös-vakság), deuteranópia (zöld-vakság), tritanópia (kék-vakság) és akromatópszia (teljes színvakság). Így ellenőrizheted, hogy a designod színei megkülönböztethetők maradnak-e mindenki számára. Webdesignereknek és fejlesztőknek az akadálymentes, mindenki által használható felületekhez.",
+    guide: [
+      "1. Add meg a vizsgált színt HEX kóddal vagy a színpipettával.",
+      "2. Az eszköz megmutatja a szín szimulált megjelenését minden színvakság-típusnál.",
+      "3. Hasonlítsd össze a mintákat – ha két fontos szín összeolvad, érdemes módosítani.",
+      "4. Bármelyik szimulált HEX értéket egy kattintással kimásolhatod.",
+    ],
+    faq: [
+      { q: "Mi az a színvakság?", a: "A színvakság (színtévesztés) a színek megkülönböztetésének csökkent képessége, általában öröklött. A leggyakoribb a vörös-zöld típus (protanópia/deuteranópia), amely a férfiak kb. 8%-át érinti." },
+      { q: "Milyen típusokat szimulál?", a: "Négyet: protanópia (a vörös érzékelésének hiánya), deuteranópia (a zöldé), tritanópia (a kéké, ritka) és akromatópszia (teljes színvakság, csak fényerő-különbségek). A deuteranópia a leggyakoribb." },
+      { q: "Mennyire pontos a szimuláció?", a: "Közelítő: a szakirodalomban elterjedt színtranszformációs mátrixokon alapul. A design akadálymentességének gyors ellenőrzéséhez kiváló eszköz, de orvosi diagnózisra nem alkalmas." },
+      { q: "Miért fontos ez a designban?", a: "Ha a felület kizárólag színnel közvetít információt (pl. piros = hiba, zöld = siker), a színtévesztők számára az elveszhet. A szimulátor segít kiszúrni az ilyen problémákat még a tervezés során." },
+      { q: "Szerverre kerül a szín?", a: "Nem, a teljes szimuláció a böngésződben fut – a szín nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Szín megadása", description: "Írd be HEX kóddal vagy válaszd ki a színpipettával a vizsgálandó színt." },
+        { title: "2. Szimuláció megtekintése", description: "Megjelenik a szín normál látással és a négy színvakság-típussal szimulálva." },
+        { title: "3. Összehasonlítás", description: "Nézd meg, megkülönböztethető marad-e a szín – főleg a kritikus színpároknál." },
+        { title: "4. Érték másolása", description: "Bármelyik szimulált HEX értéket a vágólapra másolhatod." },
+      ],
+      useCases: [
+        { icon: "♿", title: "Akadálymentesség", description: "Annak ellenőrzése, hogy a felület színei mindenki számára megkülönböztethetők maradnak." },
+        { icon: "🚦", title: "Állapotjelzők", description: "A siker/hiba (zöld/piros) jelzések tesztelése – ezek a vörös-zöld vaksággal könnyen összeolvadnak." },
+        { icon: "📊", title: "Adatvizualizáció", description: "Diagramok és térképek színeinek ellenőrzése, hogy a kategóriák elkülönüljenek." },
+        { icon: "🎨", title: "Márkaszínek", description: "Annak vizsgálata, hogyan érzékeli a márkaszíneket a közönség egy része." },
+      ],
+      formatComparison: {
+        title: "Színvakság-típusok",
+        columns: ["Típus", "Mi hiányzik", "Gyakoriság"],
+        rows: [
+          { feature: "Protanópia", values: ["Vörös érzékelés", "férfiak ~1%"] },
+          { feature: "Deuteranópia", values: ["Zöld érzékelés", "férfiak ~6%"] },
+          { feature: "Tritanópia", values: ["Kék érzékelés", "nagyon ritka"] },
+          { feature: "Akromatópszia", values: ["Minden szín", "rendkívül ritka"] },
+        ],
+      },
+      aboutSection: {
+        title: "A színvakságról",
+        paragraphs: [
+          "A színvakság (helyesebben színtévesztés) a színek megkülönböztetésének örökletes vagy szerzett csökkenése. A szem három típusú színérzékelő csapja közül valamelyik hiányzik vagy eltérően működik, ezért bizonyos színek összeolvadnak. A leggyakoribb a vörös-zöld típus, amely a férfiak közel 8%-át és a nők kis részét érinti.",
+          "A design szempontjából ez azt jelenti, hogy nem szabad kizárólag színre hagyatkozni az információ közvetítésében. Ha egy gomb csak a színével jelzi az állapotát, vagy egy diagram csak színnel különbözteti meg a kategóriákat, a színtévesztők számára ez elveszhet. A megoldás: a szín mellett használj alakot, ikont, mintázatot vagy feliratot is – a szimulátor pedig segít kiszúrni a problémás eseteket.",
+        ],
+      },
+      tips: [
+        { icon: "🔴", tip: "A vörös-zöld a leggyakoribb – ezt a két színt soha ne használd egyedüli megkülönböztetésre." },
+        { icon: "➕", tip: "A szín mellé mindig tegyél másodlagos jelzést is: ikont, alakot, mintázatot vagy szöveget." },
+        { icon: "🔍", tip: "Ha két fontos szín a szimulációban összeolvad, növeld a köztük lévő világosság-különbséget." },
+      ],
+    },
+  },
 };

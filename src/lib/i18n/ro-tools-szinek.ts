@@ -58,4 +58,38 @@ export const SZINEK_RO: Record<
       "css gradient maker",
     ],
   },
+
+  "szin-harmonia": {
+    slug: "armonii-culori",
+    title: "Generator Armonii de Culori online – complementară, triadică | InstrumenteOnline",
+    h1: "Generator de armonii de culori",
+    description:
+      "Scheme de culori armonioase dintr-o culoare de bază: complementară, analoagă, triadică, complementară divizată, tetradică și monocromatică. Valori HEX, copiere cu un clic.",
+    keywords: [
+      "armonii culori",
+      "generator paleta culori",
+      "culori complementare",
+      "schema culori",
+      "culori triadice",
+      "color harmony generator",
+      "roata culorilor",
+    ],
+  },
+
+  "szinvaksag-szimulator": {
+    slug: "simulator-daltonism",
+    title: "Simulator Daltonism online – protanopie, deuteranopie | InstrumenteOnline",
+    h1: "Simulator de daltonism",
+    description:
+      "Vezi cum apare o culoare în daltonism: protanopie, deuteranopie, tritanopie și acromatopsie. Pentru design accesibil, în browser, fără server.",
+    keywords: [
+      "simulator daltonism",
+      "daltonism culori",
+      "color blindness simulator",
+      "protanopie",
+      "deuteranopie",
+      "culori accesibile",
+      "verificare daltonism design",
+    ],
+  },
 };

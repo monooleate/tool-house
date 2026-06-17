@@ -211,6 +211,8 @@
     SzinKonverter:               () => import("../tools/szinek/SzinKonverter.svelte"),
     KontrasztEllenorzo:          () => import("../tools/szinek/KontrasztEllenorzo.svelte"),
     GradientGenerator:           () => import("../tools/szinek/GradientGenerator.svelte"),
+    SzinHarmonia:                () => import("../tools/szinek/SzinHarmonia.svelte"),
+    SzinvaksagSzimulator:        () => import("../tools/szinek/SzinvaksagSzimulator.svelte"),
   };
 
   onMount(async () => {

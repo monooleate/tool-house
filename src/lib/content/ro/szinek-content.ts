@@ -171,4 +171,116 @@ export const SZINEK_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Generator de armonii de culori ───────────────────────────────────────
+  "szin-harmonia": {
+    introText:
+      "Generatorul de armonii de culori creează dintr-o singură culoare de bază scheme de culori care se potrivesc, conform regulilor teoriei culorilor: armonie complementară, analoagă, triadică, complementară divizată, tetradică și monocromatică. Pentru fiecare schemă primești valorile HEX gata de copiat cu un clic. Pentru designeri și creatori de conținut care caută o paletă echilibrată și armonioasă, fără să experimenteze la nesfârșit.",
+    guide: [
+      "1. Introdu culoarea de bază cu cod HEX sau cu selectorul de culoare.",
+      "2. Instrumentul generează instant cele șase scheme de armonie.",
+      "3. Apasă pe orice mostră de culoare pentru a copia valoarea HEX.",
+      "4. Cu butonul «Copiază rândul» copiezi deodată toate culorile unei scheme.",
+    ],
+    faq: [
+      { q: "Ce este culoarea complementară?", a: "Culoarea aflată față în față pe cercul cromatic, la 180°. Oferă cel mai mare contrast, deci atrage atenția, dar pe suprafețe mari poate obosi – funcționează bine pentru accente." },
+      { q: "Care e diferența între schema analoagă și cea triadică?", a: "Schema analoagă folosește culori vecine pe cercul cromatic (±30°), ceea ce dă un efect calm, armonios. Schema triadică folosește trei culori la distanță egală (120°) – vie, dar echilibrată." },
+      { q: "Cum se calculează armoniile?", a: "Culoarea de bază este transformată în modelul HSL, apoi nuanța (hue) este rotită cu unghiul schemei, păstrând saturația și luminozitatea. Schema monocromatică păstrează nuanța și variază luminozitatea." },
+      { q: "Ce schemă să folosesc și când?", a: "Complementară: pentru contrast puternic, accente. Analoagă: pentru o suprafață calmă, unitară. Triadică și tetradică: pentru design jucăuș, colorat. Monocromatică: pentru un aspect curat, elegant, dintr-o singură culoare." },
+      { q: "Culoarea ajunge pe server?", a: "Nu, întreaga generare are loc în browserul tău – culoarea nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introducerea culorii de bază", description: "Scrie cu cod HEX sau alege cu selectorul culoarea de bază." },
+        { title: "2. Vizualizarea schemelor", description: "Cele șase scheme de armonie apar instant, fiecare cu mostrele ei de culoare." },
+        { title: "3. Copierea culorii", description: "Apasă pe o mostră pentru a copia valoarea HEX în clipboard." },
+        { title: "4. Schema completă", description: "Cu butonul «Copiază rândul» copiezi deodată toate culorile unei scheme." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Sistem de design", description: "Construirea unei palete echilibrate în jurul unei culori de brand sau de accent." },
+        { icon: "🖌️", title: "Ilustrație", description: "Selectarea rapidă a culorilor potrivite pentru grafică și ilustrații." },
+        { icon: "💻", title: "Culori UI", description: "Culori armonioase de fundal, accent și stare pentru interfețe web." },
+        { icon: "📊", title: "Diagrame", description: "Culori distincte, dar armonioase, pentru vizualizarea datelor." },
+      ],
+      formatComparison: {
+        title: "Scheme de armonie",
+        columns: ["Schemă", "Unghiuri", "Efect"],
+        rows: [
+          { feature: "Complementară", values: ["0°, 180°", "Contrast puternic"] },
+          { feature: "Analoagă", values: ["−30°, 0°, +30°", "Calmă, unitară"] },
+          { feature: "Triadică", values: ["0°, 120°, 240°", "Vie, echilibrată"] },
+          { feature: "Complementară divizată", values: ["0°, 150°, 210°", "Contrast, mai blând"] },
+          { feature: "Tetradică (pătrat)", values: ["0°, 90°, 180°, 270°", "Bogată, colorată"] },
+          { feature: "Monocromatică", values: ["aceeași nuanță, luminozitate diferită", "Curată, elegantă"] },
+        ],
+      },
+      aboutSection: {
+        title: "Despre armonia culorilor",
+        paragraphs: [
+          "Armonia culorilor descrie care culori se potrivesc estetic. La bază stă cercul cromatic, pe care culorile sunt dispuse după nuanța lor, între 0 și 360 de grade. Schemele clasice de armonie determină culori potrivite în funcție de poziția (unghiul) pe cerc – de exemplu, culorile opuse sunt complementare, cele vecine sunt analoage.",
+          "Aceste reguli nu sunt arbitrare: ochiul și creierul uman percep anumite relații de culoare ca echilibrate, iar altele ca tensionate. Schemele de armonie oferă un punct de plecare – nu sunt reguli obligatorii, dar dau o bază sigură pentru construirea unei palete plăcute și profesionale, pe care apoi o poți rafina ajustând saturația și luminozitatea.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Pornește de la o culoare de brand sau de accent puternică și construiește schema pe ea – nu invers." },
+        { icon: "⚖️", tip: "Într-o paletă funcționează de obicei cel mai bine o culoare dominantă, una-două complementare și una de accent (regula 60-30-10)." },
+        { icon: "♿", tip: "Verifică contrastul perechilor de culori alese cu verificatorul de contrast, pentru lizibilitate." },
+      ],
+    },
+  },
+
+  // ─── Simulator de daltonism ───────────────────────────────────────────────
+  "szinvaksag-szimulator": {
+    introText:
+      "Simulatorul de daltonism arată cum apare o culoare pentru persoanele cu cele mai frecvente deficiențe de vedere a culorilor: protanopie (lipsă de roșu), deuteranopie (lipsă de verde), tritanopie (lipsă de albastru) și acromatopsie (lipsă totală a culorii). Astfel poți verifica dacă culorile design-ului tău rămân distincte pentru toată lumea. Pentru designeri și dezvoltatori care creează interfețe accesibile, utilizabile de oricine.",
+    guide: [
+      "1. Introdu culoarea testată cu cod HEX sau cu selectorul de culoare.",
+      "2. Instrumentul arată aspectul simulat al culorii pentru fiecare tip de daltonism.",
+      "3. Compară mostrele – dacă două culori importante se contopesc, merită modificate.",
+      "4. Orice valoare HEX simulată poate fi copiată cu un clic.",
+    ],
+    faq: [
+      { q: "Ce este daltonismul?", a: "Daltonismul este capacitatea redusă de a distinge culorile, de obicei ereditară. Cel mai frecvent este tipul roșu-verde (protanopie/deuteranopie), care afectează circa 8% dintre bărbați." },
+      { q: "Ce tipuri simulează?", a: "Patru: protanopie (lipsa percepției roșului), deuteranopie (a verdelui), tritanopie (a albastrului, rară) și acromatopsie (lipsa totală a culorii, doar diferențe de luminozitate). Deuteranopia este cea mai frecventă." },
+      { q: "Cât de precisă este simularea?", a: "Aproximativă: se bazează pe matrice de transformare a culorilor răspândite în literatura de specialitate. Este un instrument excelent pentru verificarea rapidă a accesibilității design-ului, dar nu este potrivit pentru diagnostic medical." },
+      { q: "De ce este important în design?", a: "Dacă interfața transmite informația exclusiv prin culoare (de ex. roșu = eroare, verde = succes), pentru persoanele cu daltonism aceasta se poate pierde. Simulatorul ajută la depistarea unor astfel de probleme încă din faza de proiectare." },
+      { q: "Culoarea ajunge pe server?", a: "Nu, întreaga simulare rulează în browserul tău – culoarea nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introducerea culorii", description: "Scrie cu cod HEX sau alege cu selectorul culoarea de verificat." },
+        { title: "2. Vizualizarea simulării", description: "Apare culoarea cu vedere normală și simulată pentru cele patru tipuri de daltonism." },
+        { title: "3. Comparare", description: "Verifică dacă culoarea rămâne distinctă – mai ales la perechile critice de culori." },
+        { title: "4. Copierea valorii", description: "Orice valoare HEX simulată poate fi copiată în clipboard." },
+      ],
+      useCases: [
+        { icon: "♿", title: "Accesibilitate", description: "Verificarea faptului că culorile interfeței rămân distincte pentru toată lumea." },
+        { icon: "🚦", title: "Indicatori de stare", description: "Testarea semnalelor de succes/eroare (verde/roșu) – care se contopesc ușor la daltonismul roșu-verde." },
+        { icon: "📊", title: "Vizualizarea datelor", description: "Verificarea culorilor din diagrame și hărți, astfel încât categoriile să se distingă." },
+        { icon: "🎨", title: "Culori de brand", description: "Examinarea modului în care percepe o parte a publicului culorile de brand." },
+      ],
+      formatComparison: {
+        title: "Tipuri de daltonism",
+        columns: ["Tip", "Ce lipsește", "Frecvență"],
+        rows: [
+          { feature: "Protanopie", values: ["Percepția roșului", "bărbați ~1%"] },
+          { feature: "Deuteranopie", values: ["Percepția verdelui", "bărbați ~6%"] },
+          { feature: "Tritanopie", values: ["Percepția albastrului", "foarte rar"] },
+          { feature: "Acromatopsie", values: ["Toate culorile", "extrem de rar"] },
+        ],
+      },
+      aboutSection: {
+        title: "Despre daltonism",
+        paragraphs: [
+          "Daltonismul este scăderea ereditară sau dobândită a capacității de a distinge culorile. Unul dintre cele trei tipuri de conuri receptoare de culoare din ochi lipsește sau funcționează diferit, de aceea anumite culori se contopesc. Cel mai frecvent este tipul roșu-verde, care afectează aproape 8% dintre bărbați și o mică parte dintre femei.",
+          "Din punct de vedere al design-ului, asta înseamnă că nu trebuie să te bazezi exclusiv pe culoare pentru a transmite informația. Dacă un buton își indică starea doar prin culoare, sau o diagramă distinge categoriile doar prin culoare, pentru persoanele cu daltonism acest lucru se poate pierde. Soluția: pe lângă culoare folosește și formă, pictogramă, model sau etichetă – iar simulatorul te ajută să depistezi cazurile problematice.",
+        ],
+      },
+      tips: [
+        { icon: "🔴", tip: "Roșu-verde este cel mai frecvent – nu folosi niciodată aceste două culori ca singură metodă de diferențiere." },
+        { icon: "➕", tip: "Pe lângă culoare adaugă mereu un semnal secundar: pictogramă, formă, model sau text." },
+        { icon: "🔍", tip: "Dacă două culori importante se contopesc în simulare, mărește diferența de luminozitate dintre ele." },
+      ],
+    },
+  },
 };

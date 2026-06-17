@@ -753,6 +753,34 @@ const rawTools: Tool[] = [
       { q: "Hány színpont lehet?", a: "Legalább kettő, ebben az eszközben legfeljebb hat – mindegyik saját színnel és 0–100% közötti pozícióval." },
     ],
   },
+  {
+    slug: "szin-harmonia", category: "szinek",
+    title: "Szín-harmónia generátor online – komplementer, triád, analóg | Ingyenes",
+    h1: "Szín-harmónia generátor",
+    description: "Harmonikus színsémák egy alapszínből: komplementer, analóg, triád, osztott-komplementer, tetrád és monokromatikus. HEX értékek, egy kattintásos másolás.",
+    keywords: ["szín harmónia", "színséma generátor", "komplementer szín", "triád színek", "color harmony", "színpaletta generátor"],
+    status: "active", component: "SzinHarmonia",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["szinkonverter", "kontraszt-ellenorzo", "gradient-generator"],
+    faq: [
+      { q: "Mi az a komplementer szín?", a: "A színkörön szemközti (180°-ra lévő) szín – ez ad a legnagyobb kontrasztot. Az analóg színek (±30°) nyugodtabb, a triád (120°) élénk, kiegyensúlyozott sémát adnak." },
+      { q: "Hogyan számolja a harmóniákat?", a: "Az alapszínt HSL-be alakítja, majd a színárnyalatot (hue) forgatja a séma szögével, a telítettséget és világosságot megtartva (a monokromatikusnál a világosságot lépteti)." },
+    ],
+  },
+  {
+    slug: "szinvaksag-szimulator", category: "szinek",
+    title: "Színvakság-szimulátor online – protanópia, deuteranópia | Ingyenes",
+    h1: "Színvakság-szimulátor",
+    description: "Nézd meg, hogyan jelenik meg egy szín színlátászavarral: protanópia, deuteranópia, tritanópia és akromatópszia. Akadálymentes designhoz, böngészőben.",
+    keywords: ["színvakság szimulátor", "color blindness simulator", "daltonizmus", "protanópia", "deuteranópia", "akadálymentes színek"],
+    status: "active", component: "SzinvaksagSzimulator",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["kontraszt-ellenorzo", "szinkonverter", "szin-harmonia"],
+    faq: [
+      { q: "Milyen színvakság-típusokat szimulál?", a: "A négy fő típust: protanópia (vörös-vakság), deuteranópia (zöld-vakság), tritanópia (kék-vakság) és akromatópszia (teljes színvakság). A deuteranópia a leggyakoribb." },
+      { q: "Pontos a szimuláció?", a: "Közelítő – a szakirodalomban elterjedt transzformációs mátrixokon alapul. Az akadálymentesség gyors ellenőrzéséhez kiváló, orvosi diagnózisra nem alkalmas." },
+    ],
+  },
 
   // ═══ RO-ONLY: CALCULATOR – Fázis 2 ═══════════════════════════════════════
   // Algebra + statistici. Minden entry `languages: ["ro"]`.
