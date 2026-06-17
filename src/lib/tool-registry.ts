@@ -9,6 +9,7 @@ import { ADAT_CONTENT } from "./content/adat-content.ts";
 import { SZOVEG_CONTENT } from "./content/szoveg-content.ts";
 import { FEJLESZTO_CONTENT } from "./content/fejleszto-content.ts";
 import { PDF_CONTENT, EXCEL_CONTENT, MARKDOWN_CONTENT, HTML_CONTENT, FAJL_CONTENT, SEO_TOOL_CONTENT } from "./content/pdf-excel-other-content.ts";
+import { SZINEK_CONTENT } from "./content/szinek-content.ts";
 import type { ContentMap } from "./content/types.ts";
 
 // ─── Romanian Content Data Imports ───────────────────────────
@@ -17,6 +18,7 @@ import { ADAT_RO_CONTENT } from "./content/ro/adat-content.ts";
 import { SZOVEG_RO_CONTENT } from "./content/ro/szoveg-content.ts";
 import { FEJLESZTO_RO_CONTENT } from "./content/ro/fejleszto-content.ts";
 import { PDF_RO_CONTENT, EXCEL_RO_CONTENT, MARKDOWN_RO_CONTENT, HTML_RO_CONTENT, FAJL_RO_CONTENT, SEO_TOOL_RO_CONTENT } from "./content/ro/pdf-excel-other-content.ts";
+import { SZINEK_RO_CONTENT } from "./content/ro/szinek-content.ts";
 import { CALCULATOR_RO_CONTENT } from "./content/ro/calculator-content.ts";
 import { GEOMETRIE_RO_CONTENT } from "./content/ro/geometrie-content.ts";
 import { CONVERSII_RO_CONTENT } from "./content/ro/conversii-content.ts";
@@ -39,6 +41,7 @@ import { MARKDOWN_RO } from "./i18n/ro-tools-markdown.ts";
 import { HTML_RO } from "./i18n/ro-tools-html.ts";
 import { EXCEL_RO } from "./i18n/ro-tools-excel.ts";
 import { FAJL_RO, SEO_RO } from "./i18n/ro-tools-fajl-seo.ts";
+import { SZINEK_RO } from "./i18n/ro-tools-szinek.ts";
 import { CALCULATOR_RO } from "./i18n/ro-tools-calculator.ts";
 import { GEOMETRIE_RO } from "./i18n/ro-tools-geometrie.ts";
 import { CONVERSII_RO } from "./i18n/ro-tools-conversii.ts";
@@ -52,6 +55,7 @@ const RO_TRANSLATIONS: Record<string, Record<string, { slug: string; title: stri
   excel: EXCEL_RO, fajl: FAJL_RO, seo: SEO_RO,
   calculator: CALCULATOR_RO, geometrie: GEOMETRIE_RO, conversii: CONVERSII_RO,
   finante: FINANTE_RO, sanatate: SANATATE_RO, timp: TIMP_RO,
+  szinek: SZINEK_RO,
 };
 
 export type ToolStatus = "active" | "coming-soon";
@@ -59,6 +63,8 @@ export type CategoryId =
   | "kep" | "pdf" | "adat" | "szoveg"
   | "fejleszto" | "markdown" | "html" | "excel"
   | "fajl" | "seo"
+  // ─── Színek (HU+RO közös) ─────────────────────────────────
+  | "szinek"
   // ─── RO-only: matematikai kalkulátorok és konverterek ─────
   | "calculator" | "geometrie" | "conversii"
   | "finante" | "sanatate" | "timp";
@@ -264,6 +270,20 @@ export const CATEGORIES: Category[] = [
     ],
   },
 
+  // ═══ SZÍNEK (HU+RO közös kategória) ══════════════════════════════
+  {
+    id: "szinek", label: "Színek", icon: "🎨", color: "var(--cat-szinek, #f43f5e)",
+    description: "Színkonverter, WCAG kontraszt-ellenőrző és CSS gradiens generátor böngészőben.",
+    i18n: { ro: { label: "Culori", description: "Convertor de culori, verificator de contrast WCAG și generator de gradient CSS în browser.", intro: [
+      "Instrumentele de culoare InstrumenteOnline acoperă sarcinile zilnice de lucru cu culori pentru web: conversie între formatele HEX, RGB și HSL, verificarea contrastului conform standardului de accesibilitate WCAG și generarea de gradiente CSS gata de folosit. Toate rulează în browserul tău, fără server.",
+      "Ideal pentru designeri, dezvoltatori web și creatori de conținut care au nevoie de valori de culoare precise și de cod CSS direct utilizabil. Conversia și verificarea sunt instantanee, fără instalare și fără cont.",
+    ] } },
+    intro: [
+      "A Színek eszközei a webes színkezelés mindennapi feladatait fedik le: konverzió a HEX, RGB és HSL formátumok között, a WCAG akadálymentességi szabvány szerinti kontraszt-ellenőrzés és kész CSS gradiens generálása. Minden a böngésződben fut, szerver nélkül.",
+      "Ideális webdesignereknek, fejlesztőknek és tartalomkészítőknek, akiknek pontos színértékekre és azonnal használható CSS kódra van szükségük. A konverzió és az ellenőrzés azonnali, telepítés és regisztráció nélkül.",
+    ],
+  },
+
   // ═══ RO-ONLY: Matematikai kalkulátorok és konverterek ════════════
   // Minden lentebbi kategória `languages: ["ro"]` – a HU build automatikusan
   // kiszűri (isCategoryVisibleInLang / getVisibleCategories).
@@ -408,6 +428,53 @@ const rawTools: Tool[] = [
   { slug: "tomeges-atnevezes", category: "kep", title: "Tömeges képátnevezés online | Batch rename", h1: "Tömeges képátnevezés", description: "Képfájlok tömeges átnevezése sablon alapján (pl. 'termek-{001}.jpg'), ZIP letöltéssel. Böngészőben.", keywords: ["batch rename image", "bulk rename", "tömeges átnevezés", "kép átnevezés sablon"], status: "active", component: "TomegesAtnevezesTool", related: ["tomeges-zip-letoltes", "tomeges-konvertalas"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "tomeges-zip-letoltes", category: "kep", title: "Képek ZIP-be csomagolása online | Batch ZIP", h1: "Képek ZIP-be csomagolása", description: "Feltöltött képek ZIP archívumba csomagolása egy kattintással. Böngészőben, szervermentes.", keywords: ["zip képek", "batch download zip", "kép zip csomagolás", "images to zip online"], status: "active", component: "TomegesZipLetoltesTool", related: ["tomeges-atnevezes", "zip-keszito"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
 
+  // ── VEKTOR + FAVICON (HU+RO bilingual) ──────────────────────────────────────
+  {
+    slug: "svg-optimalizalo", category: "kep",
+    title: "SVG optimalizáló online – minify, méretcsökkentés | Ingyenes",
+    h1: "SVG optimalizáló",
+    description: "SVG fájlok minifikálása: kommentek, metaadatok, szerkesztői attribútumok és felesleges whitespace eltávolítása. Méretcsökkenés %-ban, böngészőben.",
+    keywords: ["svg optimalizáló", "svg minify", "svg tömörítés", "svg méretcsökkentés", "optimize svg online"],
+    status: "active", component: "SvgOptimalizalo",
+    inputFormats: ["image/svg+xml", ".svg"], outputFormat: "image/svg+xml", acceptMultiple: false,
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["png-svg", "svg-png", "kep-base64"],
+    faq: [
+      { q: "Mit távolít el az optimalizáló?", a: "XML deklarációt, DOCTYPE-ot, kommenteket, a <metadata> blokkot, a szerkesztői (Inkscape/Illustrator) attribútumokat és namespace-eket, valamint a felesleges whitespace-t – a kép megjelenése változatlan marad." },
+      { q: "Szerverre kerül az SVG?", a: "Nem, a teljes feldolgozás a böngésződben történik – a fájl nem hagyja el a gépedet." },
+    ],
+  },
+  {
+    slug: "png-svg", category: "kep",
+    title: "PNG → SVG vektorizáló online – valódi tracing | Ingyenes",
+    h1: "PNG → SVG vektorizáló",
+    description: "PNG és JPG képek valódi vektorizálása SVG-vé (kontúrkövetés), állítható színszámmal. Logókhoz és ikonokhoz, böngészőben, szerver nélkül.",
+    keywords: ["png svg", "png to svg", "kép vektorizálás", "raszter svg konverter", "vectorize png online"],
+    status: "active", component: "PngSvgTool",
+    inputFormats: ["image/png", "image/jpeg", "image/webp"], outputFormat: "image/svg+xml", acceptMultiple: false,
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["svg-optimalizalo", "svg-png", "kep-ico"],
+    faq: [
+      { q: "Valódi vektorizálás ez?", a: "Igen – az imagetracerjs könyvtár kontúrkövetéssel valódi vektor-útvonalakat (path) készít, nem csak beágyazza a raszteres képet. Egyszerű, kontrasztos képeknél (logó, ikon) a legjobb az eredmény." },
+      { q: "Mire jó a színszám beállítás?", a: "A több szín részletesebb, de nagyobb SVG-t ad; a kevesebb tisztább, kisebb fájlt. Logókhoz 8–16 szín általában ideális." },
+    ],
+  },
+  {
+    slug: "favicon-generator", category: "kep",
+    title: "Favicon-csomag generátor online – ICO, PNG, manifest | Ingyenes",
+    h1: "Favicon-csomag generátor",
+    description: "Teljes favicon-csomag képből: favicon.ico, multi-méretű PNG-k, apple-touch-icon, site.webmanifest és a beillesztendő HTML kód. ZIP-ben, böngészőben.",
+    keywords: ["favicon generátor", "favicon csomag", "favicon készítő", "apple touch icon", "favicon package generator"],
+    status: "active", component: "FaviconCsomag",
+    inputFormats: ["image/png", "image/jpeg", "image/webp"], outputFormat: "application/zip", acceptMultiple: false,
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["kep-ico", "png-svg", "svg-optimalizalo"],
+    faq: [
+      { q: "Mit tartalmaz a csomag?", a: "favicon.ico (16/32/48), külön PNG-k (16, 32, 48, 192, 512 px), apple-touch-icon (180 px), site.webmanifest és egy head-snippet.html a beillesztendő <link> tagekkel." },
+      { q: "Milyen képet töltsek fel?", a: "Egy négyzetes, lehetőleg 512×512 px-es PNG-t a legjobb minőséghez – az eszköz ebből készíti az összes méretet." },
+    ],
+  },
+
   // ── ÚJ KÉPESZKÖZÖK ──────────────────────────────────────────────────────────
   { slug: "heic-jpg", category: "kep", title: "HEIC → JPG Konvertáló | Ingyenes Online | Konvertalo.hu", h1: "HEIC → JPG Konvertáló", description: "Konvertáld iPhone/iPad HEIC képeidet JPG formátumba böngészőben, szerver nélkül. Tömeges feldolgozás, ZIP letöltés.", keywords: ["heic jpg", "heic konvertáló", "iphone kép konvertálás", "heif jpg"], status: "active", component: "HeicJpgTool", inputFormats: ["image/heic", "image/heif", ".heic", ".heif"], outputFormat: "image/jpeg", acceptMultiple: true, related: ["jpg-webp", "jpg-png", "heic-png", "metadata-torles"], updatedAt: "2026-03-01", faq: [{ q: "Mi a HEIC formátum?", a: "A HEIC (High Efficiency Image Container) az iPhone és iPad alapértelmezett képformátuma iOS 11 óta. Kiváló tömörítést nyújt, de sok program nem tudja megnyitni." }, { q: "Feltöltődnek a képeim szerverre?", a: "Nem. Az összes feldolgozás a böngésződben történik – a képeid egyetlen byte-ja sem hagyja el a gépedet." }, { q: "Lehet egyszerre több HEIC fájlt konvertálni?", a: "Igen! Tölts fel egyszerre több fájlt, és az eszköz ZIP archívumba csomagolja a konvertált JPG fájlokat." }, { q: "Elvész a kép minősége a konverzió során?", a: "A JPG konverzió alapértelmezetten 90%-os minőséggel dolgozik, ami szinte észrevehetetlen minőségveszteséggel jár." }] },
   { slug: "heic-png", category: "kep", title: "HEIC → PNG Konvertáló | Ingyenes Online | Konvertalo.hu", h1: "HEIC → PNG Konvertáló", description: "Konvertáld HEIC képeidet veszteségmentes PNG formátumba böngészőben. Átlátszóság megőrzésével, szerver nélkül.", keywords: ["heic png", "heic png konvertáló", "heif png", "iphone kép png"], status: "active", component: "HeicPngTool", inputFormats: ["image/heic", "image/heif", ".heic", ".heif"], outputFormat: "image/png", acceptMultiple: true, related: ["heic-jpg", "png-webp", "jpg-png", "metadata-torles"], updatedAt: "2026-03-01", faq: [{ q: "Mikor érdemes PNG-t választani a JPG helyett?", a: "Ha veszteségmentes minőséget szeretnél, vagy ha a képen átlátszóság is van, a PNG a jobb választás." }, { q: "A HEIC fájlokban lévő átlátszóság megmarad PNG-be konvertáláskor?", a: "Igen, a PNG formátum teljes mértékben támogatja az alfa-csatornát, az átlátszóság megmarad." }] },
@@ -545,6 +612,56 @@ const rawTools: Tool[] = [
   { slug: "url-kodolo-dekodolo", category: "fejleszto", title: "URL kódoló/dekódoló online | Percent encoding", h1: "URL kódolás és dekódolás", description: "URL encode/decode: %XX formátum kódolása és visszaalakítása – encodeURIComponent és encodeURI mód.", keywords: ["url encode decode", "percent encoding", "url kódoló", "url dekódoló", "encodeURIComponent online"], status: "active", component: "UrlKodoloTool", related: ["base64-kodolo-dekodolo", "html-entity-kodolo-dekodolo"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
   { slug: "html-entity-kodolo-dekodolo", category: "fejleszto", title: "HTML entity kódoló/dekódoló online | Escape", h1: "HTML entity kódolás/dekódolás", description: "HTML entity-k kódolása (&amp;, &lt;, &gt;, &quot;) és visszaalakítása – valós idejű, böngészőben.", keywords: ["html entity", "html escape", "html entity kódoló", "html escape online", "html karakter kódolás"], status: "active", component: "HtmlEntityTool", related: ["url-kodolo-dekodolo", "base64-kodolo-dekodolo"], updatedAt: "2026-02-23", launchedAt: "2026-02-23", faq: [] },
 
+  // ── Szó- és karakterszámláló (HU+RO bilingual) ──────────────────────────
+  // Nincs `languages` megkötés → mindkét deploy-ban látszik. A RO longform md
+  // (math collection, toolSlug="szoszamlalo") a ToolLayout-on át töltődik be.
+  {
+    slug: "szoszamlalo", category: "fejleszto",
+    title: "Szószámláló és karakterszámláló online | Ingyenes",
+    h1: "Szó- és karakterszámláló",
+    description: "Szavak, karakterek, mondatok, bekezdések és olvasási idő valós idejű számlálása. SEO és X karakterkorlátok, leggyakoribb szavak. Böngészőben, privát.",
+    keywords: ["szószámláló", "karakterszámláló", "szó és karakterszámláló", "online szószámláló", "karakter számláló online", "szavak száma"],
+    status: "active", component: "SzoSzamlalo",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["slug-generator", "kisbetu-nagybetu", "whitespace-tisztitas"],
+    faq: [
+      { q: "Hogyan számolja a szavakat?", a: "A szöveget szóköz-csoportok (szóköz, tab, sortörés) mentén bontja, így a szavak száma megegyezik a Word és a Google Dokumentumok számlálásával." },
+      { q: "A böngészőben fut, vagy szerverre kerül a szöveg?", a: "Teljes egészében a böngésződben fut – a beírt szöveg egyetlen bájtja sem kerül szerverre, így bizalmas tartalomhoz is biztonságos." },
+    ],
+  },
+
+  // ── Számrendszer-váltó (HU+RO bilingual) ────────────────────────────────
+  {
+    slug: "szamrendszer-valto", category: "fejleszto",
+    title: "Számrendszer-váltó online (bináris, hex, decimális) | Ingyenes",
+    h1: "Számrendszer-váltó",
+    description: "Bináris, oktális, decimális és hexadecimális átváltás élőben, tetszőleges alappal (2–36). Nagy számok (BigInt), bit-hossz, csoportosítás. Böngészőben, privát.",
+    keywords: ["számrendszer váltó", "bináris decimális átváltó", "hexadecimális átváltó", "bin hex dec konverter", "számrendszer átváltó online", "kettes számrendszer"],
+    status: "active", component: "SzamrendszerValto",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["szoszamlalo", "base64-kodolo-dekodolo", "url-kodolo-dekodolo"],
+    faq: [
+      { q: "Mekkora számokat tud kezelni?", a: "Tetszőlegesen nagyot – a konverzió BigInt-tel történik, így a 64 biten túli értékek (nagy hexadecimális címek, bitmaszkok) is pontosak, kerekítési hiba nélkül." },
+      { q: "Tudok egyéni számrendszert is használni?", a: "Igen, a 4 fő alapon (2, 8, 10, 16) túl bármilyen alap választható 2 és 36 között az egyéni alap mezőben." },
+    ],
+  },
+
+  // ── Unix timestamp ↔ dátum (HU+RO bilingual) ────────────────────────────
+  {
+    slug: "unix-timestamp", category: "fejleszto",
+    title: "Unix timestamp átváltó online (timestamp ↔ dátum) | Ingyenes",
+    h1: "Unix timestamp átváltó",
+    description: "Unix időbélyeg átváltása dátummá és vissza – helyi idő, UTC, ISO 8601, relatív idő. Másodperc és ezredmásodperc, élő aktuális timestamp. Böngészőben, privát.",
+    keywords: ["unix timestamp", "unix időbélyeg átváltó", "timestamp dátum", "epoch converter", "unix idő átváltó", "timestamp to date"],
+    status: "active", component: "UnixTimestamp",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["szamrendszer-valto", "szoszamlalo", "base64-kodolo-dekodolo"],
+    faq: [
+      { q: "Mi az a Unix timestamp?", a: "A Unix időbélyeg az 1970. január 1. 00:00:00 UTC (az „epoch”) óta eltelt másodpercek száma. Egyetlen számmal, időzónától függetlenül azonosít egy időpontot – ezért használják adatbázisok, API-k és naplók." },
+      { q: "Másodperc vagy ezredmásodperc?", a: "A klasszikus Unix timestamp másodpercben mér (10 számjegy), a JavaScript és sok rendszer viszont ezredmásodpercet használ (13 számjegy). A mértékegység egy kattintással átkapcsolható." },
+    ],
+  },
+
   // ── Fázis 8 (RO-only): generator cod de bare + cod QR ────────────────────
   { slug: "generator-cod-bare", category: "fejleszto", title: "Generator Cod de Bare", h1: "Generator Cod de Bare", description: "Generator coduri de bare EAN-13, CODE-128, UPC-A, ITF-14 cu export SVG și PNG.", keywords: [], status: "active", component: "CodBareGenerator", languages: ["ro"], related: ["generator-cod-qr", "generator-parola", "base64-kodolo-dekodolo"], updatedAt: "2026-04-28", launchedAt: "2026-04-28", faq: [] },
   { slug: "generator-cod-qr",   category: "fejleszto", title: "Generator Cod QR cu Pictogramă", h1: "Generator Cod QR cu Pictogramă", description: "Generator coduri QR cu pictogramă centrală — galerie presetări sau încărcare imagine. Export PNG + SVG.", keywords: [], status: "active", component: "CodQrGenerator",   languages: ["ro"], related: ["generator-cod-bare", "generator-parola", "base64-kodolo-dekodolo"], updatedAt: "2026-04-28", launchedAt: "2026-04-28", faq: [] },
@@ -592,6 +709,50 @@ const rawTools: Tool[] = [
   { slug: "alt-szoveg-sablon", category: "seo", title: "Kép alt szöveg sablon generátor", h1: "Alt szöveg sablon", description: "Tömeges kép alt szöveg generálás sablon alapján, CSV exporttal.", keywords: ["alt text", "alt szöveg seo"], status: "coming-soon", related: ["fajlnev-optimalizalo"], faq: [] },
   { slug: "robots-txt-ellenorzo", category: "seo", title: "robots.txt ellenőrző és tesztelő online", h1: "robots.txt ellenőrzése", description: "robots.txt fájl beillesztése és URL-ek tesztelése: engedélyezett-e a crawling?", keywords: ["robots txt tester", "robots ellenőrző"], status: "coming-soon", related: ["sitemap-url-ellenorzo"], faq: [] },
   { slug: "sitemap-url-ellenorzo", category: "seo", title: "Sitemap URL ellenőrző online", h1: "Sitemap URL-ek ellenőrzése", description: "XML sitemap beillesztése és URL-ek listázása, státusz megjelenítéssel.", keywords: ["sitemap ellenőrző", "xml sitemap check"], status: "coming-soon", related: ["robots-txt-ellenorzo"], faq: [] },
+
+  // ═══ SZÍNEK (HU+RO közös kategória) ══════════════════════════════════════
+  {
+    slug: "szinkonverter", category: "szinek",
+    title: "Színkonverter online – HEX, RGB, HSL, HSV, CMYK | Ingyenes",
+    h1: "Színkonverter",
+    description: "Színek átváltása élőben HEX, RGB, HSL, HSV és CMYK között. Színpipetta, R/G/B csúszkák, egy kattintásos másolás. Böngészőben, privát.",
+    keywords: ["színkonverter", "hex rgb átváltó", "rgb hex", "szín kód konverter", "hex to rgb", "hsl konverter", "cmyk átváltó"],
+    status: "active", component: "SzinKonverter",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["kontraszt-ellenorzo", "gradient-generator", "szin-paletta"],
+    faq: [
+      { q: "Milyen formátumok között vált?", a: "HEX, RGB, HSL, HSV és CMYK között. A beviteli mező HEX, rgb() és hsl() formátumot is felismer, a kimeneten mind az öt érték megjelenik." },
+      { q: "Pontos az átváltás?", a: "A HEX, RGB, HSL és HSV között matematikailag pontos; a CMYK profil nélküli közelítés, ami webes munkához elegendő, nyomdai színhűséghez nem." },
+    ],
+  },
+  {
+    slug: "kontraszt-ellenorzo", category: "szinek",
+    title: "WCAG kontraszt-ellenőrző online – AA/AAA megfelelőség | Ingyenes",
+    h1: "WCAG kontraszt-ellenőrző",
+    description: "Szöveg és háttér kontrasztarányának ellenőrzése a WCAG AA/AAA szabvány szerint, normál és nagy szövegre. Élő előnézet, böngészőben, privát.",
+    keywords: ["kontraszt ellenőrző", "wcag kontraszt", "kontraszt arány", "szín kontraszt", "akadálymentes kontraszt", "kontraszt checker"],
+    status: "active", component: "KontrasztEllenorzo",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["szinkonverter", "gradient-generator", "szin-paletta"],
+    faq: [
+      { q: "Mennyi a WCAG minimum kontraszt?", a: "Az AA szint normál szövegnél 4,5:1, nagy szövegnél 3:1; az AAA szint 7:1, illetve 4,5:1 nagy szövegnél." },
+      { q: "Mi számít nagy szövegnek?", a: "A legalább 18pt (kb. 24px) méretű, vagy a legalább 14pt (kb. 18,66px) méretű félkövér szöveg." },
+    ],
+  },
+  {
+    slug: "gradient-generator", category: "szinek",
+    title: "CSS gradiens generátor online – lineáris és radiális | Ingyenes",
+    h1: "CSS gradiens generátor",
+    description: "Lineáris és radiális CSS gradiensek készítése élő előnézettel és kész, másolható kóddal. Színpontok, szög, pozíciók. Böngészőben, privát.",
+    keywords: ["css gradiens generátor", "gradient generátor", "linear-gradient", "radial-gradient", "css színátmenet", "gradiens css kód"],
+    status: "active", component: "GradientGenerator",
+    updatedAt: "2026-06-17", launchedAt: "2026-06-17",
+    related: ["szinkonverter", "kontraszt-ellenorzo", "szin-paletta"],
+    faq: [
+      { q: "Lineáris vagy radiális?", a: "A lineáris egy egyenes mentén, a megadott szög irányában megy; a radiális egy középpontból sugárirányban terjed kifelé." },
+      { q: "Hány színpont lehet?", a: "Legalább kettő, ebben az eszközben legfeljebb hat – mindegyik saját színnel és 0–100% közötti pozícióval." },
+    ],
+  },
 
   // ═══ RO-ONLY: CALCULATOR – Fázis 2 ═══════════════════════════════════════
   // Algebra + statistici. Minden entry `languages: ["ro"]`.
@@ -709,6 +870,7 @@ const ALL_SEO_CONTENT: ContentMap = {
   ...HTML_CONTENT,
   ...FAJL_CONTENT,
   ...SEO_TOOL_CONTENT,
+  ...SZINEK_CONTENT,
 };
 
 for (const tool of rawTools) {
@@ -758,6 +920,7 @@ const ALL_RO_CONTENT: ContentMap = {
   ...FINANTE_RO_CONTENT,
   ...SANATATE_RO_CONTENT,
   ...TIMP_RO_CONTENT,
+  ...SZINEK_RO_CONTENT,
 };
 
 for (const tool of rawTools) {

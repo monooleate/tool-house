@@ -6,6 +6,29 @@
 
 export const KEP_RO: Record<string, { slug: string; title: string; h1: string; description: string; keywords: string[] }> = {
 
+  // ─── Vektor + favicon (HU+RO bilingual) ────────────────────
+  "svg-optimalizalo": {
+    slug: "optimizare-svg",
+    title: "Optimizare SVG online – minify, reducere dimensiune | InstrumenteOnline",
+    h1: "Optimizare SVG",
+    description: "Minifică fișiere SVG: elimină comentarii, metadate, atribute de editor și spații inutile. Reducere de dimensiune în %, în browser, fără server.",
+    keywords: ["optimizare svg", "svg minify", "comprimare svg", "reducere dimensiune svg", "optimize svg online"],
+  },
+  "png-svg": {
+    slug: "convertor-png-svg",
+    title: "Convertor PNG → SVG online – vectorizare reală | InstrumenteOnline",
+    h1: "Convertor PNG → SVG",
+    description: "Vectorizare reală a imaginilor PNG și JPG în SVG (urmărire de contururi), cu număr de culori reglabil. Pentru logo-uri și pictograme, în browser.",
+    keywords: ["png svg", "png to svg", "vectorizare imagine", "convertor raster svg", "vectorizare png online"],
+  },
+  "favicon-generator": {
+    slug: "generator-favicon",
+    title: "Generator Favicon online – ICO, PNG, manifest | InstrumenteOnline",
+    h1: "Generator pachet favicon",
+    description: "Pachet favicon complet dintr-o imagine: favicon.ico, PNG-uri multi-dimensiune, apple-touch-icon, site.webmanifest și codul HTML. În ZIP, în browser.",
+    keywords: ["generator favicon", "pachet favicon", "creare favicon", "apple touch icon", "favicon ico generator"],
+  },
+
   // ─── Format conversions ────────────────────────────────────
 
   "jpg-webp": {

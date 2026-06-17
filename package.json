@@ -28,6 +28,7 @@
     "gifenc": "^1.0.3",
     "gifuct-js": "^2.1.2",
     "heic2any": "^0.0.4",
+    "imagetracerjs": "^1.2.6",
     "js-yaml": "^4.1.1",
     "jsbarcode": "^3.12.3",
     "jszip": "^3.10.1",

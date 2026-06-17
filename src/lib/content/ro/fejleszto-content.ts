@@ -1,6 +1,181 @@
 import type { ContentMap } from "../types.ts";
 
 export const FEJLESZTO_RO_CONTENT: ContentMap = {
+  // ═══ NUMĂRĂTOR DE CUVINTE ȘI CARACTERE (HU+RO bilingual) ═══════════════════
+  "szoszamlalo": {
+    introText:
+      "Numărătorul de cuvinte și caractere îți arată în timp real din câte cuvinte, caractere, propoziții și paragrafe este format textul tău, pe măsură ce scrii sau lipești. Calculează și timpul estimat de citire și de vorbire și îți arată cum se încadrează conținutul în limitele uzuale (titlu SEO, meta description, X/Twitter). Util deopotrivă pentru elevi, copywriteri, specialiști SEO și administratori de social media – fără instalare și fără cont.",
+    guide: [
+      "1. Lipește sau scrie textul în câmpul de introducere – numărătoarea se actualizează instantaneu, în timp ce tastezi.",
+      "2. Citește indicatorii principali: cuvinte, caractere (cu și fără spații), propoziții, paragrafe, rânduri.",
+      "3. Verifică panoul de limite: barele arată dacă textul se încadrează în 60 / 160 / 280 de caractere.",
+      "4. Copiază statistica cu un clic sau golește câmpul și începe un text nou.",
+    ],
+    faq: [
+      { q: "Care e diferența între numărul de caractere cu și fără spații?", a: "Valoarea cu spații include toate caracterele, inclusiv spațiile, taburile și rândurile noi – aceasta este folosită la limitele de pe Twitter/X și SMS. Valoarea fără spații numără doar caracterele vizibile, utilă în anumite sarcini tipografice și de tipar." },
+      { q: "Cum se calculează timpul de citire?", a: "Timpul de citire se bazează pe numărul de cuvinte, la o viteză medie de 200 de cuvinte pe minut – ritmul cititorului adult obișnuit. Timpul de vorbire folosește 130 de cuvinte pe minut, ritmul confortabil și clar al unui prezentator (prezentare, scenariu video)." },
+      { q: "Numără corect caracterele cu diacritice românești?", a: "Da. Literele cu diacritice (ă, â, î, ș, ț) contează ca un singur caracter, la fel ca un emoji. Numărătorul le tratează corect la nivel de Unicode, astfel că rezultatul coincide cu ce afișează Word sau platformele de social media." },
+      { q: "Care este lungimea ideală pentru titlu SEO și meta description?", a: "Google afișează de obicei circa 60 de caractere din titlu și circa 155–160 din meta description; peste această limită, textul este trunchiat în rezultate. Panoul îți marchează aceste praguri, ca să nu fii nevoit să numeri separat." },
+      { q: "Textul meu ajunge pe vreun server?", a: "Nu. Întreaga procesare rulează în browserul tău, cu JavaScript – textul introdus nu părăsește niciodată dispozitivul. La reîncărcarea paginii nu rămâne nimic, deci îl poți folosi în siguranță și pentru conținut confidențial sau nepublicat." },
+      { q: "La ce folosește lista celor mai frecvente cuvinte?", a: "Îți arată ce cuvinte se repetă cel mai des în text (excluzând cuvintele de legătură și articolele). Este util pentru verificarea densității cuvintelor-cheie la textele SEO și pentru depistarea repetițiilor inutile la scris." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Lipirea textului", description: "Lipește din clipboard sau scrie direct textul în câmp. Numărătoarea urmărește tastarea în timp real." },
+        { title: "2. Citirea indicatorilor", description: "Cardurile evidențiate arată numărul de cuvinte și caractere, iar dedesubt propozițiile, paragrafele și rândurile." },
+        { title: "3. Verificarea limitelor", description: "Barele din panoul de limite arată dacă textul se încadrează în titlu SEO (60), meta description (160) și X (280)." },
+        { title: "4. Copierea statisticii", description: "Cu un clic copiezi în clipboard toți indicatorii, sau golești câmpul pentru un text nou." },
+      ],
+      useCases: [
+        { icon: "🔍", title: "Texte meta SEO", description: "La scrierea titlului și a meta description vezi imediat dacă textul se încadrează în limita afișată de Google." },
+        { icon: "📱", title: "Social media", description: "Urmărirea în timp real a limitei de 280 de caractere la o postare X/Twitter, bio sau text de reclamă." },
+        { icon: "🎓", title: "Eseuri și lucrări", description: "Pentru elevi și studenți, când tema cere un număr exact de cuvinte sau caractere (de ex. minim 500 de cuvinte)." },
+        { icon: "🎙️", title: "Discurs și scenariu video", description: "Timpul estimat de vorbire ajută la încadrarea unei prezentări sau a unui clip în intervalul de timp dat." },
+      ],
+      formatComparison: {
+        title: "Limite uzuale de caractere și cuvinte",
+        columns: ["Loc / câmp", "Limită", "Observație"],
+        rows: [
+          { feature: "Titlu SEO (Google)", values: ["~60 caractere", "Peste, se trunchiază în rezultate"] },
+          { feature: "Meta description", values: ["~155–160 caractere", "Lungimea ideală a descrierii"] },
+          { feature: "Postare X / Twitter", values: ["280 caractere", "Linkurile contează scurtate"] },
+          { feature: "SMS (1 mesaj)", values: ["160 caractere", "Peste, se împarte în mai multe SMS-uri"] },
+          { feature: "Caption Instagram", values: ["~2200 caractere", "Dar primele ~125 se văd fără „mai mult”"] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce contează numărul de cuvinte și caractere?",
+        paragraphs: [
+          "Numărul exact de cuvinte și caractere nu este, în multe sarcini, o chestiune estetică, ci o cerință concretă. În optimizarea pentru motoarele de căutare, lungimea titlului și a meta description decide dacă întregul mesaj apare în lista de rezultate sau trunchiat. Pe platformele de social media și în SMS există limite stricte de caractere, iar temele școlare și universitare impun adesea un număr minim sau maxim de cuvinte.",
+          "Numărarea cuvintelor are o bază simplă: textul este împărțit în grupuri de caractere care nu conțin spații, iar numărul acestora este returnat – exact aceeași logică pe care o folosesc Word, Google Docs și majoritatea editoarelor de text. La caractere trebuie deosebită valoarea cu spații de cea fără spații: majoritatea limitelor online (Twitter, SMS) includ și spațiile.",
+          "Estimarea timpului de citire și de vorbire pornește de la numărul de cuvinte. Viteza medie de citire în gând este de circa 200–250 de cuvinte pe minut; ritmul confortabil și ușor de urmărit al unui vorbitor este mai lent, în jur de 130 de cuvinte pe minut. Aceste estimări ajută la încadrarea timpului de citire al unui articol sau a duratei unei prezentări, înainte de a scrie textul complet.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Ține titlul SEO sub 60 de caractere, iar meta description între 155 și 160 – astfel întregul text apare în rezultatul Google." },
+        { icon: "⌨️", tip: "Numărătorul se actualizează live în timp ce tastezi, deci nu trebuie să apeși niciun buton pentru rezultat." },
+        { icon: "🔒", tip: "Textul rămâne în browserul tău – poți lipi liniștit și conținut confidențial sau încă nepublicat." },
+        { icon: "📊", tip: "Cu lista celor mai frecvente cuvinte depistezi rapid repetițiile inutile dintr-un text." },
+      ],
+    },
+  },
+
+  // ═══ CONVERTOR BAZE NUMERICE (HU+RO bilingual) ════════════════════════════
+  "szamrendszer-valto": {
+    introText:
+      "Convertorul de baze numerice transformă în timp real numere întregi între bazele binară (2), octală (8), zecimală (10) și hexazecimală (16) – scrii în oricare câmp, iar restul se actualizează instantaneu. Poți alege și o bază personalizată (2–36), iar conversia folosește BigInt, astfel că valorile peste 64 de biți (adrese mari de memorie, măști de biți) rămân exacte. Util pentru programatori, studenți și oricine are nevoie să schimbe rapid baza numerică – fără instalare, direct în browser.",
+    guide: [
+      "1. Scrie numărul în oricare câmp (binar, octal, zecimal sau hexazecimal).",
+      "2. Valorile din celelalte baze se actualizează automat, instantaneu.",
+      "3. Pentru o bază personalizată (2–36), alege baza din lista derulantă.",
+      "4. Copiază orice rezultat cu butonul de lângă rând.",
+    ],
+    faq: [
+      { q: "Între ce baze numerice convertește?", a: "Instantaneu între cele patru cele mai frecvente: binar (2), octal (8), zecimal (10) și hexazecimal (16). În plus, poți alege orice bază personalizată între 2 și 36." },
+      { q: "Ce numere poate gestiona?", a: "Oricât de mari. Conversia folosește aritmetică BigInt, deci valorile peste limita de 32 sau 64 de biți (adrese hexazecimale mari, măști de biți lungi) rămân exacte, fără erori de rotunjire." },
+      { q: "Ce înseamnă cifrele A–F din hexazecimal?", a: "În baza 16 există 16 cifre: 0–9, apoi A=10, B=11, C=12, D=13, E=14, F=15. Astfel, o cifră hexazecimală codifică exact 4 biți (un „nibble”)." },
+      { q: "Recunoaște prefixele (0x, 0b)?", a: "Da, prefixele 0x (hex), 0b (binar) și 0o (octal) sunt recunoscute și ignorate, deci poți lipi liniștit valori copiate din codul sursă." },
+      { q: "La ce folosește afișarea lungimii în biți?", a: "Arată câți biți sunt necesari pentru a reprezenta numărul (de la cel mai semnificativ bit 1). Util pentru alegerea tipului de date: încape valoarea în 8, 16, 32 sau 64 de biți." },
+      { q: "Numărul introdus ajunge pe vreun server?", a: "Nu. Întreaga conversie are loc în browserul tău, cu JavaScript – niciun fel de date nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Introducerea numărului", description: "Scrie valoarea în câmpul oricărei baze – nu trebuie să decizi dinainte baza de pornire." },
+        { title: "2. Conversie în timp real", description: "Celelalte câmpuri (binar, octal, zecimal, hexazecimal) se actualizează imediat la valoarea introdusă." },
+        { title: "3. Bază personalizată", description: "Pentru o bază între 2 și 36, alege numărul dorit din lista bazei personalizate." },
+        { title: "4. Copierea rezultatului", description: "Cu butonul de lângă rând copiezi în clipboard valoarea oricărei baze." },
+      ],
+      useCases: [
+        { icon: "💻", title: "Programare", description: "Interpretarea rapidă a adreselor hexazecimale de memorie, a codurilor de culoare (#RRGGBB) sau a măștilor de biți în zecimal și binar." },
+        { icon: "🎓", title: "Învățare", description: "La informatică, pentru înțelegerea bazelor numerice și a conversiei – vezi simultan toate cele patru forme." },
+        { icon: "🔧", title: "Rețele și hardware", description: "Conversia măștilor de subrețea IP, a valorilor de registru și a flag-urilor între binar și hexazecimal." },
+        { icon: "🔢", title: "Operații pe biți", description: "Forma binară și lungimea în biți ajută la planificarea și verificarea operațiilor pe biți (AND, OR, shift)." },
+      ],
+      formatComparison: {
+        title: "Cele patru baze numerice frecvente",
+        columns: ["Bază numerică", "Bază", "Cifre", "Exemplu (255)"],
+        rows: [
+          { feature: "Binar", values: ["2", "0–1", "11111111"] },
+          { feature: "Octal", values: ["8", "0–7", "377"] },
+          { feature: "Zecimal", values: ["10", "0–9", "255"] },
+          { feature: "Hexazecimal", values: ["16", "0–9, A–F", "FF"] },
+        ],
+      },
+      aboutSection: {
+        title: "Bazele numerice pe scurt",
+        paragraphs: [
+          "Baza numerică stabilește câte cifre diferite folosim și care este baza valorilor de poziție. În sistemul zecimal (baza 10) de zi cu zi există zece cifre (0–9), însă calculatoarele folosesc sistemul binar, fiindcă cele două stări ale comutatoarelor din circuite (0 și 1) corespund direct biților.",
+          "Sistemul hexazecimal (baza 16) este limbajul de confort al programării: o cifră hexazecimală codifică exact patru biți, deci un octet (8 biți) se scrie întotdeauna cu două cifre hexazecimale. De aceea vedem hexazecimal la adresele de memorie, codurile de culoare și codurile de eroare. Sistemul octal (baza 8) supraviețuiește azi mai ales la permisiunile de fișiere Unix (de ex. 755).",
+          "Conversia exprimă mereu același număr cu o altă notație: valoarea 255 este „255” în zecimal, „11111111” în binar și „FF” în hexazecimal – dar toate trei reprezintă aceeași cantitate. Datorită aritmeticii BigInt, acest instrument păstrează precizia chiar și la numere foarte mari, acolo unde conversia clasică în virgulă mobilă ar greși.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "O cifră hexazecimală = 4 biți, două cifre hexazecimale = 1 octet. E cel mai rapid mod de a reține legătura hex–binar." },
+        { icon: "🎨", tip: "Codurile de culoare de tip #FF8800 sunt de fapt trei octeți hexazecimali (roșu, verde, albastru) – aici îi poți descompune în zecimal." },
+        { icon: "🔒", tip: "Numărul introdus rămâne în browserul tău, nimic nu ajunge pe server – poți folosi și valori confidențiale." },
+        { icon: "📏", tip: "Privește lungimea în biți: dacă depășește 8, valoarea nu mai încape într-un octet; peste 32 e nevoie de un tip pe 64 de biți." },
+      ],
+    },
+  },
+
+  // ═══ CONVERTOR TIMESTAMP UNIX (HU+RO bilingual) ═══════════════════════════
+  "unix-timestamp": {
+    introText:
+      "Convertorul de timestamp Unix transformă marcajele de timp măsurate în secunde (sau milisecunde) de la 1970 într-o dată lizibilă și invers. Afișează ora locală, UTC, formatul ISO 8601, ziua săptămânii și timpul relativ („acum 3 zile”, „peste 2 ore”). Sus, timestamp-ul curent rulează live. Pentru programatori care lucrează cu câmpuri de bază de date, răspunsuri API sau fișiere de log – fără instalare, direct în browser.",
+    guide: [
+      "1. Timestamp → dată: introdu marcajul de timp și alege dacă este în secunde sau milisecunde.",
+      "2. Butonul „Acum” introduce timestamp-ul curent – rezultatul apare imediat (local, UTC, ISO, relativ).",
+      "3. Dată → timestamp: alege data și ora în câmp și citești timestamp-ul corespunzător.",
+      "4. Copiază orice rezultat cu un singur clic.",
+    ],
+    faq: [
+      { q: "Ce este un timestamp Unix?", a: "Marcajul de timp Unix este numărul de secunde scurse de la 1 ianuarie 1970, 00:00:00 UTC (așa-numitul „epoch”). Identifică un moment printr-un singur număr întreg, independent de fus orar, motiv pentru care e folosit de baze de date, API-uri, loguri și limbaje de programare." },
+      { q: "Care e diferența între secunde și milisecunde?", a: "Timestamp-ul Unix clasic se măsoară în secunde și are în prezent 10 cifre. JavaScript (Date.now()) și multe sisteme moderne folosesc însă milisecunde, adică 13 cifre. În instrument poți comuta unitatea pe care ai introdus-o." },
+      { q: "În ce fus orar afișează rezultatul?", a: "Afișează simultan ora din fusul orar local al browserului tău și ora UTC. Deoarece timestamp-ul este în sine independent de fus orar, vezi imediat ambele perspective, fără confuzii." },
+      { q: "Ce înseamnă formatul ISO 8601?", a: "ISO 8601 este formatul text standard al datelor, lizibil deopotrivă de oameni și de mașini (de ex. 2025-06-15T14:26:40.000Z). Litera Z de la final indică faptul că valoarea este în UTC. Este formatul așteptat de majoritatea API-urilor." },
+      { q: "La ce folosește timpul relativ?", a: "Timpul relativ exprimă în cuvinte distanța față de momentul curent: „acum 3 zile”, „peste 2 ore”. Util pentru interpretarea rapidă a intrărilor de log sau a datelor de expirare." },
+      { q: "Momentul introdus ajunge pe vreun server?", a: "Nu. Toate conversiile au loc în browserul tău, cu JavaScript – nici timestamp-ul, nici data nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Alegerea direcției", description: "Timestamp → dată sau dată → timestamp – cele două secțiuni sunt separate și se folosesc independent." },
+        { title: "2. Introducerea valorii", description: "La timestamp scrie numărul și alege unitatea secunde/milisecunde; la dată folosește câmpul de dată și oră." },
+        { title: "3. Citirea rezultatului", description: "Apar ora locală, UTC, ISO 8601, ziua săptămânii și timpul relativ – toate deodată, live." },
+        { title: "4. Copierea", description: "Copiezi orice rezultat cu butonul de alături." },
+      ],
+      useCases: [
+        { icon: "🗄️", title: "Câmpuri de bază de date", description: "Interpretarea rapidă a coloanelor created_at / updated_at și a altor timestamp-uri în date lizibile la depanare." },
+        { icon: "🔌", title: "Răspunsuri API", description: "Conversia instantanee a valorilor epoch din JSON (adesea în milisecunde) în timp uman." },
+        { icon: "📋", title: "Fișiere de log", description: "Compararea timestamp-urilor din logurile de server și aplicație cu ora locală și UTC la analiza incidentelor." },
+        { icon: "⏰", title: "Date de expirare", description: "Verificarea expirării token-urilor, intrărilor de cache sau sarcinilor cron – când expiră și cât mai e până atunci." },
+      ],
+      formatComparison: {
+        title: "Formate de marcaj de timp",
+        columns: ["Format", "Exemplu", "Caracteristică"],
+        rows: [
+          { feature: "Unix secunde", values: ["1750000000", "10 cifre, Unix clasic"] },
+          { feature: "Unix milisecunde", values: ["1750000000000", "13 cifre, JavaScript Date.now()"] },
+          { feature: "ISO 8601", values: ["2025-06-15T14:26:40Z", "Text standard, cu UTC"] },
+          { feature: "UTC lizibil", values: ["15 Jun 2025 14:26:40 GMT", "Perspectivă umană, în UTC"] },
+        ],
+      },
+      aboutSection: {
+        title: "Timpul Unix pe scurt",
+        paragraphs: [
+          "Timpul Unix (numit și timp epoch sau timp POSIX) măsoară timpul printr-un singur număr întreg: câte secunde au trecut de la miezul nopții de 1 ianuarie 1970 (UTC). Puterea acestei soluții stă în simplitate – fără fus orar, fără ora de vară, fără probleme la limita de lună sau an, doar un număr care crește continuu, ușor de calculat și de comparat.",
+          "Tocmai de aceea timestamp-ul este limba comună a timpului în informatică: bazele de date stochează astfel momentul creării înregistrărilor, API-urile semnalează astfel expirarea, iar sistemele de versionare și logurile înregistrează astfel evenimentele. Când e nevoie de citire umană, numărul se convertește într-o dată în fusul orar dorit – exact ce face acest instrument.",
+          "Există două capcane frecvente. Prima este unitatea: secunde (10 cifre) sau milisecunde (13 cifre) – ușor de greșit, de aceea instrumentul le tratează separat. A doua este fusul orar: același timestamp arată o oră diferită în perspectiva locală și în cea UTC, dar marchează exact același moment. Instrumentul afișează ambele perspective simultan, ca să nu existe confuzii.",
+        ],
+      },
+      tips: [
+        { icon: "🔢", tip: "10 cifre = secunde, 13 cifre = milisecunde. Dacă rezultatul e greșit (dată din 1970 sau foarte îndepărtată), schimbă unitatea." },
+        { icon: "🌍", tip: "Timestamp-ul este independent de fus orar; diferența afișată între local și UTC ține doar de perspectivă, nu de valoarea stocată." },
+        { icon: "📌", tip: "ISO 8601 este cel mai sigur format pentru schimbul de date – neambiguu, sortabil și înțeles de orice sistem modern." },
+        { icon: "🔒", tip: "Momentele rămân în browserul tău; poți converti în siguranță și timestamp-uri din loguri confidențiale." },
+      ],
+    },
+  },
+
   // ═══ 1. FORMATARE JSON ═════════════════════════════════════════════════════
   "json-formazas": {
     introText:

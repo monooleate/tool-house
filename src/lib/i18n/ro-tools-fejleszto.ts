@@ -267,6 +267,60 @@ export const FEJLESZTO_RO: Record<
     ],
   },
 
+  // ── Szó- és karakterszámláló (HU+RO bilingual) ──────────────
+  "szoszamlalo": {
+    slug: "numarator-cuvinte",
+    title: "Numărător de Cuvinte și Caractere online | Gratuit | InstrumenteOnline",
+    h1: "Numărător de cuvinte și caractere",
+    description:
+      "Numără în timp real cuvinte, caractere (cu și fără spații), propoziții și paragrafe. Timp de citire, limite SEO / X și cele mai frecvente cuvinte. În browser, fără server.",
+    keywords: [
+      "numarator de cuvinte",
+      "numarator caractere",
+      "contor cuvinte",
+      "numara cuvinte online",
+      "cate cuvinte are un text",
+      "numarator cuvinte si caractere",
+      "numarare caractere online",
+    ],
+  },
+
+  // ── Számrendszer-váltó (HU+RO bilingual) ──────────────
+  "szamrendszer-valto": {
+    slug: "convertor-baze-numerice",
+    title: "Convertor Baze Numerice online (binar, hexazecimal, zecimal) | InstrumenteOnline",
+    h1: "Convertor baze numerice",
+    description:
+      "Conversie binar, octal, zecimal și hexazecimal în timp real, cu bază personalizată (2–36). Numere mari (BigInt), lungime în biți și grupare. În browser, fără server.",
+    keywords: [
+      "convertor baze numerice",
+      "convertor binar zecimal",
+      "convertor hexazecimal",
+      "binar in zecimal",
+      "transformare baze numerice",
+      "convertor binar octal hexazecimal",
+      "sistem binar online",
+    ],
+  },
+
+  // ── Unix timestamp ↔ dátum (HU+RO bilingual) ──────────────
+  "unix-timestamp": {
+    slug: "convertor-timestamp-unix",
+    title: "Convertor Timestamp Unix online (timestamp ↔ dată) | InstrumenteOnline",
+    h1: "Convertor timestamp Unix",
+    description:
+      "Conversie timestamp Unix în dată și invers – oră locală, UTC, ISO 8601, timp relativ. Secunde și milisecunde, timestamp curent live. În browser, fără server.",
+    keywords: [
+      "convertor timestamp unix",
+      "timestamp unix in data",
+      "epoch converter",
+      "convertor epoch unix",
+      "timestamp in data online",
+      "unix time convertor",
+      "transformare timestamp in data",
+    ],
+  },
+
   // ── Fázis 8: cod de bare + cod QR (RO-only) ──────────────────
   "generator-cod-bare": {
     slug: "generator-cod-bare",

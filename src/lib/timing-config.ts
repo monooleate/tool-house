@@ -59,6 +59,7 @@ export const TOOL_TIMING: Record<string, Partial<TimingConfig>> = {
   // Kép eszközök – azonnali feedback
   "kep-base64":                 { delayBeforeConvert: 0, delayBeforeDownload: 0 },
   "szin-paletta":               { delayBeforeConvert: 0, delayBeforeDownload: 0 },
+  "svg-optimalizalo":           { delayBeforeConvert: 0, delayBeforeDownload: 0 },
   "exif-terkep":                { delayBeforeConvert: 0, delayBeforeDownload: 0 },
 };
 

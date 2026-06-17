@@ -1,6 +1,181 @@
 import type { ContentMap } from "./types.ts";
 
 export const FEJLESZTO_CONTENT: ContentMap = {
+  // ═══ SZÓ- ÉS KARAKTERSZÁMLÁLÓ (HU+RO bilingual) ═══════════════════════════
+  "szoszamlalo": {
+    introText:
+      "A szó- és karakterszámláló valós időben megmutatja, hány szóból, karakterből, mondatból és bekezdésből áll a szöveged, miközben gépelsz vagy beillesztesz. Becsült olvasási és beszédidőt is számol, és jelzi, hogyan fér bele a tartalom a gyakori karakterkorlátokba (SEO title, meta description, X/Twitter). Diákoknak, szövegíróknak, SEO-szakembereknek és közösségimédia-kezelőknek egyaránt hasznos – telepítés és regisztráció nélkül.",
+    guide: [
+      "1. Illeszd be vagy gépeld a szöveget a beviteli mezőbe – a számlálás azonnal, gépelés közben frissül.",
+      "2. Olvasd le a fő mérőszámokat: szavak, karakterek (szóközzel és szóköz nélkül), mondatok, bekezdések, sorok.",
+      "3. Ellenőrizd a karakterkorlát-panelt: a sávok mutatják, belefér-e a szöveg a 60 / 160 / 280 karakteres limitbe.",
+      "4. Másold ki a statisztikát egy kattintással, vagy töröld a mezőt és kezdj újat.",
+    ],
+    faq: [
+      { q: "Mi a különbség a szóközzel és szóköz nélküli karakterszám között?", a: "A szóközzel számolt érték minden karaktert tartalmaz, beleértve a szóközöket, tabulátorokat és sortöréseket – ezt használják a Twitter/X és az SMS limiteknél. A szóköz nélküli érték csak a látható karaktereket számolja, ami egyes tipográfiai és nyomdai feladatoknál hasznos." },
+      { q: "Hogyan számolja az olvasási időt?", a: "Az olvasási idő a szavak számán alapul, átlagosan 200 szó/perces olvasási sebességgel – ez a felnőtt átlagolvasó tempója. A beszédidő 130 szó/perccel számol, ami a kényelmes, érthető előadói tempónak felel meg (prezentáció, videó-szkript)." },
+      { q: "Pontosan számolja a magyar ékezetes karaktereket?", a: "Igen. Az ékezetes betűk (á, é, í, ó, ö, ő, ú, ü, ű) egyetlen karakternek számítanak, ahogy az emoji is egyetlen karakter. A számláló Unicode-helyesen kezeli őket, így az eredmény megegyezik azzal, amit a Word vagy a közösségi platformok mutatnak." },
+      { q: "Mennyi az ideális SEO title és meta description hossz?", a: "A Google a title-ből jellemzően kb. 60 karaktert, a meta description-ből kb. 155–160 karaktert jelenít meg, ezen túl a szöveg csonkolódik a találati listában. A panel ezeket a határokat jelzi, így nem kell külön számolnod." },
+      { q: "Bekerül a szövegem bármilyen szerverre?", a: "Nem. A teljes feldolgozás a böngésződben fut, JavaScripttel – a beírt szöveg soha nem hagyja el a gépedet. Az oldal újratöltése után semmi nem marad meg, így bizalmas vagy publikálatlan tartalomhoz is nyugodtan használható." },
+      { q: "Mire jó a leggyakoribb szavak lista?", a: "Megmutatja, mely szavak ismétlődnek a leggyakrabban a szövegben (a kötőszavakat és névelőket kiszűrve). Hasznos a kulcsszó-sűrűség ellenőrzéséhez SEO-szövegeknél, és a felesleges szóismétlések kiszúrásához íráskor." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Szöveg beillesztése", description: "Illeszd be a vágólapról vagy gépeld közvetlenül a szöveget a mezőbe. A számlálás élőben követi a gépelést." },
+        { title: "2. Mérőszámok leolvasása", description: "A kiemelt kártyák a szavak és karakterek számát mutatják, alattuk a mondatok, bekezdések és sorok." },
+        { title: "3. Karakterkorlátok ellenőrzése", description: "A limit-panel sávjai jelzik, hogy a szöveg belefér-e a SEO title (60), meta description (160) és X (280) határba." },
+        { title: "4. Statisztika másolása", description: "Egy kattintással a vágólapra másolod az összes mérőszámot, vagy törlöd a mezőt egy új szöveghez." },
+      ],
+      useCases: [
+        { icon: "🔍", title: "SEO meta szövegek", description: "Title és meta description írásakor azonnal látod, belefér-e a szöveg a Google által megjelenített karakterhatárba." },
+        { icon: "📱", title: "Közösségi média", description: "X/Twitter poszt, bio vagy hirdetésszöveg írásánál a 280 karakteres limit valós idejű követése." },
+        { icon: "🎓", title: "Esszé és dolgozat", description: "Diákoknak és hallgatóknak, amikor a feladat pontos szó- vagy karakterszámot ír elő (pl. min. 500 szó)." },
+        { icon: "🎙️", title: "Beszéd és videó-szkript", description: "A becsült beszédidő segít belőni egy prezentáció vagy videó hosszát a megadott időkeretbe." },
+      ],
+      formatComparison: {
+        title: "Gyakori karakter- és szólimitek",
+        columns: ["Hely / mező", "Limit", "Megjegyzés"],
+        rows: [
+          { feature: "SEO title (Google)", values: ["~60 karakter", "Efölött csonkolódik a találatban"] },
+          { feature: "Meta description", values: ["~155–160 karakter", "Az ideális leírás hossza"] },
+          { feature: "X / Twitter poszt", values: ["280 karakter", "Linkek rövidítve számítanak"] },
+          { feature: "SMS (1 üzenet)", values: ["160 karakter", "Efölött több SMS-re bomlik"] },
+          { feature: "Meta / Instagram caption", values: ["~2200 karakter", "De az első ~125 látszik csonkolás nélkül"] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért fontos a szó- és karakterszám?",
+        paragraphs: [
+          "A szavak és karakterek pontos száma sok feladatnál nem esztétikai kérdés, hanem konkrét követelmény. A keresőoptimalizálásban a title és a meta description hossza eldönti, hogy a teljes üzenet megjelenik-e a találati listában, vagy csonkolva. A közösségi platformokon és az SMS-ben kemény karakterlimitek vannak, az iskolai és egyetemi feladatok pedig gyakran írnak elő minimális vagy maximális szószámot.",
+          "A szószámlálás alapja egyszerű: a szöveget összefüggő, nem-szóköz karakterekből álló csoportokra bontjuk, és ezek számát adjuk vissza – ez megegyezik a Word, a Google Dokumentumok és a legtöbb szövegszerkesztő logikájával. A karakterszámnál meg kell különböztetni a szóközökkel és szóközök nélkül számolt értéket: a legtöbb online limit (Twitter, SMS) a szóközöket is beleszámolja.",
+          "Az olvasási és beszédidő becslése a szavak számából indul ki. Az átlagos néma olvasási sebesség kb. 200–250 szó perc; a kényelmes, jól érthető előadói tempó ennél lassabb, kb. 130 szó perc. Ezek a becslések segítenek belőni egy cikk olvasási idejét vagy egy prezentáció hosszát, mielőtt megírnád a teljes szöveget.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "A SEO title-t tartsd 60 karakter alatt, a meta description-t 155–160 között – így a teljes szöveg megjelenik a Google találatában." },
+        { icon: "⌨️", tip: "A számláló élőben frissül gépelés közben, így nem kell külön gombot nyomnod az eredményhez." },
+        { icon: "🔒", tip: "A szöveg a böngésződben marad – nyugodtan beillesztheted bizalmas vagy még publikálatlan tartalmat is." },
+        { icon: "📊", tip: "A leggyakoribb szavak listájával gyorsan kiszúrod a felesleges szóismétléseket egy szövegben." },
+      ],
+    },
+  },
+
+  // ═══ SZÁMRENDSZER-VÁLTÓ (HU+RO bilingual) ═════════════════════════════════
+  "szamrendszer-valto": {
+    introText:
+      "A számrendszer-váltó élőben alakít át egész számokat bináris (2-es), oktális (8-as), decimális (10-es) és hexadecimális (16-os) számrendszer között – bármelyik mezőt írod, a többi azonnal frissül. Tetszőleges alap (2–36) is választható, a konverzió pedig BigInt-tel történik, így a 64 biten túli értékek (nagy memóriacímek, bitmaszkok) is pontosak. Programozóknak, hallgatóknak és mindenkinek, aki gyorsan szeretne számrendszert váltani – telepítés nélkül, a böngészőben.",
+    guide: [
+      "1. Írd be a számot bármelyik mezőbe (bináris, oktális, decimális vagy hexadecimális).",
+      "2. A többi számrendszer értéke azonnal, automatikusan frissül.",
+      "3. Egyéni alaphoz (2–36) válaszd ki az alapot a legördülő listából.",
+      "4. Másold ki bármelyik eredményt a sor melletti gombbal.",
+    ],
+    faq: [
+      { q: "Milyen számrendszerek között vált?", a: "A négy leggyakoribb között azonnal: bináris (2), oktális (8), decimális (10) és hexadecimális (16). Ezen felül bármilyen egyéni alap választható 2 és 36 között." },
+      { q: "Mekkora számokat kezel?", a: "Tetszőlegesen nagyokat. A konverzió BigInt aritmetikával történik, így a 32 vagy 64 bites határon túli értékek (nagy hexadecimális címek, hosszú bitmaszkok) is kerekítési hiba nélkül pontosak." },
+      { q: "Mit jelent a hexadecimális A–F?", a: "A 16-os számrendszerben 16 számjegy van: 0–9, majd A=10, B=11, C=12, D=13, E=14, F=15. Így egy hexadecimális számjegy pontosan 4 bitet (egy „nibble”-t) kódol." },
+      { q: "Kezeli az előtagokat (0x, 0b)?", a: "Igen, a beírt 0x (hex), 0b (bináris) és 0o (oktális) előtagokat felismeri és figyelmen kívül hagyja, így nyugodtan beillesztheted a forráskódból másolt értékeket." },
+      { q: "Mire való a bit-hossz kijelzés?", a: "Megmutatja, hány bit szükséges a szám ábrázolásához (a legmagasabb helyiértékű 1-es bittől számolva). Hasznos adattípus-választáshoz: belefér-e az érték 8, 16, 32 vagy 64 bitbe." },
+      { q: "Szerverre kerül a beírt szám?", a: "Nem. A teljes átváltás a böngésződben, JavaScripttel történik – semmilyen adat nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Szám beírása", description: "Írd be az értéket bármelyik számrendszer mezőjébe – nem kell előre eldöntened a kiindulási alapot." },
+        { title: "2. Élő átváltás", description: "A többi mező (bináris, oktális, decimális, hexadecimális) azonnal frissül a beírt értékre." },
+        { title: "3. Egyéni alap", description: "Tetszőleges 2 és 36 közötti alaphoz válaszd ki a kívánt számot az egyéni alap legördülőből." },
+        { title: "4. Eredmény másolása", description: "A sor melletti gombbal bármelyik számrendszer értékét a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "💻", title: "Programozás", description: "Hexadecimális memóriacímek, színkódok (#RRGGBB) vagy bitmaszkok gyors értelmezése decimálisban és binárisban." },
+        { icon: "🎓", title: "Tanulás", description: "Informatika órán a számrendszerek és az átváltás megértéséhez – látod egyszerre mind a négy alakot." },
+        { icon: "🔧", title: "Hálózat és hardver", description: "IP-alhálózati maszkok, regiszterértékek és flag-ek átváltása bináris és hexadecimális között." },
+        { icon: "🔢", title: "Bit-műveletek", description: "A bináris alak és a bit-hossz segít a bitenkénti műveletek (AND, OR, shift) tervezésében és ellenőrzésében." },
+      ],
+      formatComparison: {
+        title: "A négy leggyakoribb számrendszer",
+        columns: ["Számrendszer", "Alap", "Számjegyek", "Példa (255)"],
+        rows: [
+          { feature: "Bináris", values: ["2", "0–1", "11111111"] },
+          { feature: "Oktális", values: ["8", "0–7", "377"] },
+          { feature: "Decimális", values: ["10", "0–9", "255"] },
+          { feature: "Hexadecimális", values: ["16", "0–9, A–F", "FF"] },
+        ],
+      },
+      aboutSection: {
+        title: "Számrendszerek dióhéjban",
+        paragraphs: [
+          "A számrendszer azt határozza meg, hány különböző számjegyet használunk, és mekkora a helyiértékek alapja. A hétköznapi decimális (10-es) rendszerben tíz számjegy van (0–9), a számítógépek viszont a kettes (bináris) rendszert használják, mert az áramköri kapcsolók két állapota (0 és 1) közvetlenül megfeleltethető a biteknek.",
+          "A hexadecimális (16-os) rendszer a programozás kényelmi nyelve: egy hexadecimális számjegy pontosan négy bitet kódol, így egy bájt (8 bit) mindig két hexadecimális jeggyel írható le. Ezért látunk hexadecimálist a memóriacímeknél, a színkódoknál és a hibakódoknál. Az oktális (8-as) rendszer ma főleg a Unix fájljogosultságoknál (pl. 755) él tovább.",
+          "Az átváltás mindig ugyanazt a számot fejezi ki más jelöléssel: a 255 érték decimálisban „255”, binárisban „11111111”, hexadecimálisban „FF” – de mindhárom ugyanaz a mennyiség. Ez az eszköz a BigInt aritmetikának köszönhetően a nagyon nagy számoknál is megőrzi a pontosságot, amit a hagyományos lebegőpontos átváltás már nem tudna.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Egy hexadecimális számjegy = 4 bit, két hexadecimális jegy = 1 bájt. Ez a leggyorsabb mód a hex és a bináris fejben tartására." },
+        { icon: "🎨", tip: "A #FF8800-szerű színkódok valójában három hexadecimális bájt (piros, zöld, kék) – itt decimálisra bonthatod őket." },
+        { icon: "🔒", tip: "A beírt szám a böngésződben marad, semmi nem kerül szerverre – bizalmas értékekhez is használható." },
+        { icon: "📏", tip: "Nézd a bit-hosszt: ha 8-nál több, az érték már nem fér el egy bájtban; 32 felett 64 bites típus kell." },
+      ],
+    },
+  },
+
+  // ═══ UNIX TIMESTAMP ÁTVÁLTÓ (HU+RO bilingual) ═════════════════════════════
+  "unix-timestamp": {
+    introText:
+      "A Unix timestamp átváltó az 1970 óta eltelt másodpercekben (vagy ezredmásodpercekben) mért időbélyegeket alakítja olvasható dátummá és vissza. Megmutatja a helyi időt, a UTC-t, az ISO 8601 alakot, a hét napját és a relatív időt is („3 napja”, „2 óra múlva”). Felül élőben ketyeg az aktuális timestamp. Fejlesztőknek, akik adatbázis-mezőkkel, API-válaszokkal vagy naplófájlokkal dolgoznak – telepítés nélkül, a böngészőben.",
+    guide: [
+      "1. Timestamp → dátum: írd be az időbélyeget, és válaszd ki, hogy másodperc vagy ezredmásodperc.",
+      "2. A „Most” gomb beírja az aktuális időbélyeget – az eredmény azonnal megjelenik (helyi, UTC, ISO, relatív).",
+      "3. Dátum → timestamp: válaszd ki a dátumot és időt a mezőben, és leolvasod a hozzá tartozó timestampet.",
+      "4. Bármelyik eredményt egy kattintással a vágólapra másolod.",
+    ],
+    faq: [
+      { q: "Mi az a Unix timestamp?", a: "A Unix időbélyeg az 1970. január 1. 00:00:00 UTC (az „epoch”) óta eltelt másodpercek száma. Egyetlen egész számmal, időzónától függetlenül azonosít egy időpontot, ezért használják adatbázisok, API-k, naplók és programnyelvek világszerte." },
+      { q: "Mi a különbség a másodperc és az ezredmásodperc között?", a: "A klasszikus Unix timestamp másodpercben mér, és jelenleg 10 számjegyű. A JavaScript (Date.now()) és sok modern rendszer viszont ezredmásodpercet használ, ami 13 számjegyű. Az eszközben átkapcsolható, melyiket adtad meg." },
+      { q: "Milyen időzónában jeleníti meg az eredményt?", a: "Egyszerre mutatja a böngésződ helyi időzónája szerinti időt és a UTC-t. Mivel a timestamp önmagában időzóna-független, így rögtön látod mindkét nézetet, félreértés nélkül." },
+      { q: "Mit jelent az ISO 8601 alak?", a: "Az ISO 8601 a dátumok szabványos, géppel és emberrel is olvasható szöveges formátuma (pl. 2025-06-15T14:26:40.000Z). A végén a Z jelzi, hogy az érték UTC-ben van. Ezt a formátumot várja a legtöbb API és adatcsere." },
+      { q: "Mire jó a relatív idő?", a: "A relatív idő szavakkal fejezi ki a távolságot a mostani időponttól: „3 napja”, „2 óra múlva”. Hasznos naplóbejegyzések vagy lejárati dátumok gyors értelmezéséhez." },
+      { q: "Szerverre kerül a megadott időpont?", a: "Nem. Minden átváltás a böngésződben, JavaScripttel történik – sem a timestamp, sem a dátum nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Irány kiválasztása", description: "Timestamp → dátum, vagy dátum → timestamp – a két szekció külön, egymástól függetlenül használható." },
+        { title: "2. Érték megadása", description: "Timestampnél írd be a számot és válaszd a másodperc/ezredmásodperc egységet; dátumnál használd a dátum-mezőt." },
+        { title: "3. Eredmény leolvasása", description: "Megjelenik a helyi idő, a UTC, az ISO 8601, a hét napja és a relatív idő – mind egyszerre, élőben." },
+        { title: "4. Másolás", description: "Bármelyik kimenetet a mellette lévő gombbal a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "🗄️", title: "Adatbázis-mezők", description: "A created_at / updated_at és hasonló timestamp-oszlopok gyors értelmezése olvasható dátummá hibakeresés közben." },
+        { icon: "🔌", title: "API-válaszok", description: "A JSON-ben kapott epoch értékek (gyakran ezredmásodpercben) azonnali átváltása emberi időre." },
+        { icon: "📋", title: "Naplófájlok", description: "Szerver- és alkalmazásnaplók timestampjeinek összevetése a helyi és UTC idővel incidensek vizsgálatakor." },
+        { icon: "⏰", title: "Lejárati idők", description: "Tokenek, gyorsítótár-bejegyzések vagy cron-feladatok lejáratának ellenőrzése – mikor jár le, és mennyi van hátra." },
+      ],
+      formatComparison: {
+        title: "Időbélyeg-formátumok",
+        columns: ["Formátum", "Példa", "Jellemző"],
+        rows: [
+          { feature: "Unix másodperc", values: ["1750000000", "10 számjegy, klasszikus Unix"] },
+          { feature: "Unix ezredmásodperc", values: ["1750000000000", "13 számjegy, JavaScript Date.now()"] },
+          { feature: "ISO 8601", values: ["2025-06-15T14:26:40Z", "Szabványos szöveg, UTC-vel"] },
+          { feature: "UTC olvasható", values: ["15 Jun 2025 14:26:40 GMT", "Emberi nézet, UTC-ben"] },
+        ],
+      },
+      aboutSection: {
+        title: "A Unix idő dióhéjban",
+        paragraphs: [
+          "A Unix idő (más néven epoch idő vagy POSIX idő) egyetlen egész számmal méri az időt: hány másodperc telt el 1970. január 1. éjfél (UTC) óta. Ennek a megoldásnak az ereje az egyszerűségében van – nincs időzóna, nincs nyári időszámítás, nincs hónap- vagy évhatár-probléma, csak egy folyamatosan növekvő szám, amellyel könnyű számolni és összehasonlítani.",
+          "Éppen ezért a timestamp a számítástechnika közös időnyelve: adatbázisok ezzel tárolják a rekordok létrehozási idejét, az API-k ezzel jeleznek lejáratot, a verziókövető rendszerek és a naplók ezzel rögzítik az eseményeket. Amikor emberi olvasásra van szükség, a számot átváltjuk dátummá a kívánt időzónában – pontosan ezt teszi ez az eszköz.",
+          "Két gyakori csapda van. Az egyik a mértékegység: másodperc (10 jegy) vagy ezredmásodperc (13 jegy) – könnyű elrontani, ezért az eszköz külön kezeli a kettőt. A másik az időzóna: ugyanaz a timestamp a helyi és a UTC nézetben más órát mutat, de ugyanazt a pillanatot jelöli. Az eszköz mindkét nézetet egyszerre mutatja, hogy ne legyen félreértés.",
+        ],
+      },
+      tips: [
+        { icon: "🔢", tip: "10 számjegy = másodperc, 13 számjegy = ezredmásodperc. Ha rossz az eredmény (1970 körüli vagy nagyon távoli dátum), kapcsold át az egységet." },
+        { icon: "🌍", tip: "A timestamp időzóna-független; a megjelenített eltérés a helyi és a UTC között csak a nézet különbsége, nem a tárolt értéké." },
+        { icon: "📌", tip: "Az ISO 8601 a legbiztonságosabb formátum adatcseréhez – egyértelmű, rendezhető és minden modern rendszer érti." },
+        { icon: "🔒", tip: "Az időpontok a böngésződben maradnak; bizalmas naplók timestampjeit is nyugodtan átválthatod." },
+      ],
+    },
+  },
+
   // ═══ 1. JSON FORMÁZÁS ═════════════════════════════════════════════════════
   "json-formazas": {
     introText:

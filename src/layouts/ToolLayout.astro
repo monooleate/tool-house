@@ -68,12 +68,15 @@ const isFejlesztoRoOnly =
 const needsKatex = MATH_CATS.has(tool.category) || isFejlesztoRoOnly;
 
 // ─── Longform Markdown lookup (Astro Content Collection) ─────
-// Ha math-kategória és van egyező toolSlug a math collection-ben (RO-only),
-// betöltjük és renderüljük a tartalmat + a frontmatter schema.org JSON-LD-t.
+// Math-kategóriák + MINDEN fejleszto tool (RO build): ha van egyező toolSlug
+// a math collection-ben, betöltjük a longformot + a frontmatter schema.org-ot.
+// (A RO-only generátorok KaTeX-et használnak; a HU+RO fejleszto toolok — pl.
+//  szó-/karakterszámláló — longformja képlet nélküli, de így szintén renderel.)
+const supportsLongform = MATH_CATS.has(tool.category) || rawTool.category === "fejleszto" || rawTool.category === "szinek";
 let mathEntry: any = null;
 let MathContent: any = null;
 let mathSchemaScripts: string[] = [];
-if (needsKatex && CURRENT_LANG === "ro") {
+if (supportsLongform && CURRENT_LANG === "ro") {
   try {
     const all = await getCollection("math");
     mathEntry = all.find((e: any) => e.data.toolSlug === rawTool.slug);

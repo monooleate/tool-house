@@ -1,6 +1,150 @@
 import type { ContentMap } from "../types.ts";
 
 export const KEP_RO_CONTENT: ContentMap = {
+  // ═══ OPTIMIZARE SVG (HU+RO bilingual) ════════════════════════════════════
+  "svg-optimalizalo": {
+    introText:
+      "Instrumentul de optimizare SVG minifică fișierele tale vectoriale: elimină comentariile, metadatele, atributele și namespace-urile inutile ale programelor de editare (Inkscape, Illustrator), precum și spațiile și rândurile noi de prisos. Aspectul imaginii rămâne neschimbat, dar dimensiunea fișierului scade semnificativ – ceea ce înseamnă încărcare mai rapidă și cod mai curat. Pentru dezvoltatori web și designeri care pun în producție pictograme și ilustrații.",
+    guide: [
+      "1. Trage sau selectează fișierul SVG.",
+      "2. Apasă butonul «Optimizare» – instrumentul minifică instant codul.",
+      "3. Vezi reducerea de dimensiune (original vs. optimizat), apoi copiază codul sau descarcă fișierul.",
+      "4. SVG-ul descărcat este identic funcțional, doar mai mic și mai curat.",
+    ],
+    faq: [
+      { q: "Ce elimină optimizarea?", a: "Declarația XML, DOCTYPE, comentariile, blocul <metadata>, atributele și namespace-urile de editor (Inkscape, Sodipodi), precum și spațiile dintre taguri și cele multiple." },
+      { q: "Se modifică imaginea după minificare?", a: "Nu. Sunt eliminate doar elementele care nu afectează afișarea (comentarii, metadate, spații) – instrucțiunile de desen (path, forme, culori) rămân neatinse." },
+      { q: "Cu cât scade dimensiunea fișierului?", a: "Depinde de sursă: SVG-urile exportate din editoare conțin adesea multe metadate inutile, la acestea reducerea poate ajunge la 30–60%; la SVG-urile deja curate, mai puțin." },
+      { q: "Este sigur pentru datele mele?", a: "Da, întreaga procesare are loc în browserul tău – niciun byte din fișierul SVG nu ajunge pe server." },
+      { q: "Păstrează elementele <title> și <desc>?", a: "Da, păstrează elementele <title> și <desc> importante pentru accesibilitate; șterge doar părțile inutile pentru afișare și cod." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea SVG", description: "Trage fișierul SVG în zona de încărcare sau selectează-l." },
+        { title: "2. Optimizare", description: "Apasă butonul «Optimizare» – minificarea rulează instant." },
+        { title: "3. Verificarea rezultatului", description: "Apar dimensiunea originală și cea optimizată, plus reducerea procentuală." },
+        { title: "4. Copiere sau descărcare", description: "Copiază codul SVG curat în clipboard sau descarcă-l ca fișier." },
+      ],
+      useCases: [
+        { icon: "🌐", title: "Performanța site-ului", description: "SVG-uri mai mici înseamnă încărcare mai rapidă și valori Core Web Vitals mai bune." },
+        { icon: "🎨", title: "Seturi de pictograme", description: "Curățarea pictogramelor exportate din editor de metadatele inutile înainte de producție." },
+        { icon: "📦", title: "SVG inline", description: "Cod mai curat când integrezi SVG-ul direct în HTML sau într-o componentă." },
+        { icon: "🔧", title: "Build pipeline", description: "Optimizare manuală pentru verificare rapidă, înainte de a configura un instrument de build." },
+      ],
+      aboutSection: {
+        title: "De ce merită să optimizezi SVG-ul?",
+        paragraphs: [
+          "SVG (Scalable Vector Graphics) este un format vectorial bazat pe XML, care rămâne clar la orice dimensiune și este ideal pentru web. Editoarele grafice (Inkscape, Illustrator) adaugă însă adesea, la export, multe date inutile în fișier: metadate de editor, informații de straturi ascunse, declarații lungi de namespace și spații abundente.",
+          "Aceste elemente nu influențează aspectul imaginii, dar cresc inutil dimensiunea fișierului. Optimizarea le elimină, astfel încât fișierul devine mai mic, se încarcă mai repede, iar codul este mai lizibil – deosebit de important când integrezi SVG-ul inline în HTML, unde fiecare byte adaugă la greutatea paginii.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "La SVG-urile exportate din editor economia este cea mai mare – sunt pline de metadate inutile." },
+        { icon: "🗜️", tip: "SVG-ul optimizat, combinat cu compresia gzip/brotli pe server, devine și mai mic la transfer." },
+        { icon: "🔒", tip: "Fișierul rămâne în browserul tău – poți optimiza liniștit și grafice confidențiale, nepublicate." },
+      ],
+    },
+  },
+
+  // ═══ CONVERTOR PNG → SVG (HU+RO bilingual) ═══════════════════════════════
+  "png-svg": {
+    introText:
+      "Convertorul PNG → SVG transformă imaginile raster (PNG, JPG) în grafică vectorială scalabilă prin urmărire reală de contururi. Nu doar integrează imaginea într-un SVG, ci desenează efectiv trasee vectoriale (path) în jurul formelor – astfel rezultatul rămâne clar la orice dimensiune. Numărul de culori îl stabilești tu. La imagini simple, contrastante (logo-uri, pictograme, siluete) rezultatul este cel mai bun.",
+    guide: [
+      "1. Trage imaginea PNG sau JPG.",
+      "2. Setează numărul de culori – mai puține dau un rezultat mai curat, mai multe unul mai detaliat.",
+      "3. Apasă butonul «Vectorizare» și verifică previzualizarea vectorială.",
+      "4. Descarcă fișierul SVG rezultat.",
+    ],
+    faq: [
+      { q: "Este vectorizare reală sau doar integrare?", a: "Vectorizare reală: biblioteca imagetracerjs creează prin urmărire de contururi trasee vectoriale efective din forme, nu integrează imaginea raster. Rezultatul rămâne clar și mărit." },
+      { q: "Pentru ce imagini este recomandat?", a: "Pentru imagini simple, contrastante, cu puține culori: logo-uri, pictograme, embleme, siluete. La fotografii vectorizarea este mai puțin utilă, fiindcă numărul mare de nuanțe ar genera un SVG mare și complex." },
+      { q: "La ce folosește setarea numărului de culori?", a: "Stabilește în câte culori simplifică instrumentul imaginea înainte de vectorizare. Mai puține culori dau un SVG mai curat și mai mic; mai multe, unul mai detaliat, dar mai mare. Pentru logo-uri, 8–16 este de obicei ideal." },
+      { q: "Imaginea ajunge pe server?", a: "Nu, vectorizarea rulează integral în browserul tău – imaginea nu părăsește dispozitivul." },
+      { q: "De ce este redimensionată imaginea procesată?", a: "Imaginile foarte mari sunt micșorate înainte de vectorizare (max. 1000 px), ca procesarea să rămână rapidă; SVG-ul rezultat poate fi totuși scalat la orice dimensiune." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea imaginii", description: "Trage imaginea PNG sau JPG în zona de încărcare." },
+        { title: "2. Setarea numărului de culori", description: "Alege în câte culori să se simplifice imaginea înainte de vectorizare." },
+        { title: "3. Vectorizare", description: "Apasă butonul – instrumentul transformă imaginea în SVG prin urmărire de contururi." },
+        { title: "4. Previzualizare și descărcare", description: "Verifică previzualizarea vectorială, apoi descarcă SVG-ul." },
+      ],
+      useCases: [
+        { icon: "🎯", title: "Vectorizare logo", description: "Re-vectorizarea unui logo vechi, existent doar în format raster, într-un SVG scalabil." },
+        { icon: "🖨️", title: "Pregătire pentru tipar", description: "Format vectorial pentru tipar de mari dimensiuni, unde imaginea raster ar fi pixelată." },
+        { icon: "✏️", title: "Editabilitate", description: "Traseele vectoriale pot fi modificate ulterior cu un editor (de ex. Inkscape)." },
+        { icon: "🎨", title: "Pictograme", description: "Transformarea pictogramelor și siluetelor simple în vector pentru uz web și UI." },
+      ],
+      formatComparison: {
+        title: "Raster vs. vector",
+        columns: ["Proprietate", "Raster (PNG/JPG)", "Vector (SVG)"],
+        rows: [
+          { feature: "Scalabilitate", values: ["Pixelat la mărire", "Clar la orice dimensiune"] },
+          { feature: "Stocare", values: ["Culoarea pixelilor", "Trasee matematice"] },
+          { feature: "Conținut ideal", values: ["Fotografii", "Logo-uri, pictograme, scheme"] },
+        ],
+      },
+      aboutSection: {
+        title: "Imagini raster și vectoriale",
+        paragraphs: [
+          "Imaginile raster (PNG, JPG) sunt formate dintr-o grilă de pixeli: fiecărui punct îi corespunde o culoare. La mărire, pixelii devin vizibili, iar imaginea devine „pixelată”. Grafica vectorială, în schimb, stochează formele printr-o descriere matematică – puncte, linii, curbe – deci rămâne perfect clară la orice dimensiune.",
+          "Vectorizarea (image tracing) încearcă să transforme formele imaginii raster în trasee vectoriale: detectează limitele de culoare și desenează contururi în jurul lor. Funcționează cel mai bine la imagini contrastante, cu puține culori (logo-uri, pictograme); la fotografii, numărul mare de nuanțe ar face rezultatul prea complex și mare, de aceea pentru acestea rămâne potrivit formatul raster.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "Pentru cel mai bun rezultat, folosește o imagine sursă curată, contrastantă, cu fundal uniform." },
+        { icon: "🎚️", tip: "Dacă rezultatul e prea detaliat sau mare, scade numărul de culori; dacă e prea grosier, crește-l." },
+        { icon: "🔍", tip: "Nu vectoriza fotografii – pentru acestea sunt potrivite PNG/JPG sau WebP." },
+      ],
+    },
+  },
+
+  // ═══ GENERATOR PACHET FAVICON (HU+RO bilingual) ══════════════════════════
+  "favicon-generator": {
+    introText:
+      "Generatorul de pachet favicon creează dintr-o singură imagine setul complet, modern, de favicon-uri: fișierul clasic favicon.ico (16/32/48 px), PNG-urile de diferite dimensiuni, pictograma apple-touch-icon, fișierul site.webmanifest și codul HTML pe care trebuie să-l inserezi în antetul paginii. Totul într-un ZIP descărcabil. Pentru dezvoltatori web care vor rapid suport complet de favicon, fără redimensionări manuale.",
+    guide: [
+      "1. Încarcă o imagine pătrată (ideal 512×512 px PNG).",
+      "2. Apasă butonul «Generează pachetul favicon».",
+      "3. Descarcă ZIP-ul și dezarhivează fișierele în folderul rădăcină al site-ului.",
+      "4. Copiază codul HTML în secțiunea <head> a paginii.",
+    ],
+    faq: [
+      { q: "Ce conține pachetul?", a: "favicon.ico (16/32/48 px împreună), PNG-uri separate (16, 32, 48, 192, 512 px), apple-touch-icon (180 px), site.webmanifest și un head-snippet.html cu tag-urile <link> de inserat." },
+      { q: "Ce imagine să încarc?", a: "O imagine pătrată, ideal de 512×512 px, pentru cea mai bună calitate. Instrumentul micșorează din ea toate dimensiunile necesare." },
+      { q: "Unde pun fișierele?", a: "PNG-urile, ICO-ul și manifestul de obicei în folderul rădăcină al site-ului; tag-urile HTML <link> se inserează în secțiunea <head> a paginii." },
+      { q: "De ce sunt necesare atâtea dimensiuni?", a: "Browserele, sistemele de operare și dispozitivele mobile folosesc pictograme de dimensiuni diferite (filă de browser, marcaj, ecran de start). Pachetul complet asigură o pictogramă clară peste tot." },
+      { q: "Imaginea ajunge pe server?", a: "Nu, întreaga generare are loc în browserul tău – imaginea sursă nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcarea imaginii", description: "Încarcă o imagine sursă pătrată, ideal de 512×512 px." },
+        { title: "2. Generare", description: "Apasă butonul – instrumentul generează toate dimensiunile și fișierele." },
+        { title: "3. Descărcarea ZIP", description: "Descarcă pachetul favicon complet într-o singură arhivă ZIP." },
+        { title: "4. Inserarea", description: "Copiază fișierele în folderul rădăcină, iar codul HTML în <head>." },
+      ],
+      useCases: [
+        { icon: "🚀", title: "Site nou", description: "Configurarea suportului complet de favicon la lansarea unui proiect, în câteva minute." },
+        { icon: "📱", title: "PWA / mobil", description: "site.webmanifest și pictogramele mari pentru aplicația web salvată pe ecranul de start." },
+        { icon: "🍎", title: "Dispozitive Apple", description: "apple-touch-icon asigură pictograma clară pentru marcajele iPhone/iPad." },
+        { icon: "🔖", title: "Identitate de brand", description: "Pictogramă unitară și clară în fila browserului și printre marcaje." },
+      ],
+      aboutSection: {
+        title: "Ce este un favicon și de ce sunt necesare mai multe dimensiuni?",
+        paragraphs: [
+          "Faviconul este pictograma mică ce apare în fila browserului, printre marcaje și pe ecranul de start, lângă site-ul tău. Cândva era suficient un singur fișier favicon.ico, dar astăzi browserele, sistemele de operare și platformele mobile cer pictograme de dimensiuni și formate diferite în locuri diferite.",
+          "De aceea acest instrument creează un pachet complet: favicon.ico clasic și maxim compatibil (mai multe dimensiuni într-un fișier), PNG-uri separate pentru browserele moderne, un apple-touch-icon mai mare pentru ecranul de start iOS și un fișier site.webmanifest necesar aplicațiilor web progresive (PWA). Cu codul HTML inclus, poți integra totul într-un singur pas.",
+        ],
+      },
+      tips: [
+        { icon: "⬛", tip: "Folosește o imagine sursă pătrată – o imagine nepătrată se poate distorsiona la micșorare." },
+        { icon: "🎨", tip: "Pictograma să fie recunoscibilă și la dimensiune mică: evită detaliile fine și liniile subțiri." },
+        { icon: "🔒", tip: "Generarea rulează în browserul tău – imaginea sursă nu ajunge pe server." },
+      ],
+    },
+  },
+
   // ═══ 1. JPG → WEBP ═══════════════════════════════════════════════════════
   "jpg-webp": {
     introText:

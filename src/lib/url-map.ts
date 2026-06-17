@@ -19,6 +19,7 @@ export const CATEGORY_URLS: Record<SupportedLang, Record<CategoryId, string>> = 
     excel: "excel",
     fajl: "fajl",
     seo: "seo",
+    szinek: "szinek",
     // RO-only kategóriák – HU build nem generál oldalt (languages: ["ro"]),
     // de a Record<CategoryId,string> teljességéhez kell placeholder
     calculator: "calculator",
@@ -39,6 +40,7 @@ export const CATEGORY_URLS: Record<SupportedLang, Record<CategoryId, string>> = 
     excel: "excel",
     fajl: "fisiere",
     seo: "seo",
+    szinek: "culori",
     // RO matematika / kalkulátor kategóriák
     calculator: "calculator",
     geometrie: "geometrie",

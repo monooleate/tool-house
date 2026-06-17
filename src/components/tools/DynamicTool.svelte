@@ -54,6 +54,10 @@
     AutomatikusVagas:  () => import("../tools/kep/AutomatikusVagas.svelte"),
     ExifTerkep:        () => import("../tools/kep/ExifTerkep.svelte"),
     SpriteVago:        () => import("../tools/kep/SpriteVago.svelte"),
+    // KÉP – vektor + favicon (HU+RO bilingual)
+    SvgOptimalizalo:   () => import("../tools/kep/SvgOptimalizalo.svelte"),
+    PngSvgTool:        () => import("../tools/kep/PngSvgTool.svelte"),
+    FaviconCsomag:     () => import("../tools/kep/FaviconCsomag.svelte"),
     // PDF
     PdfMergeTool: () => import("../tools/pdf/PdfMergeTool.svelte"),
     PdfSplitTool: () => import("../tools/pdf/PdfSplitTool.svelte"),
@@ -199,6 +203,14 @@
     CodBareGenerator:            () => import("../tools/fejleszto/CodBareGenerator.svelte"),
     CodQrGenerator:              () => import("../tools/fejleszto/CodQrGenerator.svelte"),
     GeneratorParola:             () => import("../tools/fejleszto/GeneratorParola.svelte"),
+    // FEJLESZTO (HU+RO bilingual) – szó- és karakterszámláló, számrendszer-váltó
+    SzoSzamlalo:                 () => import("../tools/fejleszto/SzoSzamlalo.svelte"),
+    SzamrendszerValto:           () => import("../tools/fejleszto/SzamrendszerValto.svelte"),
+    UnixTimestamp:               () => import("../tools/fejleszto/UnixTimestamp.svelte"),
+    // SZÍNEK (HU+RO bilingual)
+    SzinKonverter:               () => import("../tools/szinek/SzinKonverter.svelte"),
+    KontrasztEllenorzo:          () => import("../tools/szinek/KontrasztEllenorzo.svelte"),
+    GradientGenerator:           () => import("../tools/szinek/GradientGenerator.svelte"),
   };
 
   onMount(async () => {

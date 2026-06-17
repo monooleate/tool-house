@@ -1,6 +1,150 @@
 import type { ContentMap } from "./types.ts";
 
 export const KEP_CONTENT: ContentMap = {
+  // ═══ SVG OPTIMALIZÁLÓ (HU+RO bilingual) ══════════════════════════════════
+  "svg-optimalizalo": {
+    introText:
+      "Az SVG optimalizáló minifikálja a vektorgrafikus fájljaidat: eltávolítja a kommenteket, a metaadatokat, a szerkesztőprogramok (Inkscape, Illustrator) felesleges attribútumait és namespace-eit, valamint a felesleges szóközöket és sortöréseket. A kép megjelenése változatlan marad, a fájlméret viszont jelentősen csökken – gyorsabb betöltést és tisztább kódot eredményezve. Webfejlesztőknek és designereknek, akik ikonokat és illusztrációkat tesznek élesbe.",
+    guide: [
+      "1. Húzd be vagy tallózd ki az SVG fájlt.",
+      "2. Kattints az «Optimalizálás» gombra – az eszköz azonnal minifikálja a kódot.",
+      "3. Nézd meg a méretcsökkenést (eredeti vs. optimalizált), és másold ki a kódot vagy töltsd le a fájlt.",
+      "4. A letöltött SVG funkcionálisan azonos, csak kisebb és tisztább.",
+    ],
+    faq: [
+      { q: "Mit távolít el az optimalizáló?", a: "XML deklarációt, DOCTYPE-ot, kommenteket, a <metadata> blokkot, a szerkesztői (Inkscape, Sodipodi) attribútumokat és namespace-eket, valamint a tagok közötti és a többszörös whitespace-t." },
+      { q: "Megváltozik a kép a minifikálás után?", a: "Nem. Csak a megjelenítést nem befolyásoló elemek (kommentek, metaadatok, whitespace) kerülnek eltávolításra – a rajzolási utasítások (path, alakzatok, színek) érintetlenek maradnak." },
+      { q: "Mennyivel lesz kisebb a fájl?", a: "Ez a forrástól függ: a szerkesztőből exportált SVG-k gyakran sok felesleges metaadatot tartalmaznak, ezeknél 30–60% csökkenés is elérhető; a már tiszta SVG-knél kevesebb." },
+      { q: "Biztonságos az adataim szempontjából?", a: "Igen, a teljes feldolgozás a böngésződben történik – az SVG fájl egyetlen bájtja sem kerül szerverre." },
+      { q: "Megőrzi a <title> és <desc> elemeket?", a: "Igen, az akadálymentességhez fontos <title> és <desc> elemeket megtartja; csak a megjelenítéshez és kódhoz felesleges részeket törli." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. SVG feltöltése", description: "Húzd be az SVG fájlt a feltöltési területre vagy tallózd ki." },
+        { title: "2. Optimalizálás", description: "Kattints az «Optimalizálás» gombra – a minifikálás azonnal lefut." },
+        { title: "3. Eredmény ellenőrzése", description: "Megjelenik az eredeti és az optimalizált méret, valamint a százalékos csökkenés." },
+        { title: "4. Másolás vagy letöltés", description: "Másold a tiszta SVG kódot a vágólapra, vagy töltsd le fájlként." },
+      ],
+      useCases: [
+        { icon: "🌐", title: "Weboldal-teljesítmény", description: "Kisebb SVG-k gyorsabb betöltést és jobb Core Web Vitals értékeket adnak." },
+        { icon: "🎨", title: "Ikonkészletek", description: "Szerkesztőből exportált ikonok megtisztítása a felesleges metaadatoktól élesítés előtt." },
+        { icon: "📦", title: "Inline SVG", description: "Tisztább kód, ha az SVG-t közvetlenül a HTML-be vagy komponensbe ágyazod." },
+        { icon: "🔧", title: "Build pipeline", description: "Kézi optimalizálás gyors ellenőrzéshez, build-eszköz beállítása előtt." },
+      ],
+      aboutSection: {
+        title: "Miért érdemes optimalizálni az SVG-t?",
+        paragraphs: [
+          "Az SVG (Scalable Vector Graphics) egy XML-alapú vektorformátum, amely tetszőleges méretben éles marad, és webre ideális. A grafikus szerkesztők (Inkscape, Illustrator) azonban exportáláskor gyakran rengeteg felesleges adatot tesznek a fájlba: szerkesztői metaadatokat, rejtett réteginformációkat, hosszú namespace-deklarációkat és bőséges whitespace-t.",
+          "Ezek az elemek nem befolyásolják a kép megjelenését, viszont feleslegesen növelik a fájlméretet. Az optimalizálás eltávolítja őket, így a fájl kisebb lesz, gyorsabban töltődik, és a kódja is áttekinthetőbb – különösen fontos ez, ha az SVG-t inline módon ágyazod a HTML-be, ahol minden bájt a HTML-súlyt növeli.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "A szerkesztőből exportált SVG-knél a legnagyobb a megtakarítás – ezek tele vannak felesleges metaadattal." },
+        { icon: "🗜️", tip: "Az optimalizált SVG-t a szerveren gzip/brotli tömörítéssel kombinálva még kisebb lesz az átvitt méret." },
+        { icon: "🔒", tip: "A fájl a böngésződben marad – bizalmas, publikálatlan grafikákat is nyugodtan optimalizálhatsz." },
+      ],
+    },
+  },
+
+  // ═══ PNG → SVG VEKTORIZÁLÓ (HU+RO bilingual) ═════════════════════════════
+  "png-svg": {
+    introText:
+      "A PNG → SVG vektorizáló valódi kontúrkövetéssel alakítja át a raszteres képeket (PNG, JPG) skálázható vektorgrafikává. Nem csak beágyazza a képet egy SVG-be, hanem ténylegesen vektor-útvonalakat (path) rajzol az alakzatok köré – így az eredmény tetszőleges méretben éles marad. A színek számát te állítod be. Egyszerű, kontrasztos képeknél (logók, ikonok, sziluettek) a legjobb az eredmény.",
+    guide: [
+      "1. Húzd be a PNG vagy JPG képet.",
+      "2. Állítsd be a színek számát – kevesebb tisztább, több részletesebb eredményt ad.",
+      "3. Kattints a «Vektorizálás» gombra, és nézd meg a vektoros előnézetet.",
+      "4. Töltsd le a kész SVG fájlt.",
+    ],
+    faq: [
+      { q: "Ez valódi vektorizálás, vagy csak beágyazás?", a: "Valódi vektorizálás: az imagetracerjs könyvtár kontúrkövetéssel tényleges vektor-útvonalakat hoz létre az alakzatokból, nem a raszteres képet ágyazza be. Az eredmény nagyítva is éles marad." },
+      { q: "Milyen képekhez ajánlott?", a: "Egyszerű, kontrasztos, kevés színű képekhez: logók, ikonok, emblémák, sziluettek. Fotóknál a vektorizálás kevésbé hasznos, mert a sok árnyalat miatt nagy és bonyolult SVG keletkezne." },
+      { q: "Mire jó a színszám beállítás?", a: "Ez határozza meg, hány színre egyszerűsítse az eszköz a képet a vektorizálás előtt. Kevesebb szín tisztább, kisebb SVG-t ad; több szín részletesebbet, de nagyobbat. Logókhoz 8–16 általában ideális." },
+      { q: "Szerverre kerül a kép?", a: "Nem, a vektorizálás teljes egészében a böngésződben fut – a kép nem hagyja el a gépedet." },
+      { q: "Miért kisebb a feldolgozott kép?", a: "A nagyon nagy képeket az eszköz a vektorizálás előtt lekicsinyíti (max. 1000 px), hogy a feldolgozás gyors maradjon; a kimeneti SVG ettől függetlenül tetszőleges méretre skálázható." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Húzd be a PNG vagy JPG képet a feltöltési területre." },
+        { title: "2. Színszám beállítása", description: "Válaszd ki, hány színre egyszerűsödjön a kép a vektorizálás előtt." },
+        { title: "3. Vektorizálás", description: "Kattints a gombra – az eszköz kontúrkövetéssel SVG-vé alakítja a képet." },
+        { title: "4. Előnézet és letöltés", description: "Ellenőrizd a vektoros előnézetet, majd töltsd le az SVG-t." },
+      ],
+      useCases: [
+        { icon: "🎯", title: "Logó-vektorizálás", description: "Egy régi, csak raszteres formátumban meglévő logó újra-vektorizálása skálázható SVG-vé." },
+        { icon: "🖨️", title: "Nyomdai előkészítés", description: "Vektoros formátum nagy méretű nyomtatáshoz, ahol a raszteres kép pixeles lenne." },
+        { icon: "✏️", title: "Szerkeszthetőség", description: "A vektor-útvonalak szerkesztővel (pl. Inkscape) tovább módosíthatók." },
+        { icon: "🎨", title: "Ikonok", description: "Egyszerű ikonok és sziluettek vektorrá alakítása webes és UI használathoz." },
+      ],
+      formatComparison: {
+        title: "Raszter vs. vektor",
+        columns: ["Tulajdonság", "Raszter (PNG/JPG)", "Vektor (SVG)"],
+        rows: [
+          { feature: "Skálázhatóság", values: ["Nagyításnál pixeles", "Bármilyen méretben éles"] },
+          { feature: "Tárolás", values: ["Pixelek színe", "Matematikai útvonalak"] },
+          { feature: "Ideális tartalom", values: ["Fotók", "Logók, ikonok, ábrák"] },
+        ],
+      },
+      aboutSection: {
+        title: "Raszteres és vektoros képek",
+        paragraphs: [
+          "A raszteres képek (PNG, JPG) pixelek rácsából állnak: minden ponthoz egy szín tartozik. Nagyításkor a pixelek láthatóvá válnak, a kép „pixeles” lesz. A vektorgrafika ezzel szemben matematikai leírással – pontokkal, vonalakkal, görbékkel – tárolja az alakzatokat, így bármilyen méretben tökéletesen éles marad.",
+          "A vektorizálás (image tracing) a raszteres kép alakzatait próbálja vektor-útvonalakká alakítani: érzékeli a színhatárokat, és kontúrokat rajzol köréjük. Ez kontrasztos, kevés színű képeknél (logók, ikonok) működik a legjobban; fotóknál a sok árnyalat miatt az eredmény túl bonyolult és nagy lenne, ezért azokhoz a raszteres formátum marad a megfelelő.",
+        ],
+      },
+      tips: [
+        { icon: "💡", tip: "A legjobb eredményhez használj tiszta, kontrasztos, egyszínű hátterű forrásképet." },
+        { icon: "🎚️", tip: "Ha az eredmény túl részletes vagy nagy, csökkentsd a színek számát; ha túl durva, növeld." },
+        { icon: "🔍", tip: "Fotókat ne vektorizálj – azokhoz a PNG/JPG vagy a WebP a megfelelő formátum." },
+      ],
+    },
+  },
+
+  // ═══ FAVICON-CSOMAG GENERÁTOR (HU+RO bilingual) ══════════════════════════
+  "favicon-generator": {
+    introText:
+      "A favicon-csomag generátor egyetlen képből legenerálja a teljes, modern favicon-készletet: a klasszikus favicon.ico fájlt (16/32/48 px), a különböző méretű PNG-ket, az apple-touch-icon ikont, a site.webmanifest fájlt és a HTML kódot, amit be kell illesztened az oldal fejlécébe. Mindezt egy letölthető ZIP-ben. Webfejlesztőknek, akik gyorsan, kézi méretezgetés nélkül szeretnének teljes favicon-támogatást.",
+    guide: [
+      "1. Tölts fel egy négyzetes képet (ideálisan 512×512 px PNG).",
+      "2. Kattints a «Favicon-csomag generálása» gombra.",
+      "3. Töltsd le a ZIP-et, és csomagold ki a fájlokat a weboldalad gyökérmappájába.",
+      "4. Másold a HTML kódot az oldalad <head> részébe.",
+    ],
+    faq: [
+      { q: "Mit tartalmaz a csomag?", a: "favicon.ico (16/32/48 px egyben), külön PNG-k (16, 32, 48, 192, 512 px), apple-touch-icon (180 px), site.webmanifest és egy head-snippet.html a beillesztendő <link> tagekkel." },
+      { q: "Milyen képet töltsek fel?", a: "Egy négyzetes, lehetőleg 512×512 px-es képet a legjobb minőséghez. Az eszköz ebből kicsinyíti le az összes szükséges méretet." },
+      { q: "Hová tegyem a fájlokat?", a: "A PNG-ket, az ICO-t és a manifestet általában a weboldal gyökérmappájába; a HTML <link> tageket pedig az oldal <head> részébe kell beilleszteni." },
+      { q: "Miért kell ennyi különböző méret?", a: "A böngészők, az operációs rendszerek és a mobil eszközök különböző méretű ikonokat használnak (böngészőfül, könyvjelző, kezdőképernyő). A teljes csomag mindenhol éles ikont biztosít." },
+      { q: "Szerverre kerül a kép?", a: "Nem, a teljes generálás a böngésződben történik – a forráskép nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Tölts fel egy négyzetes forrásképet, ideálisan 512×512 px méretben." },
+        { title: "2. Generálás", description: "Kattints a gombra – az eszköz legenerálja az összes méretet és fájlt." },
+        { title: "3. ZIP letöltése", description: "Töltsd le a teljes favicon-csomagot egyetlen ZIP archívumban." },
+        { title: "4. Beillesztés", description: "Másold a fájlokat a gyökérmappába, a HTML kódot pedig a <head>-be." },
+      ],
+      useCases: [
+        { icon: "🚀", title: "Új weboldal", description: "Teljes favicon-támogatás beállítása egy projekt indításakor, percek alatt." },
+        { icon: "📱", title: "PWA / mobil", description: "A site.webmanifest és a nagy ikonok a kezdőképernyőre mentett webalkalmazáshoz." },
+        { icon: "🍎", title: "Apple eszközök", description: "Az apple-touch-icon biztosítja az éles ikont iPhone/iPad könyvjelzőhöz." },
+        { icon: "🔖", title: "Márkamegjelenés", description: "Egységes, éles ikon a böngészőfülön és a könyvjelzők között." },
+      ],
+      aboutSection: {
+        title: "Mi az a favicon, és miért kell több méret?",
+        paragraphs: [
+          "A favicon az a kis ikon, amely a böngészőfülön, a könyvjelzők között és a kezdőképernyőn jelenik meg a weboldalad mellett. Régen elég volt egyetlen favicon.ico fájl, ma azonban a böngészők, az operációs rendszerek és a mobil platformok különböző méretű és formátumú ikonokat várnak el a különféle helyeken.",
+          "Ezért készít ez az eszköz egy teljes csomagot: a klasszikus, maximálisan kompatibilis favicon.ico-t (több méret egy fájlban), külön PNG-ket a modern böngészőkhöz, egy nagyobb apple-touch-icon-t az iOS kezdőképernyőhöz, és egy site.webmanifest fájlt, amely a progresszív webalkalmazásokhoz (PWA) szükséges. A mellékelt HTML kóddal mindezt egy lépésben bekötheted.",
+        ],
+      },
+      tips: [
+        { icon: "⬛", tip: "Használj négyzetes forrásképet – a nem négyzetes kép torzulhat a kicsinyítésnél." },
+        { icon: "🎨", tip: "Az ikon kis méretben is felismerhető legyen: kerüld a sok apró részletet és a vékony vonalakat." },
+        { icon: "🔒", tip: "A generálás a böngésződben fut – a forráskép nem kerül szerverre." },
+      ],
+    },
+  },
+
   // ═══ 1. JPG → WEBP KONVERTÁLÁS ═══════════════════════════════════════════
   "jpg-webp": {
     introText:
