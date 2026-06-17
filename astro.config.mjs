@@ -3,14 +3,19 @@ import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import { loadEnv } from "vite";
 // pnpm add @astrojs/sitemap – ha külső sitemapet is akarsz (opcionális,
 // a src/pages/sitemap.xml.ts önmagában is elég)
 // import sitemap from "@astrojs/sitemap";
 
-// PUBLIC_SITE_LANG env változó határozza meg a nyelvet
-// Alapértelmezett: "hu"
-const SITE_LANG = process.env.PUBLIC_SITE_LANG ?? "hu";
-const SITE_URL = process.env.PUBLIC_SITE_URL ?? "https://konvertalo.hu";
+// PUBLIC_* env-ek feloldása robusztusan: CI-ban a shell env (process.env) hordozza
+// (deploy.yml + cross-env), lokálisan viszont .env-ből jöhet. A process.env NEM
+// tölti be automatikusan a .env-et a config szintjén, ezért loadEnv-vel is beolvassuk.
+// Így a sitemap (Astro.site ← site:) soha nem esik vissza csendben a rossz domainre.
+// (Lásd: src/pages/sitemap.xml.ts – ott szintén az Astro.site adja a base URL-t.)
+const ENV = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "PUBLIC_");
+const SITE_LANG = process.env.PUBLIC_SITE_LANG ?? ENV.PUBLIC_SITE_LANG ?? "hu";
+const SITE_URL = process.env.PUBLIC_SITE_URL ?? ENV.PUBLIC_SITE_URL ?? "https://konvertalo.hu";
 
 export default defineConfig({
   // Static Site Generation (SSG) – minden oldal pre-rendelt HTML
