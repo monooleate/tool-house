@@ -30,6 +30,7 @@ const PRIORITY: Record<CategoryId | "home" | "category" | "subhub" | "instant", 
   fajl:       "0.75",
   markdown:   "0.75",
   html:       "0.75",
+  szinek:     "0.85",
   // RO-only math kategóriák
   calculator: "0.9",
   geometrie:  "0.85",
@@ -54,6 +55,7 @@ const CHANGEFREQ: Record<CategoryId | "home" | "category" | "subhub" | "instant"
   fajl:       "monthly",
   markdown:   "monthly",
   html:       "monthly",
+  szinek:     "monthly",
   // RO-only math kategóriák
   calculator: "monthly",
   geometrie:  "monthly",
@@ -140,7 +142,8 @@ export const GET: APIRoute = async () => {
   urls.push(urlEntry(base, `/${getStaticUrl("kapcsolat")}`, "0.4", "monthly"));
   urls.push(urlEntry(base, `/${getStaticUrl("adatvedelmi")}`, "0.3", "yearly"));
   urls.push(urlEntry(base, `/${getStaticUrl("aszf")}`, "0.3", "yearly"));
-  urls.push(urlEntry(base, `/${getStaticUrl("kereses")}`, "0.5", "weekly"));
+  // A /kereses (RO: /cautare) belső keresőoldal noindex (lásd KeresPage.astro),
+  // ezért szándékosan NEM kerül a sitemapba (noindex + sitemap = ellentmondó jelzés).
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
