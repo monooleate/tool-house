@@ -4,6 +4,10 @@
 
 [build.environment]
   NODE_VERSION  = "20"
+  # Publikus AdSense publisher ID (lásd public/ads.txt).
+  # FONTOS: konvertalo.hu EZT a configot olvassa (a netlify.hu.toml nem aktív rá),
+  # ezért a HU reklámhoz ide kell a publisher ID. RO a saját configját/env-jét használja.
+  PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
 
 # ─── Cross-domain Language Redirects ────────────────────────
 # Fixes GSC 404 errors: wrong-language URLs on wrong domain.
