@@ -418,19 +418,45 @@ export function useCaseNode(tool: Tool, pageUrl: string): Node | null {
 }
 
 // ─── Event node (@id=#event) – countdown oldalak ─────────────
+// A Google Event rich-result ajánlott mezői (image, location.address, offers,
+// organizer, performer) is bekerülnek — különben a GSC "non-critical issue"-ként
+// jelzi őket. Mind nyilvános, ingyenes RO ünnep/asztronómiai esemény, ezért:
+//   • location: Place + PostalAddress(addressCountry: RO) – az esemény Romániában;
+//   • offers: ingyenes Offer (price 0, RON, InStock) – szabadon hozzáférhető;
+//   • organizer/performer: a kiadó Organization (@id=ORG_ID) – a graph-on belül
+//     feloldódik (name+url), a meglévő author/publisher @id-mintát követi.
 export function eventNode(opts: {
   name: string; description: string; startIso: string; pageUrl: string;
+  imageUrl?: string; validFrom?: string;
 }): Node {
   return {
     "@type": "Event",
     "@id": `${opts.pageUrl}#event`,
     name: opts.name,
     description: opts.description,
+    image: opts.imageUrl,
     startDate: opts.startIso,
     endDate: opts.startIso,
     eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    location: { "@type": "Country", name: "România" },
+    location: {
+      "@type": "Place",
+      name: "România",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "RO",
+      },
+    },
+    organizer: { "@id": ORG_ID },
+    performer: { "@id": ORG_ID },
+    offers: {
+      "@type": "Offer",
+      url: opts.pageUrl,
+      price: "0",
+      priceCurrency: "RON",
+      availability: "https://schema.org/InStock",
+      validFrom: opts.validFrom,
+    },
     url: opts.pageUrl,
   };
 }

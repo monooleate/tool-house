@@ -139,6 +139,10 @@ if (countdownEvent) {
     description: countdownEvent.description,
     startIso: countdownEvent.iso,
     pageUrl,
+    // hero kép RO sluggal (a timp tool-ok languages:["ro"], rawTool.slug = RO slug)
+    imageUrl: buildCanonical(`/hero/${rawTool.category}/${rawTool.slug}.png`),
+    // az ingyenes hozzáférés a tool indulása óta érvényes (offers.validFrom)
+    validFrom: (rawTool as { launchedAt?: string }).launchedAt,
   }));
 }
 ---
