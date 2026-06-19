@@ -23,6 +23,9 @@ jobs:
         env:
           SITE_LANG: hu
           PUBLIC_SITE_URL: https://konvertalo.hu
+          # Publikus AdSense publisher ID (ugyanaz a fiók mint RO; lásd public/ads.txt).
+          # Build-időbe égetve → BaseLayout betölti az adsbygoogle scriptet, AdSlot renderel.
+          PUBLIC_ADSENSE_CLIENT_ID: ca-pub-9658786113006303
       - uses: netlify/actions/cli@master
         with:
           args: deploy --prod --dir=dist --site=${{ secrets.NETLIFY_SITE_ID_HU }}
@@ -43,6 +46,9 @@ jobs:
         env:
           SITE_LANG: ro
           PUBLIC_SITE_URL: https://instrumenteonline.ro
+          # Publikus AdSense publisher ID (lásd public/ads.txt). Eddig csak Netlify UI-ban
+          # volt → most committed config, hogy ne tűnjön el egy Actions-deploynál.
+          PUBLIC_ADSENSE_CLIENT_ID: ca-pub-9658786113006303
       - uses: netlify/actions/cli@master
         with:
           args: deploy --prod --dir=dist --site=${{ secrets.NETLIFY_SITE_ID_RO }}

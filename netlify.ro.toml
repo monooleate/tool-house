@@ -6,6 +6,8 @@
   NODE_VERSION = "20"
   PUBLIC_SITE_LANG = "ro"
   PUBLIC_SITE_URL = "https://instrumenteonline.ro"
+  # Publikus AdSense publisher ID (lásd public/ads.txt)
+  PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
 
 [[headers]]
   for = "/*"

@@ -6,6 +6,8 @@
   NODE_VERSION = "20"
   PUBLIC_SITE_LANG = "hu"
   PUBLIC_SITE_URL = "https://konvertalo.hu"
+  # Publikus AdSense publisher ID (ugyanaz a fiók mint RO; lásd public/ads.txt)
+  PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
 
 [[redirects]]
   from = "/jpg-to-webp"
