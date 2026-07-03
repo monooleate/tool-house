@@ -19,7 +19,7 @@ import type { SupportedLang } from "../i18n/index.ts";
 const ENV_ENABLED = import.meta.env.PUBLIC_HOUSE_ADS_ENABLED === "true";
 
 // ─── Típusok ────────────────────────────────────────────────
-export type HouseAdFormat = "leaderboard" | "rectangle";
+export type HouseAdFormat = "leaderboard" | "rectangle" | "billboard";
 
 export interface HouseAdPlacement {
   desktop: boolean;
@@ -31,12 +31,26 @@ export interface HouseAdPlacement {
 }
 
 export type PlacementKey =
+  | "homepage"
   | "articleTop"
   | "articleMiddle"
   | "articleBottom"
   | "anchorTop"
   | "anchorBottom"
   | "interstitial";
+
+// Egy formátumhoz tartozó kép-készlet (desktop + mobil, retina 2x-szel).
+// A fix méret (w/h) CLS=0-t garantál. A src-ek /public-ból abszolút útvonalak.
+export interface HouseAdImage {
+  src: string;
+  src2x?: string;
+  w?: number;
+  h?: number;
+  mobileSrc?: string;
+  mobileSrc2x?: string;
+  mw?: number;
+  mh?: number;
+}
 
 export interface HouseAdCreative {
   id: string;
@@ -45,6 +59,11 @@ export interface HouseAdCreative {
   headline: string;
   subline?: string;
   cta?: string;
+  alt?: string;
+  /** Formátum-specifikus képek (leaderboard/rectangle). Ha egy placement
+   *  formátumához van kép, KÉP renderel; különben szöveges fallback. */
+  images?: Partial<Record<HouseAdFormat, HouseAdImage>>;
+  /** Legacy: egyetlen, formátum-független kép (az `images` elsőbbséget élvez). */
   img?: string;
   imgMobile?: string;
   imgWidth?: number;
@@ -63,6 +82,7 @@ export interface HouseAdConfig {
 
 // ─── Defaultok (site-független) ─────────────────────────────
 const PLACEMENT_DEFAULTS: Record<PlacementKey, HouseAdPlacement> = {
+  homepage:      { desktop: true,  mobile: true,  format: "billboard" },
   articleTop:    { desktop: true,  mobile: true,  format: "leaderboard" },
   articleMiddle: { desktop: true,  mobile: true,  format: "leaderboard" },
   articleBottom: { desktop: true,  mobile: true,  format: "rectangle" },
@@ -71,7 +91,7 @@ const PLACEMENT_DEFAULTS: Record<PlacementKey, HouseAdPlacement> = {
   interstitial:  { desktop: false, mobile: false, format: "rectangle", minPageviews: 2, delayMs: 4000 },
 };
 
-const FORMATS = new Set<HouseAdFormat>(["leaderboard", "rectangle"]);
+const FORMATS = new Set<HouseAdFormat>(["leaderboard", "rectangle", "billboard"]);
 
 // ─── Validátorok ────────────────────────────────────────────
 const bool = (v: unknown, d: boolean) => (typeof v === "boolean" ? v : d);
@@ -105,6 +125,20 @@ function resolvePlacement(key: PlacementKey, src: any): HouseAdPlacement {
   return out;
 }
 
+function resolveImage(src: any): HouseAdImage | null {
+  if (!src || typeof src !== "object" || typeof src.src !== "string" || !src.src) return null;
+  const img: HouseAdImage = { src: src.src };
+  if (typeof src.src2x === "string") img.src2x = src.src2x;
+  if (typeof src.mobileSrc === "string") img.mobileSrc = src.mobileSrc;
+  if (typeof src.mobileSrc2x === "string") img.mobileSrc2x = src.mobileSrc2x;
+  const w = num(src.w, 0), h = num(src.h, 0), mw = num(src.mw, 0), mh = num(src.mh, 0);
+  if (w) img.w = w;
+  if (h) img.h = h;
+  if (mw) img.mw = mw;
+  if (mh) img.mh = mh;
+  return img;
+}
+
 function resolveCreative(src: any, i: number): HouseAdCreative | null {
   if (!src || typeof src !== "object") return null;
   const headline = str(src.headline, "");
@@ -118,11 +152,22 @@ function resolveCreative(src: any, i: number): HouseAdCreative | null {
     headline,
     subline: typeof src.subline === "string" ? src.subline : undefined,
     cta: str(src.cta, "Tovább"),
+    alt: typeof src.alt === "string" ? src.alt : undefined,
     bgFrom: str(src.bgFrom, "#007a5c"),
     bgTo: str(src.bgTo, "#005e45"),
     accent: str(src.accent, "#ffffff"),
     textOn: str(src.textOn, "#eafff8"),
   };
+  // Formátum-specifikus képek (leaderboard/rectangle).
+  if (src.images && typeof src.images === "object") {
+    const imgs: Partial<Record<HouseAdFormat, HouseAdImage>> = {};
+    for (const f of FORMATS) {
+      const resolved = resolveImage((src.images as any)[f]);
+      if (resolved) imgs[f] = resolved;
+    }
+    if (Object.keys(imgs).length > 0) c.images = imgs;
+  }
+  // Legacy: egyetlen formátum-független kép.
   if (typeof src.img === "string" && src.img.length > 0) {
     c.img = src.img;
     if (typeof src.imgMobile === "string") c.imgMobile = src.imgMobile;

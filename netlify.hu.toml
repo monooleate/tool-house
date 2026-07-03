@@ -7,10 +7,13 @@
   PUBLIC_SITE_LANG = "hu"
   PUBLIC_SITE_URL = "https://konvertalo.hu"
   # Publikus AdSense publisher ID (ugyanaz a fiók mint RO; lásd public/ads.txt)
-  PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
+  # HU-n AdSense KIKAPCSOLVA (helyette saját erdeireka hirdetés). Visszakapcsolás: komment-jel törlése.
+  # PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
   # Saját (house-ad) réteg főkapcsolója — csak "true" kapcsolja BE (doksi: HOUSE-ADS.md).
   # Megjegyzés: konvertalo.hu élesben a default netlify.toml-t olvassa, nem ezt.
-  PUBLIC_HOUSE_ADS_ENABLED = "false"
+  PUBLIC_HOUSE_ADS_ENABLED = "true"
+  # Plausible analytics – teljes script-URL (env guard: üres = kikapcsolva).
+  PUBLIC_PLAUSIBLE_SRC = "https://plausible.io/js/pa-cZq4nIfImlz--x20rIOXE.js"
 
 [[redirects]]
   from = "/jpg-to-webp"

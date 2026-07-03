@@ -80,20 +80,24 @@ Cseréld a placeholder kreatívokat a valódi bannereidre — a `hu` és `ro` bl
 |---|---|---|
 | `leaderboard` | fekvő sáv: `[ikon + cím/szöveg] \| [CTA]` — **mobilon álló kártyára vált** | cikk fölé/közepére, anchor |
 | `rectangle` | álló, közepes kártya | cikk alá, popup, mobil |
+| `billboard` | nagy, széles fekvő banner (970×250) — **mobilon rectangle-re vált** | főoldal |
 
 ## Hirdetési felületek
 
-| Felület | Hol a kódban | Formátum (default) | Alap |
+| Felület | Hol a kódban | Formátum (default) | Alap (HU) |
 |---|---|---|---|
+| **Főoldal** (a Featured szekció után) | `HouseAdEngine` → a `[data-ha-home]` jelölőbe (`index.astro`) | billboard | **ON** |
 | Cikk fölé (a tool UI után) | `HouseAdEngine` → a `.tool-page`-ben a `.tool-ui` után | leaderboard | **ON** |
 | Cikk közepére | `HouseAdEngine` → a tartalom függőleges közepéhez legközelebbi `.section-title` szekció elé | leaderboard | **ON** |
 | Cikk alá (a kapcsolódó eszközök előtt) | `HouseAdEngine` → a `.related-section` elé (v. a `.tool-page` végére) | rectangle | **ON** |
-| Felső/alsó anchor (site-wide) | `HouseAdEngine` → `position:fixed` sáv | leaderboard | OFF (kész) |
-| Felugró popup (interstitial) | `HouseAdEngine` → modal overlay | rectangle | OFF (kész) |
+| Felső anchor (site-wide) | `HouseAdEngine` → `position:fixed` felső sáv | leaderboard | OFF (kész) |
+| **Alsó anchor (site-wide)** | `HouseAdEngine` → `position:fixed` alsó sáv, összecsukható nyíllal | leaderboard | **ON** (alulról „úszik" fel) |
+| **Felugró popup (interstitial)** | `HouseAdEngine` → modal overlay (2. oldalletöltéstől, 4s késés, 1×/munkamenet) | rectangle | **ON** |
 
 **A cikkbe szúrt bannerek CSAK tool-oldalon** jelennek meg (a `.tool-page`
-tartalom-kontextus a feltétel). Az **anchor + popup** minden oldalon (site-wide),
-ha be van kapcsolva.
+kell). A **főoldali** banner a főoldal `[data-ha-home]` jelölőjébe kerül. Az
+**anchor + popup** minden oldalon (site-wide), ha be van kapcsolva. **HU alapállapot:
+főoldal + 3 cikk-banner + alsó anchor + popup BE; csak a felső anchor KI** (JSON-ból bármikor kapcsolható).
 
 ## Ideális banner-méretek (IAB / Google)
 

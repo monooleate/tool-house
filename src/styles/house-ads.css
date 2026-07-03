@@ -116,17 +116,19 @@
   transform: translateX(2px);
 }
 
-/* Kép-kreatív: sima <img>, fix mérettel (CLS=0), a kártya keret nélkül köré simul */
+/* Kép-kreatív: sima <img>, natív méret (CLS=0), a kártya keret nélkül köré simul */
 .ha-ad--img .ha-ad__link {
   padding: 0;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--border);
   background: var(--bg-card);
 }
 .ha-ad__img {
   display: block;
-  width: 100%;
-  height: auto;
   max-width: 100%;
+  height: auto;
+  margin: 0 auto;
   border-radius: inherit;
 }
 .ha-ad--img .ha-ad__img-mobile { display: none; }
@@ -163,7 +165,30 @@
   }
 }
 
+/* billboard — nagy, széles fekvő banner (főoldal). Kép: natív méret, középre.
+   Szöveges fallback: középre zárt oszlop. Mobilon a rectangle-kép (mw/mh) ugrik be. */
+.ha-fmt-billboard.ha-ad--text .ha-ad__link {
+  align-items: center;
+  text-align: center;
+}
+.ha-fmt-billboard.ha-ad--text .ha-ad__cta {
+  align-self: center;
+}
+
 /* ─────────────────────────────  HELYEK (placement)  ───────────────────────────── */
+/* Főoldali banner konténer ([data-ha-home]) — csak akkor foglal helyet, ha a motor feltölti */
+.ha-home {
+  display: block;
+  padding-block: var(--sp-8);
+}
+.ha-home:empty {
+  display: none; /* ads OFF → nincs üres térköz a főoldalon */
+}
+.ha-home .ha-ad {
+  max-width: 970px;
+  margin-inline: auto;
+}
+
 /* Cikkbe szúrt banner (top / middle / bottom) — a tartalom-oszlopban, középre zárt */
 .ha-ad--in {
   margin: var(--sp-6) auto;

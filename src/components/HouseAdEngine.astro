@@ -66,19 +66,32 @@ const active = cfg.enabled && cfg.creatives.length > 0;
         } catch (e) { return href; }
       }
 
+      // ── A placement formátumához tartozó kép-készlet (vagy legacy flat kép) ──
+      function imgFor(cr, format) {
+        if (cr.images && cr.images[format]) return cr.images[format];
+        if (cr.img) return { src: cr.img, mobileSrc: cr.imgMobile, w: cr.imgWidth, h: cr.imgHeight };
+        return null;
+      }
+      // Egy <img> (retina srcset-tel + fix mérettel a CLS=0-hoz).
+      function imgTag(cls, src, src2x, w, h, alt) {
+        if (!src) return '';
+        var srcset = src2x ? ' srcset="' + esc(src) + ' 1x, ' + esc(src2x) + ' 2x"' : '';
+        var wh = (w ? ' width="' + w + '"' : '') + (h ? ' height="' + h + '"' : '');
+        return '<img class="ha-ad__img ' + cls + '" src="' + esc(src) + '"' + srcset + wh +
+          ' alt="' + esc(alt) + '" loading="eager" decoding="async">';
+      }
+
       // ── A KÁRTYA belső markupja (kép-elsődleges, szöveges fallback) ──
       function cardHTML(cr, format, placement) {
         var href = esc(withUtm(cr.href, placement));
+        var im = imgFor(cr, format);
         var inner;
-        if (cr.img) {
-          var hasMobile = cr.imgMobile ? ' ha-ad--has-mobile' : '';
-          var wh = (cr.imgWidth ? ' width="' + cr.imgWidth + '"' : '') + (cr.imgHeight ? ' height="' + cr.imgHeight + '"' : '');
+        if (im) {
+          var alt = cr.alt || cr.headline || L.ad;
+          var hasMobile = im.mobileSrc ? ' ha-ad--has-mobile' : '';
           inner =
-            '<img class="ha-ad__img ha-ad__img-desktop' + hasMobile + '" src="' + esc(cr.img) + '"' + wh +
-            ' alt="' + esc(cr.headline || L.ad) + '" loading="eager" decoding="async">' +
-            (cr.imgMobile
-              ? '<img class="ha-ad__img ha-ad__img-mobile ha-ad--has-mobile" src="' + esc(cr.imgMobile) + '" alt="" loading="eager" decoding="async">'
-              : '');
+            imgTag('ha-ad__img-desktop' + hasMobile, im.src, im.src2x, im.w, im.h, alt) +
+            (im.mobileSrc ? imgTag('ha-ad__img-mobile ha-ad--has-mobile', im.mobileSrc, im.mobileSrc2x, im.mw, im.mh, alt) : '');
         } else {
           inner =
             '<span class="ha-ad__main">' +
@@ -98,10 +111,11 @@ const active = cfg.enabled && cfg.creatives.length > 0;
         var format = (CFG.placements[placement] || {}).format || 'rectangle';
         var cr = pickCreative();
         if (!cr) return null;
+        var hasImg = !!imgFor(cr, format);
         var el = document.createElement('aside');
-        el.className = 'ha-ad ha-fmt-' + format + ' ' + (cr.img ? 'ha-ad--img' : 'ha-ad--text') + (extraClass ? ' ' + extraClass : '');
+        el.className = 'ha-ad ha-fmt-' + format + ' ' + (hasImg ? 'ha-ad--img' : 'ha-ad--text') + (extraClass ? ' ' + extraClass : '');
         el.setAttribute('aria-label', L.ad);
-        if (!cr.img) {
+        if (!hasImg) {
           el.style.setProperty('--ha-bg-from', cr.bgFrom);
           el.style.setProperty('--ha-bg-to', cr.bgTo);
           el.style.setProperty('--ha-accent', cr.accent);
@@ -160,6 +174,17 @@ const active = cfg.enabled && cfg.creatives.length > 0;
             else page.appendChild(adb);
           }
         }
+      }
+
+      // ── Főoldali banner (billboard) a [data-ha-home] jelölőbe ──
+      function placeHomepage() {
+        var slot = document.querySelector('[data-ha-home]');
+        if (!slot) return; // csak a főoldalon van jelölő
+        var old = slot.querySelector('aside.ha-ad');
+        if (old) old.remove();
+        if (!on('homepage')) return;
+        var ad = buildAd('homepage', 'ha-ad--home');
+        if (ad) slot.appendChild(ad);
       }
 
       // ── Anchor (tapadó sáv) — összecsukható fül + CLS-reserve ──
@@ -283,7 +308,8 @@ const active = cfg.enabled && cfg.creatives.length > 0;
 
       function init() {
         placeInContent();
-        MQ.addEventListener('change', function () { placeInContent(); syncAnchors(); });
+        placeHomepage();
+        MQ.addEventListener('change', function () { placeInContent(); placeHomepage(); syncAnchors(); });
         syncAnchors();
         mountInterstitial();
       }

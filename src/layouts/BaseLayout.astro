@@ -23,6 +23,17 @@ const toolCategories = localizedCategories.filter(c => !MATH_CATS_SET.has(c.id))
 const mathCategories = localizedCategories.filter(c =>  MATH_CATS_SET.has(c.id));
 const hasMathCategories = mathCategories.length > 0;
 const { siteName, siteUrl, siteNameShort, lang: htmlLang, locale } = CURRENT_CONFIG;
+
+// ─── Plausible analytics (env-vezérelt, mint opticutnál) ─────
+// A teljes script-URL a PUBLIC_PLAUSIBLE_SRC env-ben (oldalanként külön deploy-env).
+// Két snippet-forma támogatott:
+//  - Klasszikus: <script defer data-domain="…" src="…/js/script.js"> (PUBLIC_PLAUSIBLE_DOMAIN kell)
+//  - Új (token a fájlnévben, …/js/pa-<token>.js) + inline plausible.init() — data-domain nélkül.
+// Ha egyik env sincs beállítva → semmi nem renderel (nincs console-hiba).
+const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || '';
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || '';
+const plausibleIsNew = plausibleSrc.includes('/js/pa');
+const plausibleClassicSrc = plausibleSrc || 'https://plausible.io/js/script.js';
 // View Transitions kikapcsolva – link navigáció hibát okozott
 // import { ViewTransitions } from "astro:transitions";
 import SearchOverlay from "../components/ui/SearchOverlay.svelte";
@@ -296,6 +307,20 @@ const serializedGraph = graphNodes
       } catch(e) {}
     })();
   </script>
+
+  <!-- Privacy-friendly analytics by Plausible – env-vezérelt (PUBLIC_PLAUSIBLE_SRC) -->
+  {plausibleDomain && !plausibleIsNew && (
+    <script defer data-domain={plausibleDomain} src={plausibleClassicSrc}></script>
+  )}
+  {plausibleIsNew && (
+    <Fragment>
+      <script async src={plausibleSrc}></script>
+      <script is:inline>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+      </script>
+    </Fragment>
+  )}
 
   <!-- Google AdSense – csak ha Publisher ID be van állítva -->
   {(() => {

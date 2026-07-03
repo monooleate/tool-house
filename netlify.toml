@@ -7,11 +7,16 @@
   # Publikus AdSense publisher ID (lásd public/ads.txt).
   # FONTOS: konvertalo.hu EZT a configot olvassa (a netlify.hu.toml nem aktív rá),
   # ezért a HU reklámhoz ide kell a publisher ID. RO a saját configját/env-jét használja.
-  PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
+  # ── HU-n AdSense KIKAPCSOLVA (helyette saját erdeireka hirdetés fut, lásd lentebb).
+  #    Visszakapcsoláshoz: vedd ki a komment-jelet a következő sor elől.
+  # PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
   # Saját (house-ad) hirdetési réteg FŐKAPCSOLÓJA (SSOT: src/config/house-ads.json,
   # doksi: HOUSE-ADS.md). Csak "true" kapcsolja BE. Ez a HU (konvertalo.hu) kapcsolója.
-  # AdSense-től FÜGGETLEN. Bekapcsoláshoz: állítsd "true"-ra és pushold.
-  PUBLIC_HOUSE_ADS_ENABLED = "false"
+  # AdSense-től FÜGGETLEN. HU-n BEKAPCSOLVA → erdeireka bannerek (public/house-ads/erdeireka).
+  PUBLIC_HOUSE_ADS_ENABLED = "true"
+  # Plausible analytics (privacy-friendly) – teljes script-URL. HU (konvertalo.hu).
+  # Ajánlott oldalanként külön Plausible token; a RO a netlify.ro.toml-ban állítja.
+  PUBLIC_PLAUSIBLE_SRC = "https://plausible.io/js/pa-cZq4nIfImlz--x20rIOXE.js"
 
 # ─── Cross-domain Language Redirects ────────────────────────
 # Fixes GSC 404 errors: wrong-language URLs on wrong domain.
