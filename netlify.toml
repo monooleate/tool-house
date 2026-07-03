@@ -8,6 +8,10 @@
   # FONTOS: konvertalo.hu EZT a configot olvassa (a netlify.hu.toml nem aktív rá),
   # ezért a HU reklámhoz ide kell a publisher ID. RO a saját configját/env-jét használja.
   PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
+  # Saját (house-ad) hirdetési réteg FŐKAPCSOLÓJA (SSOT: src/config/house-ads.json,
+  # doksi: HOUSE-ADS.md). Csak "true" kapcsolja BE. Ez a HU (konvertalo.hu) kapcsolója.
+  # AdSense-től FÜGGETLEN. Bekapcsoláshoz: állítsd "true"-ra és pushold.
+  PUBLIC_HOUSE_ADS_ENABLED = "false"
 
 # ─── Cross-domain Language Redirects ────────────────────────
 # Fixes GSC 404 errors: wrong-language URLs on wrong domain.

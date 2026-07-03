@@ -1,0 +1,294 @@
+---
+// ============================================================
+// HouseAdEngine.astro — SAJÁT (house-ad) hirdetés-MOTOR.
+// Kliens-oldali, config-vezérelt banner-elhelyező (AdSense-mintára), a
+// BaseLayout <body> végén, SITE-WIDE mountolva. A feloldott house-ads.json-t
+// (az AKTUÁLIS site hu/ro blokkját) INLINE beadja a scriptnek (define:vars):
+//   • articleTop / articleMiddle / articleBottom → a `.tool-page` tartalomba szúrva
+//   • anchorTop / anchorBottom → tapadó sáv, ÖSSZECSUKHATÓ füllel (sessionStorage), CLS-reserve
+//   • interstitial → felugró popup (késleltetve, N. oldalletöltéstől, munkamenetenként 1x)
+// A kreatívot (saját banner) placementenként SÚLYOZOTTAN húzza a `creatives`-ből.
+// SSOT: src/config/house-ads.json · reader: src/lib/house-ads.ts · stílus: src/styles/house-ads.css
+// ============================================================
+import { getHouseAdEngineData } from "../lib/house-ads.ts";
+import { CURRENT_LANG } from "../i18n/index.ts";
+
+const { cfg, utmSource } = getHouseAdEngineData();
+
+// Nyelv-függő UI-feliratok (a badge/tab/close a látogató nyelvén).
+const L = CURRENT_LANG === "ro"
+  ? { ad: "Publicitate", open: "Deschide reclama", collapse: "Restrange reclama", close: "Inchide" }
+  : { ad: "Hirdetés", open: "Hirdetés megnyitása", collapse: "Hirdetés összecsukása", close: "Bezárás" };
+
+// Csak akkor rendereljük a motort, ha a réteg be van kapcsolva ÉS van kreatív.
+const active = cfg.enabled && cfg.creatives.length > 0;
+---
+
+{active && (
+  <script is:inline define:vars={{ CFG: cfg, UTM: utmSource, L }}>
+    (function () {
+      if (window.__houseAds) return;
+      window.__houseAds = true;
+
+      var MQ = window.matchMedia('(min-width: 48rem)');
+      function view() { return MQ.matches ? 'desktop' : 'mobile'; }
+      function on(p) { var c = CFG.placements[p]; return !!(c && c[view()]); }
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (m) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+        });
+      }
+
+      // ── Súlyozott kreatív-választás ──
+      function pickCreative() {
+        var list = CFG.creatives || [];
+        if (!list.length) return null;
+        var total = 0, i;
+        for (i = 0; i < list.length; i++) total += Math.max(0, list[i].weight || 1);
+        if (total <= 0) return list[0];
+        var r = Math.random() * total;
+        for (i = 0; i < list.length; i++) {
+          r -= Math.max(0, list[i].weight || 1);
+          if (r < 0) return list[i];
+        }
+        return list[list.length - 1];
+      }
+
+      // ── UTM-mel + rel/target-tel bővített href ──
+      function withUtm(href, placement) {
+        try {
+          var u = new URL(href);
+          u.searchParams.set('utm_source', UTM);
+          u.searchParams.set('utm_medium', 'house-ad');
+          u.searchParams.set('utm_campaign', 'house');
+          u.searchParams.set('utm_content', placement);
+          return u.toString();
+        } catch (e) { return href; }
+      }
+
+      // ── A KÁRTYA belső markupja (kép-elsődleges, szöveges fallback) ──
+      function cardHTML(cr, format, placement) {
+        var href = esc(withUtm(cr.href, placement));
+        var inner;
+        if (cr.img) {
+          var hasMobile = cr.imgMobile ? ' ha-ad--has-mobile' : '';
+          var wh = (cr.imgWidth ? ' width="' + cr.imgWidth + '"' : '') + (cr.imgHeight ? ' height="' + cr.imgHeight + '"' : '');
+          inner =
+            '<img class="ha-ad__img ha-ad__img-desktop' + hasMobile + '" src="' + esc(cr.img) + '"' + wh +
+            ' alt="' + esc(cr.headline || L.ad) + '" loading="eager" decoding="async">' +
+            (cr.imgMobile
+              ? '<img class="ha-ad__img ha-ad__img-mobile ha-ad--has-mobile" src="' + esc(cr.imgMobile) + '" alt="" loading="eager" decoding="async">'
+              : '');
+        } else {
+          inner =
+            '<span class="ha-ad__main">' +
+            '<span class="ha-ad__badge"><span class="ha-ad__dot" aria-hidden="true"></span>' +
+            '<span class="ha-ad__label">' + esc(L.ad) + '</span></span>' +
+            '<span class="ha-ad__title">' + esc(cr.headline) + '</span>' +
+            (cr.subline ? '<span class="ha-ad__text">' + esc(cr.subline) + '</span>' : '') +
+            '</span>' +
+            '<span class="ha-ad__cta">' + esc(cr.cta || 'Tovább') +
+            '<span class="ha-ad__arrow" aria-hidden="true">→</span></span>';
+        }
+        return '<a class="ha-ad__link" href="' + href + '" target="_blank" rel="sponsored noopener">' + inner + '</a>';
+      }
+
+      // ── Egy banner-elem összeállítása (kártya + színek) ──
+      function buildAd(placement, extraClass) {
+        var format = (CFG.placements[placement] || {}).format || 'rectangle';
+        var cr = pickCreative();
+        if (!cr) return null;
+        var el = document.createElement('aside');
+        el.className = 'ha-ad ha-fmt-' + format + ' ' + (cr.img ? 'ha-ad--img' : 'ha-ad--text') + (extraClass ? ' ' + extraClass : '');
+        el.setAttribute('aria-label', L.ad);
+        if (!cr.img) {
+          el.style.setProperty('--ha-bg-from', cr.bgFrom);
+          el.style.setProperty('--ha-bg-to', cr.bgTo);
+          el.style.setProperty('--ha-accent', cr.accent);
+          el.style.setProperty('--ha-text-on', cr.textOn);
+        }
+        el.innerHTML = cardHTML(cr, format, placement);
+        return el;
+      }
+
+      // ── Cikkbe szúrt bannerek (top / middle / bottom) a `.tool-page`-be ──
+      function placeInContent() {
+        var old = document.querySelectorAll('aside.ha-ad--in[data-ha]');
+        for (var i = 0; i < old.length; i++) old[i].remove();
+        var page = document.querySelector('.tool-page');
+        if (!page) return; // in-content csak tool-oldalon (van tartalom-kontextus)
+
+        if (on('articleTop')) {
+          var ad = buildAd('articleTop', 'ha-ad--in');
+          if (ad) {
+            ad.setAttribute('data-ha', 'top');
+            var ui = page.querySelector('.tool-ui');
+            if (ui && ui.parentNode === page) ui.insertAdjacentElement('afterend', ad);
+            else {
+              var hdr = page.querySelector('.tool-header');
+              if (hdr) hdr.insertAdjacentElement('afterend', ad);
+              else page.insertBefore(ad, page.firstChild);
+            }
+          }
+        }
+
+        if (on('articleMiddle')) {
+          // A tartalom függőleges közepéhez legközelebbi szekció-cím elé.
+          var titles = page.querySelectorAll('.section-title');
+          if (titles.length) {
+            var mid = page.getBoundingClientRect().top + page.offsetHeight / 2;
+            var best = null, bestD = Infinity;
+            for (var j = 0; j < titles.length; j++) {
+              var sec = titles[j].closest('section, article');
+              if (!sec || sec.classList.contains('related-section')) continue;
+              var d = Math.abs(titles[j].getBoundingClientRect().top - mid);
+              if (d < bestD) { bestD = d; best = sec; }
+            }
+            if (best) {
+              var adm = buildAd('articleMiddle', 'ha-ad--in');
+              if (adm) { adm.setAttribute('data-ha', 'middle'); best.parentNode.insertBefore(adm, best); }
+            }
+          }
+        }
+
+        if (on('articleBottom')) {
+          var adb = buildAd('articleBottom', 'ha-ad--in');
+          if (adb) {
+            adb.setAttribute('data-ha', 'bottom');
+            var related = page.querySelector('.related-section');
+            if (related) related.parentNode.insertBefore(adb, related);
+            else page.appendChild(adb);
+          }
+        }
+      }
+
+      // ── Anchor (tapadó sáv) — összecsukható fül + CLS-reserve ──
+      function reserveAnchor(pos, bar) {
+        var h = bar.offsetHeight;
+        if (!h) return;
+        var id = 'ha-anchor-' + pos + '-reserve';
+        var st = document.getElementById(id);
+        if (!st) { st = document.createElement('style'); st.id = id; document.head.appendChild(st); }
+        st.textContent = pos === 'top'
+          ? 'body{padding-top:' + h + 'px}.site-header{top:' + h + 'px!important}'
+          : 'body{padding-bottom:' + h + 'px}';
+      }
+      function clearReserve(pos) {
+        var st = document.getElementById('ha-anchor-' + pos + '-reserve');
+        if (st) st.remove();
+      }
+      function renderHandle(pos) {
+        var wrap = document.createElement('div');
+        wrap.className = 'ha-anchor-handle ha-anchor-handle--' + pos;
+        wrap.setAttribute('data-ha-handle', pos);
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', L.open);
+        b.innerHTML = '<span>' + esc(L.ad) + '</span><span aria-hidden="true">' + (pos === 'top' ? '▼' : '▲') + '</span>';
+        b.addEventListener('click', function () {
+          wrap.remove();
+          try { sessionStorage.setItem('ha-anchor-' + pos + '-collapsed', '0'); } catch (e) {}
+          mountAnchor(pos);
+        });
+        wrap.appendChild(b);
+        document.body.appendChild(wrap);
+      }
+      function collapseAnchor(pos, bar) {
+        bar.classList.add('ha-anchor--out');
+        try { sessionStorage.setItem('ha-anchor-' + pos + '-collapsed', '1'); } catch (e) {}
+        setTimeout(function () { clearReserve(pos); bar.remove(); renderHandle(pos); }, 300);
+      }
+      function mountAnchor(pos) {
+        var key = pos === 'top' ? 'anchorTop' : 'anchorBottom';
+        var cfg = CFG.placements[key] || {};
+        var collapsed = false;
+        try { collapsed = sessionStorage.getItem('ha-anchor-' + pos + '-collapsed') === '1'; } catch (e) {}
+        if (collapsed) { renderHandle(pos); return; }
+        var bar = document.createElement('div');
+        bar.className = 'ha-anchor ha-anchor--' + pos + ' ha-anchor--out';
+        bar.setAttribute('data-ha-anchor', pos);
+        var ad = buildAd(key);
+        if (!ad) return;
+        bar.appendChild(ad);
+        var tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'ha-anchor__tab';
+        tab.setAttribute('aria-label', L.collapse);
+        tab.textContent = pos === 'top' ? '▲' : '▼';
+        tab.addEventListener('click', function () { collapseAnchor(pos, bar); });
+        bar.appendChild(tab);
+        document.body.appendChild(bar);
+        var seen = false;
+        try { seen = sessionStorage.getItem('ha-anchor-' + pos + '-seen') === '1'; } catch (e) {}
+        var reveal = function () {
+          reserveAnchor(pos, bar);
+          setTimeout(function () { bar.classList.remove('ha-anchor--out'); }, 30);
+          if ('ResizeObserver' in window) {
+            var ro = new ResizeObserver(function () { reserveAnchor(pos, bar); });
+            ro.observe(bar);
+          }
+        };
+        if (seen) { reveal(); }
+        else {
+          setTimeout(function () {
+            try { sessionStorage.setItem('ha-anchor-' + pos + '-seen', '1'); } catch (e) {}
+            reveal();
+          }, cfg.showDelayMs || 1200);
+        }
+      }
+      function syncAnchors() {
+        var olds = document.querySelectorAll('[data-ha-anchor],[data-ha-handle]');
+        for (var i = 0; i < olds.length; i++) {
+          var p = olds[i].getAttribute('data-ha-anchor') || olds[i].getAttribute('data-ha-handle');
+          clearReserve(p);
+          olds[i].remove();
+        }
+        if (on('anchorTop')) mountAnchor('top');
+        if (on('anchorBottom')) mountAnchor('bottom');
+      }
+
+      // ── Interstitial (felugró popup) — késleltetve, N. oldalletöltéstől, 1x/munkamenet ──
+      function mountInterstitial() {
+        var cfg = CFG.placements.interstitial || {};
+        try {
+          if (sessionStorage.getItem('ha-pop-shown')) return;
+          var pv = parseInt(sessionStorage.getItem('ha-pv') || '0', 10) + 1;
+          sessionStorage.setItem('ha-pv', String(pv));
+          if (pv < (cfg.minPageviews || 2)) return;
+        } catch (e) {}
+        setTimeout(function () {
+          if (!on('interstitial')) return;
+          var ad = buildAd('interstitial');
+          if (!ad) return;
+          var ov = document.createElement('div');
+          ov.className = 'ha-pop-overlay';
+          ov.setAttribute('role', 'dialog');
+          ov.setAttribute('aria-modal', 'true');
+          ov.setAttribute('aria-label', L.ad);
+          var card = document.createElement('div');
+          card.className = 'ha-pop-card';
+          card.innerHTML =
+            '<div class="ha-pop-head"><span>' + esc(L.ad) + '</span>' +
+            '<button class="ha-pop-close" type="button" aria-label="' + esc(L.close) + '">✕</button></div>';
+          card.appendChild(ad);
+          ov.appendChild(card);
+          document.body.appendChild(ov);
+          function close() { ov.classList.remove('ha-pop-in'); setTimeout(function () { ov.remove(); }, 200); }
+          ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+          card.querySelector('.ha-pop-close').addEventListener('click', close);
+          setTimeout(function () { ov.classList.add('ha-pop-in'); }, 30);
+          try { sessionStorage.setItem('ha-pop-shown', '1'); } catch (e) {}
+        }, cfg.delayMs || 4000);
+      }
+
+      function init() {
+        placeInContent();
+        MQ.addEventListener('change', function () { placeInContent(); syncAnchors(); });
+        syncAnchors();
+        mountInterstitial();
+      }
+      if (document.readyState !== 'loading') init();
+      else document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+)}

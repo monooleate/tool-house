@@ -4,6 +4,8 @@
 // Alap layout: HTML skeleton, SEO meta, dark mode, nav, footer
 // ============================================================
 import "../styles/global.css";
+import "../styles/house-ads.css";
+import HouseAdEngine from "../components/HouseAdEngine.astro";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical, buildPageGraph, serializeGraph } from "../lib/seo.ts";
 import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory, getVisibleCategories, getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
@@ -538,6 +540,9 @@ const serializedGraph = graphNodes
       </div>
     </div>
   )}
+
+  <!-- Saját (house-ad) hirdetés-motor – site-wide, SSOT: src/config/house-ads.json -->
+  <HouseAdEngine />
 
 </body>
 </html>

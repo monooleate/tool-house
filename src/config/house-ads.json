@@ -1,0 +1,115 @@
+{
+  "_README": "Saját (house-ad) hirdetési réteg — MEGJELENÍTÉSI SSOT (single source of truth). Két külön site: 'hu' = konvertalo.hu, 'ro' = instrumenteonline.ro. MINDKÉT nyelvnek KÜLÖN beállítása (placements) ÉS KÜLÖN bannerei (creatives) vannak — a build a PUBLIC_SITE_LANG szerint az egyiket olvassa. Itt szabályozod, MELY felület, MELY nézetben (desktop/mobil), MILYEN formátumban, MILYEN időzítéssel, és MELYIK saját bannert (kreatívot) mutatja. A Google AdSense (AdSlot.svelte) ettől FÜGGETLEN réteg — ez nem érinti. Mintája: mathSeo erdeireka + operex-tudastar BANNERS. FIGYELEM: a JSON build-időben beépül (a motor inline megkapja) → változás után 'npm run build:hu' / 'build:ro' vagy dev-restart kell (a Vite az import-cache miatt nem frissíti hot-reloaddal). Hibás/hiányzó mezőre a kód (src/lib/house-ads.ts) a defaultot használja → a JSON sosem tudja 'elrontani' a rendert.",
+
+  "_FORMATUMOK": {
+    "_comment": "A 'format' mező adja a doboz ALAKJÁT. Választható: 'leaderboard' | 'rectangle'.",
+    "leaderboard": "fekvő, széles sáv: [ikon + cím/szöveg] | [CTA] — cikk fölé/közepére, anchor; mobilon álló kártyára vált",
+    "rectangle": "álló, közepes kártya — cikk alá, popup, mobil"
+  },
+
+  "_MERETEK_IAB": {
+    "_comment": "Ajánlott banner-méretek (IAB / Google) placementenként — iránymutatás a kép-kreatívok cseréjéhez. Asset: 2x retina, WebP/SVG (PNG/JPG fallback), <150 KB; FIX méret → CLS=0.",
+    "articleTop": "desktop 728x90 (leaderboard); mobil 320x100 v. 300x250",
+    "articleMiddle": "desktop 728x90 (leaderboard); mobil 300x250 (medium rectangle)",
+    "articleBottom": "desktop 336x280 (large rectangle); mobil 300x250",
+    "anchorTop/anchorBottom": "desktop 728x90 (leaderboard); mobil 320x100 v. 320x50",
+    "interstitial": "desktop 336x280 / 300x250; mobil 300x250"
+  },
+
+  "_PLACEMENT_HELP": {
+    "desktop / mobile": "boolean — megjelenjen-e az adott nézetben (töréspont: 48rem / 768px)",
+    "format": "'leaderboard' | 'rectangle' (lásd _FORMATUMOK)",
+    "showDelayMs": "csak anchor: késleltetett beúszás (ms)",
+    "minPageviews": "csak interstitial: csak ennyiedik oldalletöltéstől (munkamenet)",
+    "delayMs": "csak interstitial: késleltetés a felugrás előtt (ms)"
+  },
+
+  "_CREATIVE_HELP": {
+    "_comment": "A 'creatives' tömb a SAJÁT bannerek katalógusa az adott site-hoz. Több tétel = súlyozott ROTÁCIÓ (weight). A motor placementenként húz egyet (SSR-mentes, kliens-oldali). MINDEGYIK kép-elsődleges, szöveges fallbackkel.",
+    "id": "egyedi azonosító (analytics/debug)",
+    "weight": "rotációs súly (nagyobb = gyakoribb); alap 1",
+    "href": "kattintási cél (csak http(s)); a motor UTM-et és rel='sponsored noopener'-t ad hozzá",
+    "headline": "fő cím (kötelező a szöveges fallbackhez)",
+    "subline": "alcím / leírás (opcionális)",
+    "cta": "gomb-felirat (pl. 'Tudj meg többet')",
+    "img": "OPCIONÁLIS abszolút útvonal a /public-ból (pl. '/house-ads/hu/operex-728x90.webp'). Ha meg van adva, a kép renderel a szöveg helyett. imgMobile: külön mobil kreatív.",
+    "imgWidth / imgHeight": "a kép natív mérete (CLS=0 helyfoglaláshoz) — kép esetén kötelező",
+    "bgFrom / bgTo / accent / textOn": "a SZÖVEGES banner márkaszínei (gradiens + CTA + szövegszín) — ha nincs 'img'"
+  },
+
+  "hu": {
+    "enabled": true,
+    "placements": {
+      "articleTop":    { "desktop": true,  "mobile": true,  "format": "leaderboard" },
+      "articleMiddle": { "desktop": true,  "mobile": true,  "format": "leaderboard" },
+      "articleBottom": { "desktop": true,  "mobile": true,  "format": "rectangle" },
+      "anchorTop":     { "desktop": false, "mobile": false, "format": "leaderboard", "showDelayMs": 1200 },
+      "anchorBottom":  { "desktop": false, "mobile": false, "format": "leaderboard", "showDelayMs": 1200 },
+      "interstitial":  { "desktop": false, "mobile": false, "format": "rectangle", "minPageviews": 2, "delayMs": 4000 }
+    },
+    "creatives": [
+      {
+        "id": "hu-operex",
+        "weight": 2,
+        "href": "https://operex.eu/",
+        "headline": "OPEREX — digitális műszaknapló",
+        "subline": "Auditálható napló minden műszaknak, offline is. Papír helyett pár kattintás.",
+        "cta": "Ismerd meg",
+        "bgFrom": "#1f6fbf",
+        "bgTo": "#0f4c81",
+        "accent": "#ffffff",
+        "textOn": "#eaf2fb"
+      },
+      {
+        "id": "hu-sajat-eszkozok",
+        "weight": 1,
+        "href": "https://konvertalo.hu/",
+        "headline": "Ingyenes online eszközök",
+        "subline": "PDF, kép, adat és szöveg — regisztráció nélkül, a böngésződben.",
+        "cta": "Böngéssz",
+        "bgFrom": "#00c896",
+        "bgTo": "#007a5c",
+        "accent": "#ffffff",
+        "textOn": "#eafff8"
+      }
+    ]
+  },
+
+  "ro": {
+    "enabled": true,
+    "placements": {
+      "articleTop":    { "desktop": true,  "mobile": true,  "format": "leaderboard" },
+      "articleMiddle": { "desktop": true,  "mobile": true,  "format": "leaderboard" },
+      "articleBottom": { "desktop": true,  "mobile": true,  "format": "rectangle" },
+      "anchorTop":     { "desktop": false, "mobile": false, "format": "leaderboard", "showDelayMs": 1200 },
+      "anchorBottom":  { "desktop": false, "mobile": false, "format": "leaderboard", "showDelayMs": 1200 },
+      "interstitial":  { "desktop": false, "mobile": false, "format": "rectangle", "minPageviews": 2, "delayMs": 4000 }
+    },
+    "creatives": [
+      {
+        "id": "ro-instrumente",
+        "weight": 2,
+        "href": "https://instrumenteonline.ro/",
+        "headline": "Instrumente online gratuite",
+        "subline": "Calculatoare, PDF, imagini si date — fara cont, direct in browser.",
+        "cta": "Exploreaza",
+        "bgFrom": "#00c896",
+        "bgTo": "#007a5c",
+        "accent": "#ffffff",
+        "textOn": "#eafff8"
+      },
+      {
+        "id": "ro-calculatoare",
+        "weight": 1,
+        "href": "https://instrumenteonline.ro/calculator/",
+        "headline": "Calculatoare matematice",
+        "subline": "Ecuatii, geometrie, procente si conversii — cu explicatii pas cu pas.",
+        "cta": "Calculeaza",
+        "bgFrom": "#4f46e5",
+        "bgTo": "#3730a3",
+        "accent": "#ffffff",
+        "textOn": "#eef0ff"
+      }
+    ]
+  }
+}

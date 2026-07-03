@@ -8,6 +8,10 @@
   PUBLIC_SITE_URL = "https://instrumenteonline.ro"
   # Publikus AdSense publisher ID (lásd public/ads.txt)
   PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
+  # Saját (house-ad) réteg FŐKAPCSOLÓJA (RO / instrumenteonline.ro) — csak "true"
+  # kapcsolja BE (doksi: HOUSE-ADS.md). AdSense-től FÜGGETLEN. FONTOS: ha a RO Netlify
+  # site a dashboard-env-et használja (nem ezt a fájlt), ott is állítsd be ugyanígy.
+  PUBLIC_HOUSE_ADS_ENABLED = "false"
 
 [[headers]]
   for = "/*"

@@ -8,6 +8,9 @@
   PUBLIC_SITE_URL = "https://konvertalo.hu"
   # Publikus AdSense publisher ID (ugyanaz a fiók mint RO; lásd public/ads.txt)
   PUBLIC_ADSENSE_CLIENT_ID = "ca-pub-9658786113006303"
+  # Saját (house-ad) réteg főkapcsolója — csak "true" kapcsolja BE (doksi: HOUSE-ADS.md).
+  # Megjegyzés: konvertalo.hu élesben a default netlify.toml-t olvassa, nem ezt.
+  PUBLIC_HOUSE_ADS_ENABLED = "false"
 
 [[redirects]]
   from = "/jpg-to-webp"
