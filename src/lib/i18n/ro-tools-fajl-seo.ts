@@ -77,6 +77,102 @@ export const SEO_RO: Record<
   string,
   { slug: string; title: string; h1: string; description: string; keywords: string[] }
 > = {
+  "meta-tag-generator": {
+    slug: "generator-meta-tag",
+    title: "Generator Meta Tag online – title, description, canonical, robots | InstrumenteOnline",
+    h1: "Generator meta tag",
+    description:
+      "Asamblează meta tag-urile din <head>: title, description, canonical, robots, theme-color. Contor live de caractere, cod gata de copiat. În browser.",
+    keywords: [
+      "generator meta tag",
+      "creare meta tag",
+      "generator title meta",
+      "tag canonical",
+      "generator meta description",
+      "meta tag html",
+    ],
+  },
+
+  "open-graph-generator": {
+    slug: "generator-open-graph",
+    title: "Generator Open Graph online – card de partajare Facebook, LinkedIn | InstrumenteOnline",
+    h1: "Generator Open Graph",
+    description:
+      "Generează meta tag-uri og: cu previzualizare live a cardului Facebook/LinkedIn. og:title, og:image, og:description – cod gata de copiat.",
+    keywords: [
+      "generator open graph",
+      "generator og tag",
+      "og:image",
+      "meta partajare facebook",
+      "opengraph",
+      "tag partajare social",
+    ],
+  },
+
+  "twitter-card-generator": {
+    slug: "generator-twitter-card",
+    title: "Generator Twitter Card online – card de partajare X (Twitter) | InstrumenteOnline",
+    h1: "Generator Twitter Card",
+    description:
+      "Generează meta tag-uri twitter: cu previzualizare live a cardului X (Twitter). summary și summary_large_image – cod gata de copiat.",
+    keywords: [
+      "generator twitter card",
+      "twitter card",
+      "meta partajare x",
+      "summary_large_image",
+      "twitter:image",
+      "meta tag twitter",
+    ],
+  },
+
+  "faq-schema-generator": {
+    slug: "generator-schema-faq",
+    title: "Generator Schema FAQ online – date structurate JSON-LD FAQPage | InstrumenteOnline",
+    h1: "Generator Schema FAQ (JSON-LD)",
+    description:
+      "Generează date structurate FAQPage (JSON-LD) din perechi întrebare-răspuns. Compatibil Google Rich Results, cod gata de copiat.",
+    keywords: [
+      "generator schema faq",
+      "json-ld faq",
+      "faqpage schema",
+      "date structurate intrebari",
+      "rich results faq",
+      "schema.org faq",
+    ],
+  },
+
+  "robots-txt-generator": {
+    slug: "generator-robots-txt",
+    title: "Generator robots.txt online – reguli de crawling cu asistent | InstrumenteOnline",
+    h1: "Generator robots.txt",
+    description:
+      "Asamblează robots.txt cu asistent: user-agent, Disallow/Allow, crawl-delay, sitemap, blocare boți AI. Copiere și descărcare.",
+    keywords: [
+      "generator robots.txt",
+      "creare robots txt",
+      "disallow allow",
+      "crawl-delay",
+      "sitemap robots",
+      "blocare boti ai robots",
+    ],
+  },
+
+  "utm-generator": {
+    slug: "generator-utm",
+    title: "Generator linkuri UTM online – constructor URL campanie | InstrumenteOnline",
+    h1: "Generator URL campanie UTM",
+    description:
+      "Construiește URL de campanie cu parametri UTM: source, medium, campaign, term, content. Previzualizare live, șabloane, link de copiat.",
+    keywords: [
+      "generator utm",
+      "utm link builder",
+      "url campanie",
+      "utm_source",
+      "parametru utm",
+      "url builder analytics",
+    ],
+  },
+
   "title-meta-hossz": {
     slug: "verificare-title-meta",
     title: "Verificare lungime title si meta description online | InstrumenteOnline",

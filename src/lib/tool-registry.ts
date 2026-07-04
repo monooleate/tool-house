@@ -10,6 +10,7 @@ import { SZOVEG_CONTENT } from "./content/szoveg-content.ts";
 import { FEJLESZTO_CONTENT } from "./content/fejleszto-content.ts";
 import { PDF_CONTENT, EXCEL_CONTENT, MARKDOWN_CONTENT, HTML_CONTENT, FAJL_CONTENT, SEO_TOOL_CONTENT } from "./content/pdf-excel-other-content.ts";
 import { SZINEK_CONTENT } from "./content/szinek-content.ts";
+import { SEO_CONTENT } from "./content/seo-content.ts";
 import type { ContentMap } from "./content/types.ts";
 
 // ─── Romanian Content Data Imports ───────────────────────────
@@ -19,6 +20,7 @@ import { SZOVEG_RO_CONTENT } from "./content/ro/szoveg-content.ts";
 import { FEJLESZTO_RO_CONTENT } from "./content/ro/fejleszto-content.ts";
 import { PDF_RO_CONTENT, EXCEL_RO_CONTENT, MARKDOWN_RO_CONTENT, HTML_RO_CONTENT, FAJL_RO_CONTENT, SEO_TOOL_RO_CONTENT } from "./content/ro/pdf-excel-other-content.ts";
 import { SZINEK_RO_CONTENT } from "./content/ro/szinek-content.ts";
+import { SEO_RO_CONTENT } from "./content/ro/seo-content.ts";
 import { CALCULATOR_RO_CONTENT } from "./content/ro/calculator-content.ts";
 import { GEOMETRIE_RO_CONTENT } from "./content/ro/geometrie-content.ts";
 import { CONVERSII_RO_CONTENT } from "./content/ro/conversii-content.ts";
@@ -702,13 +704,142 @@ const rawTools: Tool[] = [
       { q: "Hogyan működik a pixel szélesség becslése?", a: "A betűk átlagos szélességét (kb. 7px/karakter az Arial 16px-nél) veszi alapul. Ez közelítés – a Google pontos pixelszélessége betűtípustól és böngészőtől függ." },
     ],
   },
-  { slug: "utm-eltavolito", category: "seo", title: "UTM paraméterek eltávolítása URL-ből", h1: "UTM paraméterek törlése", description: "URL-ből az összes UTM és tracking paraméter eltávolítása (utm_source, fbclid stb.).", keywords: ["utm remove", "url clean tracking"], status: "coming-soon", related: ["url-normalizalo", "canonical-epito"], faq: [] },
-  { slug: "url-normalizalo", category: "seo", title: "URL normalizáló online", h1: "URL normalizálása", description: "URL tisztítása: trailing slash, protokoll, www, kisbetűsítés normalizálása.", keywords: ["url normalize", "url normalizálás"], status: "coming-soon", related: ["utm-eltavolito", "canonical-epito"], faq: [] },
-  { slug: "canonical-epito", category: "seo", title: "Canonical URL tag generátor", h1: "Canonical tag generátor", description: "Canonical link tag HTML kód generálása URL alapján, egy kattintással másolható.", keywords: ["canonical url", "canonical tag generator"], status: "coming-soon", related: ["url-normalizalo"], faq: [] },
-  { slug: "fajlnev-optimalizalo", category: "seo", title: "SEO fájlnév optimalizáló online", h1: "SEO fájlnév optimalizálás", description: "Fájlok nevének SEO optimalizálása: ékezetek, szóközök, speciális karakterek.", keywords: ["fájlnév seo", "image filename seo"], status: "coming-soon", related: ["slug-generator", "url-normalizalo"], faq: [] },
-  { slug: "alt-szoveg-sablon", category: "seo", title: "Kép alt szöveg sablon generátor", h1: "Alt szöveg sablon", description: "Tömeges kép alt szöveg generálás sablon alapján, CSV exporttal.", keywords: ["alt text", "alt szöveg seo"], status: "coming-soon", related: ["fajlnev-optimalizalo"], faq: [] },
-  { slug: "robots-txt-ellenorzo", category: "seo", title: "robots.txt ellenőrző és tesztelő online", h1: "robots.txt ellenőrzése", description: "robots.txt fájl beillesztése és URL-ek tesztelése: engedélyezett-e a crawling?", keywords: ["robots txt tester", "robots ellenőrző"], status: "coming-soon", related: ["sitemap-url-ellenorzo"], faq: [] },
-  { slug: "sitemap-url-ellenorzo", category: "seo", title: "Sitemap URL ellenőrző online", h1: "Sitemap URL-ek ellenőrzése", description: "XML sitemap beillesztése és URL-ek listázása, státusz megjelenítéssel.", keywords: ["sitemap ellenőrző", "xml sitemap check"], status: "coming-soon", related: ["robots-txt-ellenorzo"], faq: [] },
+  {
+    slug: "meta-tag-generator", category: "seo",
+    title: "Meta tag generátor online – title, description, canonical, robots | Ingyenes",
+    h1: "Meta tag generátor",
+    description: "Az oldal <head> meta tagjeinek összeállítása: title, description, canonical, robots, theme-color. Élő karakterszámláló, másolható kód.",
+    keywords: ["meta tag generátor", "meta tag készítő", "title meta generátor", "canonical tag", "meta description generátor", "html meta tag"],
+    status: "active", component: "MetaTagGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["title-meta-hossz", "open-graph-generator", "twitter-card-generator"],
+    faq: [],
+  },
+  {
+    slug: "open-graph-generator", category: "seo",
+    title: "Open Graph generátor online – Facebook, LinkedIn megosztási kártya | Ingyenes",
+    h1: "Open Graph generátor",
+    description: "og: meta tagek generálása élő Facebook/LinkedIn kártya-előnézettel. og:title, og:image, og:description – másolható kód.",
+    keywords: ["open graph generátor", "og tag generátor", "og:image", "facebook megosztás meta", "opengraph", "közösségi megosztás tag"],
+    status: "active", component: "OpenGraphGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["twitter-card-generator", "meta-tag-generator", "faq-schema-generator"],
+    faq: [],
+  },
+  {
+    slug: "twitter-card-generator", category: "seo",
+    title: "Twitter Card generátor online – X megosztási kártya | Ingyenes",
+    h1: "Twitter Card generátor",
+    description: "twitter: meta tagek generálása élő X (Twitter) kártya-előnézettel. summary és summary_large_image – másolható kód.",
+    keywords: ["twitter card generátor", "twitter card", "x megosztás meta", "summary_large_image", "twitter:image", "twitter meta tag"],
+    status: "active", component: "TwitterCardGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["open-graph-generator", "meta-tag-generator", "faq-schema-generator"],
+    faq: [],
+  },
+  {
+    slug: "faq-schema-generator", category: "seo",
+    title: "FAQ Schema generátor online – JSON-LD FAQPage strukturált adat | Ingyenes",
+    h1: "FAQ Schema (JSON-LD) generátor",
+    description: "FAQPage strukturált adat (JSON-LD) generálása kérdés-válasz párokból. Google Rich Results kompatibilis, másolható kód.",
+    keywords: ["faq schema generátor", "json-ld faq", "faqpage schema", "gyakori kérdések strukturált adat", "rich results faq", "schema.org faq"],
+    status: "active", component: "FaqSchemaGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["meta-tag-generator", "open-graph-generator", "robots-txt-generator"],
+    faq: [],
+  },
+  {
+    slug: "robots-txt-generator", category: "seo",
+    title: "robots.txt generátor online – crawling szabályok varázslóval | Ingyenes",
+    h1: "robots.txt generátor",
+    description: "robots.txt összeállítása varázslóval: user-agent, Disallow/Allow, crawl-delay, sitemap, AI-bot tiltás. Másolható, letölthető.",
+    keywords: ["robots.txt generátor", "robots txt készítő", "disallow allow", "crawl-delay", "sitemap robots", "ai bot tiltás robots"],
+    status: "active", component: "RobotsTxtGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["robots-txt-ellenorzo", "meta-tag-generator", "utm-generator"],
+    faq: [],
+  },
+  {
+    slug: "utm-generator", category: "seo",
+    title: "UTM link generátor online – kampány URL építő | Ingyenes",
+    h1: "UTM kampány URL generátor",
+    description: "Kampány URL építése UTM paraméterekkel: source, medium, campaign, term, content. Élő előnézet, sablonok, másolható link.",
+    keywords: ["utm generátor", "utm link builder", "kampány url", "utm_source", "utm paraméter", "url builder analytics"],
+    status: "active", component: "UtmGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["utm-eltavolito", "meta-tag-generator", "robots-txt-generator"],
+    faq: [],
+  },
+  {
+    slug: "utm-eltavolito", category: "seo",
+    title: "UTM paraméter eltávolító online – tiszta URL | Ingyenes",
+    h1: "UTM paraméterek törlése",
+    description: "URL-ből az összes UTM és tracking paraméter (utm_source, fbclid, gclid…) eltávolítása. Több URL egyszerre, egy kattintással.",
+    keywords: ["utm eltávolító", "url tisztítás", "fbclid eltávolítás", "tracking paraméter törlés", "url cleaner", "utm remove"],
+    status: "active", component: "UtmEltavolito",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["url-normalizalo", "canonical-epito", "utm-generator"], faq: [],
+  },
+  {
+    slug: "url-normalizalo", category: "seo",
+    title: "URL normalizáló online – protokoll, www, trailing slash | Ingyenes",
+    h1: "URL normalizálása",
+    description: "URL egységesítése: https kényszerítés, www és trailing slash kezelés, kisbetűsítés, fragment eltávolítás. Több URL egyszerre.",
+    keywords: ["url normalizáló", "url egységesítés", "trailing slash", "url tisztítás", "url normalize", "canonical url"],
+    status: "active", component: "UrlNormalizalo",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["utm-eltavolito", "canonical-epito", "fajlnev-optimalizalo"], faq: [],
+  },
+  {
+    slug: "canonical-epito", category: "seo",
+    title: "Canonical tag generátor online – rel=canonical | Ingyenes",
+    h1: "Canonical tag generátor",
+    description: "Canonical link tag HTML generálása egy vagy több URL-ből, egy kattintással másolható. Duplikált tartalom ellen.",
+    keywords: ["canonical tag generátor", "rel canonical", "canonical url", "duplikált tartalom", "canonical link", "canonical html"],
+    status: "active", component: "CanonicalGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["url-normalizalo", "meta-tag-generator", "utm-eltavolito"], faq: [],
+  },
+  {
+    slug: "fajlnev-optimalizalo", category: "seo",
+    title: "SEO fájlnév optimalizáló online – ékezet, szóköz tisztítás | Ingyenes",
+    h1: "SEO fájlnév optimalizálás",
+    description: "Fájlnevek SEO-barát átalakítása: ékezetek, szóközök és speciális karakterek eltávolítása, kötőjeles, kisbetűs formára. Több név egyszerre.",
+    keywords: ["fájlnév optimalizáló", "seo fájlnév", "kép fájlnév seo", "ékezet eltávolítás", "image filename seo", "slug fájlnév"],
+    status: "active", component: "FajlnevOptimalizalo",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["alt-szoveg-sablon", "url-normalizalo", "slug-generator"], faq: [],
+  },
+  {
+    slug: "alt-szoveg-sablon", category: "seo",
+    title: "Alt szöveg sablon generátor online – tömeges, CSV | Ingyenes",
+    h1: "Kép alt szöveg sablon generátor",
+    description: "Tömeges kép alt szöveg generálás sablonból és adatsorokból, {1} {2} helyőrzőkkel, CSV exporttal. Akadálymentes, SEO-barát alt szövegek.",
+    keywords: ["alt szöveg generátor", "alt text sablon", "kép alt szöveg", "tömeges alt text", "alt tag seo", "akadálymentes kép"],
+    status: "active", component: "AltSzovegGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["fajlnev-optimalizalo", "faq-schema-generator", "meta-tag-generator"], faq: [],
+  },
+  {
+    slug: "robots-txt-ellenorzo", category: "seo",
+    title: "robots.txt ellenőrző és tesztelő online – crawl teszt | Ingyenes",
+    h1: "robots.txt ellenőrzése és tesztelése",
+    description: "robots.txt beillesztése és URL-ek tesztelése: engedélyezett-e a bejárás adott user-agentnek? Google-féle leghosszabb-egyezés logika.",
+    keywords: ["robots.txt ellenőrző", "robots txt tester", "robots txt teszt", "crawl teszt", "disallow teszt", "robots validator"],
+    status: "active", component: "RobotsTxtTester",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["robots-txt-generator", "sitemap-url-ellenorzo", "meta-tag-generator"], faq: [],
+  },
+  {
+    slug: "sitemap-url-ellenorzo", category: "seo",
+    title: "Sitemap URL ellenőrző online – XML sitemap elemző | Ingyenes",
+    h1: "Sitemap URL-ek ellenőrzése",
+    description: "XML sitemap beillesztése és az URL-ek listázása darabszámmal, lastmod és priority adatokkal. Sitemap-index támogatással.",
+    keywords: ["sitemap ellenőrző", "xml sitemap elemző", "sitemap url lista", "sitemap validator", "sitemap checker", "xml sitemap check"],
+    status: "active", component: "SitemapChecker",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["robots-txt-ellenorzo", "robots-txt-generator", "canonical-epito"], faq: [],
+  },
 
   // ═══ SZÍNEK (HU+RO közös kategória) ══════════════════════════════════════
   {
@@ -899,6 +1030,7 @@ const ALL_SEO_CONTENT: ContentMap = {
   ...FAJL_CONTENT,
   ...SEO_TOOL_CONTENT,
   ...SZINEK_CONTENT,
+  ...SEO_CONTENT,
 };
 
 for (const tool of rawTools) {
@@ -949,6 +1081,7 @@ const ALL_RO_CONTENT: ContentMap = {
   ...SANATATE_RO_CONTENT,
   ...TIMP_RO_CONTENT,
   ...SZINEK_RO_CONTENT,
+  ...SEO_RO_CONTENT,
 };
 
 for (const tool of rawTools) {
