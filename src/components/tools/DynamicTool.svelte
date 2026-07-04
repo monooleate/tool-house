@@ -93,6 +93,13 @@
     KarakterCsereTool: () => import("../tools/szoveg/KarakterCsereTool.svelte"),
     KeresesCsereTool: () => import("../tools/szoveg/KeresesCsereTool.svelte"),
     RegexCsereTool: () => import("../tools/szoveg/RegexCsereTool.svelte"),
+    // SZÖVEG – Batch B (HU+RO)
+    LoremIpsumGenerator: () => import("../tools/szoveg/LoremIpsumGenerator.svelte"),
+    SzovegOsszehasonlitas: () => import("../tools/szoveg/SzovegOsszehasonlitas.svelte"),
+    SzovegIsmetlo: () => import("../tools/szoveg/SzovegIsmetlo.svelte"),
+    VesszoSortores: () => import("../tools/szoveg/VesszoSortores.svelte"),
+    ForditottSzoveg: () => import("../tools/szoveg/ForditottSzoveg.svelte"),
+    SzovegHashtag: () => import("../tools/szoveg/SzovegHashtag.svelte"),
     // FEJLESZTŐ
     JsonFormazasTool: () => import("../tools/fejleszto/JsonFormazasTool.svelte"),
     JsonMinimalasTool: () => import("../tools/fejleszto/JsonMinimalasTool.svelte"),

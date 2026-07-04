@@ -576,4 +576,335 @@ export const SZOVEG_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Generator Lorem Ipsum ──────────────────────────────────────────────────
+  "lorem-ipsum": {
+    introText:
+      "Generatorul Lorem Ipsum creează text de umplutură – text „latin” de completare – în orice cantitate: paragrafe, propoziții sau cuvinte. Textul de umplutură este un instrument consacrat în design și machetare: chiar în lipsa conținutului real, îți arată cum va arăta o aranjare, o tipografie sau o componentă. Setează cantitatea și unitatea, opțional cu începutul clasic „Lorem ipsum dolor sit amet…”, și copiază textul gata făcut cu un clic. Totul rulează în browserul tău.",
+    guide: [
+      "1. Setează cantitatea dorită (de exemplu 3).",
+      "2. Alege unitatea: paragrafe, propoziții sau cuvinte.",
+      "3. După nevoie, activează începutul clasic „Lorem ipsum dolor sit amet…”.",
+      "4. Copiază textul de umplutură generat în clipboard.",
+    ],
+    faq: [
+      { q: "Ce este Lorem Ipsum?", a: "Lorem Ipsum este un text de completare fără sens, derivat dintr-un text latin, folosit de secole în tipografie și design. Este util fiindcă distribuția cuvintelor seamănă cu textul real, dar conținutul nu distrage atenția de la design." },
+      { q: "De ce folosim text de umplutură?", a: "Fiindcă adesea conținutul real nu este încă disponibil când proiectăm o aranjare, o tipografie sau o componentă. Textul de umplutură completează spațiul, astfel încât se vede machetarea, lungimea rândului și ritmul – fără ca sensul textului să distragă atenția." },
+      { q: "Cât text pot genera?", a: "Poți cere între 1 și 100 de unități, fie paragrafe, propoziții sau cuvinte. Generarea este instantanee, iar cantitatea de text este proporțională cu setarea." },
+      { q: "Dă mereu același text?", a: "Generarea este deterministă: la aceleași setări dă același text. Este intenționat – astfel designul tău este reproductibil și nu se schimbă la fiecare reîncărcare." },
+      { q: "Are nevoie de internet sau cont?", a: "Nu. Textul de umplutură se generează integral local, în browserul tău – nu e nevoie de server, înregistrare sau conexiune la internet pentru operație." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Cantitate", description: "Scrie câte unități de text de umplutură vrei." },
+        { title: "2. Unitate", description: "Alege: paragrafe, propoziții sau cuvinte." },
+        { title: "3. Început", description: "Activează începutul clasic „Lorem ipsum…” dacă e nevoie." },
+        { title: "4. Copiere", description: "Copiezi textul generat cu un clic în clipboard." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Web design", description: "Completarea aranjărilor și componentelor înaintea conținutului real, pentru verificarea machetării." },
+        { icon: "📄", title: "Machetare tipar", description: "Umplerea casetelor de text din publicații și broșuri pentru testarea tipografiei." },
+        { icon: "🧑‍💻", title: "Prototip", description: "Umplerea rapidă a mockup-urilor UI și a șabloanelor cu text de lungime credibilă." },
+        { icon: "📊", title: "Prezentare", description: "Text substituent pentru prezentări și demonstrații, până e gata conținutul final." },
+      ],
+      formatComparison: {
+        title: "Unități",
+        columns: ["Unitate", "Ce dă"],
+        rows: [
+          { feature: "Paragraf", values: ["Paragrafe complete, din mai multe propoziții"] },
+          { feature: "Propoziție", values: ["Propoziții separate, încheiate cu punct"] },
+          { feature: "Cuvânt", values: ["Numărul dat de cuvinte într-un singur bloc"] },
+        ],
+      },
+      aboutSection: {
+        title: "Scurtă istorie a textului de umplutură",
+        paragraphs: [
+          "Originea Lorem Ipsum urcă până în secolul al XVI-lea: un tipograf necunoscut a amestecat un fragment de text latin ca să facă din el un catalog de caractere. Textul este un fragment dintr-o lucrare a lui Cicero, deformat până la nerecunoaștere – tocmai de aceea nu are sens, ceea ce e esența lui: atenția nu e captată de conținut, ci de formă.",
+          "În era digitală, Lorem Ipsum a devenit unul dintre instrumentele de bază ale designului. Când proiectăm un site, interfața unei aplicații sau o publicație, textul real adesea nu e gata. Textul de umplutură completează spațiul cu conținut neutru, de lungime credibilă, astfel încât designerul se poate concentra pe fontul, lungimea rândului, spațierile și ritmul vizual – nu pe ce spune textul.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "Pentru design folosește text de umplutură cu lungime apropiată de conținutul real – nici prea puțin, nici prea mult." },
+        { icon: "🔤", tip: "Începutul clasic e familiar clienților – semnalează că textul e încă provizoriu." },
+        { icon: "⚠️", tip: "Înainte de lansare, înlocuiește mereu textul de umplutură cu conținut real – Lorem Ipsum e dăunător în motorul de căutare." },
+        { icon: "🧩", tip: "Pentru componente generează text scurt (o propoziție), pentru o pagină întreagă mai multe paragrafe." },
+      ],
+    },
+  },
+
+  // ─── Comparare text (diff) ──────────────────────────────────────────────────
+  "szoveg-osszehasonlitas": {
+    introText:
+      "Instrumentul de comparare text confruntă rândurile a două texte și evidențiază colorat diferențele: ce rânduri au fost adăugate și care au dispărut. Lipești varianta originală și cea modificată și vezi instant diff-ul, cu totalul rândurilor adăugate și șterse. Poți alege și comparare fără spații sau fără majuscule/minuscule. Util pentru compararea versiunilor, traducerilor sau editărilor. Totul rulează în browserul tău, textele nu ajung pe server.",
+    guide: [
+      "1. Lipește textul original în câmpul din stânga (A).",
+      "2. Lipește textul modificat în câmpul din dreapta (B).",
+      "3. După nevoie, activează modul fără spații sau fără majuscule/minuscule.",
+      "4. Citește diff-ul colorat: verde = adăugat, roșu = șters.",
+    ],
+    faq: [
+      { q: "La ce nivel compară?", a: "La nivel de rând: împarte cele două texte în rânduri și, pe baza celui mai lung subșir comun (LCS), determină ce rânduri sunt identice, care au fost adăugate și care au dispărut. Este metoda consacrată a instrumentelor de diff." },
+      { q: "Ce înseamnă culorile?", a: "Fundalul verde marchează rândurile noi (adăugate) apărute în textul B, roșul (tăiat) rândurile dispărute din A, iar cel neutru rândurile identice în ambele texte." },
+      { q: "La ce folosesc modurile fără spații / fără majuscule?", a: "Cu ele filtrezi diferențele nesemnificative: modul fără spații ignoră spațiile în plus, cel fără majuscule/minuscule ignoră diferența de scriere. Astfel rămân doar diferențele de fond." },
+      { q: "Există o limită de mărime?", a: "Diff-ul detaliat, pe rânduri, rulează rapid până la circa 2000 de rânduri per parte; peste această valoare instrumentul semnalează că textul e prea mare. Pentru sarcinile tipice de editare este suficient." },
+      { q: "Textele ajung pe vreun server?", a: "Nu. Întreaga comparare are loc în browserul tău, prin JavaScript – nici originalul, nici textul modificat nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Original (A)", description: "Lipește textul care servește drept bază de comparație." },
+        { title: "2. Modificat (B)", description: "Lipește cealaltă variantă în câmpul din dreapta." },
+        { title: "3. Setare", description: "Activează modul fără spații sau fără majuscule, dacă e nevoie." },
+        { title: "4. Diff", description: "Citește diferențele codificate colorat și totalul." },
+      ],
+      useCases: [
+        { icon: "📝", title: "Variante de text", description: "Confruntarea a două versiuni ale unui document, privire rapidă asupra modificărilor." },
+        { icon: "🌐", title: "Traducere", description: "Compararea traducerii originale cu cea revizuită pentru a filtra modificările." },
+        { icon: "🧑‍💻", title: "Configurație", description: "Găsirea diferențelor dintre două fișiere de setări sau liste." },
+        { icon: "✍️", title: "Editare", description: "Confruntarea vizuală a corecturilor editorului cu originalul." },
+      ],
+      formatComparison: {
+        title: "Notațiile diff-ului",
+        columns: ["Notație", "Semnificație"],
+        rows: [
+          { feature: "+ verde", values: ["Rând nou apărut în textul B"] },
+          { feature: "− roșu", values: ["Rând dispărut din textul A"] },
+          { feature: "neutru", values: ["Rând identic în ambele texte"] },
+        ],
+      },
+      aboutSection: {
+        title: "Cum funcționează diff-ul de text?",
+        paragraphs: [
+          "În spatele comparării textelor stă algoritmul celui mai lung subșir comun (LCS – Longest Common Subsequence). Instrumentul împarte cele două texte în rânduri, apoi caută cea mai lungă succesiune de rânduri care apare în ambele texte în aceeași ordine. Acestea sunt rândurile „comune”; ce e în A dar nu în comun este „șters”, ce e în B dar nu în comun este „adăugat”.",
+          "Este aceeași metodă folosită și de sistemele de control al versiunilor (de exemplu Git) pentru afișarea modificărilor din fișiere. Compararea pe rânduri este ideală pentru majoritatea sarcinilor de text: arată rapid și clar ce s-a schimbat între două versiuni, fără a fi nevoie să cauți caracter cu caracter.",
+        ],
+      },
+      tips: [
+        { icon: "🔤", tip: "Dacă te interesează doar diferența de conținut, activează modul fără spații." },
+        { icon: "📑", tip: "Lipește paragrafele rând cu rând – diff-ul pe rânduri e astfel cel mai precis." },
+        { icon: "🔍", tip: "La diferențe mari, ordonează/curăță întâi textul, ca diff-ul să fie mai clar." },
+        { icon: "🔒", tip: "Poți compara în siguranță și documente confidențiale – totul rămâne local." },
+      ],
+    },
+  },
+
+  // ─── Repetare text ──────────────────────────────────────────────────────────
+  "szoveg-ismetlo": {
+    introText:
+      "Instrumentul de repetare text repetă un text dat de câte ori dorești, cu separator la alegere și numerotare opțională. Scrie textul, dă numărul de repetări, alege ce se pune între repetări – rând nou, virgulă, spațiu sau separator personalizat – și copiază rezultatul gata făcut. Util pentru generarea rapidă de date de test, rânduri șablon, liste de completare sau tipare repetitive. Totul rulează în browserul tău.",
+    guide: [
+      "1. Scrie textul de repetat.",
+      "2. Dă de câte ori să se repete.",
+      "3. Alege separatorul (rând nou, virgulă, spațiu, personalizat) și cere numerotare, dacă e nevoie.",
+      "4. Copiază textul generat în clipboard.",
+    ],
+    faq: [
+      { q: "La ce folosește repetarea textului?", a: "Pentru multe sarcini mărunte: generarea de date de test sau liste de completare, multiplicarea unui rând șablon, generarea de rânduri HTML sau CSV repetitive, sau pur și simplu multiplicarea unui tipar." },
+      { q: "Ce separatoare pot alege?", a: "Rând nou (fiecare repetare pe rând separat), spațiu, virgulă, sau separator personalizat pe care îl dai tu. Opțiunea „nimic” lipește textele direct unul după altul." },
+      { q: "Ce este numerotarea?", a: "Dacă o activezi, în fața fiecărei repetări apare un număr de ordine (1. 2. 3. …). Util pentru generarea rapidă de liste numerotate, cazuri de test sau serii de pași." },
+      { q: "Câte repetări pot cere?", a: "Între 1 și 10 000. La numere mari, rezultatul va fi firesc lung, dar generarea rămâne instantanee." },
+      { q: "Textul ajunge pe vreun server?", a: "Nu. Repetarea are loc integral în browserul tău – textul tău nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Text", description: "Scrie textul sau rândul de repetat." },
+        { title: "2. Cantitate", description: "Dă numărul de repetări." },
+        { title: "3. Separator", description: "Alege ce se pune între repetări și cere numerotare, dacă vrei." },
+        { title: "4. Copiere", description: "Copiezi textul repetat, gata făcut, în clipboard." },
+      ],
+      useCases: [
+        { icon: "🧪", title: "Date de test", description: "Generarea rapidă de rânduri repetitive pentru dezvoltare și testare." },
+        { icon: "📋", title: "Rânduri șablon", description: "Multiplicarea unui rând șablon, apoi completarea individuală." },
+        { icon: "🔢", title: "Listă numerotată", description: "Schela listelor numerotate și a seriilor de pași în câteva clicuri." },
+        { icon: "🎯", title: "Tipare", description: "Generarea de tipare, separatoare sau șiruri de caractere repetitive." },
+      ],
+      formatComparison: {
+        title: "Opțiuni de separator",
+        columns: ["Separator", "Rezultat"],
+        rows: [
+          { feature: "Rând nou", values: ["Fiecare repetare pe rând separat"] },
+          { feature: "Virgulă", values: ["Listă pe un singur rând, cu virgule"] },
+          { feature: "Spațiu", values: ["Text continuu, separat prin spații"] },
+          { feature: "Personalizat", values: ["Orice separator ales de tine"] },
+        ],
+      },
+      aboutSection: {
+        title: "Când e utilă repetarea textului?",
+        paragraphs: [
+          "Pare simplă la prima vedere, dar multiplicarea rapidă a unui text este utilă în surprinzător de multe situații. În timpul dezvoltării ai adesea nevoie de o cantitate mai mare de date de test repetitive – de exemplu multe rânduri identice pentru popularea unei liste sau a unui tabel. În munca pe bază de șablon merită multiplicat un rând de bază, apoi personalizat individual, în loc să tastezi manual fiecare.",
+          "Opțiunea de numerotare adaugă o valoare aparte: schela listelor numerotate, a cazurilor de test, a seriilor de pași sau a șabloanelor o pregătește în câteva minute. Iar alegerea liberă a separatorului face ca același instrument să fie potrivit atât pentru liste pe un rând, cu virgule, cât și pentru blocuri pe mai multe rânduri – în funcție de ce ai nevoie.",
+        ],
+      },
+      tips: [
+        { icon: "🔢", tip: "Pentru o listă numerotată activează numerotarea – schela listei e gata." },
+        { icon: "📄", tip: "Pentru CSV sau listă alege separatorul „rând nou”." },
+        { icon: "➕", tip: "Cu un separator personalizat (de ex. „ | ”) poți produce liste de format unic." },
+        { icon: "🧹", tip: "Dacă din rezultat trebuie filtrate duplicatele, folosește apoi instrumentul de ștergere a duplicatelor." },
+      ],
+    },
+  },
+
+  // ─── Convertor virgulă ↔ rând nou ───────────────────────────────────────────
+  "vesszo-sortores": {
+    introText:
+      "Convertorul virgulă ↔ rând nou lucrează în două direcții: dintr-un text pe mai multe rânduri face o singură listă separată printr-un separator, sau invers, împarte o listă separată prin separator în rânduri distincte. Poți alege separatorul (virgulă, punct și virgulă, spațiu, tab sau personalizat) și, pe parcurs, poți curăța elementele, omite pe cele goale, șterge duplicatele sau pune totul între ghilimele. Ideal pentru transformarea listelor, coloanelor și enumerărilor. Totul rulează în browserul tău.",
+    guide: [
+      "1. Alege direcția: „Din rânduri în listă” sau „Din listă în rânduri”.",
+      "2. Alege separatorul (virgulă, punct și virgulă, spațiu, tab sau personalizat).",
+      "3. Activează opțiunile dorite: curățare, omitere goale, ștergere duplicate, ghilimele.",
+      "4. Lipește datele de intrare și copiază rezultatul transformat.",
+    ],
+    faq: [
+      { q: "Ce fac cele două direcții?", a: "„Din rânduri în listă” unește textul pe mai multe rânduri într-un singur rând, cu elementele separate prin separator (de exemplu listă cu virgule). „Din listă în rânduri” este inversul: împarte o listă separată prin separator în rânduri distincte." },
+      { q: "Ce separatoare pot alege?", a: "Virgulă, punct și virgulă, spațiu, tab, sau separator personalizat pe care îl dai tu. Astfel gestionează cele mai frecvente formate de liste și coloane." },
+      { q: "La ce folosesc curățarea și omiterea goale?", a: "Curățarea taie spațiile în plus de la începutul și sfârșitul elementelor, iar „omiterea goale” filtrează elementele fără conținut. Împreună dau o listă curată, ordonată." },
+      { q: "Ce face punerea între ghilimele?", a: "Pune fiecare element între ghilimele – util dacă vrei să inserezi rezultatul într-un cod, o interogare SQL (listă IN) sau un CSV, unde valorile trebuie puse între ghilimele." },
+      { q: "Datele ajung pe vreun server?", a: "Nu. Transformarea are loc integral în browserul tău – datele tale nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Direcție", description: "Alege: din rânduri în listă, sau din listă în rânduri." },
+        { title: "2. Separator", description: "Setează separatorul listei." },
+        { title: "3. Opțiuni", description: "Curățare, omitere goale, ștergere duplicate, ghilimele, după nevoie." },
+        { title: "4. Copiere", description: "Copiezi lista transformată în clipboard." },
+      ],
+      useCases: [
+        { icon: "📊", title: "Coloană de tabel", description: "Transformarea unei coloane (valori pe rânduri) în listă cu virgule și invers." },
+        { icon: "🧑‍💻", title: "Cod și SQL", description: "Transformarea rândurilor în listă cu virgule, între ghilimele, pentru o listă IN SQL sau un tablou." },
+        { icon: "📧", title: "Listă de adrese", description: "Aducerea unei liste de e-mailuri pe rânduri la o formă pe un rând, cu virgule." },
+        { icon: "🧹", title: "Curățare date", description: "Curățarea unei liste dezordonate: trim, eliminarea celor goale și a duplicatelor într-un pas." },
+      ],
+      formatComparison: {
+        title: "Exemplu de transformare",
+        columns: ["Direcție", "Intrare → Ieșire"],
+        rows: [
+          { feature: "Din rânduri în listă", values: ["măr / pară / prună → măr, pară, prună"] },
+          { feature: "Din listă în rânduri", values: ["măr, pară, prună → măr / pară / prună"] },
+          { feature: "Cu ghilimele", values: ["măr → \"măr\""] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce este utilă această transformare?",
+        paragraphs: [
+          "Listele și enumerările cer formate diferite în sisteme diferite. Într-un tabel valorile stau pe rânduri (sau în celule) separate; într-un cod adesea ca listă separată prin virgule, între ghilimele; într-un text ca simplă enumerare cu virgule. A transforma între ele manual este lent și predispus la erori – mai ales la multe elemente.",
+          "Acest instrument transformă înainte și înapoi între cele două forme cele mai frecvente – cea pe rânduri și cea separată prin separator – curățând datele pe parcurs. Curățarea, omiterea celor goale și filtrarea duplicatelor asigură împreună că rezultatul e curat și direct utilizabil, fie că îl inserezi într-un tabel, fie într-un fragment de cod.",
+        ],
+      },
+      tips: [
+        { icon: "🧑‍💻", tip: "Pentru o listă IN SQL activează ghilimelele și separatorul virgulă." },
+        { icon: "🧹", tip: "La o intrare dezordonată lasă activate curățarea și omiterea celor goale." },
+        { icon: "🔁", tip: "Filtrarea duplicatelor deduplică lista în timpul transformării." },
+        { icon: "➕", tip: "Cu un separator personalizat poți produce și formate neobișnuite (de ex. puncte „ • ”)." },
+      ],
+    },
+  },
+
+  // ─── Text inversat ──────────────────────────────────────────────────────────
+  "forditott-szoveg": {
+    introText:
+      "Instrumentul de text inversat inversează textul – la nivel de caracter, cuvânt sau rând. Modul caracter scrie întregul text invers (corect cu diacritice, pe bază Unicode), modul cuvânt schimbă ordinea cuvintelor, iar modul rând inversează ordinea rândurilor. Scrie textul, alege modul și copiază rezultatul. Util pentru texte ludice, inversarea ordinii unor serii de date sau o codare simplă. Totul rulează în browserul tău.",
+    guide: [
+      "1. Alege modul de inversare: caracter, cuvânt sau rând.",
+      "2. Lipește textul.",
+      "3. Citește rezultatul inversat.",
+      "4. Copiază-l în clipboard cu un clic.",
+    ],
+    faq: [
+      { q: "Ce moduri pot alege?", a: "Trei moduri: modul caracter inversează caracterele întregului text, modul cuvânt schimbă ordinea cuvintelor (cuvintele rămân întregi), iar modul rând inversează ordinea rândurilor." },
+      { q: "Gestionează corect diacriticele?", a: "Da. Inversarea caracterelor este pe bază Unicode ([...text]), astfel încât literele cu diacritice românești (ă, â, î, ș, ț) și emoji-urile se inversează întregi, corect – nu se descompun." },
+      { q: "La ce folosește textul inversat?", a: "Pentru texte ludice sau care atrag atenția, crearea de scriere în oglindă, inversarea ordinii unor serii de date (de exemplu o listă) cu modul rând, sau o „codare” simplă, lizibilă și de om." },
+      { q: "Modul cuvânt păstrează semnele de punctuație?", a: "Modul cuvânt inversează ordinea de-a lungul spațiilor, semnele de punctuație se mișcă lipite de cuvinte. Astfel cuvintele propoziției ajung în ordine inversă, dar cuvintele în sine rămân lizibile." },
+      { q: "Textul ajunge pe vreun server?", a: "Nu. Inversarea are loc integral în browserul tău – textul tău nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Mod", description: "Alege: inversare la nivel de caracter, cuvânt sau rând." },
+        { title: "2. Intrare", description: "Lipește textul de inversat." },
+        { title: "3. Rezultat", description: "Textul inversat apare instant." },
+        { title: "4. Copiere", description: "Copiezi rezultatul în clipboard." },
+      ],
+      useCases: [
+        { icon: "🎮", title: "Text ludic", description: "Crearea de scriere în oglindă sau texte citibile invers, pentru distracție." },
+        { icon: "🔃", title: "Inversare ordine", description: "Inversarea ordinii unei liste sau serii de date cu modul rând." },
+        { icon: "🧩", title: "Ghicitoare", description: "„Codare” simplă, lizibilă pentru ghicitori și jocuri." },
+        { icon: "🔤", title: "Tipografie", description: "Testarea direcției caracterelor și experimentarea unor efecte de text neobișnuite." },
+      ],
+      formatComparison: {
+        title: "Cele trei moduri",
+        columns: ["Mod", "Exemplu"],
+        rows: [
+          { feature: "Caracter", values: ["măr → răm"] },
+          { feature: "Cuvânt", values: ["măr roșu → roșu măr"] },
+          { feature: "Rând", values: ["rând 1 / rând 2 → rând 2 / rând 1"] },
+        ],
+      },
+      aboutSection: {
+        title: "Despre inversarea textului",
+        paragraphs: [
+          "Inversarea textului pare o operație simplă, dar poate însemna trei lucruri cu totul diferite, în funcție de unitatea cu care lucrăm. Inversarea la nivel de caracter este cea mai spectaculoasă: întregul text se scrie literă cu literă invers. Aici este importantă gestionarea corectă a Unicode, fiindcă abordarea naivă ar descompune literele cu diacritice și emoji-urile – acest instrument evită asta.",
+          "Inversarea la nivel de cuvânt și de rând este mai degrabă practică. Modul cuvânt schimbă ordinea cuvintelor, păstrându-le lizibile; modul rând inversează ordinea unei liste sau serii de date, ceea ce poate fi util de exemplu pentru inversarea unei ordini cronologice. Toate cele trei moduri rulează instant, local, și se copiază cu un clic.",
+        ],
+      },
+      tips: [
+        { icon: "🔃", tip: "Pentru inversarea ordinii unei liste folosește modul rând." },
+        { icon: "🔤", tip: "Modul caracter gestionează corect emoji-urile și diacriticele – încearcă liniștit." },
+        { icon: "🎯", tip: "Modul cuvânt e bun pentru inversarea rapidă a ordinii cuvintelor dintr-o propoziție." },
+        { icon: "🔒", tip: "Totul are loc local – poți inversa în siguranță și text confidențial." },
+      ],
+    },
+  },
+
+  // ─── Generator hashtag ──────────────────────────────────────────────────────
+  "szoveg-hashtag": {
+    introText:
+      "Generatorul de hashtag-uri creează, din cuvinte și expresii, hashtag-uri potrivite pentru social media. Lipești textul – pe cuvinte sau pe rânduri –, alegi stilul (camelCase sau litere mici) și, opțional, eliminarea diacriticelor, iar instrumentul generează hashtag-uri curate care încep cu semnul #. Ideal pentru postări pe Instagram, TikTok și LinkedIn, unde trebuie produse rapid și consecvent hashtag-uri. Totul rulează în browserul tău.",
+    guide: [
+      "1. Lipește textul: cuvinte sau expresii, pe rânduri sau cu spații.",
+      "2. Alege modul: fiecare cuvânt un hashtag separat, sau fiecare rând un hashtag.",
+      "3. Alege stilul (camelCase sau litere mici) și eliminarea diacriticelor.",
+      "4. Copiază hashtag-urile generate în clipboard.",
+    ],
+    faq: [
+      { q: "Cum se formează hashtag-urile?", a: "Din fiecare cuvânt sau rând rezultă un hashtag: instrumentul elimină caracterele care nu sunt litere/cifre (și opțional diacriticele), unește cuvintele, apoi pune în față semnul #. Stilul camelCase pune majusculă la începutul cuvintelor pentru lizibilitate mai bună." },
+      { q: "Care e diferența dintre camelCase și litere mici?", a: "Litere mici sunt toate mici (#reduceredevara), iar camelCase marchează limita cuvintelor cu majusculă (#reducereDeVara). camelCase este mai lizibil la hashtag-urile din mai multe cuvinte, iar cititoarele de ecran îl gestionează mai bine." },
+      { q: "De ce să elimini diacriticele?", a: "În hashtag-uri, caracterele cu diacritice pot rupe hashtag-ul pe unele platforme sau pot fi greu de căutat. Hashtag-ul ASCII (fără diacritice) funcționează mai fiabil și e mai ușor de căutat pe majoritatea platformelor sociale." },
+      { q: "Fiecare cuvânt sau fiecare rând să fie un hashtag?", a: "Modul „fiecare cuvânt” face din fiecare cuvânt al intrării un hashtag separat; modul „fiecare rând” unește un rând întreg (o expresie din mai multe cuvinte) într-un singur hashtag. Pentru expresii e mai util modul rând, pentru cuvinte cheie modul cuvânt." },
+      { q: "Textul ajunge pe vreun server?", a: "Nu. Generarea hashtag-urilor are loc integral în browserul tău – textul tău nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Text", description: "Lipește cuvintele sau expresiile." },
+        { title: "2. Mod", description: "Alege: fiecare cuvânt sau fiecare rând un hashtag." },
+        { title: "3. Stil", description: "camelCase sau litere mici, cu eliminarea diacriticelor." },
+        { title: "4. Copiere", description: "Copiezi hashtag-urile gata făcute în clipboard." },
+      ],
+      useCases: [
+        { icon: "📸", title: "Instagram", description: "Generarea rapidă și consecventă a hashtag-urilor de postare din cuvinte cheie." },
+        { icon: "🎵", title: "TikTok", description: "Din expresii, hashtag-uri potrivite trendurilor, într-un singur pas." },
+        { icon: "💼", title: "LinkedIn", description: "Hashtag-uri camelCase pentru postări profesionale, pentru lizibilitate mai bună." },
+        { icon: "🏷️", title: "Campanie", description: "Producerea de hashtag-uri unitare de campanie dintr-o listă de cuvinte sau expresii." },
+      ],
+      formatComparison: {
+        title: "Stiluri",
+        columns: ["Stil", "Exemplu"],
+        rows: [
+          { feature: "camelCase", values: ["reducere de vară → #reducereDeVara"] },
+          { feature: "litere mici", values: ["reducere de vară → #reduceredevara"] },
+          { feature: "Mod cuvânt", values: ["livrare gratuită → #livrare #gratuita"] },
+        ],
+      },
+      aboutSection: {
+        title: "Hashtag-urile în social media",
+        paragraphs: [
+          "Hashtag-urile sunt instrumentele de categorisire și descoperire ale rețelelor sociale: un hashtag bine ales poate crește mult vizibilitatea postării, fiindcă cei interesați de subiect îl găsesc. Un hashtag eficient este concis, relevant și consecvent – de aceea merită generat dintr-o listă de cuvinte cheie sau expresii, într-un stil unitar, nu tastat individual, la întâmplare.",
+          "Contează și forma tehnică. La hashtag-urile din mai multe cuvinte, camelCase (#reducereDeVara) este mult mai lizibil decât cel continuu, cu litere mici (#reduceredevara), iar cititoarele de ecran îl citesc de-a lungul limitelor de cuvinte. Iar eliminarea diacriticelor asigură că hashtag-ul funcționează fiabil și e ușor de căutat pe orice platformă – instrumentul o face automat pentru tine.",
+        ],
+      },
+      tips: [
+        { icon: "🐫", tip: "Pentru un hashtag din mai multe cuvinte alege camelCase – e mai lizibil și mai accesibil." },
+        { icon: "🔤", tip: "Lasă activată eliminarea diacriticelor pentru o căutabilitate fiabilă." },
+        { icon: "🎯", tip: "Pentru expresii e mai util modul rând, pentru cuvinte cheie unice modul cuvânt." },
+        { icon: "📈", tip: "Combină câteva hashtag-uri populare și câteva specifice pentru cel mai bun reach." },
+      ],
+    },
+  },
 };

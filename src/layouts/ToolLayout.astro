@@ -72,7 +72,7 @@ const needsKatex = MATH_CATS.has(tool.category) || isFejlesztoRoOnly;
 // a math collection-ben, betöltjük a longformot + a frontmatter schema.org-ot.
 // (A RO-only generátorok KaTeX-et használnak; a HU+RO fejleszto toolok — pl.
 //  szó-/karakterszámláló — longformja képlet nélküli, de így szintén renderel.)
-const supportsLongform = MATH_CATS.has(tool.category) || rawTool.category === "fejleszto" || rawTool.category === "szinek" || rawTool.category === "seo";
+const supportsLongform = MATH_CATS.has(tool.category) || rawTool.category === "fejleszto" || rawTool.category === "szinek" || rawTool.category === "seo" || rawTool.category === "szoveg";
 let mathEntry: any = null;
 let MathContent: any = null;
 let mathSchemaScripts: string[] = [];

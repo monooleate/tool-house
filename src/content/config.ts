@@ -25,7 +25,7 @@ const mathCollection = defineCollection({
     category: z.enum([
       "calculator", "geometrie", "conversii",
       "finante", "sanatate", "timp",
-      "fejleszto", "szinek", "seo",
+      "fejleszto", "szinek", "seo", "szoveg",
     ]),
     published_at: z.string(),
     refreshed_at: z.string().optional(),

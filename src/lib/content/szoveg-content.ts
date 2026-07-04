@@ -576,4 +576,335 @@ export const SZOVEG_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Lorem Ipsum generátor ──────────────────────────────────────────────────
+  "lorem-ipsum": {
+    introText:
+      "A Lorem Ipsum generátor vakszöveget – kitöltő „latin” szöveget – készít tetszőleges mennyiségben: bekezdés, mondat vagy szó szerint. A vakszöveg a tervezés és a tördelés bevett segédeszköze: valódi tartalom hiányában is látni engedi, hogyan fog kinézni egy elrendezés, egy tipográfia vagy egy komponens. Állítsd be a mennyiséget és az egységet, opcionálisan a klasszikus „Lorem ipsum dolor sit amet…” kezdéssel, és másold a kész szöveget egy kattintással. Minden a böngésződben fut.",
+    guide: [
+      "1. Add meg a kívánt mennyiséget (pl. 3).",
+      "2. Válaszd ki az egységet: bekezdés, mondat vagy szó.",
+      "3. Szükség szerint kapcsold be a klasszikus „Lorem ipsum dolor sit amet…” kezdést.",
+      "4. Másold a generált vakszöveget a vágólapra.",
+    ],
+    faq: [
+      { q: "Mi az a Lorem Ipsum?", a: "A Lorem Ipsum egy latinból torzított, értelmetlen kitöltő szöveg, amelyet a nyomdászat és a tervezés évszázadok óta használ. Azért jó, mert a szavak eloszlása a valódi szöveghez hasonló, de a tartalom nem vonja el a figyelmet a tervezésről." },
+      { q: "Miért használjunk vakszöveget?", a: "Mert a valódi tartalom gyakran még nem áll rendelkezésre, amikor egy elrendezést, tipográfiát vagy komponenst tervezünk. A vakszöveg kitölti a helyet, így látszik a tördelés, a sorhossz és a ritmus – anélkül, hogy a szöveg jelentése elterelné a figyelmet." },
+      { q: "Mennyi szöveget generálhatok?", a: "Bekezdésből, mondatból vagy szóból egyaránt 1 és 100 közötti mennyiséget kérhetsz. A generálás azonnali, és a szöveg mennyisége a beállítással arányos." },
+      { q: "Mindig ugyanazt a szöveget adja?", a: "A generálás determinisztikus: azonos beállításokhoz azonos szöveget ad. Ez szándékos – így a tervezésed reprodukálható, és nem változik minden frissítésnél." },
+      { q: "Kell hozzá internet vagy fiók?", a: "Nem. A vakszöveg teljes egészében a böngésződben, helyben generálódik – nincs szükség szerverre, regisztrációra vagy internetkapcsolatra a művelethez." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Mennyiség", description: "Írd be, hány egységnyi vakszöveget szeretnél." },
+        { title: "2. Egység", description: "Válaszd ki: bekezdés, mondat vagy szó." },
+        { title: "3. Kezdés", description: "Kapcsold be a klasszikus „Lorem ipsum…” kezdést, ha kell." },
+        { title: "4. Másolás", description: "A generált szöveget egy kattintással a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Webdesign", description: "Elrendezések és komponensek kitöltése valós tartalom előtt, a tördelés ellenőrzéséhez." },
+        { icon: "📄", title: "Nyomdai tördelés", description: "Kiadványok, brosúrák szövegdobozainak feltöltése a tipográfia teszteléséhez." },
+        { icon: "🧑‍💻", title: "Prototípus", description: "UI-mockupok és sablonok gyors feltöltése hihető hosszúságú szöveggel." },
+        { icon: "📊", title: "Bemutató", description: "Prezentációk és demók placeholder-szövege, amíg a végleges tartalom elkészül." },
+      ],
+      formatComparison: {
+        title: "Egységek",
+        columns: ["Egység", "Mit ad"],
+        rows: [
+          { feature: "Bekezdés", values: ["Több mondatból álló, teljes bekezdések"] },
+          { feature: "Mondat", values: ["Különálló, ponttal zárt mondatok"] },
+          { feature: "Szó", values: ["Megadott számú szó egyetlen blokkban"] },
+        ],
+      },
+      aboutSection: {
+        title: "A vakszöveg rövid története",
+        paragraphs: [
+          "A Lorem Ipsum eredete a 16. századig nyúlik vissza: egy ismeretlen nyomdász összekevert egy latin szövegrészletet, hogy betűmintakönyvet készítsen belőle. A szöveg Cicero egyik művéből származó, felismerhetetlenné torzított részlet – éppen ezért nincs értelme, ami a lényege: a figyelmet nem a tartalom, hanem a forma köti le.",
+          "A digitális korban a Lorem Ipsum a tervezés egyik alapeszköze lett. Amikor egy weboldalt, egy alkalmazás felületét vagy egy kiadványt tervezünk, a valódi szöveg gyakran még nincs kész. A vakszöveg kitölti a helyet hihető hosszúságú, semleges tartalommal, így a tervező a betűtípusra, a sorhosszra, a térközökre és a vizuális ritmusra koncentrálhat – nem pedig arra, hogy mit mond a szöveg.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "A tervezéshez a valódi tartalomhoz közeli hosszúságú vakszöveget használj – ne túl keveset, ne túl sokat." },
+        { icon: "🔤", tip: "A klasszikus kezdés ismerős a megrendelőknek – jelzi, hogy a szöveg még ideiglenes." },
+        { icon: "⚠️", tip: "Élesítés előtt mindig cseréld le a vakszöveget valódi tartalomra – a Lorem Ipsum a keresőben káros." },
+        { icon: "🧩", tip: "Komponensekhez rövid (mondatnyi), teljes oldalhoz több bekezdésnyi szöveget generálj." },
+      ],
+    },
+  },
+
+  // ─── Szöveg-összehasonlító (diff) ───────────────────────────────────────────
+  "szoveg-osszehasonlitas": {
+    introText:
+      "A szöveg-összehasonlító két szöveg sorait veti össze, és színesen kiemeli a különbségeket: mely sorok kerültek hozzá, és melyek tűntek el. Illeszd be az eredeti és a módosított változatot, és azonnal látod a diffet, összesítve a hozzáadott és törölt sorok számával. Választhatsz szóköz- és kis-/nagybetű-érzéketlen összehasonlítást is. Hasznos verziók, fordítások vagy szerkesztések összevetéséhez. Minden a böngésződben fut, a szövegeid nem kerülnek szerverre.",
+    guide: [
+      "1. Illeszd be az eredeti szöveget a bal oldali (A) mezőbe.",
+      "2. Illeszd be a módosított szöveget a jobb oldali (B) mezőbe.",
+      "3. Szükség szerint kapcsold be a szóköz- vagy kis-/nagybetű-érzéketlen módot.",
+      "4. Olvasd le a színes diffet: zöld = hozzáadott, piros = törölt sor.",
+    ],
+    faq: [
+      { q: "Milyen szinten hasonlít össze?", a: "Sor szinten: a két szöveget sorokra bontja, és a leghosszabb közös részsorozat (LCS) alapján határozza meg, mely sorok azonosak, melyek kerültek hozzá és melyek tűntek el. Ez a diff-eszközök bevett módszere." },
+      { q: "Mit jelentenek a színek?", a: "A zöld háttér a B szövegben megjelenő új (hozzáadott) sorokat jelöli, a piros (áthúzott) az A-ból eltűnt (törölt) sorokat, a semleges pedig a mindkét szövegben azonos sorokat." },
+      { q: "Mire jó a szóköz- és kis-/nagybetű-érzéketlen mód?", a: "Ezekkel kiszűrheted a lényegtelen eltéréseket: a szóköz-érzéketlen mód figyelmen kívül hagyja a felesleges szóközöket, a kis-/nagybetű-érzéketlen pedig az eltérő betűméretet. Így csak az érdemi különbségek maradnak." },
+      { q: "Van méretkorlát?", a: "A részletes, sor-szintű diff oldalanként kb. 2000 sorig fut gyorsan; efölött az eszköz jelzi, hogy a szöveg túl nagy. A tipikus szerkesztési feladatokhoz ez bőven elég." },
+      { q: "A szövegeim szerverre kerülnek?", a: "Nem. A teljes összehasonlítás a böngésződben, JavaScripttel történik – sem az eredeti, sem a módosított szöveg nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Eredeti (A)", description: "Illeszd be az összehasonlítás alapjául szolgáló szöveget." },
+        { title: "2. Módosított (B)", description: "Illeszd be a másik változatot a jobb oldali mezőbe." },
+        { title: "3. Beállítás", description: "Kapcsold be a szóköz- vagy kis-/nagybetű-érzéketlen módot, ha kell." },
+        { title: "4. Diff", description: "Olvasd le a színkódolt különbségeket és az összesítést." },
+      ],
+      useCases: [
+        { icon: "📝", title: "Szövegváltozatok", description: "Egy dokumentum két verziójának összevetése, a változtatások gyors áttekintése." },
+        { icon: "🌐", title: "Fordítás", description: "Eredeti és lektorált fordítás összehasonlítása a módosítások kiszűréséhez." },
+        { icon: "🧑‍💻", title: "Konfiguráció", description: "Két beállításfájl vagy lista különbségeinek megtalálása." },
+        { icon: "✍️", title: "Szerkesztés", description: "A szerkesztő javításainak vizuális összevetése az eredetivel." },
+      ],
+      formatComparison: {
+        title: "A diff jelölései",
+        columns: ["Jelölés", "Jelentése"],
+        rows: [
+          { feature: "+ zöld", values: ["A B szövegben megjelent új sor"] },
+          { feature: "− piros", values: ["Az A szövegből eltűnt sor"] },
+          { feature: "semleges", values: ["Mindkét szövegben azonos sor"] },
+        ],
+      },
+      aboutSection: {
+        title: "Hogyan működik a szöveg-diff?",
+        paragraphs: [
+          "A szövegek összehasonlítása mögött a leghosszabb közös részsorozat (LCS – Longest Common Subsequence) algoritmusa áll. Az eszköz a két szöveget sorokra bontja, majd megkeresi azt a leghosszabb sor-sorozatot, amely mindkét szövegben azonos sorrendben előfordul. Ezek a „közös” sorok; ami az A-ban van, de a közösben nincs, az „törölt”, ami a B-ben van, de a közösben nincs, az „hozzáadott”.",
+          "Ez ugyanaz a módszer, amit a verziókezelő rendszerek (például a Git) is használnak a fájlok változásainak megjelenítéséhez. A sor-szintű összehasonlítás a legtöbb szöveges feladathoz ideális: gyorsan és érthetően mutatja meg, mi változott két verzió között, anélkül, hogy karakterről karakterre kellene keresgélni.",
+        ],
+      },
+      tips: [
+        { icon: "🔤", tip: "Ha csak a tartalmi eltérés érdekel, kapcsold be a szóköz-érzéketlen módot." },
+        { icon: "📑", tip: "Bekezdéseket soronként illessz be – a sor-szintű diff így a legpontosabb." },
+        { icon: "🔍", tip: "Nagy különbségeknél előbb rendezd/tisztítsd a szöveget, hogy a diff átláthatóbb legyen." },
+        { icon: "🔒", tip: "Bizalmas dokumentumokat is nyugodtan összevethetsz – minden helyben marad." },
+      ],
+    },
+  },
+
+  // ─── Szövegismétlő ──────────────────────────────────────────────────────────
+  "szoveg-ismetlo": {
+    introText:
+      "A szövegismétlő egy megadott szöveget ismétel meg tetszőleges alkalommal, választható elválasztóval és opcionális sorszámozással. Írd be a szöveget, add meg az ismétlések számát, válaszd ki, hogy új sor, vessző, szóköz vagy egyéni elválasztó kerüljön az ismétlések közé, és másold a kész eredményt. Hasznos tesztadatok, sablonsorok, kitöltő listák vagy ismétlődő minták gyors előállításához. Minden a böngésződben fut.",
+    guide: [
+      "1. Írd be az ismételendő szöveget.",
+      "2. Add meg, hányszor ismétlődjön.",
+      "3. Válaszd ki az elválasztót (új sor, vessző, szóköz, egyéni), és kérj sorszámozást, ha kell.",
+      "4. Másold a generált szöveget a vágólapra.",
+    ],
+    faq: [
+      { q: "Mire jó a szövegismétlés?", a: "Sok apró feladathoz: tesztadat vagy kitöltő lista előállításához, egy sablonsor sokszorozásához, ismétlődő HTML- vagy CSV-sorok generálásához, vagy egyszerűen egy minta többszörözéséhez." },
+      { q: "Milyen elválasztók közül választhatok?", a: "Új sor (minden ismétlés külön sorba), szóköz, vessző, vagy egyéni elválasztó, amelyet te adsz meg. A „semmi” opció közvetlenül egymás után fűzi a szövegeket." },
+      { q: "Mi a sorszámozás?", a: "Ha bekapcsolod, minden ismétlés elé egy sorszám kerül (1. 2. 3. …). Hasznos számozott listák, tesztesetek vagy lépéssorok gyors előállításához." },
+      { q: "Hány ismétlést kérhetek?", a: "1 és 10 000 közötti mennyiséget. Nagy számoknál a kimenet természetesen hosszú lesz, de a generálás azonnali marad." },
+      { q: "A szöveg szerverre kerül?", a: "Nem. Az ismétlés teljes egészében a böngésződben történik – a szöveged nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Szöveg", description: "Írd be az ismételendő szöveget vagy sort." },
+        { title: "2. Mennyiség", description: "Add meg az ismétlések számát." },
+        { title: "3. Elválasztó", description: "Válaszd ki, mi kerüljön az ismétlések közé, és kérj sorszámot, ha kell." },
+        { title: "4. Másolás", description: "A kész, ismételt szöveget a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "🧪", title: "Tesztadat", description: "Ismétlődő sorok gyors előállítása fejlesztéshez és teszteléshez." },
+        { icon: "📋", title: "Sablonsorok", description: "Egy sablonsor sokszorozása, majd egyenkénti kitöltése." },
+        { icon: "🔢", title: "Számozott lista", description: "Sorszámozott listák és lépéssorok váza néhány kattintással." },
+        { icon: "🎯", title: "Minták", description: "Ismétlődő minták, elválasztók vagy karaktersorok generálása." },
+      ],
+      formatComparison: {
+        title: "Elválasztó opciók",
+        columns: ["Elválasztó", "Eredmény"],
+        rows: [
+          { feature: "Új sor", values: ["Minden ismétlés külön sorban"] },
+          { feature: "Vessző", values: ["Vesszővel tagolt, egy soros lista"] },
+          { feature: "Szóköz", values: ["Szóközzel elválasztott folyó szöveg"] },
+          { feature: "Egyéni", values: ["Tetszőleges elválasztó karakter(ek)"] },
+        ],
+      },
+      aboutSection: {
+        title: "Mikor hasznos a szövegismétlés?",
+        paragraphs: [
+          "Elsőre egyszerűnek tűnik, mégis meglepően sokféle helyzetben hasznos egy szöveg gyors sokszorozása. Fejlesztés közben gyakran kell nagyobb mennyiségű, ismétlődő tesztadat – például sok egyforma sor egy lista vagy táblázat feltöltéséhez. A sablonalapú munkában egy alapsort érdemes sokszorozni, majd egyenként testre szabni, ahelyett, hogy manuálisan gépelnénk le mindegyiket.",
+          "A sorszámozás opció külön értéket ad: számozott listák, tesztesetek, lépéssorok vagy sablonok vázát perceken belül elkészíti. Az elválasztó szabad megválasztásával pedig ugyanaz az eszköz alkalmas egy soros, vesszős listák és többsoros blokkok előállítására is – attól függően, mire van szükséged.",
+        ],
+      },
+      tips: [
+        { icon: "🔢", tip: "Számozott listához kapcsold be a sorszámozást – kész a lista váza." },
+        { icon: "📄", tip: "CSV-hez vagy listához az „új sor” elválasztót válaszd." },
+        { icon: "➕", tip: "Egyéni elválasztóval (pl. „ | ”) egyedi formátumú listákat is előállíthatsz." },
+        { icon: "🧹", tip: "Ha az eredményből duplikátumokat kell szűrni, használd utána a duplikátum-törlő eszközt." },
+      ],
+    },
+  },
+
+  // ─── Vessző ↔ sortörés átalakító ────────────────────────────────────────────
+  "vesszo-sortores": {
+    introText:
+      "A vessző ↔ sortörés átalakító két irányban dolgozik: a több soros szövegből egyetlen, elválasztóval tagolt listát készít, vagy fordítva, egy elválasztóval tagolt listát bont külön sorokra. Választhatsz elválasztót (vessző, pontosvessző, szóköz, tab vagy egyéni), és menet közben trimmelheted az elemeket, kihagyhatod az üreseket, törölheted a duplikátumokat vagy idézőjelbe teheted őket. Ideális listák, oszlopok és felsorolások átalakításához. Minden a böngésződben fut.",
+    guide: [
+      "1. Válaszd ki az irányt: „Sorokból lista” vagy „Listából sorok”.",
+      "2. Válaszd ki az elválasztót (vessző, pontosvessző, szóköz, tab vagy egyéni).",
+      "3. Kapcsold be a kívánt opciókat: trimmelés, üresek kihagyása, duplikátumok törlése, idézőjelezés.",
+      "4. Illeszd be a bemenetet, és másold az átalakított eredményt.",
+    ],
+    faq: [
+      { q: "Mit csinál a két irány?", a: "A „Sorokból lista” a több soros szöveget egyetlen sorba fűzi, az elemeket az elválasztóval tagolva (pl. vesszős lista). A „Listából sorok” ennek fordítottja: egy elválasztóval tagolt listát bont külön sorokra." },
+      { q: "Milyen elválasztók közül választhatok?", a: "Vessző, pontosvessző, szóköz, tabulátor, vagy egyéni elválasztó, amelyet te adsz meg. Így a leggyakoribb lista- és oszlopformátumokat kezeli." },
+      { q: "Mire jó a trimmelés és az üresek kihagyása?", a: "A trimmelés levágja az elemek elejéről és végéről a felesleges szóközöket, az „üresek kihagyása” pedig kiszűri a tartalom nélküli elemeket. Együtt tiszta, rendezett listát adnak." },
+      { q: "Mit csinál az idézőjelezés?", a: "Minden elemet idézőjelbe tesz – hasznos, ha az eredményt egy programkódba, SQL-lekérdezésbe (IN-lista) vagy CSV-be szeretnéd illeszteni, ahol az értékeket idézőjelezni kell." },
+      { q: "A bemenet szerverre kerül?", a: "Nem. Az átalakítás teljes egészében a böngésződben történik – az adataid nem hagyják el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Irány", description: "Válaszd ki: sorokból lista, vagy listából sorok." },
+        { title: "2. Elválasztó", description: "Állítsd be a lista elválasztóját." },
+        { title: "3. Opciók", description: "Trimmelés, üresek kihagyása, duplikátum-szűrés, idézőjelezés igény szerint." },
+        { title: "4. Másolás", description: "Az átalakított listát a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "📊", title: "Táblázat oszlop", description: "Egy táblázatoszlop (soronkénti értékek) átalakítása vesszős listává és vissza." },
+        { icon: "🧑‍💻", title: "Kód és SQL", description: "Sorok idézőjeles, vesszős listává alakítása egy SQL IN-lista vagy tömb számára." },
+        { icon: "📧", title: "Címlista", description: "E-mail címek soronkénti listájának egy soros, vesszős formára hozása." },
+        { icon: "🧹", title: "Adattisztítás", description: "Rendezetlen lista tisztítása: trim, üresek és duplikátumok eltávolítása egy lépésben." },
+      ],
+      formatComparison: {
+        title: "Példa átalakítás",
+        columns: ["Irány", "Bemenet → Kimenet"],
+        rows: [
+          { feature: "Sorokból lista", values: ["alma / körte / szilva → alma, körte, szilva"] },
+          { feature: "Listából sorok", values: ["alma, körte, szilva → alma / körte / szilva"] },
+          { feature: "Idézőjelezéssel", values: ["alma → \"alma\""] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért hasznos ez az átalakítás?",
+        paragraphs: [
+          "A listák és felsorolások különböző rendszerekben különböző formátumot igényelnek. Egy táblázatban az értékek külön sorokban (vagy cellákban) állnak; egy programkódban gyakran vesszővel tagolt, idézőjeles listaként; egy szövegben pedig egyszerű, vesszős felsorolásként. Ezek között kézzel átalakítani lassú és hibalehetőségeket rejt – főleg sok elem esetén.",
+          "Ez az eszköz a két leggyakoribb forma – a soronkénti és az elválasztóval tagolt – között alakít oda-vissza, menet közben megtisztítva az adatot. A trimmelés, az üresek kihagyása és a duplikátum-szűrés együtt biztosítja, hogy a végeredmény tiszta és közvetlenül felhasználható legyen, akár egy táblázatba, akár egy kódrészletbe illeszted.",
+        ],
+      },
+      tips: [
+        { icon: "🧑‍💻", tip: "SQL IN-listához kapcsold be az idézőjelezést és a vesszős elválasztót." },
+        { icon: "🧹", tip: "Rendezetlen bemenetnél hagyd bekapcsolva a trimmelést és az üresek kihagyását." },
+        { icon: "🔁", tip: "A duplikátum-szűrés egyben deduplikálja is a listát az átalakítás közben." },
+        { icon: "➕", tip: "Egyéni elválasztóval szokatlan formátumokat (pl. „ • ” pontok) is előállíthatsz." },
+      ],
+    },
+  },
+
+  // ─── Fordított szöveg ───────────────────────────────────────────────────────
+  "forditott-szoveg": {
+    introText:
+      "A fordított szöveg eszköz megfordítja a szöveget – karakter, szó vagy sor szintjén. A karakter-mód a teljes szöveget visszafelé írja (diakritika-helyesen, Unicode-alapon), a szó-mód a szavak sorrendjét cseréli meg, a sor-mód pedig a sorok sorrendjét fordítja meg. Írd be a szöveget, válaszd ki a módot, és másold az eredményt. Hasznos játékos szövegekhez, adatsorok sorrendjének megfordításához vagy egyszerű kódoláshoz. Minden a böngésződben fut.",
+    guide: [
+      "1. Válaszd ki a megfordítás módját: karakter, szó vagy sor.",
+      "2. Illeszd be a szöveget.",
+      "3. Olvasd le a megfordított eredményt.",
+      "4. Másold a vágólapra egy kattintással.",
+    ],
+    faq: [
+      { q: "Milyen módok közül választhatok?", a: "Három mód van: a karakter-mód a teljes szöveg karaktereit fordítja visszafelé, a szó-mód a szavak sorrendjét cseréli meg (a szavak maguk épek maradnak), a sor-mód pedig a sorok sorrendjét fordítja meg." },
+      { q: "Helyesen kezeli az ékezeteket?", a: "Igen. A karakter-megfordítás Unicode-alapú ([...text]), így a magyar ékezetes betűk (á, é, ő, ű) és az emojik is egészben, helyesen fordulnak meg – nem esnek szét." },
+      { q: "Mire jó a fordított szöveg?", a: "Játékos vagy figyelemfelkeltő szövegekhez, tükörírás létrehozásához, adatsorok (pl. lista) sorrendjének megfordításához a sor-móddal, vagy egyszerű, ember számára is olvasható „kódoláshoz”." },
+      { q: "A szó-mód megtartja az írásjeleket?", a: "A szó-mód a szóközök mentén fordítja meg a sorrendet, az írásjelek a szavakhoz tapadva mozognak. Így a mondat szavai fordított sorrendbe kerülnek, de a szavak maguk olvashatók maradnak." },
+      { q: "A szöveg szerverre kerül?", a: "Nem. A megfordítás teljes egészében a böngésződben történik – a szöveged nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Mód", description: "Válaszd ki: karakter, szó vagy sor szintű megfordítás." },
+        { title: "2. Bemenet", description: "Illeszd be a megfordítandó szöveget." },
+        { title: "3. Eredmény", description: "A megfordított szöveg azonnal megjelenik." },
+        { title: "4. Másolás", description: "Az eredményt a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "🎮", title: "Játékos szöveg", description: "Tükörírás vagy visszafelé olvasható szövegek létrehozása szórakozáshoz." },
+        { icon: "🔃", title: "Sorrend-fordítás", description: "Egy lista vagy adatsor sorrendjének megfordítása a sor-móddal." },
+        { icon: "🧩", title: "Rejtvény", description: "Egyszerű, olvasható „kódolás” rejtvényekhez, feladványokhoz." },
+        { icon: "🔤", title: "Tipográfia", description: "Karakterirány tesztelése és szokatlan szövegeffektek kísérletezéséhez." },
+      ],
+      formatComparison: {
+        title: "A három mód",
+        columns: ["Mód", "Példa"],
+        rows: [
+          { feature: "Karakter", values: ["alma → amla"] },
+          { feature: "Szó", values: ["piros alma → alma piros"] },
+          { feature: "Sor", values: ["1. sor / 2. sor → 2. sor / 1. sor"] },
+        ],
+      },
+      aboutSection: {
+        title: "A szöveg megfordításáról",
+        paragraphs: [
+          "A szöveg megfordítása egyszerű műveletnek tűnik, de három egészen különböző dolgot jelenthet, attól függően, milyen egységgel dolgozunk. A karakter szintű megfordítás a leglátványosabb: a teljes szöveg betűről betűre visszafelé íródik. Itt fontos a helyes Unicode-kezelés, mert a naiv megközelítés szétszedné az ékezetes betűket és az emojikat – ez az eszköz ezt elkerüli.",
+          "A szó és a sor szintű megfordítás inkább gyakorlati. A szó-mód a szavak sorrendjét cseréli meg, miközben a szavak olvashatók maradnak; a sor-mód pedig egy lista vagy adatsor sorrendjét fordítja meg, ami hasznos lehet például időrend visszafordításához. Mindhárom mód azonnal, helyben fut, és egy kattintással másolható.",
+        ],
+      },
+      tips: [
+        { icon: "🔃", tip: "Lista sorrendjének megfordításához a sor-módot használd." },
+        { icon: "🔤", tip: "A karakter-mód emojikat és ékezeteket is helyesen kezel – nyugodtan próbáld ki." },
+        { icon: "🎯", tip: "A szó-mód mondatok szórendjének gyors megfordítására jó." },
+        { icon: "🔒", tip: "Minden helyben történik – bizalmas szöveget is nyugodtan megfordíthatsz." },
+      ],
+    },
+  },
+
+  // ─── Szöveg → Hashtag generátor ─────────────────────────────────────────────
+  "szoveg-hashtag": {
+    introText:
+      "A szöveg → hashtag generátor szavakból és kifejezésekből közösségi médiába illő hashtageket készít. Illeszd be a szöveget – szavanként vagy soronként –, válaszd ki a stílust (camelCase vagy kisbetűs) és opcionálisan az ékezetek eltávolítását, az eszköz pedig legenerálja a # jellel kezdődő, tiszta hashtageket. Ideális Instagram-, TikTok- és LinkedIn-posztokhoz, ahol gyorsan, következetesen kell hashtageket előállítani. Minden a böngésződben fut.",
+    guide: [
+      "1. Illeszd be a szöveget: szavakat vagy kifejezéseket, soronként vagy szóközzel.",
+      "2. Válaszd ki a módot: minden szó külön hashtag, vagy minden sor egy hashtag.",
+      "3. Válaszd ki a stílust (camelCase vagy kisbetűs) és az ékezet-eltávolítást.",
+      "4. Másold a generált hashtageket a vágólapra.",
+    ],
+    faq: [
+      { q: "Hogyan képződnek a hashtagek?", a: "Minden szóból vagy sorból egy hashtag lesz: az eszköz eltávolítja a nem betű/szám karaktereket (és opcionálisan az ékezeteket), összevonja a szavakat, majd elé teszi a # jelet. A camelCase stílus a szavak kezdőbetűit nagybetűsíti a jobb olvashatóságért." },
+      { q: "Mi a különbség a camelCase és a kisbetűs között?", a: "A kisbetűs mind kis betű (#nyariakcio), a camelCase pedig a szavak határát nagybetűvel jelöli (#nyariAkcio). A camelCase olvashatóbb a több szóból álló hashtageknél, és a képernyőolvasók is jobban kezelik." },
+      { q: "Miért érdemes eltávolítani az ékezeteket?", a: "A hashtagekben az ékezetes karakterek egyes platformokon megtörhetik a hashtaget vagy rosszul kereshetők. Az ASCII-hashtag (ékezetek nélkül) megbízhatóbban működik és jobban kereshető a legtöbb közösségi platformon." },
+      { q: "Minden szó vagy minden sor legyen egy hashtag?", a: "A „minden szó” mód a bemenet minden egyes szavából külön hashtaget csinál; a „minden sor” mód egy egész sort (több szóból álló kifejezést) von össze egyetlen hashtaggé. Kifejezésekhez a sor-mód, kulcsszavakhoz a szó-mód a hasznosabb." },
+      { q: "A szöveg szerverre kerül?", a: "Nem. A hashtagek generálása teljes egészében a böngésződben történik – a szöveged nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Szöveg", description: "Illeszd be a szavakat vagy kifejezéseket." },
+        { title: "2. Mód", description: "Válaszd ki: minden szó vagy minden sor egy hashtag." },
+        { title: "3. Stílus", description: "camelCase vagy kisbetűs, ékezet-eltávolítással." },
+        { title: "4. Másolás", description: "A kész hashtageket a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "📸", title: "Instagram", description: "Poszt-hashtagek gyors, következetes generálása kulcsszavakból." },
+        { icon: "🎵", title: "TikTok", description: "Kifejezésekből trendbarát hashtagek egyetlen lépésben." },
+        { icon: "💼", title: "LinkedIn", description: "Szakmai posztok camelCase hashtagjei a jobb olvashatóságért." },
+        { icon: "🏷️", title: "Kampány", description: "Egységes kampány-hashtagek előállítása egy szó- vagy kifejezéslistából." },
+      ],
+      formatComparison: {
+        title: "Stílusok",
+        columns: ["Stílus", "Példa"],
+        rows: [
+          { feature: "camelCase", values: ["nyári akció → #nyariAkcio"] },
+          { feature: "kisbetűs", values: ["nyári akció → #nyariakcio"] },
+          { feature: "Szó-mód", values: ["ingyenes szállítás → #ingyenes #szallitas"] },
+        ],
+      },
+      aboutSection: {
+        title: "Hashtagek a közösségi médiában",
+        paragraphs: [
+          "A hashtagek a közösségi média kategorizáló és felfedezési eszközei: egy jól megválasztott hashtag a poszt láthatóságát nagyban növelheti, mert a téma iránt érdeklődők rátalálnak. A hatékony hashtag tömör, releváns és következetes – ezért érdemes egy kulcsszó- vagy kifejezéslistából egységes stílusban generálni őket, nem pedig egyesével, ötletszerűen gépelni.",
+          "A technikai forma is számít. A több szóból álló hashtageknél a camelCase (#nyariAkcio) sokkal olvashatóbb, mint a folyó kisbetűs (#nyariakcio), és a képernyőolvasók is a szóhatárok mentén olvassák fel. Az ékezetek eltávolítása pedig biztosítja, hogy a hashtag minden platformon megbízhatóan működjön és kereshető legyen – ezt az eszköz automatikusan elvégzi helyetted.",
+        ],
+      },
+      tips: [
+        { icon: "🐫", tip: "Több szavas hashtaghez válaszd a camelCase-t – olvashatóbb és akadálymentesebb." },
+        { icon: "🔤", tip: "Hagyd bekapcsolva az ékezet-eltávolítást a megbízható kereshetőségért." },
+        { icon: "🎯", tip: "Kifejezésekhez a sor-mód, egyedi kulcsszavakhoz a szó-mód a hasznosabb." },
+        { icon: "📈", tip: "Kombinálj néhány népszerű és néhány specifikus hashtaget a legjobb elérésért." },
+      ],
+    },
+  },
 };

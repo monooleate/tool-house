@@ -88,4 +88,52 @@ export const SZOVEG_RO: Record<string, { slug: string; title: string; h1: string
     description: "Transformă text în camelCase, snake_case, PascalCase, kebab-case – util pentru programatori și creatori de conținut.",
     keywords: ["case converter", "camelcase", "snake_case", "pascalcase", "kebab-case", "convertor case online"],
   },
+
+  "lorem-ipsum": {
+    slug: "generator-lorem-ipsum",
+    title: "Generator Lorem Ipsum online – text de umplutură | Gratuit",
+    h1: "Generator Lorem Ipsum",
+    description: "Generează text de umplutură (Lorem Ipsum) pe paragrafe, propoziții sau cuvinte, în orice cantitate. Cu început clasic, copiere cu un clic. În browser.",
+    keywords: ["generator lorem ipsum", "text de umplutură", "text substituent", "lorem ipsum română", "dummy text", "text de completare"],
+  },
+
+  "szoveg-osszehasonlitas": {
+    slug: "comparare-text",
+    title: "Comparare text online – diff, diferența dintre două texte | Gratuit",
+    h1: "Comparare text (diff)",
+    description: "Compară două texte pe rânduri: evidențierea colorată a rândurilor adăugate și șterse. Mod fără spații și fără majuscule. În browser, privat.",
+    keywords: ["comparare text", "text diff", "diff online", "diferența dintre texte", "compară texte", "compare text online"],
+  },
+
+  "szoveg-ismetlo": {
+    slug: "repetare-text",
+    title: "Repetare text online – multiplicare text | Gratuit",
+    h1: "Repetare text",
+    description: "Repetă un text de oricâte ori, cu separator la alegere (rând nou, virgulă, spațiu) și numerotare opțională. Copiere cu un clic, în browser.",
+    keywords: ["repetare text", "text repeater", "multiplicare text", "repetare text online", "repeat text", "repetare rând"],
+  },
+
+  "vesszo-sortores": {
+    slug: "virgula-rand-nou",
+    title: "Convertor virgulă ↔ rând nou online – listă | Gratuit",
+    h1: "Convertor virgulă ↔ rând nou",
+    description: "Din rânduri în listă sau din listă în rânduri – cu separator la alegere, curățare, ștergere duplicate și ghilimele. În browser, privat.",
+    keywords: ["virgulă rând nou", "convertor listă", "din rânduri în listă", "listă cu virgule", "comma to lines", "convertor rând virgulă"],
+  },
+
+  "forditott-szoveg": {
+    slug: "text-inversat",
+    title: "Text inversat online – caracter, cuvânt, rând invers | Gratuit",
+    h1: "Text inversat",
+    description: "Inversează textul la nivel de caracter, cuvânt sau rând. Corect cu diacritice (Unicode), copiere cu un clic. În browser, privat.",
+    keywords: ["text inversat", "reverse text", "text invers", "inversare text", "text în oglindă", "backwards text"],
+  },
+
+  "szoveg-hashtag": {
+    slug: "generator-hashtag",
+    title: "Generator hashtag online – #hashtag pentru social media | Gratuit",
+    h1: "Generator hashtag",
+    description: "Generează hashtag-uri din cuvinte și expresii pentru social media – stil camelCase sau litere mici, cu eliminarea diacriticelor. Copiere cu un clic.",
+    keywords: ["generator hashtag", "text hashtag", "creare hashtag", "hashtag instagram", "hashtag camelcase", "text to hashtag"],
+  },
 };
