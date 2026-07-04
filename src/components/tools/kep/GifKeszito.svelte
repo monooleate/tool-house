@@ -13,16 +13,19 @@
   let progress = 0;
   let delay = 100;
   let loop = true;
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     files = [...files, ...event.detail];
     resultBlob = null;
+    errorMsg = "";
   }
 
   async function convert() {
     if (!files.length) return;
     processing = true;
     progress = 0;
+    errorMsg = "";
 
     try {
       const { GIFEncoder, quantize, applyPalette } = await import("gifenc");
@@ -59,6 +62,7 @@
       resultBlob = new Blob([buffer], { type: "image/gif" });
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     } finally {
       processing = false;
     }
@@ -73,6 +77,7 @@
     files = [];
     resultBlob = null;
     progress = 0;
+    errorMsg = "";
   }
 </script>
 
@@ -80,14 +85,14 @@
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
     <label class="label">
-      {ui.frameDelay ?? "Frame delay"}: <span class="quality-val">{delay} ms</span>
+      {ui.frameDelay}: <span class="quality-val">{delay} ms</span>
     </label>
     <input type="range" min="20" max="2000" step="10" bind:value={delay} class="slider" />
   </div>
   <div class="settings-row">
     <label>
       <input type="checkbox" bind:checked={loop} />
-      {ui.infiniteLoop ?? "Végtelen hurok"}
+      {ui.infiniteLoop}
     </label>
   </div>
 </div>
@@ -105,19 +110,24 @@
 {/if}
 
 {#if files.length > 0}
-  <p class="tool-meta">{files.length} {ui.file ?? "kép"} {ui.selected ?? "kiválasztva"}</p>
+  <div class="meta-row">
+    <p class="tool-meta">{files.length} {ui.image.toLowerCase()} {ui.selected}{files.length < 2 ? ` · ${ui.minTwoImages}` : ""}</p>
+    <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.reset}</button>
+  </div>
 {/if}
+
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
 
 {#if processing}
   <div class="progress-bar-wrap">
     <div class="progress-bar" style="width: {progress}%"></div>
-    <span class="progress-label">GIF generálás... {progress}%</span>
+    <span class="progress-label">{ui.generatingGif}... {progress}%</span>
   </div>
 {/if}
 
 {#if resultBlob && !processing}
   <div class="tool-result-summary card">
-    <p>GIF {ui.conversionDone ?? "elkészült"}: {Math.round(resultBlob.size / 1024)} KB, {files.length} frame</p>
+    <p>GIF {ui.conversionDone}: {Math.round(resultBlob.size / 1024)} KB, {files.length} {ui.image.toLowerCase()}</p>
   </div>
 {/if}
 
@@ -127,8 +137,8 @@
     isConverting={processing}
     isDone={!!resultBlob && !processing}
     onConvert={convert} onDownload={download}
-    convertLabel={"GIF " + (ui.conversion ?? "generálás")}
-    downloadLabel={"GIF " + (ui.download ?? "letöltés")}
+    convertLabel={"GIF " + ui.generate}
+    downloadLabel={"GIF " + ui.download}
     fileCount={files.length} />
 {/if}
 
@@ -143,6 +153,8 @@
 .dropzone-wrap { margin-bottom: var(--sp-5); }
 .add-more { margin-bottom: var(--sp-5); opacity: 0.7; }
 .tool-meta { font-size: 0.85rem; color: var(--text-muted); margin: var(--sp-3) 0; }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
+.meta-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
 .tool-result-summary { margin: var(--sp-4) 0; padding: var(--sp-4); }
 .progress-bar-wrap { position: relative; height: 28px; background: var(--bg-input); border-radius: var(--r-md); margin: var(--sp-4) 0; overflow: hidden; }
 .progress-bar { height: 100%; background: var(--accent); transition: width 0.3s; }

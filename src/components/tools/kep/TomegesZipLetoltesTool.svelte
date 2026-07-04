@@ -81,7 +81,7 @@
             <span class="file-item__name" title={f.name}>{f.name}</span>
             <span class="file-item__size">{formatFileSize(f.size)}</span>
           </div>
-          <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)}>X</button>
+          <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} aria-label={ui.remove}>X</button>
         </li>
       {/each}
     </ul>

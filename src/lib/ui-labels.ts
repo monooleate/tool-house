@@ -594,6 +594,36 @@ const labels = {
     layoutGrid: "Rácsos",
     gap: "Rés (px)",
 
+    // ─── Képeszköz audit fixek (2026-06) ──────────────────
+    conversionDone: "sikeresen konvertálva",
+    selected: "kiválasztva",
+    differenceLabel: "eltérés",
+    base64LargerNote: "Base64 ~33%-kal nagyobb az eredetinél",
+    generatingGif: "GIF generálás",
+    processingFrames: "Képkockák feldolgozása",
+    noFramesError: "Nincs feldolgozható képkocka a fájlban.",
+    minTwoImages: "Legalább 2 kép szükséges.",
+    collage: "Kollázs",
+    pixelToPrintSize: "Pixel → Nyomtatási méret",
+    printSizeToPixel: "Nyomtatási méret → Pixel",
+    customLabel: "Egyéni",
+    unit: "Mértékegység",
+    spriteCellLimit: "Túl sok cella ({n}). Növeld a cellaméretet (max. 2000 cella).",
+
+    // ─── PDF audit fixek (2026-06) ────────────────────────
+    reorderAllPagesError: "Minden oldalnak pontosan egyszer kell szerepelnie.",
+    pdfCompressRasterNote: "A tömörítés a tartalmat képpé alakítja – a szöveg utána nem kereshető és nem másolható.",
+    pdfRedactRasterNote: "A kitakart oldalak képpé alakulnak, így a tartalom véglegesen eltűnik – az érintett oldal utána nem lesz kereshető.",
+    pdfLocalProcessingNote: "Minden feldolgozás a böngésződben történik – a fájl és a jelszó nem kerül szerverre.",
+    pdfEncryptedError: "Ez a PDF jelszóval védett – előbb távolítsd el a jelszavas védelmet.",
+    togglePassword: "Jelszó megjelenítése/elrejtése",
+    prevPage: "Előző oldal",
+    nextPage: "Következő oldal",
+    posTopCenter: "Fent középen",
+    posMiddleLeft: "Középen balra",
+    posMiddleRight: "Középen jobbra",
+    posBottomCenter: "Lent középen",
+
     // ─── Email capture ─────────────────────────────────────
     emailBar: {
       title: 'Értesülj az új eszközökről',
@@ -1193,6 +1223,36 @@ const labels = {
     layoutVertical: "Vertical",
     layoutGrid: "Grilă",
     gap: "Spațiu (px)",
+
+    // ─── Képeszköz audit fixek (2026-06) ──────────────────
+    conversionDone: "convertite cu succes",
+    selected: "selectate",
+    differenceLabel: "diferență",
+    base64LargerNote: "Base64 este cu ~33% mai mare decât originalul",
+    generatingGif: "Se generează GIF",
+    processingFrames: "Se procesează cadrele",
+    noFramesError: "Niciun cadru de procesat în fișier.",
+    minTwoImages: "Sunt necesare cel puțin 2 imagini.",
+    collage: "Colaj",
+    pixelToPrintSize: "Pixel → Dimensiune de tipărire",
+    printSizeToPixel: "Dimensiune de tipărire → Pixel",
+    customLabel: "Personalizat",
+    unit: "Unitate de măsură",
+    spriteCellLimit: "Prea multe celule ({n}). Mărește dimensiunea celulei (max. 2000 celule).",
+
+    // ─── PDF audit fixek (2026-06) ────────────────────────
+    reorderAllPagesError: "Fiecare pagină trebuie să apară exact o dată.",
+    pdfCompressRasterNote: "Comprimarea transformă conținutul în imagine – textul nu va mai fi căutabil sau copiabil.",
+    pdfRedactRasterNote: "Paginile redactate devin imagine, deci conținutul dispare definitiv – pagina afectată nu va mai fi căutabilă.",
+    pdfLocalProcessingNote: "Toată procesarea are loc în browserul tău – fișierul și parola nu ajung pe server.",
+    pdfEncryptedError: "Acest PDF este protejat cu parolă – elimină mai întâi protecția.",
+    togglePassword: "Afișează/ascunde parola",
+    prevPage: "Pagina anterioară",
+    nextPage: "Pagina următoare",
+    posTopCenter: "Sus la mijloc",
+    posMiddleLeft: "La mijloc stânga",
+    posMiddleRight: "La mijloc dreapta",
+    posBottomCenter: "Jos la mijloc",
 
     // ─── Email capture ─────────────────────────────────────
     emailBar: {

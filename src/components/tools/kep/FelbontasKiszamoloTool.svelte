@@ -44,10 +44,10 @@
   <div class="settings-row">
     <div class="radio-group">
       <label class="radio-label">
-        <input type="radio" bind:group={mode} value="pixel-to-print" /> Pixel -&gt; Nyomtatasi meret
+        <input type="radio" bind:group={mode} value="pixel-to-print" /> {ui.pixelToPrintSize}
       </label>
       <label class="radio-label">
-        <input type="radio" bind:group={mode} value="print-to-pixel" /> Nyomtatasi meret -&gt; Pixel
+        <input type="radio" bind:group={mode} value="print-to-pixel" /> {ui.printSizeToPixel}
       </label>
     </div>
   </div>
@@ -55,7 +55,7 @@
 
 {#if mode === "pixel-to-print"}
   <div class="calc-section card">
-    <h3 class="calc-section__title">Pixel -&gt; Nyomtatasi meret</h3>
+    <h3 class="calc-section__title">{ui.pixelToPrintSize}</h3>
 
     <div class="settings-row two-col">
       <div>
@@ -84,7 +84,7 @@
           class:btn--primary={customDpi}
           class:btn--outline={!customDpi}
           on:click={() => { customDpi = true; }}
-        >Egyeni</button>
+        >{ui.customLabel}</button>
       </div>
       {#if customDpi}
         <input type="number" min="1" max="10000" bind:value={dpi} class="input" style="margin-top: var(--sp-2); max-width: 120px;" />
@@ -106,7 +106,7 @@
   </div>
 {:else}
   <div class="calc-section card">
-    <h3 class="calc-section__title">Nyomtatasi meret -&gt; Pixel</h3>
+    <h3 class="calc-section__title">{ui.printSizeToPixel}</h3>
 
     <div class="settings-row two-col">
       <div>
@@ -121,7 +121,7 @@
 
     <div class="settings-row two-col">
       <div>
-        <label class="label" for="pr-unit">Mertekegyseg</label>
+        <label class="label" for="pr-unit">{ui.unit}</label>
         <select id="pr-unit" bind:value={printUnit} class="input">
           <option value="cm">cm</option>
           <option value="inch">inch</option>

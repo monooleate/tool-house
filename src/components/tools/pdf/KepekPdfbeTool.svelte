@@ -6,6 +6,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
   import PdfPreview from "./PdfPreview.svelte";
 
   const timing = getTimingConfig("kepek-pdfbe");
@@ -112,7 +113,7 @@
       resultFilename = "kepek.pdf";
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isConverting = false;
     }
@@ -158,9 +159,9 @@
             <span class="file-item__name" title={file.name}>{file.name}</span>
             <span class="file-item__size">{formatFileSize(file.size)}</span>
             <div class="file-item__actions">
-              <button class="btn btn--ghost btn--sm" on:click={() => moveUp(i)} disabled={i === 0} title={ui.moveUp}>&#9650;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => moveDown(i)} disabled={i === files.length - 1} title={ui.moveDown}>&#9660;</button>
-              <button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} title={ui.remove}>&#10005;</button>
+              <button class="btn btn--ghost btn--sm" aria-label={ui.moveUp} on:click={() => moveUp(i)} disabled={i === 0} title={ui.moveUp}>&#9650;</button>
+              <button class="btn btn--ghost btn--sm" aria-label={ui.moveDown} on:click={() => moveDown(i)} disabled={i === files.length - 1} title={ui.moveDown}>&#9660;</button>
+              <button class="btn btn--ghost btn--sm" aria-label={ui.remove} on:click={() => removeFile(i)} title={ui.remove}>&#10005;</button>
             </div>
           </li>
         {/each}

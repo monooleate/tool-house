@@ -12,10 +12,12 @@
   let cols = 0, rows = 0, imgW = 0, imgH = 0;
   let processing = false;
   let isDone = false;
+  let errorMsg = "";
 
   async function handleFiles(event: CustomEvent<File[]>) {
     file = event.detail[0] ?? null;
     isDone = false;
+    errorMsg = "";
     if (!file) return;
     const bm = await createImageBitmap(file);
     imgW = bm.width; imgH = bm.height;
@@ -30,6 +32,11 @@
 
   async function convert() {
     if (!file || cols <= 0 || rows <= 0) return;
+    errorMsg = "";
+    if (cols * rows > 2000) {
+      errorMsg = ui.spriteCellLimit.replace("{n}", String(cols * rows));
+      return;
+    }
     processing = true;
 
     try {
@@ -56,6 +63,7 @@
       isDone = true;
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     } finally {
       processing = false;
     }
@@ -67,18 +75,18 @@
   {#if imgW > 0}
     <div class="settings-row">
       <label class="label">
-        {ui.cellWidth ?? "Cella szélesség (px)"}:
+        {ui.cellWidth}:
         <input type="number" min="1" max={imgW} bind:value={cellW} on:change={updateGrid} class="input input-sm" />
       </label>
     </div>
     <div class="settings-row">
       <label class="label">
-        {ui.cellHeight ?? "Cella magasság (px)"}:
+        {ui.cellHeight}:
         <input type="number" min="1" max={imgH} bind:value={cellH} on:change={updateGrid} class="input input-sm" />
       </label>
     </div>
     {#if cols > 0 && rows > 0}
-      <p class="tool-meta">{cols} × {rows} {ui.gridInfo ?? "rács →"} {cols * rows} {ui.file ?? "kép"}</p>
+      <p class="tool-meta">{cols} × {rows} {ui.gridInfo} {cols * rows} {ui.image.toLowerCase()}</p>
     {/if}
   {/if}
 </div>
@@ -88,13 +96,15 @@
     label={ui.dragImageFor} sublabel="PNG, JPG, WebP -- Max. 50 MB" on:files={handleFiles} />
 </div>
 
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
+
 {#if file}
   <ConvertButton {timing}
     canConvert={!!file && cols > 0 && rows > 0 && !processing}
     isConverting={processing}
     isDone={isDone}
     onConvert={convert} onDownload={() => {}}
-    convertLabel={"ZIP " + (ui.conversion ?? "export")}
+    convertLabel={"ZIP " + ui.conversion}
     downloadLabel={""}
     fileCount={1} />
 {/if}
@@ -105,5 +115,6 @@
 .settings-row { margin-bottom: var(--sp-5); }
 .input-sm { width: 100px; }
 .tool-meta { font-size: 0.85rem; color: var(--text-muted); margin-top: var(--sp-3); }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
 .dropzone-wrap { margin-bottom: var(--sp-5); }
 </style>

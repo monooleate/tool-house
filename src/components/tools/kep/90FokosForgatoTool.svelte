@@ -29,7 +29,7 @@
           resultBlob = blob;
           processing = false;
         } else if (e.data.type === "error") {
-          error = e.data.error;
+          error = ui.conversionError;
           processing = false;
         }
       });
@@ -93,9 +93,9 @@
   <div class="settings-row">
     <span class="label">{ui.rotationAngle}</span>
     <div class="quick-buttons">
-      <button class="btn btn--sm" class:btn--primary={angle === 90} class:btn--outline={angle !== 90} on:click={() => setAngle(90)}>90&#176; (jobbra)</button>
-      <button class="btn btn--sm" class:btn--primary={angle === 180} class:btn--outline={angle !== 180} on:click={() => setAngle(180)}>180&#176;</button>
-      <button class="btn btn--sm" class:btn--primary={angle === 270} class:btn--outline={angle !== 270} on:click={() => setAngle(270)}>270&#176; (balra)</button>
+      <button class="btn btn--sm" class:btn--primary={angle === 90} class:btn--outline={angle !== 90} on:click={() => setAngle(90)}>{ui.deg90Right}</button>
+      <button class="btn btn--sm" class:btn--primary={angle === 180} class:btn--outline={angle !== 180} on:click={() => setAngle(180)}>{ui.deg180}</button>
+      <button class="btn btn--sm" class:btn--primary={angle === 270} class:btn--outline={angle !== 270} on:click={() => setAngle(270)}>{ui.deg270Left}</button>
     </div>
   </div>
 

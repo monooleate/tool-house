@@ -6,6 +6,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
   import PdfPreview from "./PdfPreview.svelte";
 
   const timing = getTimingConfig("pdf-oldalak-kivalasztasa");
@@ -39,7 +40,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       pageCount = 0;
     }
   }
@@ -89,7 +90,7 @@
       resultFilename = `${baseName}${ui.selectedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -147,7 +148,7 @@
           type="text"
           class="input"
           bind:value={rangeInput}
-          placeholder="pl. 1, 3-5, 8"
+          placeholder={ui.pagesPlaceholder}
         />
         <span class="hint">{ui.pagesAndRangesHint} (1-{pageCount})</span>
       </div>

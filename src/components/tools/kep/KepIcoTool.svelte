@@ -10,14 +10,17 @@
 
   let file: File | null = null;
   let resultBlob: Blob | null = null;
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     file = event.detail[0] ?? null;
     resultBlob = null;
+    errorMsg = "";
   }
 
   async function convert() {
     if (!file) return;
+    errorMsg = "";
 
     try {
       const img = await createImageBitmap(file);
@@ -35,6 +38,7 @@
       resultBlob = buildIcoBlob(pngBuffers, ICO_SIZES);
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     }
   }
 
@@ -88,9 +92,11 @@
     label={ui.dragImageFor} sublabel="PNG, JPG, WebP -- Max. 20 MB" on:files={handleFiles} />
 </div>
 
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
+
 {#if resultBlob}
   <div class="tool-result-summary card">
-    <p>ICO {ui.file ?? "fájl"} {ui.conversionDone ?? "elkészült"}: 16×16, 32×32, 48×48 px</p>
+    <p>ICO {ui.file} {ui.conversionDone}: 16×16, 32×32, 48×48 px</p>
   </div>
 {/if}
 
@@ -100,8 +106,8 @@
     isConverting={false}
     isDone={!!resultBlob}
     onConvert={convert} onDownload={download}
-    convertLabel={"ICO " + (ui.conversion ?? "generálás")}
-    downloadLabel={"favicon.ico " + (ui.download ?? "letöltés")}
+    convertLabel={"ICO " + ui.conversion}
+    downloadLabel={"favicon.ico " + ui.download}
     fileCount={1} />
 {/if}
 
@@ -111,4 +117,5 @@
 .settings-hint { font-size: 0.85rem; color: var(--text-muted); }
 .dropzone-wrap { margin-bottom: var(--sp-5); }
 .tool-result-summary { margin: var(--sp-4) 0; padding: var(--sp-4); }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
 </style>

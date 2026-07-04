@@ -7,6 +7,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("tomoritese");
 
@@ -101,7 +102,7 @@
       resultFilename = `${baseName}${ui.pdfCompressedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -160,6 +161,8 @@
       </div>
     </div>
 
+    <p class="tool-note">⚠️ {ui.pdfCompressRasterNote}</p>
+
     {#if isProcessing && progress > 0}
       <div class="progress-bar">
         <div class="progress-bar__fill" style="width: {progress}%"></div>
@@ -208,6 +211,7 @@
 
 <style>
 .tool { display: flex; flex-direction: column; gap: var(--sp-5); }
+.tool-note { font-size: .8rem; color: var(--yellow-text, #856404); background: var(--yellow-bg, #fff3cd); border-radius: var(--r-md); padding: var(--sp-3) var(--sp-4); margin: 0; line-height: 1.5; }
 .file-info { display: flex; flex-direction: column; gap: var(--sp-3); }
 .file-info__row { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
 .file-info__name { font-family: var(--font-mono); font-size: .875rem; font-weight: 700; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

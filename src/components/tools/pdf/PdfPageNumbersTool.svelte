@@ -7,6 +7,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("oldalszamok");
 
@@ -26,12 +27,27 @@
   let startNumber = 1;
   let fontSize = 10;
   let margin = 15;
+  let resultKey = "";
+
+  // Beállítás-változás után az elavult eredmény eldobása (ne lehessen régi beállítású PDF-et letölteni)
+  $: if (isDone && resultKey && `${position}-${format}-${startNumber}-${fontSize}-${margin}` !== resultKey) {
+    isDone = false;
+    resultBlob = null;
+    resultBytes = null;
+    convertBtnRef?.reset();
+  }
 
   const positions = [
     ["tl", "tc", "tr"],
     ["ml", "mc", "mr"],
     ["bl", "bc", "br"],
   ];
+
+  const POS_LABELS: Record<string, string> = {
+    tl: ui.topLeft, tc: ui.posTopCenter, tr: ui.topRight,
+    ml: ui.posMiddleLeft, mc: ui.center, mr: ui.posMiddleRight,
+    bl: ui.bottomLeft, bc: ui.posBottomCenter, br: ui.bottomRight,
+  };
 
   function handleFiles(e: CustomEvent<File[]>) {
     const f = e.detail[0];
@@ -52,7 +68,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       pageCount = 0;
     }
   }
@@ -111,9 +127,10 @@
       resultBytes = new Uint8Array(result);
       resultBlob = new Blob([result], { type: "application/pdf" });
       resultFilename = `${baseName}${ui.pdfPageNumberSuffix}.pdf`;
+      resultKey = `${position}-${format}-${startNumber}-${fontSize}-${margin}`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -173,7 +190,8 @@
                   class="position-cell"
                   class:position-cell--active={position === pos}
                   on:click={() => { position = pos; }}
-                  title={pos}
+                  aria-label={POS_LABELS[pos]}
+                  title={POS_LABELS[pos]}
                 >
                   <span class="position-dot"></span>
                 </button>

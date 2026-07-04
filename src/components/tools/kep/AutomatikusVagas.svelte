@@ -11,10 +11,12 @@
   let resultBlob: Blob | null = null;
   let tolerance = 10;
   let bgColor = "#ffffff";
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     file = event.detail[0] ?? null;
     resultBlob = null;
+    errorMsg = "";
   }
 
   function hexToRgb(hex: string): [number, number, number] {
@@ -35,6 +37,7 @@
 
   async function convert() {
     if (!file) return;
+    errorMsg = "";
 
     try {
       const img = await createImageBitmap(file);
@@ -70,7 +73,7 @@
       const cropW = right - left + 1;
       const cropH = bottom - top + 1;
 
-      if (cropW <= 0 || cropH <= 0) throw new Error("Nem találtam levágható tartalmat.");
+      if (cropW <= 0 || cropH <= 0) { errorMsg = ui.conversionError; return; }
 
       const outCanvas = new OffscreenCanvas(cropW, cropH);
       const outCtx = outCanvas.getContext("2d")!;
@@ -79,6 +82,7 @@
       resultBlob = await outCanvas.convertToBlob({ type: "image/png" });
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     }
   }
 
@@ -92,12 +96,12 @@
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
     <label class="label">
-      {ui.bgColor ?? "Háttérszín"}: <input type="color" bind:value={bgColor} />
+      {ui.bgColor}: <input type="color" bind:value={bgColor} />
     </label>
   </div>
   <div class="settings-row">
     <label class="label">
-      {ui.tolerance ?? "Tolerancia"}: <span class="quality-val">{tolerance}</span>
+      {ui.tolerance}: <span class="quality-val">{tolerance}</span>
     </label>
     <input type="range" min="0" max="80" bind:value={tolerance} class="slider" />
   </div>
@@ -108,14 +112,16 @@
     label={ui.dragImageFor} sublabel="JPG, PNG, WebP -- Max. 50 MB" on:files={handleFiles} />
 </div>
 
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
+
 {#if file}
   <ConvertButton {timing}
     canConvert={!!file}
     isConverting={false}
     isDone={!!resultBlob}
     onConvert={convert} onDownload={download}
-    convertLabel={ui.conversion ?? "Vágás"}
-    downloadLabel={"PNG " + (ui.download ?? "letöltés")}
+    convertLabel={ui.crop}
+    downloadLabel={"PNG " + ui.download}
     fileCount={1} />
 {/if}
 
@@ -128,4 +134,5 @@
 .slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: var(--r-full); background: var(--border); outline: none; cursor: pointer; margin-top: var(--sp-2); }
 .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--bg-card); box-shadow: 0 0 0 2px var(--accent); }
 .dropzone-wrap { margin-bottom: var(--sp-5); }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
 </style>

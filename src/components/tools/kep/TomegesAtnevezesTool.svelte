@@ -4,7 +4,7 @@
   import { ui } from "../../../lib/ui-labels.ts";
 
   let files: File[] = [];
-  let template = "kep-{001}";
+  let template = "img-{001}";
   let processing = false;
 
   function handleFiles(event: CustomEvent<File[]>) {
@@ -56,7 +56,7 @@
 
   function reset() {
     files = [];
-    template = "kep-{001}";
+    template = "img-{001}";
   }
 </script>
 
@@ -65,7 +65,7 @@
 
   <div class="settings-row">
     <label class="label" for="template-input">{ui.renamePattern}</label>
-    <input id="template-input" type="text" bind:value={template} class="input" placeholder={"kep-{001}"} />
+    <input id="template-input" type="text" bind:value={template} class="input" placeholder={"img-{001}"} />
     <p class="settings-hint">{"{001}"} = 001, 002... / {"{01}"} = 01, 02...</p>
   </div>
 </div>
@@ -106,7 +106,7 @@
             <td class="mono" title={item.original}>{item.original}</td>
             <td class="mono renamed">{item.renamed}</td>
             <td class="mono">{formatFileSize(item.size)}</td>
-            <td><button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)}>X</button></td>
+            <td><button class="btn btn--ghost btn--sm" on:click={() => removeFile(i)} aria-label={ui.remove}>X</button></td>
           </tr>
         {/each}
       </tbody>

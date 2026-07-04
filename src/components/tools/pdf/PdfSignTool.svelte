@@ -7,6 +7,8 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
+  import { onDestroy } from "svelte";
 
   const timing = getTimingConfig("alairas");
 
@@ -62,6 +64,7 @@
     isDone = false;
     resultBlob = null;
     resultBytes = null;
+    if (signatureDataUrl) URL.revokeObjectURL(signatureDataUrl);
     signatureDataUrl = null;
     signatureBytes = null;
     convertBtnRef?.reset();
@@ -77,7 +80,7 @@
       selectedPage = pageCount - 1;
       await renderPdfPage();
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
     }
   }
 
@@ -112,6 +115,7 @@
 
   function clearSignature() {
     signaturePad?.clear();
+    if (signatureDataUrl) URL.revokeObjectURL(signatureDataUrl);
     signatureDataUrl = null;
     signatureBytes = null;
   }
@@ -147,6 +151,7 @@
       const arr = new Uint8Array(reader.result as ArrayBuffer);
       sigImageBytes = arr;
       signatureBytes = arr;
+      if (signatureDataUrl) URL.revokeObjectURL(signatureDataUrl);
       signatureDataUrl = URL.createObjectURL(new Blob([arr], { type: f.type }));
     };
     reader.readAsArrayBuffer(f);
@@ -205,7 +210,7 @@
       resultFilename = `${baseName}${ui.pdfSignSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -223,12 +228,17 @@
     isDone = false;
     resultBlob = null;
     resultBytes = null;
+    if (signatureDataUrl) URL.revokeObjectURL(signatureDataUrl);
     signatureDataUrl = null;
     signatureBytes = null;
     sigImageBytes = null;
     typedName = "";
     convertBtnRef?.reset();
   }
+
+  onDestroy(() => {
+    if (signatureDataUrl) URL.revokeObjectURL(signatureDataUrl);
+  });
 </script>
 
 <div class="tool">

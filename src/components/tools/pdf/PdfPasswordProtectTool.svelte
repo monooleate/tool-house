@@ -7,6 +7,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("jelszo-vedelem");
 
@@ -80,7 +81,7 @@
       resultFilename = `${baseName}${ui.pdfPasswordSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -131,7 +132,7 @@
             class="input"
             bind:value={password}
           />
-          <button class="btn btn--ghost btn--sm" on:click={() => { showPassword = !showPassword; }}>
+          <button class="btn btn--ghost btn--sm" aria-label={ui.togglePassword} on:click={() => { showPassword = !showPassword; }}>
             {showPassword ? "🙈" : "👁"}
           </button>
         </div>

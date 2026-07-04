@@ -14,11 +14,13 @@
   let processing = false;
   let progress = 0;
   let errorMsg = "";
+  let failedCount = 0;
 
   function handleFiles(event: CustomEvent<File[]>) {
     files = event.detail;
     results = [];
     errorMsg = "";
+    failedCount = 0;
   }
 
   async function convert() {
@@ -42,12 +44,14 @@
           const baseName = file.name.replace(/\.(heic|heif)$/i, "");
           results.push({ name: `${baseName}.${TARGET_EXT}`, blob });
         } catch (e) {
-          console.error(`${file.name} konvertálása sikertelen:`, e);
+          console.error(`${file.name}:`, e);
+          failedCount++;
         }
         progress = Math.round(((i + 1) / files.length) * 100);
       }
+      if (!results.length) errorMsg = ui.conversionError;
     } catch (e) {
-      errorMsg = ui.errorGeneric ?? "Hiba történt a konverzió során.";
+      errorMsg = ui.conversionError;
     } finally {
       processing = false;
     }
@@ -72,7 +76,7 @@
 
 <div class="tool-settings card">
   <h2 class="tool-settings__title">{ui.settings}</h2>
-  <p class="settings-hint">{ui.lossless ?? "Veszteségmentes"} PNG</p>
+  <p class="settings-hint">{ui.lossless} PNG</p>
 </div>
 
 {#if !files.length}
@@ -92,13 +96,13 @@
 {#if processing}
   <div class="progress-bar-wrap">
     <div class="progress-bar" style="width: {progress}%"></div>
-    <span class="progress-label">{ui.converting ?? "Konvertálás..."} {progress}%</span>
+    <span class="progress-label">{ui.convertingInProgress} {progress}%</span>
   </div>
 {/if}
 
 {#if results.length > 0 && !processing}
   <div class="tool-result-summary card">
-    <p>{results.length} {ui.file ?? "fájl"} {ui.conversionDone ?? "sikeresen konvertálva"}.</p>
+    <p>{results.length} {ui.file} {ui.conversionDone}.{failedCount > 0 ? ` · ${failedCount} ${ui.error}` : ""}</p>
   </div>
 {/if}
 
@@ -108,8 +112,8 @@
     isConverting={processing}
     isDone={results.length > 0 && !processing}
     onConvert={convert} onDownload={download}
-    convertLabel={"PNG " + (ui.conversion ?? "konvertálás")}
-    downloadLabel={results.length > 1 ? (ui.zipDownload ?? "ZIP letöltés") : "PNG " + (ui.download ?? "letöltés")}
+    convertLabel={"PNG " + ui.conversion}
+    downloadLabel={results.length > 1 ? ui.zipDownload : "PNG " + ui.download}
     fileCount={files.length} />
 {/if}
 

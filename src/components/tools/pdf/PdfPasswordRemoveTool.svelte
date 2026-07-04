@@ -36,16 +36,20 @@
       if (pwd) opts.password = pwd;
 
       const doc = await PDFDocument.load(bytes, opts);
-      // Success — save without password
+
+      if (!pwd) {
+        // Jelszó nélkül betöltődött → a PDF nem volt védve: nincs mit feloldani,
+        // ne kínáljunk félrevezető "feloldott" letöltést.
+        notProtected = true;
+        needsPassword = false;
+        return;
+      }
+
+      // Védett PDF + megadott jelszó → mentés jelszó nélkül
       const result = await doc.save();
       const baseName = f.name.replace(/\.pdf$/i, "");
       resultBytes = new Uint8Array(result);
       resultFilename = `${baseName}${ui.pdfUnlockedSuffix}.pdf`;
-
-      if (!pwd && !needsPassword) {
-        // PDF was not password-protected
-        notProtected = true;
-      }
       needsPassword = false;
     } catch (err: any) {
       const msg = err.message || "";
@@ -119,7 +123,7 @@
               bind:value={password}
               on:keydown={(e) => { if (e.key === "Enter") submitPassword(); }}
             />
-            <button class="btn btn--ghost btn--sm" on:click={() => { showPassword = !showPassword; }}>
+            <button class="btn btn--ghost btn--sm" aria-label={ui.togglePassword} on:click={() => { showPassword = !showPassword; }}>
               {showPassword ? "🙈" : "👁"}
             </button>
           </div>

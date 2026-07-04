@@ -6,6 +6,7 @@
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("pdf-keppe");
 
@@ -21,6 +22,15 @@
   let resultFilename = "";
   let resultEntries: { filename: string; data: Uint8Array }[] | null = null;
   let resultZipFilename = "";
+  let resultKey = "";
+
+  // Beállítás-változás után az elavult eredmény eldobása (ne lehessen régi felbontást/formátumot letölteni)
+  $: if (isDone && resultKey && `${format}-${scale}` !== resultKey) {
+    isDone = false;
+    resultBlob = null;
+    resultEntries = null;
+    convertBtnRef?.reset();
+  }
 
   function handleFiles(e: CustomEvent<File[]>) {
     const f = e.detail[0];
@@ -39,7 +49,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       pageCount = 0;
     }
   }
@@ -88,9 +98,10 @@
         resultEntries = entries;
         resultZipFilename = `${baseName}${ui.imagesZipSuffix}.zip`;
       }
+      resultKey = `${format}-${scale}`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isConverting = false;
     }

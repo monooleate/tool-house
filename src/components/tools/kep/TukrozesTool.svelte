@@ -29,7 +29,7 @@
           resultBlob = blob;
           processing = false;
         } else if (e.data.type === "error") {
-          error = e.data.error;
+          error = ui.conversionError;
           processing = false;
         }
       });
@@ -88,10 +88,10 @@
     <span class="label">{ui.mirror}</span>
     <div class="radio-group">
       <label class="radio-label">
-        <input type="radio" bind:group={direction} value="horizontal" /> &#8596;
+        <input type="radio" bind:group={direction} value="horizontal" /> &#8596; {ui.layoutHorizontal}
       </label>
       <label class="radio-label">
-        <input type="radio" bind:group={direction} value="vertical" /> &#8597;
+        <input type="radio" bind:group={direction} value="vertical" /> &#8597; {ui.layoutVertical}
       </label>
     </div>
   </div>

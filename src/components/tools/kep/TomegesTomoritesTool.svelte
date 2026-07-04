@@ -85,7 +85,7 @@
     const entries = await Promise.all(
       done.map(async (item) => ({ filename: item.outputFilename!, data: new Uint8Array(await item.outputBlob!.arrayBuffer()) })),
     );
-    await downloadZip(entries, "tomorított-kepek.zip");
+    await downloadZip(entries, "tomoritett-kepek.zip");
   }
 
   function handleReset() { queue = []; fileMap.clear(); isProcessing = false; }

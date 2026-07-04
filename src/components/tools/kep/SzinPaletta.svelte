@@ -5,21 +5,19 @@
   let file: File | null = null;
   let colors: { hex: string; rgb: string; hsl: string }[] = [];
   let colorCount = 6;
-  let previewUrl = "";
   let copied = "";
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     file = event.detail[0] ?? null;
     colors = [];
-    if (file) {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      previewUrl = URL.createObjectURL(file);
-      extractColors();
-    }
+    errorMsg = "";
+    if (file) extractColors();
   }
 
   async function extractColors() {
     if (!file) return;
+    errorMsg = "";
 
     try {
       // Use Canvas-based color extraction instead of color-thief-ts for reliability
@@ -36,9 +34,10 @@
       // Simple median-cut-like: collect all colors, bucket sort
       const colorMap = new Map<string, number>();
       for (let i = 0; i < pixels.length; i += 4) {
-        const r = Math.round(pixels[i] / 16) * 16;
-        const g = Math.round(pixels[i + 1] / 16) * 16;
-        const b = Math.round(pixels[i + 2] / 16) * 16;
+        // 16-os vödrökbe kvantálás, 255-re vágva: Math.round túlcsordulhatna 256-ra → érvénytelen hex/rgb
+        const r = Math.min(255, Math.round(pixels[i] / 16) * 16);
+        const g = Math.min(255, Math.round(pixels[i + 1] / 16) * 16);
+        const b = Math.min(255, Math.round(pixels[i + 2] / 16) * 16);
         const key = `${r},${g},${b}`;
         colorMap.set(key, (colorMap.get(key) ?? 0) + 1);
       }
@@ -54,6 +53,7 @@
       });
     } catch (e) {
       console.error(e);
+      errorMsg = ui.imageLoadError;
     }
   }
 
@@ -85,7 +85,7 @@
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
     <label class="label">
-      {ui.colorCount ?? "Színek száma"}: <span class="quality-val">{colorCount}</span>
+      {ui.colorCount}: <span class="quality-val">{colorCount}</span>
     </label>
     <input type="range" min="3" max="10" bind:value={colorCount} class="slider"
       on:change={extractColors} />
@@ -97,6 +97,10 @@
     label={ui.dragImageFor} sublabel="JPG, PNG, WebP -- Max. 20 MB" on:files={handleFiles} />
 </div>
 
+{#if errorMsg}
+  <div class="alert alert--error" role="alert">{errorMsg}</div>
+{/if}
+
 {#if colors.length > 0}
   <div class="color-palette">
     {#each colors as color}
@@ -104,7 +108,7 @@
         <div class="color-swatch" style="background: {color.hex}"></div>
         <div class="color-values">
           <button class="color-btn" on:click={() => copyColor(color.hex)}>
-            {copied === color.hex ? (ui.copied ?? "Másolva!") : color.hex}
+            {copied === color.hex ? ui.copied : color.hex}
           </button>
           <small>{color.rgb}</small>
           <small>{color.hsl}</small>

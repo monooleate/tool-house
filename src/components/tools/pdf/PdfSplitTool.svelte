@@ -6,6 +6,7 @@
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("pdf-szetbontas");
 
@@ -39,7 +40,7 @@
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       pageCount = 0;
     }
   }
@@ -114,7 +115,7 @@
       }
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isSplitting = false;
     }

@@ -8,6 +8,7 @@
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { downloadBlob, downloadZip, formatFileSize } from "../../../lib/download.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { onDestroy } from "svelte";
 
   // ─── Timing ─────────────────────────────────────────────
   const TOOL_SLUG = "jpg-webp";
@@ -153,6 +154,31 @@
   $: doneCount = queue.filter((i) => i.status === "done").length;
   $: hasResults = doneCount > 0;
   $: hasFiles = queue.length > 0;
+
+  // ─── Preview ObjectURL-ek kezelése (revoke a memóriaszivárgás ellen) ──
+  let previewFirstId: string | null = null;
+  let previewOrigUrl = "";
+  let previewOutUrl = "";
+  $: updatePreview(queue);
+  function updatePreview(q: QueueItem[]) {
+    const fd = q.find((i) => i.status === "done");
+    const id = fd?.id ?? null;
+    if (id === previewFirstId) return;
+    if (previewOrigUrl) URL.revokeObjectURL(previewOrigUrl);
+    if (previewOutUrl) URL.revokeObjectURL(previewOutUrl);
+    previewOrigUrl = "";
+    previewOutUrl = "";
+    previewFirstId = id;
+    if (fd?.outputBlob) {
+      const f = fileMap.get(fd.id);
+      if (f) previewOrigUrl = URL.createObjectURL(f);
+      previewOutUrl = URL.createObjectURL(fd.outputBlob);
+    }
+  }
+  onDestroy(() => {
+    if (previewOrigUrl) URL.revokeObjectURL(previewOrigUrl);
+    if (previewOutUrl) URL.revokeObjectURL(previewOutUrl);
+  });
 </script>
 
 <!-- Settings panel -->
@@ -260,7 +286,7 @@
         <div class="preview-pane">
           <div class="preview-pane__label">{ui.original} · {firstDone.originalSize ? formatFileSize(firstDone.originalSize) : ""}</div>
           <img
-            src={URL.createObjectURL(fileMap.get(firstDone.id)!)}
+            src={previewOrigUrl}
             alt="{ui.original}"
             class="preview-img"
             loading="lazy"
@@ -269,7 +295,7 @@
         <div class="preview-pane">
           <div class="preview-pane__label">WebP · {firstDone.outputSize ? formatFileSize(firstDone.outputSize) : ""}</div>
           <img
-            src={URL.createObjectURL(firstDone.outputBlob)}
+            src={previewOutUrl}
             alt="{ui.converted} WebP"
             class="preview-img"
             loading="lazy"

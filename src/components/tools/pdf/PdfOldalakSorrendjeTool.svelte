@@ -6,6 +6,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
   import PdfPreview from "./PdfPreview.svelte";
 
   const timing = getTimingConfig("pdf-oldalak-sorrendje");
@@ -14,12 +15,16 @@
   let pageCount = 0;
   let isProcessing = false;
   let error = "";
-  let orderInput = "";
+  let pageOrder: number[] = []; // 0-indexed eredeti oldalak az ÚJ sorrendben
   let isDone = false;
   let convertBtnRef: ConvertButton;
   let resultBlob: Blob | null = null;
   let resultBytes: Uint8Array | null = null;
   let resultFilename = "";
+
+  // Drag&drop állapot
+  let dragIndex = -1;
+  let dragOverIndex = -1;
 
   function handleFiles(e: CustomEvent<File[]>) {
     const f = e.detail[0];
@@ -38,45 +43,52 @@
       const bytes = await f.arrayBuffer();
       const doc = await PDFDocument.load(bytes);
       pageCount = doc.getPageCount();
-      // Pre-fill with default order
-      orderInput = Array.from({ length: pageCount }, (_, i) => i + 1).join(", ");
+      pageOrder = Array.from({ length: pageCount }, (_, i) => i);
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       pageCount = 0;
     }
   }
 
   function reverseOrder() {
-    if (pageCount === 0) return;
-    orderInput = Array.from({ length: pageCount }, (_, i) => pageCount - i).join(", ");
+    pageOrder = [...pageOrder].reverse();
   }
 
   function resetOrder() {
-    if (pageCount === 0) return;
-    orderInput = Array.from({ length: pageCount }, (_, i) => i + 1).join(", ");
+    pageOrder = Array.from({ length: pageCount }, (_, i) => i);
   }
 
-  function parseOrder(input: string, max: number): number[] {
-    const nums = input.split(",").map((s) => parseInt(s.trim(), 10));
-    for (const n of nums) {
-      if (isNaN(n) || n < 1 || n > max) {
-        throw new Error(`${ui.invalidPageNumber}: ${n}. (1-${max})`);
-      }
-    }
-    return nums.map((n) => n - 1);
+  // Egy elem áthelyezése from → to (fel/le gomb + drag&drop közös magja)
+  function moveItem(from: number, to: number) {
+    if (to < 0 || to >= pageOrder.length || from === to) return;
+    const next = [...pageOrder];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    pageOrder = next;
   }
+
+  // Drag&drop (egér)
+  function onDragStart(i: number) { dragIndex = i; }
+  function onDragOver(e: DragEvent, i: number) { e.preventDefault(); dragOverIndex = i; }
+  function onDrop(i: number) {
+    if (dragIndex !== -1) moveItem(dragIndex, i);
+    dragIndex = -1;
+    dragOverIndex = -1;
+  }
+  function onDragEnd() { dragIndex = -1; dragOverIndex = -1; }
 
   async function doConvert() {
-    if (!file || pageCount === 0 || !orderInput.trim()) return;
+    if (!file || pageOrder.length === 0) return;
     isProcessing = true;
     error = "";
     try {
-      const indices = parseOrder(orderInput, pageCount);
+      // A pageOrder mindig az összes oldal permutációja (drag/move műveletek),
+      // így nincs szükség külön "minden oldal pontosan egyszer" validációra.
       const { PDFDocument } = await import("pdf-lib");
       const bytes = await file.arrayBuffer();
       const srcDoc = await PDFDocument.load(bytes);
       const newDoc = await PDFDocument.create();
-      const pages = await newDoc.copyPages(srcDoc, indices);
+      const pages = await newDoc.copyPages(srcDoc, pageOrder);
       pages.forEach((p) => newDoc.addPage(p));
       const result = await newDoc.save();
       const baseName = file.name.replace(/\.pdf$/i, "");
@@ -85,7 +97,7 @@
       resultFilename = `${baseName}${ui.reorderedSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -101,7 +113,7 @@
     file = null;
     pageCount = 0;
     error = "";
-    orderInput = "";
+    pageOrder = [];
     isDone = false;
     resultBlob = null;
     convertBtnRef?.reset();
@@ -136,17 +148,31 @@
     </div>
 
     <div class="card settings-card">
-      <div class="field">
-        <label class="label" for="page-order">{ui.pageOrderLabel}</label>
-        <input
-          id="page-order"
-          type="text"
-          class="input input--wide"
-          bind:value={orderInput}
-          placeholder="pl. 3, 1, 2, 4"
-        />
-        <span class="hint">{ui.pageOrderHint}</span>
-      </div>
+      <span class="label">{ui.pageOrderLabel}</span>
+      <p class="reorder-info">{ui.reorderInfo}</p>
+      <ul class="page-list" role="list">
+        {#each pageOrder as pageIdx, i (pageIdx)}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <li
+            class="page-card"
+            class:page-card--drag={dragIndex === i}
+            class:page-card--over={dragOverIndex === i && dragIndex !== i}
+            draggable="true"
+            on:dragstart={() => onDragStart(i)}
+            on:dragover={(e) => onDragOver(e, i)}
+            on:drop={() => onDrop(i)}
+            on:dragend={onDragEnd}
+          >
+            <span class="page-card__handle" aria-hidden="true">⠿</span>
+            <span class="page-card__num">{ui.page} {pageIdx + 1}</span>
+            <span class="page-card__pos">→ {i + 1}.</span>
+            <div class="page-card__actions">
+              <button class="btn btn--ghost btn--sm" aria-label={ui.moveUp} on:click={() => moveItem(i, i - 1)} disabled={i === 0}>▲</button>
+              <button class="btn btn--ghost btn--sm" aria-label={ui.moveDown} on:click={() => moveItem(i, i + 1)} disabled={i === pageOrder.length - 1}>▼</button>
+            </div>
+          </li>
+        {/each}
+      </ul>
       <div class="quick-actions">
         <button class="btn btn--outline btn--sm" on:click={reverseOrder}>{ui.reverseOrder}</button>
         <button class="btn btn--outline btn--sm" on:click={resetOrder}>{ui.originalOrder}</button>
@@ -158,7 +184,7 @@
     <ConvertButton
       bind:this={convertBtnRef}
       {timing}
-      canConvert={orderInput.trim() !== "" && pageCount > 0}
+      canConvert={pageCount > 0}
       isConverting={isProcessing}
       {isDone}
       onConvert={doConvert}
@@ -202,6 +228,16 @@
 .input--wide { max-width: 100%; }
 .hint { font-family: var(--font-mono); font-size: .75rem; color: var(--text-subtle); }
 .quick-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.reorder-info { font-size: .8rem; color: var(--text-muted); margin: 0; }
+.page-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-2); max-height: 420px; overflow-y: auto; }
+.page-card { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-3); background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--r-md); cursor: grab; user-select: none; transition: border-color var(--t-fast), opacity var(--t-fast); }
+.page-card:active { cursor: grabbing; }
+.page-card--drag { opacity: .4; }
+.page-card--over { border-color: var(--accent); border-style: dashed; }
+.page-card__handle { color: var(--text-subtle); font-size: 1.1rem; line-height: 1; }
+.page-card__num { font-family: var(--font-mono); font-size: .85rem; font-weight: 700; flex: 1; }
+.page-card__pos { font-family: var(--font-mono); font-size: .78rem; color: var(--accent); }
+.page-card__actions { display: flex; gap: var(--sp-1); }
 .stats-bar { display: flex; gap: var(--sp-6); }
 .stat { display: flex; flex-direction: column; align-items: center; }
 .stat__num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--accent); }

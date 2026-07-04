@@ -30,7 +30,7 @@
           resultBlob = blob;
           processing = false;
         } else if (e.data.type === "error") {
-          error = e.data.error;
+          error = ui.conversionError;
           processing = false;
         }
       });

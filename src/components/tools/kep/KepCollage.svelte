@@ -12,14 +12,17 @@
   let layout: "horizontal" | "vertical" | "grid" = "horizontal";
   let gap = 8;
   let bgColor = "#ffffff";
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     files = [...files, ...event.detail];
     resultBlob = null;
+    errorMsg = "";
   }
 
   async function convert() {
     if (files.length < 2) return;
+    errorMsg = "";
 
     try {
       const bitmaps = await Promise.all(files.map(f => createImageBitmap(f)));
@@ -74,6 +77,7 @@
       resultBlob = await canvas.convertToBlob({ type: "image/png" });
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     }
   }
 
@@ -85,6 +89,7 @@
   function reset() {
     files = [];
     resultBlob = null;
+    errorMsg = "";
   }
 </script>
 
@@ -92,23 +97,23 @@
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
     <label class="label">
-      {ui.layout ?? "Elrendezés"}:
+      {ui.layout}:
       <select bind:value={layout} class="select">
-        <option value="horizontal">{ui.layoutHorizontal ?? "Vízszintes"}</option>
-        <option value="vertical">{ui.layoutVertical ?? "Függőleges"}</option>
-        <option value="grid">{ui.layoutGrid ?? "Rácsos"}</option>
+        <option value="horizontal">{ui.layoutHorizontal}</option>
+        <option value="vertical">{ui.layoutVertical}</option>
+        <option value="grid">{ui.layoutGrid}</option>
       </select>
     </label>
   </div>
   <div class="settings-row">
     <label class="label">
-      {ui.gap ?? "Rés (px)"}: <span class="quality-val">{gap}</span>
+      {ui.gap}: <span class="quality-val">{gap}</span>
     </label>
     <input type="range" min="0" max="50" bind:value={gap} class="slider" />
   </div>
   <div class="settings-row">
     <label class="label">
-      {ui.bgColor ?? "Háttérszín"}: <input type="color" bind:value={bgColor} />
+      {ui.bgColor}: <input type="color" bind:value={bgColor} />
     </label>
   </div>
 </div>
@@ -125,8 +130,13 @@
   </div>
 {/if}
 
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
+
 {#if files.length > 0}
-  <p class="tool-meta">{files.length} {ui.file ?? "kép"} {ui.selected ?? "kiválasztva"}</p>
+  <div class="meta-row">
+    <p class="tool-meta">{files.length} {ui.image.toLowerCase()} {ui.selected}{files.length < 2 ? ` · ${ui.minTwoImages}` : ""}</p>
+    <button class="btn btn--ghost btn--sm" on:click={reset}>{ui.reset}</button>
+  </div>
 {/if}
 
 {#if files.length > 0}
@@ -135,8 +145,8 @@
     isConverting={false}
     isDone={!!resultBlob}
     onConvert={convert} onDownload={download}
-    convertLabel={"Collage " + (ui.conversion ?? "generálás")}
-    downloadLabel={"PNG " + (ui.download ?? "letöltés")}
+    convertLabel={ui.collage + " " + ui.generate}
+    downloadLabel={"PNG " + ui.download}
     fileCount={files.length} />
 {/if}
 
@@ -152,4 +162,6 @@
 .dropzone-wrap { margin-bottom: var(--sp-5); }
 .add-more { margin-bottom: var(--sp-5); opacity: 0.7; }
 .tool-meta { font-size: 0.85rem; color: var(--text-muted); margin: var(--sp-3) 0; }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
+.meta-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
 </style>

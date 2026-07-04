@@ -7,6 +7,7 @@
   import { downloadBlob, formatFileSize } from "../../../lib/download.ts";
   import { getTimingConfig } from "../../../lib/timing-config.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   const timing = getTimingConfig("eltakares");
 
@@ -67,7 +68,7 @@
       currentPage = 0;
       await renderPage(0);
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
     }
   }
 
@@ -123,13 +124,15 @@
   function onPointerUp() {
     if (!isDrawing) return;
     isDrawing = false;
-    if (currentRect.w > 5 && currentRect.h > 5) {
+    if (currentRect.w > 5 && currentRect.h > 5 && canvasWidth > 0 && canvasHeight > 0) {
+      // Normalizált (0–1) koordináták — oldalméret-függetlenek, így eltérő méretű
+      // oldalaknál sem csúsznak el (a korábbi globális-pixel tárolás bugja).
       redactions = [...redactions, {
         pageIndex: currentPage,
-        x: currentRect.x,
-        y: currentRect.y,
-        width: currentRect.w,
-        height: currentRect.h,
+        x: currentRect.x / canvasWidth,
+        y: currentRect.y / canvasHeight,
+        width: currentRect.w / canvasWidth,
+        height: currentRect.h / canvasHeight,
         color: redactColor,
       }];
     }
@@ -154,32 +157,57 @@
     isProcessing = true;
     error = "";
     try {
-      const { PDFDocument, rgb } = await import("pdf-lib");
-      const doc = await PDFDocument.load(fileBytes);
-      const pages = doc.getPages();
+      const { PDFDocument } = await import("pdf-lib");
+      const pdfjsLib = await import("pdfjs-dist");
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "";
 
-      for (const r of redactions) {
-        const page = pages[r.pageIndex];
-        if (!page) continue;
-        const { width: pageW, height: pageH } = page.getSize();
-        const scaleX = pageW / canvasWidth;
-        const scaleY = pageH / canvasHeight;
-        const pdfX = r.x * scaleX;
-        const pdfY = pageH - (r.y + r.height) * scaleY;
-        const pdfW = r.width * scaleX;
-        const pdfH = r.height * scaleY;
-        const color = r.color === "black" ? rgb(0, 0, 0) : rgb(1, 1, 1);
-        page.drawRectangle({ x: pdfX, y: pdfY, width: pdfW, height: pdfH, color, borderWidth: 0 });
+      // Csak az érintett oldalakat égetjük képpé (így a többi oldal kereshető marad);
+      // a takart oldalon a szöveg a raszterizálás után VÉGLEG eltűnik, nem nyerhető vissza.
+      const redactedPages = new Set(redactions.map((r) => r.pageIndex));
+      const srcDoc = await PDFDocument.load(fileBytes);
+      const pdfjsDoc = await pdfjsLib.getDocument({ data: fileBytes.slice() }).promise;
+      const newDoc = await PDFDocument.create();
+      const total = srcDoc.getPageCount();
+      const RASTER_SCALE = 2;
+
+      for (let i = 0; i < total; i++) {
+        if (!redactedPages.has(i)) {
+          // Nincs takarás → eredeti oldal változatlan átmásolása (kereshetőség megmarad)
+          const [copied] = await newDoc.copyPages(srcDoc, [i]);
+          newDoc.addPage(copied);
+          continue;
+        }
+
+        // Takart oldal: raszterizálás canvasra, a takarás ráégetése, majd kép-oldalként beágyazás
+        const pg = await pdfjsDoc.getPage(i + 1);
+        const viewport = pg.getViewport({ scale: RASTER_SCALE });
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+        const ctx = canvas.getContext("2d")!;
+        await pg.render({ canvasContext: ctx, viewport }).promise;
+
+        for (const r of redactions.filter((x) => x.pageIndex === i)) {
+          ctx.fillStyle = r.color === "black" ? "#000000" : "#ffffff";
+          ctx.fillRect(r.x * canvas.width, r.y * canvas.height, r.width * canvas.width, r.height * canvas.height);
+        }
+
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        const jpegBytes = Uint8Array.from(atob(dataUrl.split(",")[1]), (c) => c.charCodeAt(0));
+        const img = await newDoc.embedJpg(jpegBytes);
+        const { width: pw, height: ph } = srcDoc.getPage(i).getSize();
+        const newPage = newDoc.addPage([pw, ph]);
+        newPage.drawImage(img, { x: 0, y: 0, width: pw, height: ph });
       }
 
-      const result = await doc.save({ useObjectStreams: false });
+      const result = await newDoc.save();
       const baseName = file!.name.replace(/\.pdf$/i, "");
       resultBytes = new Uint8Array(result);
       resultBlob = new Blob([result], { type: "application/pdf" });
       resultFilename = `${baseName}${ui.pdfRedactSuffix}.pdf`;
       isDone = true;
     } catch (err: any) {
-      error = `${ui.error}: ${err.message || ui.unknownError}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }
@@ -230,9 +258,9 @@
 
     {#if pageCount > 1}
       <div class="page-nav">
-        <button class="btn btn--ghost btn--sm" on:click={() => changePage(-1)} disabled={currentPage === 0}>◀</button>
+        <button class="btn btn--ghost btn--sm" aria-label={ui.prevPage} on:click={() => changePage(-1)} disabled={currentPage === 0}>◀</button>
         <span>{currentPage + 1} / {pageCount}</span>
-        <button class="btn btn--ghost btn--sm" on:click={() => changePage(1)} disabled={currentPage === pageCount - 1}>▶</button>
+        <button class="btn btn--ghost btn--sm" aria-label={ui.nextPage} on:click={() => changePage(1)} disabled={currentPage === pageCount - 1}>▶</button>
       </div>
     {/if}
 
@@ -250,7 +278,7 @@
         {#each currentPageRedactions as r}
           <div
             class="redact-rect"
-            style="left:{r.x}px;top:{r.y}px;width:{r.width}px;height:{r.height}px;background:{r.color === 'black' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)'}"
+            style="left:{r.x * canvasWidth}px;top:{r.y * canvasHeight}px;width:{r.width * canvasWidth}px;height:{r.height * canvasHeight}px;background:{r.color === 'black' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.7)'}"
           ></div>
         {/each}
         {#if isDrawing && currentRect.w > 0}
@@ -280,8 +308,8 @@
       <div class="redact-list">
         {#each redactions as r, i}
           <div class="redact-item">
-            <span>{ui.page} {r.pageIndex + 1}, {Math.round(r.width)}×{Math.round(r.height)}px</span>
-            <button class="btn btn--ghost btn--sm" on:click={() => removeRedaction(i)}>✕</button>
+            <span>{ui.page} {r.pageIndex + 1} · {Math.round(r.width * 100)}×{Math.round(r.height * 100)}%</span>
+            <button class="btn btn--ghost btn--sm" aria-label={ui.remove} on:click={() => removeRedaction(i)}>✕</button>
           </div>
         {/each}
       </div>
@@ -306,6 +334,7 @@
       <div class="confirm-modal">
         <div class="confirm-modal__box">
           <p>{ui.pdfRedactConfirm}</p>
+          <p class="confirm-modal__note">{ui.pdfRedactRasterNote}</p>
           <div class="confirm-modal__actions">
             <button class="btn btn--primary" on:click={doConvert}>{ui.pdfRedactBtn}</button>
             <button class="btn btn--ghost" on:click={() => { showConfirm = false; }}>{ui.cancel}</button>
@@ -383,5 +412,6 @@
   max-width: 400px;
   text-align: center;
 }
+.confirm-modal__note { font-size: .8rem; color: var(--text-muted); margin-top: var(--sp-2); line-height: 1.5; }
 .confirm-modal__actions { display: flex; gap: var(--sp-3); justify-content: center; margin-top: var(--sp-4); }
 </style>

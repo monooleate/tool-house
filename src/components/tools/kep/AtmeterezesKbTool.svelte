@@ -12,15 +12,18 @@
   let resultBlob: Blob | null = null;
   let actualKb = 0;
   let processing = false;
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     file = event.detail[0] ?? null;
     resultBlob = null;
+    errorMsg = "";
   }
 
   async function convert() {
     if (!file) return;
     processing = true;
+    errorMsg = "";
 
     try {
       const img = await createImageBitmap(file);
@@ -54,6 +57,7 @@
       actualKb = Math.round(resultBlob.size / 1024);
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     } finally {
       processing = false;
     }
@@ -69,7 +73,7 @@
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
     <label class="label">
-      {ui.targetSizeKb ?? "Célméret (KB)"}: <span class="quality-val">{targetKb} KB</span>
+      {ui.targetSizeKb}: <span class="quality-val">{targetKb} KB</span>
     </label>
     <input type="range" min="10" max="5000" step="10" bind:value={targetKb} class="slider" />
     <input type="number" min="10" max="10000" bind:value={targetKb} class="input input-sm" />
@@ -82,14 +86,16 @@
 </div>
 
 {#if file}
-  <p class="tool-meta">{ui.originalSize ?? "Eredeti méret"}: {formatFileSize(file.size)}</p>
+  <p class="tool-meta">{ui.originalSize}: {formatFileSize(file.size)}</p>
 {/if}
+
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
 
 {#if resultBlob && !processing}
   <div class="tool-result-summary card">
     <p>
-      {ui.conversionDone ?? "Elkészült"}: <strong>{actualKb} KB</strong>
-      ({ui.targetSizeKb ?? "cél"}: {targetKb} KB, eltérés: {Math.abs(actualKb - targetKb)} KB)
+      {ui.conversionDone}: <strong>{actualKb} KB</strong>
+      ({ui.targetSizeKb}: {targetKb} KB, {ui.differenceLabel}: {Math.abs(actualKb - targetKb)} KB)
     </p>
   </div>
 {/if}
@@ -100,8 +106,8 @@
     isConverting={processing}
     isDone={!!resultBlob && !processing}
     onConvert={convert} onDownload={download}
-    convertLabel={ui.conversion ?? "Konvertálás"}
-    downloadLabel={"JPG " + (ui.download ?? "letöltés") + ` (${actualKb} KB)`}
+    convertLabel={ui.conversion}
+    downloadLabel={"JPG " + ui.download + ` (${actualKb} KB)`}
     fileCount={1} />
 {/if}
 
@@ -115,5 +121,6 @@
 .input-sm { width: 100px; margin-top: var(--sp-2); }
 .dropzone-wrap { margin-bottom: var(--sp-5); }
 .tool-meta { font-size: 0.85rem; color: var(--text-muted); margin: var(--sp-3) 0; }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
 .tool-result-summary { margin: var(--sp-4) 0; padding: var(--sp-4); }
 </style>

@@ -2,6 +2,7 @@
   import Dropzone from "../../ui/Dropzone.svelte";
   import { downloadText, formatFileSize } from "../../../lib/download.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   let file: File | null = null;
   let isProcessing = false;
@@ -49,7 +50,7 @@
       wordCount = cleanText.split(/\s+/).filter(Boolean).length;
       charCount = cleanText.length;
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
     } finally {
       isProcessing = false;
     }

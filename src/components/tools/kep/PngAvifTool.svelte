@@ -15,16 +15,19 @@
   let progress = 0;
   let quality = 60;
   let lossless = false;
+  let errorMsg = "";
 
   function handleFiles(event: CustomEvent<File[]>) {
     files = event.detail;
     results = [];
+    errorMsg = "";
   }
 
   async function convert() {
     if (!files.length) return;
     processing = true;
     progress = 0;
+    errorMsg = "";
 
     try {
       const { encode } = await import("@jsquash/avif");
@@ -51,6 +54,7 @@
       }
     } catch (e) {
       console.error(e);
+      errorMsg = ui.conversionError;
     } finally {
       processing = false;
     }
@@ -75,17 +79,17 @@
 <div class="tool-settings card">
   <h2 class="tool-settings__title">{ui.settings}</h2>
   <div class="settings-row">
-    <label class="label">
-      {ui.quality ?? "Minőség"}: <span class="quality-val">{lossless ? (ui.lossless ?? "Veszteségmentes") : quality}</span>
+    <label class="label" for="avif-quality">
+      {ui.quality}: <span class="quality-val">{lossless ? ui.lossless : quality}</span>
     </label>
     {#if !lossless}
-      <input type="range" min="1" max="63" bind:value={quality} class="slider" />
+      <input id="avif-quality" type="range" min="1" max="63" bind:value={quality} class="slider" />
     {/if}
   </div>
   <div class="settings-row">
     <label>
       <input type="checkbox" bind:checked={lossless} />
-      {ui.lossless ?? "Veszteségmentes"}
+      {ui.lossless}
     </label>
   </div>
 </div>
@@ -102,16 +106,18 @@
   </div>
 {/if}
 
+{#if errorMsg}<p class="tool-error">{errorMsg}</p>{/if}
+
 {#if processing}
   <div class="progress-bar-wrap">
     <div class="progress-bar" style="width: {progress}%"></div>
-    <span class="progress-label">{ui.converting ?? "Konvertálás..."} {progress}%</span>
+    <span class="progress-label">{ui.convertingInProgress} {progress}%</span>
   </div>
 {/if}
 
 {#if results.length > 0 && !processing}
   <div class="tool-result-summary card">
-    <p>{results.length} AVIF {ui.file ?? "fájl"} {ui.conversionDone ?? "elkészült"}.</p>
+    <p>{results.length} AVIF {ui.file} {ui.conversionDone}.</p>
   </div>
 {/if}
 
@@ -121,8 +127,8 @@
     isConverting={processing}
     isDone={results.length > 0 && !processing}
     onConvert={convert} onDownload={download}
-    convertLabel={"AVIF " + (ui.conversion ?? "konvertálás")}
-    downloadLabel={results.length > 1 ? (ui.zipDownload ?? "ZIP letöltés") : "AVIF " + (ui.download ?? "letöltés")}
+    convertLabel={"AVIF " + ui.conversion}
+    downloadLabel={results.length > 1 ? ui.zipDownload : "AVIF " + ui.download}
     fileCount={files.length} />
 {/if}
 
@@ -131,6 +137,7 @@
 .tool-settings__title { font-size: 1rem; margin-bottom: var(--sp-5); }
 .settings-row { margin-bottom: var(--sp-5); }
 .settings-row:last-child { margin-bottom: 0; }
+.tool-error { color: var(--error, #e53e3e); margin: var(--sp-3) 0; }
 .quality-val { color: var(--accent); font-weight: 700; }
 .slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: var(--r-full); background: var(--border); outline: none; cursor: pointer; margin-top: var(--sp-2); }
 .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid var(--bg-card); box-shadow: 0 0 0 2px var(--accent); }

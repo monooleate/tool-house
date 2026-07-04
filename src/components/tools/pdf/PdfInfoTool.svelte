@@ -2,6 +2,7 @@
   import Dropzone from "../../ui/Dropzone.svelte";
   import { formatFileSize } from "../../../lib/download.ts";
   import { ui } from "../../../lib/ui-labels.ts";
+  import { mapPdfError } from "../../../lib/pdf-error.ts";
 
   let file: File | null = null;
   let isLoading = false;
@@ -36,7 +37,7 @@
   function formatPdfDate(date: Date | null | undefined): string {
     if (!date) return "-";
     try {
-      return date.toLocaleDateString("hu-HU", {
+      return date.toLocaleDateString(ui.locale === "ro" ? "ro-RO" : "hu-HU", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -74,7 +75,7 @@
         pageHeight: `${Math.round(height)} pt (${(height / 72 * 25.4).toFixed(1)} mm)`,
       };
     } catch (err: any) {
-      error = `${ui.pdfLoadError}: ${err.message}`;
+      error = mapPdfError(err);
       info = null;
     } finally {
       isLoading = false;
