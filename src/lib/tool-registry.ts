@@ -189,8 +189,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "szoveg", label: "Szöveg", icon: "📝", color: "var(--cat-szoveg)",
-    description: "Szövegszerkesztő eszközök: rendezés, tisztítás, konverzió.",
-    i18n: { ro: { label: "Text", description: "Instrumente de editare text: sortare, curățare, conversie.", intro: [
+    description: "Szövegeszközök: rendezés, tisztítás, összehasonlítás, Lorem Ipsum, hashtag.",
+    i18n: { ro: { label: "Text", description: "Instrumente text: sortare, curățare, comparare, Lorem Ipsum, hashtag.", intro: [
       "Instrumentele de text oferă ajutor pentru sarcinile zilnice de procesare a textului: sortarea și filtrarea rândurilor, eliminarea duplicatelor, conversia majuscule/minuscule, curățarea spațiilor, eliminarea diacriticelor și generarea slug-urilor URL.",
       "Nu este nevoie de instalare sau înregistrare – doar lipește textul, alege operația și primești rezultatul imediat. Util pentru creatori de conținut, traducători și dezvoltatori deopotrivă.",
     ] } },
@@ -201,13 +201,13 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "fejleszto", label: "Fejlesztő", icon: "⚙️", color: "var(--cat-fejleszto)",
-    description: "JSON, YAML, XML, Base64, URL – fejlesztői segédeszközök.",
-    i18n: { ro: { label: "Dezvoltator", description: "JSON, YAML, XML, Base64, URL – instrumente pentru dezvoltatori.", intro: [
-      "Colecția de instrumente pentru dezvoltatori oferă uneltele zilnice ale programatorilor: formatare și validare JSON, codare/decodare Base64, URL encode/decode, conversie YAML–JSON, formatare XML și generare hash. Totul rulează în browser, fără server.",
+    description: "JSON eszközök, JWT, UUID, cron, Base64, URL – fejlesztői segédeszközök.",
+    i18n: { ro: { label: "Dezvoltator", description: "Instrumente JSON, JWT, UUID, cron, Base64, URL – pentru dezvoltatori.", intro: [
+      "Colecția de instrumente pentru dezvoltatori oferă uneltele zilnice ale programatorilor: formatare, validare, vizualizare arborescentă și schemă JSON, conversie JSON–XML, decodare JWT, generare UUID și interpretare cron, codare/decodare Base64, URL encode/decode, conversie YAML–JSON și formatare XML. Totul rulează în browser, fără server.",
       "Ideal pentru dezvoltare API, depanare și gestionarea fișierelor de configurare. Nu trebuie să instalezi instrumente CLI – deschide browserul și lucrează.",
     ] } },
     intro: [
-      "A fejlesztői eszközgyűjtemény a programozók mindennapi segédeszközeit kínálja: JSON formázás és validálás, Base64 kódolás/dekódolás, URL encode/decode, YAML–JSON konverzió, XML formázás és hash generálás. Minden a böngészőben fut, szerver nélkül.",
+      "A fejlesztői eszközgyűjtemény a programozók mindennapi segédeszközeit kínálja: JSON formázás, validálás, összecsukható fa-nézet és séma-generálás, JSON–XML konverzió, JWT dekódolás, UUID és cron kifejezés kezelés, Base64 kódolás/dekódolás, URL encode/decode, YAML–JSON konverzió és XML formázás. Minden a böngészőben fut, szerver nélkül.",
       "Ideális API fejlesztéshez, hibakereséshez és konfigurációs fájlok kezeléséhez. Nem kell CLI eszközt telepíteni – nyisd meg a böngészőt és dolgozz.",
     ],
   },
@@ -261,8 +261,8 @@ export const CATEGORIES: Category[] = [
   },
   {
     id: "seo", label: "SEO", icon: "🔍", color: "var(--cat-seo)",
-    description: "SEO segédeszközök: title/meta hossz, UTM, canonical, robots.txt.",
-    i18n: { ro: { label: "SEO", description: "Instrumente SEO: lungime title/meta, UTM, canonical, robots.txt.", intro: [
+    description: "SEO eszközök: meta-tag, Open Graph, FAQ schema, robots.txt, UTM, canonical.",
+    i18n: { ro: { label: "SEO", description: "Instrumente SEO: meta-tag, Open Graph, schemă FAQ, robots.txt, UTM, canonical.", intro: [
       "Instrumentele SEO oferă ajutor pentru sarcinile zilnice de optimizare pentru motoarele de căutare: verificarea lungimii title și meta description, constructor parametri UTM, generator URL canonical, analizor și tester robots.txt.",
       "Ideal pentru specialiști SEO, manageri de conținut și dezvoltatori web care doresc să verifice și optimizeze rapid meta datele paginilor. Nu este nevoie de instrumente plătite pentru sarcinile de bază.",
     ] } },
@@ -727,6 +727,68 @@ const rawTools: Tool[] = [
   },
 
   // ── Fázis 8 (RO-only): generator cod de bare + cod QR ────────────────────
+  // ═══ FEJLESZTŐ – Batch C (HU+RO, longform) ══════════════
+  {
+    slug: "json-viewer", category: "fejleszto",
+    title: "JSON Viewer online – összecsukható fa-nézet | Ingyenes",
+    h1: "JSON Viewer (fa-nézet)",
+    description: "JSON megjelenítése összecsukható, szintaxis-kiemelt fa-nézetben, útvonal-másolással. Nagy JSON-ök gyors áttekintése. Böngészőben, privát.",
+    keywords: ["json viewer", "json fa nézet", "json megjelenítő", "json tree viewer", "json böngésző", "json formázó fa"],
+    status: "active", component: "JsonViewer",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["json-formazas", "json-xml", "json-schema"], faq: [],
+  },
+  {
+    slug: "json-xml", category: "fejleszto",
+    title: "JSON ↔ XML konverter online – kétirányú | Ingyenes",
+    h1: "JSON ↔ XML konverter",
+    description: "Kétirányú konverzió JSON és XML között, józan alapértelmezésekkel (ismételt elem → tömb). Böngészőben, szerver nélkül, privát.",
+    keywords: ["json xml konverter", "json to xml", "xml to json", "json xml átalakító", "json xml online", "xml json konverzió"],
+    status: "active", component: "JsonXml",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["json-viewer", "json-schema", "xml-formazas"], faq: [],
+  },
+  {
+    slug: "json-schema", category: "fejleszto",
+    title: "JSON Schema generátor online – JSON mintából | Ingyenes",
+    h1: "JSON Schema generátor",
+    description: "JSON Schema (draft-07) generálása egy JSON mintából, típus-inferenciával. Validáláshoz és dokumentációhoz. Böngészőben, privát.",
+    keywords: ["json schema generátor", "json to json schema", "json séma", "json schema draft-07", "json validáció séma", "json schema online"],
+    status: "active", component: "JsonSchema",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["json-viewer", "json-xml", "json-ellenorzes"], faq: [],
+  },
+  {
+    slug: "jwt-dekoder", category: "fejleszto",
+    title: "JWT dekóder online – header, payload, lejárat | Ingyenes",
+    h1: "JWT dekóder",
+    description: "JWT token dekódolása: header és payload olvasható JSON-ként, lejárat (exp) ellenőrzéssel. Nem validál aláírást. Böngészőben, privát.",
+    keywords: ["jwt dekóder", "jwt decode", "json web token", "jwt payload", "jwt lejárat", "jwt debugger"],
+    status: "active", component: "JwtDekoder",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["base64-kodolo-dekodolo", "json-viewer", "unix-timestamp"], faq: [],
+  },
+  {
+    slug: "uuid-generator", category: "fejleszto",
+    title: "UUID generátor online – v4, tömeges | Ingyenes",
+    h1: "UUID generátor (v4)",
+    description: "Véletlenszerű UUID (v4) generálása egyesével vagy tömegesen, a Web Crypto API-val. Nagybetűs, kötőjel nélküli, idézőjeles opciók. Böngészőben.",
+    keywords: ["uuid generátor", "uuid v4", "guid generátor", "uuid készítő", "random uuid", "uuid online"],
+    status: "active", component: "UuidGenerator",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["jwt-dekoder", "szamrendszer-valto", "base64-kodolo-dekodolo"], faq: [],
+  },
+  {
+    slug: "cron-ertelmezo", category: "fejleszto",
+    title: "Cron kifejezés magyarázó online – mezők + következő futások",
+    h1: "Cron kifejezés magyarázó",
+    description: "Cron kifejezés értelmezése: mezőnkénti magyarázat és a következő futások kiszámítása, sablonokkal. Böngészőben, privát.",
+    keywords: ["cron kifejezés", "cron magyarázó", "crontab értelmező", "cron parser", "cron következő futás", "cron generátor"],
+    status: "active", component: "CronErtelmezo",
+    updatedAt: "2026-07-04", launchedAt: "2026-07-04",
+    related: ["unix-timestamp", "json-viewer", "uuid-generator"], faq: [],
+  },
+
   { slug: "generator-cod-bare", category: "fejleszto", title: "Generator Cod de Bare", h1: "Generator Cod de Bare", description: "Generator coduri de bare EAN-13, CODE-128, UPC-A, ITF-14 cu export SVG și PNG.", keywords: [], status: "active", component: "CodBareGenerator", languages: ["ro"], related: ["generator-cod-qr", "generator-parola", "base64-kodolo-dekodolo"], updatedAt: "2026-04-28", launchedAt: "2026-04-28", faq: [] },
   { slug: "generator-cod-qr",   category: "fejleszto", title: "Generator Cod QR cu Pictogramă", h1: "Generator Cod QR cu Pictogramă", description: "Generator coduri QR cu pictogramă centrală — galerie presetări sau încărcare imagine. Export PNG + SVG.", keywords: [], status: "active", component: "CodQrGenerator",   languages: ["ro"], related: ["generator-cod-bare", "generator-parola", "base64-kodolo-dekodolo"], updatedAt: "2026-04-28", launchedAt: "2026-04-28", faq: [] },
   { slug: "generator-parola",   category: "fejleszto", title: "Generator de Parole Sigure — Aleatorii, Memorabile, PIN", h1: "Generator de Parole Sigure", description: "Generează parole puternice în browser: aleatorii, fraze de acces memorabile, coduri PIN și pronunțabile. Indicator de tărie cu entropie, 100% local.", keywords: ["generator parola", "generator parole sigure", "parola aleatorie online", "parola puternica", "generator passphrase", "generator cod pin", "verificare tarie parola"], status: "active", component: "GeneratorParola", languages: ["ro"], related: ["generator-cod-qr", "generator-cod-bare", "base64-kodolo-dekodolo"], updatedAt: "2026-06-07", launchedAt: "2026-06-07", faq: [] },

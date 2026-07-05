@@ -358,4 +358,52 @@ export const FEJLESZTO_RO: Record<
       "qr png svg",
     ],
   },
+
+  "json-viewer": {
+    slug: "vizualizator-json",
+    title: "Vizualizator JSON online – vedere arborescentă restrângibilă | Gratuit",
+    h1: "Vizualizator JSON (arbore)",
+    description: "Afișează JSON într-un arbore restrângibil, cu sintaxă colorată și copierea căii. Răsfoire rapidă a JSON-urilor mari. În browser, privat.",
+    keywords: ["vizualizator json", "json arbore", "json tree viewer", "vizualizare json", "json viewer online", "json colorat"],
+  },
+
+  "json-xml": {
+    slug: "convertor-json-xml",
+    title: "Convertor JSON ↔ XML online – bidirecțional | Gratuit",
+    h1: "Convertor JSON ↔ XML",
+    description: "Conversie bidirecțională între JSON și XML, cu valori implicite rezonabile (element repetat → tablou). În browser, fără server.",
+    keywords: ["convertor json xml", "json to xml", "xml to json", "json xml online", "conversie json xml", "transformare json xml"],
+  },
+
+  "json-schema": {
+    slug: "generator-json-schema",
+    title: "Generator JSON Schema online – dintr-un exemplu JSON | Gratuit",
+    h1: "Generator JSON Schema",
+    description: "Generează JSON Schema (draft-07) dintr-un exemplu JSON, prin inferența tipurilor. Pentru validare și documentare. În browser, privat.",
+    keywords: ["generator json schema", "json to json schema", "schema json", "json schema draft-07", "validare json schema", "json schema online"],
+  },
+
+  "jwt-dekoder": {
+    slug: "decodor-jwt",
+    title: "Decodor JWT online – header, payload, expirare | Gratuit",
+    h1: "Decodor JWT",
+    description: "Decodează un token JWT: header și payload ca JSON lizibil, cu verificarea expirării (exp). Nu verifică semnătura. În browser, privat.",
+    keywords: ["decodor jwt", "jwt decode", "json web token", "jwt payload", "expirare jwt", "jwt debugger"],
+  },
+
+  "uuid-generator": {
+    slug: "generator-uuid",
+    title: "Generator UUID online – v4, în masă | Gratuit",
+    h1: "Generator UUID (v4)",
+    description: "Generează UUID aleatoriu (v4) individual sau în masă, cu Web Crypto API. Opțiuni majuscule, fără cratime, ghilimele. În browser.",
+    keywords: ["generator uuid", "uuid v4", "generator guid", "creare uuid", "uuid aleatoriu", "uuid online"],
+  },
+
+  "cron-ertelmezo": {
+    slug: "interpretor-cron",
+    title: "Interpretor expresie cron online – câmpuri + următoarele execuții | Gratuit",
+    h1: "Interpretor expresie cron",
+    description: "Interpretează o expresie cron: explicație pe câmpuri și calculul următoarelor execuții, cu șabloane. În browser, privat.",
+    keywords: ["expresie cron", "interpretor cron", "crontab explicat", "cron parser", "cron următoarea execuție", "generator cron"],
+  },
 };

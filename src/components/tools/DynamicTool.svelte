@@ -227,6 +227,13 @@
     SzoSzamlalo:                 () => import("../tools/fejleszto/SzoSzamlalo.svelte"),
     SzamrendszerValto:           () => import("../tools/fejleszto/SzamrendszerValto.svelte"),
     UnixTimestamp:               () => import("../tools/fejleszto/UnixTimestamp.svelte"),
+    // FEJLESZTO – Batch C (HU+RO)
+    JsonViewer:                  () => import("../tools/fejleszto/JsonViewer.svelte"),
+    JsonXml:                     () => import("../tools/fejleszto/JsonXml.svelte"),
+    JsonSchema:                  () => import("../tools/fejleszto/JsonSchema.svelte"),
+    JwtDekoder:                  () => import("../tools/fejleszto/JwtDekoder.svelte"),
+    UuidGenerator:               () => import("../tools/fejleszto/UuidGenerator.svelte"),
+    CronErtelmezo:               () => import("../tools/fejleszto/CronErtelmezo.svelte"),
     // SZÍNEK (HU+RO bilingual)
     SzinKonverter:               () => import("../tools/szinek/SzinKonverter.svelte"),
     KontrasztEllenorzo:          () => import("../tools/szinek/KontrasztEllenorzo.svelte"),

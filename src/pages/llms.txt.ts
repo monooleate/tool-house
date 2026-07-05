@@ -35,7 +35,7 @@ const CATEGORY_DESC_OVERRIDE_RO: Partial<Record<CategoryId, string>> = {
   finante:    "Romanian finance calculators (Romanian VAT 19%, credit/loan with APR, compound interest, discount, margin, hourly wage)",
   sanatate:   "Romanian health calculators (BMI WHO, ideal weight 4 formulas, daily calories Mifflin-St Jeor + macros)",
   timp:       "Romanian time tools (date difference with RO working days, countdowns: Christmas/New Year/Orthodox Easter/Bacalaureat/birthday/age live clock, custom countdown generator)",
-  fejleszto:  "Developer tools (JSON/YAML/XML/CSS/JS format+minify, Base64/URL/HTML entity encode-decode, EAN-13/CODE-128/UPC-A/ITF-14 barcode generator with GS1 check digit, QR code generator with center icon and module styles)",
+  fejleszto:  "Developer tools (JSON format/minify/validate, collapsible JSON tree viewer, JSON Schema generator, JSON↔XML converter, JWT decoder with expiry check, UUID v4 generator, cron expression interpreter, YAML/CSS/JS format+minify, Base64/URL/HTML entity encode-decode, EAN-13/CODE-128/UPC-A/ITF-14 barcode generator, QR code generator)",
 };
 
 function escapeMd(s: string): string {

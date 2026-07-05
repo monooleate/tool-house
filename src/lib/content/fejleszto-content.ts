@@ -1059,4 +1059,338 @@ export const FEJLESZTO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── JSON Viewer ────────────────────────────────────────────────────────────
+  "json-viewer": {
+    introText:
+      "A JSON Viewer egy összecsukható, szintaxis-kiemelt fa-nézetben jeleníti meg a JSON adatot, hogy a mély, beágyazott struktúrákat is könnyű legyen áttekinteni. Illeszd be a JSON-t, és azonnal egy interaktív fát kapsz: az objektumokat és tömböket összecsukhatod, a kulcsokat és értékeket típus szerint színezve látod, és egy kattintással a vágólapra másolhatod bármelyik elem elérési útját. Nagy API-válaszok és konfigurációs fájlok gyors böngészéséhez. Minden a böngésződben fut.",
+    guide: [
+      "1. Illeszd be a JSON adatot a szövegmezőbe.",
+      "2. Böngészd a fát: az objektumokat és tömböket a ▶/▼ gombbal csukhatod össze vagy nyithatod ki.",
+      "3. Használd az „Összes kinyitása / becsukása” gombokat a teljes fa kezeléséhez.",
+      "4. Kattints egy sorra az elérési útja (pl. adat.raktar.db) másolásához.",
+    ],
+    faq: [
+      { q: "Miben más, mint a JSON formázó?", a: "A formázó szöveges, behúzott JSON-t ad; a Viewer egy interaktív fa, ahol az ágakat összecsukhatod, a típusokat színezve látod, és az elérési utakat másolhatod. Nagy, mély JSON-öknél a fa sokkal átláthatóbb." },
+      { q: "Mekkora JSON-t kezel?", a: "A megjelenítés a böngésződben történik, így nagy fájlokat is kezel. Nagyon nagy JSON-öknél az összecsukás segít az áttekintésben – a becsukott ágak nem renderelődnek ki." },
+      { q: "Mit jelentenek a színek?", a: "A kulcsok kiemelt színnel, a szövegek zölddel, a számok lilával, a logikai értékek narancssárgával, a null pirossal jelennek meg. Ez segít gyorsan felismerni az adattípusokat." },
+      { q: "Hogyan másolom egy érték útvonalát?", a: "Kattints a kívánt sorra, és az eszköz a vágólapra másolja a JavaScript-elérési utat (pl. felhasznalok[0].nev), amit közvetlenül használhatsz a kódodban." },
+      { q: "A JSON szerverre kerül?", a: "Nem. A teljes feldolgozás és megjelenítés a böngésződben történik – az adataid nem hagyják el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. JSON beillesztése", description: "Illeszd be a megjelenítendő JSON adatot." },
+        { title: "2. Böngészés", description: "Csukd össze vagy nyisd ki az ágakat a ▶/▼ gombbal." },
+        { title: "3. Teljes fa", description: "Az „Összes kinyitása/becsukása” gombokkal egyszerre kezeled a fát." },
+        { title: "4. Útvonal másolása", description: "Kattints egy sorra az elérési útja vágólapra másolásához." },
+      ],
+      useCases: [
+        { icon: "🔌", title: "API-válaszok", description: "Nagy, mélyen beágyazott API-válaszok gyors áttekintése fejlesztés és hibakeresés közben." },
+        { icon: "⚙️", title: "Konfiguráció", description: "Bonyolult konfigurációs JSON-ök szerkezetének felderítése és ellenőrzése." },
+        { icon: "🧭", title: "Útvonal-keresés", description: "Egy mélyen fekvő érték pontos elérési útjának megtalálása és másolása a kódhoz." },
+        { icon: "🐛", title: "Hibakeresés", description: "Rendellenes vagy hiányzó mezők gyors felderítése a fa-nézetben." },
+      ],
+      formatComparison: {
+        title: "Fa-nézet elemei",
+        columns: ["Elem", "Megjelenés"],
+        rows: [
+          { feature: "Objektum { }", values: ["Összecsukható ág, gyerekszámmal"] },
+          { feature: "Tömb [ ]", values: ["Összecsukható ág, elemszámmal"] },
+          { feature: "Szöveg / szám", values: ["Típus szerint színezett érték"] },
+          { feature: "Elérési út", values: ["Kattintásra a vágólapra másolható"] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért hasznos a fa-nézet?",
+        paragraphs: [
+          "A JSON a modern web adatformátuma – API-k, konfigurációk, adatcsere mind JSON-t használnak. A gond az, hogy a valós JSON gyakran mélyen beágyazott és hosszú: egy sima, formázott szövegben nehéz megtalálni egy adott mezőt vagy átlátni a szerkezetet. A fa-nézet erre ad választ: az ágakat összecsukhatod, így csak arra a részre koncentrálhatsz, ami érdekel.",
+          "A típus szerinti színezés és az elérési út másolása külön gyorsítja a munkát. Amikor egy mélyen fekvő értékre kell hivatkozni a kódban, elég rákattintani, és kész a pontos elérési út. Mindez a böngészőben, azonnal, adatküldés nélkül működik – így bizalmas API-válaszokat is nyugodtan megvizsgálhatsz.",
+        ],
+      },
+      tips: [
+        { icon: "🌳", tip: "Nagy JSON-nál előbb csukd be az összes ágat, majd nyisd ki célzottan azt, ami érdekel." },
+        { icon: "🧭", tip: "Az elérési út másolás a leggyorsabb módja, hogy a kódban hivatkozz egy mezőre." },
+        { icon: "🎨", tip: "A színek alapján egy pillantással látod, hogy egy érték szöveg, szám vagy logikai." },
+        { icon: "🔒", tip: "Bizalmas API-válaszokat is nyugodtan böngéssz – minden helyben marad." },
+      ],
+    },
+  },
+
+  // ─── JSON ↔ XML konverter ───────────────────────────────────────────────────
+  "json-xml": {
+    introText:
+      "A JSON ↔ XML konverter mindkét irányban átalakítja az adatot: JSON-ból XML-t, vagy XML-ből JSON-t készít, józan alapértelmezésekkel. Válaszd ki az irányt, illeszd be az adatot, és azonnal megkapod a konvertált, behúzott eredményt. Hasznos, amikor egy JSON-alapú rendszernek XML-t kell adnod, vagy egy régi XML API válaszát JSON-ként szeretnéd feldolgozni. Minden a böngésződben fut, szerver nélkül.",
+    guide: [
+      "1. Válaszd ki az irányt: JSON → XML vagy XML → JSON.",
+      "2. Illeszd be a forrás-adatot a bal oldali mezőbe.",
+      "3. Olvasd le a konvertált eredményt a jobb oldalon.",
+      "4. Másold ki a vágólapra egy kattintással.",
+    ],
+    faq: [
+      { q: "Milyen szabályok szerint konvertál?", a: "Objektum kulcsaiból XML elemek lesznek, a primitív értékek szöveges tartalommá alakulnak. XML → JSON irányban az ismételt azonos nevű elemekből tömb keletkezik, a számok és logikai értékek felismerésre kerülnek. Ez a legelterjedtebb, józan konvenció." },
+      { q: "Miért nem mindig tökéletes az átalakítás?", a: "A JSON és az XML adatmodellje eltér: az XML ismer attribútumokat, névtereket és rendezett vegyes tartalmat, amit a JSON nem. Ezért az oda-vissza konverzió némileg veszteséges lehet – az eszköz a leggyakoribb, egyszerű szerkezetekre optimalizál." },
+      { q: "Kezeli a tömböket?", a: "Igen. JSON → XML irányban egy tömbből ismételt, azonos nevű elemek lesznek; XML → JSON irányban az azonos nevű testvér-elemekből tömb áll össze." },
+      { q: "Van gyökérelem?", a: "XML-nek egyetlen gyökéreleme kell, hogy legyen. Ha a JSON egyetlen felső kulcsot tartalmaz, azt használja gyökérnek; egyébként egy `root` gyökeret ad hozzá." },
+      { q: "Az adat szerverre kerül?", a: "Nem. A teljes konverzió a böngésződben történik – az adataid nem hagyják el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Irány", description: "Válaszd ki: JSON → XML vagy XML → JSON." },
+        { title: "2. Forrás", description: "Illeszd be a konvertálandó adatot." },
+        { title: "3. Eredmény", description: "A konvertált, behúzott adat azonnal megjelenik." },
+        { title: "4. Másolás", description: "Az eredményt a vágólapra másolod." },
+      ],
+      useCases: [
+        { icon: "🔄", title: "Rendszer-integráció", description: "JSON-alapú alkalmazás összekötése egy XML-t váró régi rendszerrel." },
+        { icon: "📡", title: "Régi API-k", description: "XML API-válaszok átalakítása JSON-ná a könnyebb feldolgozáshoz." },
+        { icon: "📄", title: "Adatmigráció", description: "Adatok átvitele két, eltérő formátumot használó rendszer között." },
+        { icon: "🧪", title: "Tesztadat", description: "Meglévő JSON gyors XML-változatának előállítása teszteléshez." },
+      ],
+      formatComparison: {
+        title: "Konverziós szabályok",
+        columns: ["JSON", "XML"],
+        rows: [
+          { feature: "{ \"a\": 1 }", values: ["<a>1</a>"] },
+          { feature: "[ ismételt elem ]", values: ["<tag>…</tag><tag>…</tag>"] },
+          { feature: "szám / logikai", values: ["szöveges tartalom (visszaalakítva felismerve)"] },
+        ],
+      },
+      aboutSection: {
+        title: "JSON és XML: két adatvilág",
+        paragraphs: [
+          "A JSON és az XML a strukturált adatcsere két nagy formátuma. A JSON tömör, könnyen olvasható és a modern web alapértelmezett választása; az XML régebbi, bőbeszédűbb, de gazdagabb szerkezeti lehetőségekkel (attribútumok, névterek, séma-validáció). Sok integráció során a kettő között kell hidat verni – például egy modern szolgáltatásnak egy vállalati XML-rendszerrel kell kommunikálnia.",
+          "A konverzió alapja egyszerű leképezés: az objektum-kulcsok elemekké, az értékek szöveggé, az ismétlődések tömbbé vagy ismételt elemekké válnak. Mivel a két adatmodell nem fedi egymást tökéletesen, az oda-vissza alakítás a szélső esetekben veszteséges lehet; a mindennapi, egyszerű szerkezetekre viszont gyors és megbízható megoldást ad.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Tartsd egyszerűnek a szerkezetet – a lapos, egyértelmű adat konvertálódik a legjobban." },
+        { icon: "🔁", tip: "Az oda-vissza konverzió után mindig ellenőrizd az eredményt, főleg attribútumok esetén." },
+        { icon: "📐", tip: "JSON → XML-nél egyetlen felső kulcs adja a legtisztább gyökérelemet." },
+        { icon: "🔍", tip: "Az eredményt a JSON Viewerrel vagy egy XML formázóval tovább ellenőrizheted." },
+      ],
+    },
+  },
+
+  // ─── JSON Schema generátor ──────────────────────────────────────────────────
+  "json-schema": {
+    introText:
+      "A JSON Schema generátor egy JSON mintából automatikusan előállítja a hozzá tartozó JSON Schema-t (draft-07). Illeszd be egy tipikus adatpéldát, és az eszköz típus-inferenciával felépíti a sémát: felismeri a szövegeket, számokat (egész vagy tört), logikai értékeket, objektumokat és tömböket, és opcionálisan minden mezőt kötelezőként jelöl. A séma alkalmas validálásra, dokumentálásra vagy API-szerződések alapjául. Minden a böngésződben fut.",
+    guide: [
+      "1. Illeszd be egy tipikus JSON adatpéldát.",
+      "2. Döntsd el, hogy minden mező kötelező (required) legyen-e.",
+      "3. Olvasd le a generált JSON Schema-t (draft-07).",
+      "4. Másold ki, és használd validálásra vagy dokumentációként.",
+    ],
+    faq: [
+      { q: "Mi az a JSON Schema?", a: "A JSON Schema egy szabvány, amellyel leírható egy JSON adat elvárt szerkezete: milyen mezők, milyen típussal, melyek kötelezők. Használható adatok validálására (megfelel-e a formátumnak) és dokumentálására egyaránt." },
+      { q: "Melyik verziót generálja?", a: "A draft-07 verziót, amely a legszélesebb körben támogatott. A séma tartalmazza a $schema hivatkozást, a típusokat, az objektumok properties mezőit és opcionálisan a required listát." },
+      { q: "Hogyan kezeli a tömböket?", a: "A tömb típusát az első elem alapján következteti ki (items). Ha a tömb elemei egységes szerkezetűek, ez pontos sémát ad; vegyes tömböknél érdemes a sémát utólag finomítani." },
+      { q: "Miért minden mező kötelező alapból?", a: "Egy mintából nem derül ki, mely mezők opcionálisak, ezért a biztonságos alapértelmezés az, hogy minden megfigyelt mező kötelező. A kapcsolóval kikapcsolhatod, ha lazább sémát szeretnél." },
+      { q: "Az adat szerverre kerül?", a: "Nem. A séma-generálás a böngésződben történik – a mintaadatod nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Minta", description: "Illeszd be egy reprezentatív JSON adatpéldát." },
+        { title: "2. Kötelezőség", description: "Állítsd be, hogy minden mező required legyen-e." },
+        { title: "3. Séma", description: "A generált JSON Schema (draft-07) azonnal megjelenik." },
+        { title: "4. Használat", description: "Másold ki validáláshoz vagy dokumentációhoz." },
+      ],
+      useCases: [
+        { icon: "✅", title: "Validáció", description: "Bejövő adatok ellenőrzése a séma alapján – megfelel-e az elvárt formátumnak." },
+        { icon: "📘", title: "Dokumentáció", description: "Egy API vagy adatstruktúra formális, gépi olvasható leírása." },
+        { icon: "🤝", title: "API-szerződés", description: "A séma közös alap a backend és a frontend, vagy két szolgáltatás között." },
+        { icon: "🧪", title: "Tesztelés", description: "A séma alapján érvényes és érvénytelen tesztadatok generálhatók." },
+      ],
+      formatComparison: {
+        title: "Típus-inferencia",
+        columns: ["Minta érték", "Séma típus"],
+        rows: [
+          { feature: "42", values: ["integer"] },
+          { feature: "3.14", values: ["number"] },
+          { feature: "\"szöveg\"", values: ["string"] },
+          { feature: "[ … ]", values: ["array (items az első elemből)"] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért érdemes JSON Schema-t használni?",
+        paragraphs: [
+          "Ahogy egy adatstruktúra egyre több helyen kerül felhasználásra, egyre fontosabbá válik, hogy pontosan definiált legyen: milyen mezők vannak, milyen típussal, mi kötelező. A JSON Schema erre ad szabványos, gépi olvasható választ. Egy séma birtokában automatikusan validálhatod a bejövő adatokat, dokumentálhatod az API-dat, és megelőzheted a formátumból eredő hibákat.",
+          "A séma kézi megírása aprólékos és unalmas munka, főleg nagy struktúráknál. Ez az eszköz felgyorsítja: egy valós adatpéldából kiindulva felépíti a séma vázát, amit aztán már csak finomítani kell (opcionális mezők, minták, korlátok megadása). Így percek alatt eljutsz a nyers adattól a használható sémáig.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Adj meg reprezentatív mintát – minden lehetséges mezővel, hogy a séma teljes legyen." },
+        { icon: "🔧", tip: "A generált séma egy kiindulás – finomítsd opcionális mezőkkel és korlátokkal (min, max, pattern)." },
+        { icon: "📋", tip: "A required kapcsolóval szabályozhatod, mennyire szigorú legyen a séma." },
+        { icon: "🧩", tip: "Vegyes tömböknél a séma az első elemet veszi alapul – ellenőrizd, ha a tömb heterogén." },
+      ],
+    },
+  },
+
+  // ─── JWT dekóder ────────────────────────────────────────────────────────────
+  "jwt-dekoder": {
+    introText:
+      "A JWT dekóder olvashatóvá teszi a JSON Web Token tartalmát: a header és a payload részt base64url-dekódolja és formázott JSON-ként jeleníti meg, kiemelve a lejáratot (exp), a kiállítás idejét (iat) és az érvényesség kezdetét (nbf) – olvasható dátumként, státusszal. Fontos: az eszköz NEM ellenőrzi az aláírást (ahhoz a titkos kulcs kellene) – csak dekódol, ami a token tartalmát bárki számára láthatóvá teszi. Minden a böngésződben fut, a token nem kerül szerverre.",
+    guide: [
+      "1. Illeszd be a JWT tokent (a három, ponttal elválasztott rész).",
+      "2. Olvasd le a header és a payload dekódolt, formázott JSON-t.",
+      "3. Ellenőrizd a lejáratot (exp) – az eszköz jelzi, ha a token lejárt.",
+      "4. Másold ki a header vagy a payload tartalmát, ha szükséges.",
+    ],
+    faq: [
+      { q: "Mi az a JWT?", a: "A JWT (JSON Web Token) egy kompakt token-formátum, amelyet gyakran használnak hitelesítéshez és jogosultságkezeléshez. Három részből áll: header (algoritmus), payload (adatok, claim-ek) és signature (aláírás), pontokkal elválasztva." },
+      { q: "Ellenőrzi az aláírást?", a: "Nem. Az aláírás ellenőrzéséhez a szerver titkos kulcsa vagy nyilvános kulcsa kellene, ami itt nem áll rendelkezésre. Az eszköz csak dekódol – a payload olvashatóvá tétele nem jelenti a token hitelességének igazolását." },
+      { q: "Biztonságos beilleszteni egy tokent?", a: "Itt igen, mert a dekódolás teljesen a böngésződben történik, a token nem kerül sehová. Fontos viszont tudni: a JWT payload NEM titkosított, csak base64-kódolt – bárki, aki megszerzi a tokent, elolvashatja a tartalmát." },
+      { q: "Mit jelent a lejárat (exp)?", a: "Az exp claim egy Unix timestamp, ameddig a token érvényes. Az eszköz olvasható dátummá alakítja, és jelzi, ha a token már lejárt. A lejárt tokeneket a szerverek elutasítják." },
+      { q: "A token szerverre kerül?", a: "Nem. A teljes dekódolás a böngésződben, JavaScripttel történik – a token nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Token beillesztése", description: "Illeszd be a teljes JWT-t (header.payload.signature)." },
+        { title: "2. Tartalom", description: "Olvasd le a header és payload dekódolt JSON-t." },
+        { title: "3. Lejárat", description: "Ellenőrizd az exp/iat/nbf claim-eket olvasható dátumként." },
+        { title: "4. Másolás", description: "Másold ki a header vagy payload tartalmát." },
+      ],
+      useCases: [
+        { icon: "🔐", title: "Hitelesítés", description: "Egy bejelentkezési token tartalmának ellenőrzése fejlesztés közben." },
+        { icon: "🐛", title: "Hibakeresés", description: "Miért utasítja el a szerver a tokent? Lejárt, vagy hibás a payload?" },
+        { icon: "🕵️", title: "Jogosultság", description: "A payload jogosultsági claim-jeinek (role, scope) gyors ellenőrzése." },
+        { icon: "⏱️", title: "Lejárat", description: "Egy token érvényességi idejének gyors leolvasása olvasható formában." },
+      ],
+      formatComparison: {
+        title: "A JWT három része",
+        columns: ["Rész", "Tartalma"],
+        rows: [
+          { feature: "Header", values: ["Algoritmus és token-típus"] },
+          { feature: "Payload", values: ["Claim-ek: sub, exp, iat, role…"] },
+          { feature: "Signature", values: ["Aláírás (titkos kulccsal ellenőrizhető)"] },
+        ],
+      },
+      aboutSection: {
+        title: "Hogyan épül fel egy JWT?",
+        paragraphs: [
+          "A JSON Web Token három, ponttal elválasztott részből áll. Az első a header, ami az aláírás algoritmusát írja le. A második a payload, ami a tényleges adatokat (claim-eket) tartalmazza: ki a felhasználó, meddig érvényes a token, milyen jogosultságai vannak. A harmadik a signature, amely az első két rész titkos kulccsal képzett aláírása – ez garantálja, hogy a tokent nem hamisították meg.",
+          "Fontos megérteni: a header és a payload csupán base64url-kódolt, NEM titkosított. Ez azt jelenti, hogy bárki, aki hozzáfér a tokenhez, elolvashatja a tartalmát – ezért érzékeny adatot (jelszó, titok) soha ne tegyél a payloadba. Az aláírás nem a tartalmat rejti el, hanem a hamisítást akadályozza meg. Ez az eszköz a kódolt tartalmat teszi olvashatóvá, de az aláírás érvényességét nem vizsgálja.",
+        ],
+      },
+      tips: [
+        { icon: "⚠️", tip: "A payload nem titkos – soha ne tegyél bele jelszót vagy érzékeny adatot." },
+        { icon: "⏱️", tip: "Ha a szerver 401-et ad, először a lejáratot (exp) ellenőrizd itt." },
+        { icon: "🔏", tip: "A dekódolás nem hitelesítés – az aláírás ellenőrzése mindig szerveroldalon történjen." },
+        { icon: "🔒", tip: "A token itt biztonságban van (helyben dekódol), de általában óvatosan bánj vele." },
+      ],
+    },
+  },
+
+  // ─── UUID generátor ─────────────────────────────────────────────────────────
+  "uuid-generator": {
+    introText:
+      "Az UUID generátor véletlenszerű, egyedi azonosítókat (UUID v4) készít – egyesével vagy akár ezres tételben. A generálás a böngésző kriptográfiailag biztonságos véletlenszám-forrását (Web Crypto API) használja, így az azonosítók gyakorlatilag ütközésmentesek. Választhatsz nagybetűs, kötőjel nélküli vagy idézőjeles formátumot, és egy kattintással másolhatod az egészet. Adatbázis-kulcsokhoz, teszteléshez és minden olyan helyre, ahol egyedi azonosító kell. Minden a böngésződben fut.",
+    guide: [
+      "1. Add meg, hány UUID-t szeretnél (1–1000).",
+      "2. Válaszd ki a formátumot: nagybetűs, kötőjel nélküli, idézőjeles.",
+      "3. Az „Újragenerálás” gombbal új készletet kapsz.",
+      "4. Másold ki az összes UUID-t a vágólapra.",
+    ],
+    faq: [
+      { q: "Mi az az UUID v4?", a: "Az UUID (Universally Unique Identifier) egy 128 bites azonosító. A v4 változat véletlenszerű: a bitek nagy részét véletlen forrásból tölti fel, így két generált UUID ütközésének esélye gyakorlatilag nulla, központi koordináció nélkül is." },
+      { q: "Mennyire egyediek?", a: "A v4 UUID 122 bit véletlent tartalmaz – ez annyi lehetséges érték, hogy még sok milliárd generálás mellett is elhanyagolható az ütközés esélye. Ezért használható elosztott rendszerekben is, ahol nincs központi azonosító-kiosztás." },
+      { q: "Biztonságos a véletlenforrás?", a: "Igen. Az eszköz a Web Crypto API-t (crypto.randomUUID / getRandomValues) használja, amely kriptográfiailag biztonságos. Ez erősebb, mint a Math.random(), és alkalmas biztonsági szempontból is érzékeny azonosítókhoz." },
+      { q: "Mire jók a formátum-opciók?", a: "A kötőjel nélküli forma tömörebb (32 karakter), a nagybetűs egyes rendszerekhez illeszkedik, az idézőjeles pedig közvetlenül beilleszthető kódba vagy listába. Válaszd a célrendszerhez illőt." },
+      { q: "Az UUID-k szerverre kerülnek?", a: "Nem. A generálás teljes egészében a böngésződben történik – az azonosítók nem kerülnek feltöltésre." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Mennyiség", description: "Add meg, hány UUID-t szeretnél (1–1000)." },
+        { title: "2. Formátum", description: "Válaszd ki: nagybetűs, kötőjel nélküli, idézőjeles." },
+        { title: "3. Generálás", description: "Az „Újragenerálás” gombbal új készletet kapsz." },
+        { title: "4. Másolás", description: "Az összes UUID-t egy kattintással másolod." },
+      ],
+      useCases: [
+        { icon: "🗄️", title: "Adatbázis-kulcs", description: "Elsődleges kulcsok, ahol elosztott, ütközésmentes azonosító kell." },
+        { icon: "🧪", title: "Tesztadat", description: "Egyedi azonosítók tömeges generálása teszteléshez és fejlesztéshez." },
+        { icon: "🔗", title: "Korreláció", description: "Kérés- vagy tranzakció-azonosítók naplózáshoz és nyomkövetéshez." },
+        { icon: "📁", title: "Fájlnevek", description: "Ütközésmentes, egyedi fájl- vagy erőforrásnevek generálása." },
+      ],
+      formatComparison: {
+        title: "Formátum-opciók",
+        columns: ["Opció", "Példa"],
+        rows: [
+          { feature: "Alap", values: ["f47ac10b-58cc-4372-a567-0e02b2c3d479"] },
+          { feature: "Kötőjel nélkül", values: ["f47ac10b58cc4372a5670e02b2c3d479"] },
+          { feature: "Nagybetűs", values: ["F47AC10B-58CC-4372-A567-0E02B2C3D479"] },
+        ],
+      },
+      aboutSection: {
+        title: "Mire való az UUID?",
+        paragraphs: [
+          "Az egyedi azonosító a szoftverfejlesztés egyik alapköve: adatbázis-rekordoknak, fájloknak, kéréseknek, felhasználóknak mind kell egy garantáltan egyedi kulcs. A hagyományos, növekvő sorszám (auto-increment) egyszerű, de központi koordinációt igényel – elosztott rendszerben, ahol több szerver egyszerre generál azonosítót, ütközne. Az UUID ezt oldja meg: elég véletlent tartalmaz ahhoz, hogy koordináció nélkül is egyedi maradjon.",
+          "A v4 (véletlenszerű) UUID a legelterjedtebb változat. Kulcsfontosságú, hogy a véletlen jó minőségű legyen: egy gyenge véletlenforrás kiszámíthatóvá, ütközésre hajlamossá tenné az azonosítókat. Ezért használja ez az eszköz a böngésző kriptográfiailag biztonságos Web Crypto API-ját – ugyanazt a forrást, amit a biztonsági kulcsok generálása is.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Adatbázis-kulcsként a v4 UUID ideális elosztott, több-szerveres környezetben." },
+        { icon: "📏", tip: "A kötőjel nélküli forma helyet spórol URL-ekben és fájlnevekben." },
+        { icon: "🔒", tip: "A Web Crypto forrás miatt az azonosítók nem kiszámíthatók – ez biztonsági előny." },
+        { icon: "📋", tip: "Kódba illesztéshez kapcsold be az idézőjeles formátumot." },
+      ],
+    },
+  },
+
+  // ─── Cron kifejezés magyarázó ───────────────────────────────────────────────
+  "cron-ertelmezo": {
+    introText:
+      "A cron kifejezés magyarázó érthetővé teszi a cron ütemezéseket: mezőnként (perc, óra, nap, hónap, hét napja) megmutatja, mit jelent az adott érték, és kiszámítja a következő futások konkrét időpontjait. Illeszd be a cron kifejezést, vagy válassz egy sablont, és azonnal látod, mikor fog lefutni a feladat. Segít elkerülni a hibás ütemezéseket – nem kell fejben visszafejteni a csillagok és számok jelentését. Minden a böngésződben fut.",
+    guide: [
+      "1. Illeszd be a cron kifejezést (5 mező), vagy válassz egy sablont.",
+      "2. Olvasd le a mezőnkénti magyarázatot (perc, óra, nap, hónap, hét napja).",
+      "3. Nézd meg a következő futások konkrét időpontjait.",
+      "4. Módosítsd a kifejezést, amíg a kívánt ütemezést kapod.",
+    ],
+    faq: [
+      { q: "Mi az a cron kifejezés?", a: "A cron egy ütemezési formátum, amely öt mezőből áll: perc, óra, a hónap napja, hónap és a hét napja. Ezekkel megadható, mikor fusson le egy ismétlődő feladat – például minden hétköznap reggel 9-kor." },
+      { q: "Mit jelentenek a szimbólumok?", a: "A * (csillag) jelentése „minden”; a szám egy konkrét értéket jelöl; a A-B tartományt (pl. 1-5); a */N lépést (minden N-edik); a A,B pedig listát. Az eszköz mindegyiket értelmezi és emberi nyelven megmutatja." },
+      { q: "Hogyan számolja a következő futásokat?", a: "A jelenlegi időből kiindulva végighalad a soron következő perceken, és kiválasztja azokat, amelyek illeszkednek mind az öt mezőre. Az első néhány találatot mutatja meg konkrét dátumként." },
+      { q: "Milyen időzónát használ?", a: "A böngésződ (a géped) helyi időzónáját. Ha a cron egy szerveren fut, igazítsd a gondolatban a szerver időzónájához – sok szerver UTC-ben dolgozik." },
+      { q: "Az adat szerverre kerül?", a: "Nem. Az értelmezés és a számítás teljesen a böngésződben történik – semmi nem kerül feltöltésre." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kifejezés", description: "Illeszd be a cron kifejezést, vagy válassz sablont." },
+        { title: "2. Magyarázat", description: "Olvasd le, mit jelent az öt mező egyenként." },
+        { title: "3. Futások", description: "Nézd meg a következő futások konkrét időpontjait." },
+        { title: "4. Finomítás", description: "Módosítsd, amíg a kívánt ütemezést kapod." },
+      ],
+      useCases: [
+        { icon: "⏰", title: "Ütemezett feladat", description: "Egy cron job ütemezésének ellenőrzése élesítés előtt." },
+        { icon: "🐛", title: "Hibakeresés", description: "Miért nem futott le a feladat? A mező-magyarázat és a futások segítenek." },
+        { icon: "📚", title: "Tanulás", description: "A cron szintaxis megértése konkrét példákon és sablonokon keresztül." },
+        { icon: "🔧", title: "Karbantartás", description: "Egy örökölt crontab bejegyzés jelentésének gyors visszafejtése." },
+      ],
+      formatComparison: {
+        title: "A cron mezők",
+        columns: ["Mező", "Tartomány"],
+        rows: [
+          { feature: "Perc", values: ["0–59"] },
+          { feature: "Óra", values: ["0–23"] },
+          { feature: "Nap (hónap)", values: ["1–31"] },
+          { feature: "Hónap", values: ["1–12"] },
+          { feature: "Hét napja", values: ["0–6 (0 = vasárnap)"] },
+        ],
+      },
+      aboutSection: {
+        title: "A cron ütemezés logikája",
+        paragraphs: [
+          "A cron a Unix-világ klasszikus ütemezője: öt egyszerű mezővel írható le szinte bármilyen ismétlődő minta. A kompaktság ára viszont az olvashatóság – a `0 9 * * 1-5` első ránézésre nem árulja el, hogy „minden hétköznap reggel 9-kor” jelent. Egy elgépelés pedig könnyen oda vezethet, hogy a feladat rossz időben, vagy egyáltalán nem fut le.",
+          "Ez az eszköz két irányból teszi átláthatóvá a cron kifejezést. Egyrészt mezőnként megmagyarázza, mit jelent az adott érték; másrészt konkrétan kiszámítja a következő futások időpontjait, így a szintaxis megértése helyett egyszerűen látod az eredményt. A kettő együtt megbízhatóvá teszi az ütemezés ellenőrzését még élesítés előtt.",
+        ],
+      },
+      tips: [
+        { icon: "🧪", tip: "Élesítés előtt mindig nézd meg a következő futásokat – egy elgépelt csillag sokba kerülhet." },
+        { icon: "🌍", tip: "Ne feledd az időzónát: a szervered valószínűleg UTC-ben fut, nem a te helyi idődben." },
+        { icon: "📋", tip: "Ismeretlen crontab bejegyzésnél a mező-magyarázat gyorsan tisztázza a jelentést." },
+        { icon: "⭐", tip: "A */N lépés-szintaxis (pl. */15) gyakori félreértés forrása – itt ellenőrizheted a hatását." },
+      ],
+    },
+  },
 };

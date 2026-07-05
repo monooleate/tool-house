@@ -1222,4 +1222,338 @@ export const FEJLESZTO_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Vizualizator JSON ──────────────────────────────────────────────────────
+  "json-viewer": {
+    introText:
+      "Vizualizatorul JSON afișează datele JSON într-o vedere arborescentă restrângibilă, cu evidențierea sintaxei, ca structurile adânc imbricate să fie ușor de parcurs. Lipești JSON-ul și primești imediat un arbore interactiv: obiectele și tablourile le poți restrânge, cheile și valorile le vezi colorate după tip, iar calea oricărui element o poți copia cu un clic. Pentru răsfoirea rapidă a răspunsurilor API mari și a fișierelor de configurare. Totul rulează în browserul tău.",
+    guide: [
+      "1. Lipește datele JSON în câmpul de text.",
+      "2. Parcurge arborele: restrânge sau extinde obiectele și tablourile cu butonul ▶/▼.",
+      "3. Folosește butoanele „Extinde/Restrânge tot” pentru întregul arbore.",
+      "4. Dă clic pe un rând pentru a copia calea lui (ex. date.stoc.buc).",
+    ],
+    faq: [
+      { q: "Prin ce diferă de formatarea JSON?", a: "Formatarea dă JSON text, indentat; vizualizatorul e un arbore interactiv, unde restrângi ramurile, vezi tipurile colorate și copiezi căile. La JSON mari și adânci, arborele e mult mai clar." },
+      { q: "Ce mărime de JSON gestionează?", a: "Afișarea are loc în browserul tău, deci gestionează și fișiere mari. La JSON foarte mari, restrângerea ajută la vedere de ansamblu – ramurile restrânse nu se randează." },
+      { q: "Ce înseamnă culorile?", a: "Cheile apar cu o culoare de accent, textele cu verde, numerele cu mov, valorile logice cu portocaliu, iar null cu roșu. Astfel recunoști rapid tipurile de date." },
+      { q: "Cum copiez calea unei valori?", a: "Dă clic pe rândul dorit, iar instrumentul copiază în clipboard calea JavaScript (ex. utilizatori[0].nume), pe care o poți folosi direct în codul tău." },
+      { q: "JSON-ul ajunge pe vreun server?", a: "Nu. Întreaga procesare și afișare are loc în browserul tău – datele tale nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Lipirea JSON", description: "Lipește datele JSON de afișat." },
+        { title: "2. Parcurgere", description: "Restrânge sau extinde ramurile cu butonul ▶/▼." },
+        { title: "3. Arbore complet", description: "Cu „Extinde/Restrânge tot” gestionezi arborele dintr-o dată." },
+        { title: "4. Copiere cale", description: "Dă clic pe un rând pentru a copia calea lui în clipboard." },
+      ],
+      useCases: [
+        { icon: "🔌", title: "Răspunsuri API", description: "Vedere de ansamblu rapidă a răspunsurilor API mari, adânc imbricate, la dezvoltare și depanare." },
+        { icon: "⚙️", title: "Configurație", description: "Explorarea și verificarea structurii unor JSON de configurare complexe." },
+        { icon: "🧭", title: "Căutare cale", description: "Găsirea și copierea căii exacte a unei valori adânci, pentru cod." },
+        { icon: "🐛", title: "Depanare", description: "Depistarea rapidă a câmpurilor anormale sau lipsă în vederea arborescentă." },
+      ],
+      formatComparison: {
+        title: "Elementele arborelui",
+        columns: ["Element", "Aspect"],
+        rows: [
+          { feature: "Obiect { }", values: ["Ramură restrângibilă, cu număr de copii"] },
+          { feature: "Tablou [ ]", values: ["Ramură restrângibilă, cu număr de elemente"] },
+          { feature: "Text / număr", values: ["Valoare colorată după tip"] },
+          { feature: "Cale", values: ["Copiabilă în clipboard la clic"] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce e utilă vederea arborescentă?",
+        paragraphs: [
+          "JSON este formatul de date al web-ului modern – API-uri, configurații, schimb de date, toate folosesc JSON. Problema e că JSON-ul real e adesea adânc imbricat și lung: într-un text simplu, formatat, e greu să găsești un câmp anume sau să înțelegi structura. Vederea arborescentă răspunde la asta: restrângi ramurile, ca să te concentrezi doar pe partea care te interesează.",
+          "Colorarea după tip și copierea căii accelerează suplimentar munca. Când trebuie să faci referire la o valoare adâncă în cod, e suficient să dai clic și ai calea exactă. Toate acestea funcționează în browser, instant, fără trimitere de date – deci poți examina liniștit și răspunsuri API confidențiale.",
+        ],
+      },
+      tips: [
+        { icon: "🌳", tip: "La un JSON mare, restrânge întâi toate ramurile, apoi extinde țintit ce te interesează." },
+        { icon: "🧭", tip: "Copierea căii e cel mai rapid mod de a face referire la un câmp în cod." },
+        { icon: "🎨", tip: "După culori vezi dintr-o privire dacă o valoare e text, număr sau logică." },
+        { icon: "🔒", tip: "Poți răsfoi liniștit și răspunsuri API confidențiale – totul rămâne local." },
+      ],
+    },
+  },
+
+  // ─── Convertor JSON ↔ XML ───────────────────────────────────────────────────
+  "json-xml": {
+    introText:
+      "Convertorul JSON ↔ XML transformă datele în ambele direcții: din JSON face XML, sau din XML face JSON, cu valori implicite rezonabile. Alegi direcția, lipești datele și primești imediat rezultatul convertit, indentat. Util când trebuie să dai XML unui sistem bazat pe JSON, sau când vrei să procesezi ca JSON răspunsul unui API XML vechi. Totul rulează în browserul tău, fără server.",
+    guide: [
+      "1. Alege direcția: JSON → XML sau XML → JSON.",
+      "2. Lipește datele sursă în câmpul din stânga.",
+      "3. Citește rezultatul convertit în dreapta.",
+      "4. Copiază-l în clipboard cu un clic.",
+    ],
+    faq: [
+      { q: "După ce reguli convertește?", a: "Din cheile obiectului rezultă elemente XML, valorile primitive devin conținut text. La XML → JSON, din elementele repetate cu același nume rezultă un tablou, iar numerele și valorile logice sunt recunoscute. Este convenția cea mai răspândită, rezonabilă." },
+      { q: "De ce nu e mereu perfectă conversia?", a: "Modelul de date al JSON și al XML diferă: XML cunoaște atribute, spații de nume și conținut mixt ordonat, pe care JSON nu le are. De aceea conversia dus-întors poate fi ușor cu pierderi – instrumentul optimizează pentru structurile simple, frecvente." },
+      { q: "Gestionează tablourile?", a: "Da. La JSON → XML, dintr-un tablou rezultă elemente repetate cu același nume; la XML → JSON, din elementele frate cu același nume se formează un tablou." },
+      { q: "Există element rădăcină?", a: "XML trebuie să aibă un singur element rădăcină. Dacă JSON-ul conține o singură cheie de nivel superior, aceasta e folosită ca rădăcină; altfel se adaugă o rădăcină `root`." },
+      { q: "Datele ajung pe vreun server?", a: "Nu. Întreaga conversie are loc în browserul tău – datele tale nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Direcție", description: "Alege: JSON → XML sau XML → JSON." },
+        { title: "2. Sursă", description: "Lipește datele de convertit." },
+        { title: "3. Rezultat", description: "Datele convertite, indentate, apar instant." },
+        { title: "4. Copiere", description: "Copiezi rezultatul în clipboard." },
+      ],
+      useCases: [
+        { icon: "🔄", title: "Integrare de sisteme", description: "Conectarea unei aplicații bazate pe JSON cu un sistem vechi care așteaptă XML." },
+        { icon: "📡", title: "API-uri vechi", description: "Transformarea răspunsurilor API XML în JSON pentru procesare mai ușoară." },
+        { icon: "📄", title: "Migrare date", description: "Transferul datelor între două sisteme cu formate diferite." },
+        { icon: "🧪", title: "Date de test", description: "Producerea rapidă a unei variante XML dintr-un JSON existent, pentru testare." },
+      ],
+      formatComparison: {
+        title: "Reguli de conversie",
+        columns: ["JSON", "XML"],
+        rows: [
+          { feature: "{ \"a\": 1 }", values: ["<a>1</a>"] },
+          { feature: "[ element repetat ]", values: ["<tag>…</tag><tag>…</tag>"] },
+          { feature: "număr / logic", values: ["conținut text (recunoscut la revenire)"] },
+        ],
+      },
+      aboutSection: {
+        title: "JSON și XML: două lumi de date",
+        paragraphs: [
+          "JSON și XML sunt cele două mari formate de schimb de date structurate. JSON este concis, ușor de citit și alegerea implicită a web-ului modern; XML este mai vechi, mai verbos, dar cu posibilități structurale mai bogate (atribute, spații de nume, validare cu schemă). În multe integrări trebuie construită o punte între cele două – de exemplu, un serviciu modern trebuie să comunice cu un sistem XML de întreprindere.",
+          "Baza conversiei este o mapare simplă: cheile obiectului devin elemente, valorile devin text, repetițiile devin tablou sau elemente repetate. Deoarece cele două modele de date nu se suprapun perfect, conversia dus-întors poate fi cu pierderi în cazurile limită; pentru structurile simple, de zi cu zi, oferă însă o soluție rapidă și de încredere.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Păstrează structura simplă – datele plate, clare, se convertesc cel mai bine." },
+        { icon: "🔁", tip: "După conversia dus-întors, verifică mereu rezultatul, mai ales la atribute." },
+        { icon: "📐", tip: "La JSON → XML, o singură cheie de nivel superior dă cel mai curat element rădăcină." },
+        { icon: "🔍", tip: "Rezultatul îl poți verifica mai departe cu vizualizatorul JSON sau un formator XML." },
+      ],
+    },
+  },
+
+  // ─── Generator JSON Schema ──────────────────────────────────────────────────
+  "json-schema": {
+    introText:
+      "Generatorul de JSON Schema produce automat schema (draft-07) dintr-un exemplu JSON. Lipești un exemplu tipic de date, iar instrumentul construiește schema prin inferența tipurilor: recunoaște textele, numerele (întregi sau zecimale), valorile logice, obiectele și tablourile, și opțional marchează fiecare câmp ca obligatoriu. Schema este potrivită pentru validare, documentare sau ca bază de contract API. Totul rulează în browserul tău.",
+    guide: [
+      "1. Lipește un exemplu tipic de date JSON.",
+      "2. Decide dacă fiecare câmp să fie obligatoriu (required).",
+      "3. Citește schema JSON generată (draft-07).",
+      "4. Copiaz-o și folosește-o pentru validare sau documentare.",
+    ],
+    faq: [
+      { q: "Ce este JSON Schema?", a: "JSON Schema este un standard prin care se descrie structura așteptată a unor date JSON: ce câmpuri, cu ce tip, care sunt obligatorii. Se poate folosi pentru validarea datelor (dacă respectă formatul) și pentru documentare." },
+      { q: "Ce versiune generează?", a: "Versiunea draft-07, cea mai larg suportată. Schema conține referința $schema, tipurile, câmpurile properties ale obiectelor și, opțional, lista required." },
+      { q: "Cum gestionează tablourile?", a: "Tipul tabloului este dedus din primul element (items). Dacă elementele tabloului au structură uniformă, schema e precisă; la tablouri mixte merită rafinată ulterior." },
+      { q: "De ce e totul obligatoriu implicit?", a: "Dintr-un exemplu nu reiese care câmpuri sunt opționale, deci valoarea implicită sigură e ca fiecare câmp observat să fie obligatoriu. Cu comutatorul o poți dezactiva, dacă vrei o schemă mai laxă." },
+      { q: "Datele ajung pe vreun server?", a: "Nu. Generarea schemei are loc în browserul tău – datele exemplu nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Exemplu", description: "Lipește un exemplu reprezentativ de date JSON." },
+        { title: "2. Obligativitate", description: "Setează dacă fiecare câmp să fie required." },
+        { title: "3. Schemă", description: "Schema JSON generată (draft-07) apare instant." },
+        { title: "4. Utilizare", description: "Copiaz-o pentru validare sau documentare." },
+      ],
+      useCases: [
+        { icon: "✅", title: "Validare", description: "Verificarea datelor de intrare pe baza schemei – respectă formatul așteptat?" },
+        { icon: "📘", title: "Documentare", description: "Descrierea formală, citibilă de mașină, a unui API sau a unei structuri de date." },
+        { icon: "🤝", title: "Contract API", description: "Schema e o bază comună între backend și frontend, sau între două servicii." },
+        { icon: "🧪", title: "Testare", description: "Pe baza schemei se pot genera date de test valide și invalide." },
+      ],
+      formatComparison: {
+        title: "Inferența tipurilor",
+        columns: ["Valoare exemplu", "Tip schemă"],
+        rows: [
+          { feature: "42", values: ["integer"] },
+          { feature: "3.14", values: ["number"] },
+          { feature: "\"text\"", values: ["string"] },
+          { feature: "[ … ]", values: ["array (items din primul element)"] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce merită să folosești JSON Schema?",
+        paragraphs: [
+          "Pe măsură ce o structură de date e folosită în tot mai multe locuri, devine tot mai important să fie definită precis: ce câmpuri există, cu ce tip, ce e obligatoriu. JSON Schema oferă un răspuns standard, citibil de mașină. Având o schemă, poți valida automat datele de intrare, poți documenta API-ul și poți preveni erorile din format.",
+          "Scrierea manuală a schemei e o muncă migăloasă și plictisitoare, mai ales la structuri mari. Acest instrument o accelerează: pornind de la un exemplu real de date, construiește scheletul schemei, pe care apoi mai trebuie doar să îl rafinezi (câmpuri opționale, tipare, limite). Astfel ajungi în câteva minute de la date brute la o schemă utilizabilă.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Dă un exemplu reprezentativ – cu toate câmpurile posibile, ca schema să fie completă." },
+        { icon: "🔧", tip: "Schema generată e un punct de plecare – rafineaz-o cu câmpuri opționale și limite (min, max, pattern)." },
+        { icon: "📋", tip: "Cu comutatorul required reglezi cât de strictă să fie schema." },
+        { icon: "🧩", tip: "La tablouri mixte schema ia primul element ca model – verifică dacă tabloul e eterogen." },
+      ],
+    },
+  },
+
+  // ─── Decodor JWT ────────────────────────────────────────────────────────────
+  "jwt-dekoder": {
+    introText:
+      "Decodorul JWT face lizibil conținutul unui JSON Web Token: decodează base64url partea header și payload și le afișează ca JSON formatat, evidențiind expirarea (exp), momentul emiterii (iat) și începutul valabilității (nbf) – ca dată citibilă, cu status. Important: instrumentul NU verifică semnătura (pentru asta ar fi nevoie de cheia secretă) – doar decodează, ceea ce face conținutul tokenului vizibil pentru oricine. Totul rulează în browserul tău, tokenul nu ajunge pe server.",
+    guide: [
+      "1. Lipește tokenul JWT (cele trei părți separate prin punct).",
+      "2. Citește header și payload decodate, ca JSON formatat.",
+      "3. Verifică expirarea (exp) – instrumentul semnalează dacă tokenul a expirat.",
+      "4. Copiază conținutul header sau payload, dacă e nevoie.",
+    ],
+    faq: [
+      { q: "Ce este un JWT?", a: "JWT (JSON Web Token) este un format de token compact, folosit frecvent pentru autentificare și autorizare. Este format din trei părți: header (algoritm), payload (date, claim-uri) și signature (semnătură), separate prin puncte." },
+      { q: "Verifică semnătura?", a: "Nu. Pentru verificarea semnăturii ar fi nevoie de cheia secretă sau publică a serverului, care nu e disponibilă aici. Instrumentul doar decodează – a face payload-ul lizibil nu înseamnă a dovedi autenticitatea tokenului." },
+      { q: "E sigur să lipesc un token?", a: "Aici da, fiindcă decodarea are loc integral în browserul tău, tokenul nu ajunge nicăieri. Important de știut însă: payload-ul JWT NU e criptat, ci doar codat base64 – oricine obține tokenul îi poate citi conținutul." },
+      { q: "Ce înseamnă expirarea (exp)?", a: "Claim-ul exp este un timestamp Unix până când tokenul e valid. Instrumentul îl transformă în dată citibilă și semnalează dacă tokenul a expirat deja. Tokenurile expirate sunt respinse de servere." },
+      { q: "Tokenul ajunge pe vreun server?", a: "Nu. Întreaga decodare are loc în browserul tău, prin JavaScript – tokenul nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Lipirea tokenului", description: "Lipește JWT-ul complet (header.payload.signature)." },
+        { title: "2. Conținut", description: "Citește header și payload decodate ca JSON." },
+        { title: "3. Expirare", description: "Verifică claim-urile exp/iat/nbf ca dată citibilă." },
+        { title: "4. Copiere", description: "Copiază conținutul header sau payload." },
+      ],
+      useCases: [
+        { icon: "🔐", title: "Autentificare", description: "Verificarea conținutului unui token de autentificare la dezvoltare." },
+        { icon: "🐛", title: "Depanare", description: "De ce respinge serverul tokenul? A expirat, sau payload-ul e greșit?" },
+        { icon: "🕵️", title: "Autorizare", description: "Verificarea rapidă a claim-urilor de autorizare (role, scope) din payload." },
+        { icon: "⏱️", title: "Expirare", description: "Citirea rapidă a valabilității unui token, în formă lizibilă." },
+      ],
+      formatComparison: {
+        title: "Cele trei părți ale JWT",
+        columns: ["Parte", "Conținut"],
+        rows: [
+          { feature: "Header", values: ["Algoritm și tip de token"] },
+          { feature: "Payload", values: ["Claim-uri: sub, exp, iat, role…"] },
+          { feature: "Signature", values: ["Semnătură (verificabilă cu cheia secretă)"] },
+        ],
+      },
+      aboutSection: {
+        title: "Cum e construit un JWT?",
+        paragraphs: [
+          "JSON Web Token este format din trei părți separate prin punct. Prima e header-ul, care descrie algoritmul semnăturii. A doua e payload-ul, care conține datele efective (claim-urile): cine e utilizatorul, până când e valid tokenul, ce drepturi are. A treia e signature, semnătura primelor două părți cu o cheie secretă – aceasta garantează că tokenul nu a fost falsificat.",
+          "Este important de înțeles: header-ul și payload-ul sunt doar codate base64url, NU criptate. Asta înseamnă că oricine are acces la token îi poate citi conținutul – de aceea nu pune niciodată date sensibile (parolă, secret) în payload. Semnătura nu ascunde conținutul, ci împiedică falsificarea. Acest instrument face lizibil conținutul codat, dar nu examinează validitatea semnăturii.",
+        ],
+      },
+      tips: [
+        { icon: "⚠️", tip: "Payload-ul nu e secret – nu pune niciodată parolă sau date sensibile în el." },
+        { icon: "⏱️", tip: "Dacă serverul dă 401, verifică întâi expirarea (exp) aici." },
+        { icon: "🔏", tip: "Decodarea nu e autentificare – verificarea semnăturii să se facă mereu pe server." },
+        { icon: "🔒", tip: "Tokenul e în siguranță aici (decodare locală), dar în general tratează-l cu grijă." },
+      ],
+    },
+  },
+
+  // ─── Generator UUID ─────────────────────────────────────────────────────────
+  "uuid-generator": {
+    introText:
+      "Generatorul de UUID creează identificatori unici aleatorii (UUID v4) – individual sau în loturi de până la o mie. Generarea folosește sursa de numere aleatoare criptografic sigură a browserului (Web Crypto API), astfel încât identificatorii sunt practic fără coliziuni. Poți alege format cu majuscule, fără cratime sau între ghilimele, și poți copia totul cu un clic. Pentru chei de bază de date, testare și orice loc unde e nevoie de un identificator unic. Totul rulează în browserul tău.",
+    guide: [
+      "1. Setează câte UUID-uri vrei (1–1000).",
+      "2. Alege formatul: majuscule, fără cratime, între ghilimele.",
+      "3. Cu butonul „Regenerează” obții un set nou.",
+      "4. Copiază toate UUID-urile în clipboard.",
+    ],
+    faq: [
+      { q: "Ce este UUID v4?", a: "UUID (Universally Unique Identifier) este un identificator de 128 de biți. Varianta v4 e aleatoare: majoritatea biților sunt umpluți dintr-o sursă aleatoare, astfel încât șansa de coliziune a două UUID-uri generate e practic nulă, chiar și fără coordonare centrală." },
+      { q: "Cât de unice sunt?", a: "Un UUID v4 conține 122 de biți aleatori – atât de multe valori posibile, încât chiar la multe miliarde de generări, șansa de coliziune e neglijabilă. De aceea se poate folosi și în sisteme distribuite, fără alocare centrală de identificatori." },
+      { q: "E sigură sursa aleatoare?", a: "Da. Instrumentul folosește Web Crypto API (crypto.randomUUID / getRandomValues), care e criptografic sigură. E mai puternică decât Math.random() și potrivită și pentru identificatori sensibili din punct de vedere al securității." },
+      { q: "La ce folosesc opțiunile de format?", a: "Forma fără cratime e mai compactă (32 de caractere), cea cu majuscule se potrivește unor sisteme, iar cea între ghilimele se inserează direct în cod sau într-o listă. Alege forma potrivită sistemului țintă." },
+      { q: "UUID-urile ajung pe vreun server?", a: "Nu. Generarea are loc integral în browserul tău – identificatorii nu sunt încărcați." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Cantitate", description: "Setează câte UUID-uri vrei (1–1000)." },
+        { title: "2. Format", description: "Alege: majuscule, fără cratime, între ghilimele." },
+        { title: "3. Generare", description: "Cu butonul „Regenerează” obții un set nou." },
+        { title: "4. Copiere", description: "Copiezi toate UUID-urile cu un clic." },
+      ],
+      useCases: [
+        { icon: "🗄️", title: "Cheie de bază de date", description: "Chei primare, unde e nevoie de un identificator distribuit, fără coliziuni." },
+        { icon: "🧪", title: "Date de test", description: "Generarea în masă de identificatori unici pentru testare și dezvoltare." },
+        { icon: "🔗", title: "Corelare", description: "Identificatori de cerere sau tranzacție pentru logare și urmărire." },
+        { icon: "📁", title: "Nume de fișiere", description: "Generarea de nume unice, fără coliziuni, de fișiere sau resurse." },
+      ],
+      formatComparison: {
+        title: "Opțiuni de format",
+        columns: ["Opțiune", "Exemplu"],
+        rows: [
+          { feature: "De bază", values: ["f47ac10b-58cc-4372-a567-0e02b2c3d479"] },
+          { feature: "Fără cratime", values: ["f47ac10b58cc4372a5670e02b2c3d479"] },
+          { feature: "Majuscule", values: ["F47AC10B-58CC-4372-A567-0E02B2C3D479"] },
+        ],
+      },
+      aboutSection: {
+        title: "La ce folosește UUID-ul?",
+        paragraphs: [
+          "Identificatorul unic e una dintre pietrele de temelie ale dezvoltării software: înregistrărilor de bază de date, fișierelor, cererilor, utilizatorilor le trebuie o cheie garantat unică. Numărul incremental clasic (auto-increment) e simplu, dar necesită coordonare centrală – într-un sistem distribuit, unde mai multe servere generează simultan identificatori, ar apărea coliziuni. UUID-ul rezolvă asta: conține suficient aleatoriu ca să rămână unic fără coordonare.",
+          "UUID-ul v4 (aleatoriu) e varianta cea mai răspândită. Este esențial ca aleatoriul să fie de bună calitate: o sursă slabă ar face identificatorii predictibili și predispuși la coliziuni. De aceea acest instrument folosește Web Crypto API criptografic sigură a browserului – aceeași sursă folosită și la generarea cheilor de securitate.",
+        ],
+      },
+      tips: [
+        { icon: "🔑", tip: "Ca cheie de bază de date, UUID v4 e ideal în medii distribuite, cu mai multe servere." },
+        { icon: "📏", tip: "Forma fără cratime economisește spațiu în URL-uri și nume de fișiere." },
+        { icon: "🔒", tip: "Datorită sursei Web Crypto, identificatorii nu sunt predictibili – un avantaj de securitate." },
+        { icon: "📋", tip: "Pentru inserare în cod, activează formatul cu ghilimele." },
+      ],
+    },
+  },
+
+  // ─── Interpretor cron ───────────────────────────────────────────────────────
+  "cron-ertelmezo": {
+    introText:
+      "Interpretorul de expresii cron face inteligibile programările cron: pe fiecare câmp (minut, oră, zi, lună, ziua săptămânii) arată ce înseamnă valoarea respectivă și calculează momentele concrete ale următoarelor execuții. Lipești expresia cron sau alegi un șablon și vezi imediat când se va executa sarcina. Ajută la evitarea programărilor greșite – nu trebuie să descifrezi în minte semnificația stelelor și numerelor. Totul rulează în browserul tău.",
+    guide: [
+      "1. Lipește expresia cron (5 câmpuri) sau alege un șablon.",
+      "2. Citește explicația pe câmpuri (minut, oră, zi, lună, ziua săptămânii).",
+      "3. Vezi momentele concrete ale următoarelor execuții.",
+      "4. Modifică expresia până obții programarea dorită.",
+    ],
+    faq: [
+      { q: "Ce este o expresie cron?", a: "Cron este un format de programare format din cinci câmpuri: minut, oră, ziua lunii, luna și ziua săptămânii. Cu ele se stabilește când să ruleze o sarcină repetitivă – de exemplu în fiecare zi lucrătoare la ora 9 dimineața." },
+      { q: "Ce înseamnă simbolurile?", a: "* (steaua) înseamnă „oricare”; un număr indică o valoare concretă; A-B un interval (ex. 1-5); */N un pas (fiecare al N-lea); iar A,B o listă. Instrumentul le interpretează pe toate și le arată în limbaj natural." },
+      { q: "Cum calculează următoarele execuții?", a: "Pornind de la momentul curent, parcurge minutele care urmează și le selectează pe cele care se potrivesc tuturor celor cinci câmpuri. Afișează primele câteva potriviri ca date concrete." },
+      { q: "Ce fus orar folosește?", a: "Fusul orar local al browserului tău (al dispozitivului). Dacă cron rulează pe un server, ajustează mental la fusul serverului – multe servere lucrează în UTC." },
+      { q: "Datele ajung pe vreun server?", a: "Nu. Interpretarea și calculul au loc integral în browserul tău – nimic nu este încărcat." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Expresie", description: "Lipește expresia cron sau alege un șablon." },
+        { title: "2. Explicație", description: "Citește ce înseamnă fiecare din cele cinci câmpuri." },
+        { title: "3. Execuții", description: "Vezi momentele concrete ale următoarelor execuții." },
+        { title: "4. Rafinare", description: "Modifică până obții programarea dorită." },
+      ],
+      useCases: [
+        { icon: "⏰", title: "Sarcină programată", description: "Verificarea programării unui cron job înainte de lansare." },
+        { icon: "🐛", title: "Depanare", description: "De ce nu a rulat sarcina? Explicația pe câmpuri și execuțiile ajută." },
+        { icon: "📚", title: "Învățare", description: "Înțelegerea sintaxei cron pe exemple concrete și șabloane." },
+        { icon: "🔧", title: "Mentenanță", description: "Descifrarea rapidă a sensului unei intrări crontab moștenite." },
+      ],
+      formatComparison: {
+        title: "Câmpurile cron",
+        columns: ["Câmp", "Interval"],
+        rows: [
+          { feature: "Minut", values: ["0–59"] },
+          { feature: "Oră", values: ["0–23"] },
+          { feature: "Zi (lună)", values: ["1–31"] },
+          { feature: "Lună", values: ["1–12"] },
+          { feature: "Ziua săptămânii", values: ["0–6 (0 = duminică)"] },
+        ],
+      },
+      aboutSection: {
+        title: "Logica programării cron",
+        paragraphs: [
+          "Cron este programatorul clasic al lumii Unix: cu cinci câmpuri simple se poate descrie aproape orice tipar repetitiv. Prețul conciziei e însă lizibilitatea – `0 9 * * 1-5` nu dezvăluie la prima vedere că înseamnă „în fiecare zi lucrătoare la ora 9 dimineața”. Iar o greșeală de tastare poate duce ușor la rularea sarcinii la ora greșită sau deloc.",
+          "Acest instrument face transparentă expresia cron din două direcții. Pe de o parte, explică pe fiecare câmp ce înseamnă valoarea; pe de altă parte, calculează concret momentele următoarelor execuții, astfel încât, în loc să înțelegi sintaxa, vezi pur și simplu rezultatul. Împreună, cele două fac verificarea programării fiabilă chiar înainte de lansare.",
+        ],
+      },
+      tips: [
+        { icon: "🧪", tip: "Înainte de lansare, verifică mereu următoarele execuții – o stea tastată greșit poate costa scump." },
+        { icon: "🌍", tip: "Nu uita fusul orar: serverul tău rulează probabil în UTC, nu în ora ta locală." },
+        { icon: "📋", tip: "La o intrare crontab necunoscută, explicația pe câmpuri clarifică rapid sensul." },
+        { icon: "⭐", tip: "Sintaxa de pas */N (ex. */15) e o sursă frecventă de neînțelegeri – aici îi verifici efectul." },
+      ],
+    },
+  },
 };
