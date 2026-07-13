@@ -74,6 +74,36 @@ súlyozott rotáció** (`weight`) — a motor placementenként húz egyet. Minde
 Cseréld a placeholder kreatívokat a valódi bannereidre — a `hu` és `ro` blokk
 **egymástól függetlenül** szerkeszthető.
 
+## Kampányok (50-50 rotáció)
+
+Egy site több **kampányt** futtathat egyszerre, oldalletöltésenként egyszer
+sorsolt, súlyozott rotációval — **egy oldalon egy hirdető** (mint a mathSeo
+*erdeireka* rétegben). A kreatívokon a `campaign` mező jelöli a kampányt; a
+motor (`HouseAdEngine.astro` `pickCampaign()`) betöltéskor **egyszer** választ
+kampányt, és minden placement abból húz.
+
+- **Súly:** a site-blokk `campaigns` mezője (`{ "utazas": {"weight":1},
+  "ingatlan": {"weight":1} }`) → `1/1` = 50-50. Hiányzó `campaigns` → a
+  creatives-ben előforduló kampányok egyenlő súllyal.
+- **Cél-URL:** kampányonként a kreatív saját `href`-je (nincs külön
+  campaign-target). UTM: `utm_campaign=house-<campaign>`.
+- **Vissza-kompatibilis:** ha egy site kreatívjain nincs `campaign` (pl. RO),
+  a motor NEM sorsol kampányt → a régi, közös-poolos viselkedés marad.
+
+**HU (konvertalo.hu) jelenlegi kampányai:**
+
+| kampány | hirdető | href | banner-mappa |
+|---|---|---|---|
+| `utazas` | Erdei Réka | `https://erdeireka.hu` | `public/house-ads/erdeireka/` |
+| `ingatlan` | Dubai okos befektetés | `https://erdeireka.hu/dubai-okos-befektetes` | `public/house-ads/erdeireka-ingatlan/` |
+
+Az `ingatlan` kreatív jelenleg **szöveges fallback** (nincs `images` blokk) →
+azonnal éles, nincs törött kép. A Dubai bannereket a
+`public/house-ads/erdeireka-ingatlan/` mappába kell másolni (a `erdeireka/`
+mappával azonos fájlnevekkel), majd a `hu-erdeireka-ingatlan` kreatívhoz
+hozzáadni az `images` blokkot (a másik erdeireka kreatívét másolva, az
+útvonalat `/house-ads/erdeireka-ingatlan/`-ra cserélve), és build.
+
 ## Formátumok
 
 | `format` | alak | hol tipikus |

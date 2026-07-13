@@ -39,9 +39,40 @@ const active = cfg.enabled && cfg.creatives.length > 0;
         });
       }
 
-      // ── Súlyozott kreatív-választás ──
-      function pickCreative() {
+      // ── Aktív kampány OLDALLETÖLTÉSENKÉNT EGYSZER (50-50 rotáció) ──
+      // Ha ≥2 különböző kampány van a creatives közt, kisorsolunk EGYET (a
+      // CFG.campaigns súlyok szerint, default egyenlő), és MINDEN placement
+      // ugyanabból a kampányból húz → egy oldalon egy hirdető (mint mathSeo).
+      // 0-1 kampány esetén null → a régi viselkedés (közös pool).
+      function pickCampaign() {
         var list = CFG.creatives || [];
+        var order = [], seen = {}, i, c;
+        for (i = 0; i < list.length; i++) {
+          c = list[i].campaign;
+          if (c == null || c === '' || seen[c]) continue;
+          seen[c] = 1; order.push(c);
+        }
+        if (order.length < 2) return null;
+        var weights = CFG.campaigns || {}, total = 0, w = [];
+        for (i = 0; i < order.length; i++) {
+          var ww = (weights[order[i]] && weights[order[i]].weight);
+          ww = (typeof ww === 'number' && ww >= 0) ? ww : 1;
+          w.push(ww); total += ww;
+        }
+        if (total <= 0) return order[0];
+        var r = Math.random() * total;
+        for (i = 0; i < order.length; i++) { r -= w[i]; if (r < 0) return order[i]; }
+        return order[order.length - 1];
+      }
+      var ACTIVE_CAMPAIGN = pickCampaign();
+
+      // ── Súlyozott kreatív-választás (az aktív kampányon belül) ──
+      function pickCreative() {
+        var all = CFG.creatives || [];
+        var list = ACTIVE_CAMPAIGN
+          ? all.filter(function (c) { return c.campaign === ACTIVE_CAMPAIGN; })
+          : all;
+        if (!list.length) list = all;
         if (!list.length) return null;
         var total = 0, i;
         for (i = 0; i < list.length; i++) total += Math.max(0, list[i].weight || 1);
@@ -60,7 +91,7 @@ const active = cfg.enabled && cfg.creatives.length > 0;
           var u = new URL(href);
           u.searchParams.set('utm_source', UTM);
           u.searchParams.set('utm_medium', 'house-ad');
-          u.searchParams.set('utm_campaign', 'house');
+          u.searchParams.set('utm_campaign', ACTIVE_CAMPAIGN ? 'house-' + ACTIVE_CAMPAIGN : 'house');
           u.searchParams.set('utm_content', placement);
           return u.toString();
         } catch (e) { return href; }

@@ -54,6 +54,7 @@
     "creatives": [
       {
         "id": "hu-erdeireka",
+        "campaign": "utazas",
         "weight": 1,
         "href": "https://erdeireka.hu",
         "alt": "Erdei Réka – erdeireka.hu",
@@ -90,8 +91,26 @@
             "mw": 300, "mh": 250
           }
         }
+      },
+      {
+        "id": "hu-erdeireka-ingatlan",
+        "campaign": "ingatlan",
+        "weight": 1,
+        "href": "https://erdeireka.hu/dubai-okos-befektetes",
+        "alt": "Dubai okos ingatlan-befektetés – erdeireka.hu",
+        "headline": "Dubai okos befektetés",
+        "subline": "Ingatlan, ami dolgozik helyetted",
+        "cta": "Tudj meg többet",
+        "bgFrom": "#0b3d5c",
+        "bgTo": "#c99a3f",
+        "accent": "#f0c674",
+        "textOn": "#ffffff"
       }
-    ]
+    ],
+    "campaigns": {
+      "utazas":   { "weight": 1 },
+      "ingatlan": { "weight": 1 }
+    }
   },
 
   "ro": {

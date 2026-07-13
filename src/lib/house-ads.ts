@@ -54,6 +54,12 @@ export interface HouseAdImage {
 
 export interface HouseAdCreative {
   id: string;
+  /** Kampány-azonosító (pl. "utazas" | "ingatlan"). Ha ≥2 különböző kampány
+   *  van a creatives közt, a motor OLDALLETÖLTÉSENKÉNT EGYSZER sorsol kampányt
+   *  (a `campaigns` súlyok szerint, default 50-50), és minden placement AZONOS
+   *  kampányból húz → egy oldalon egy hirdető. Hiányzó campaign → a régi
+   *  viselkedés (minden kreatív egy közös poolban). */
+  campaign?: string;
   weight: number;
   href: string;
   headline: string;
@@ -74,10 +80,14 @@ export interface HouseAdCreative {
   textOn: string;
 }
 
+/** Kampány-súlyok az oldalletöltésenkénti 50-50 rotációhoz (default 1/1). */
+export type HouseAdCampaigns = Record<string, { weight: number }>;
+
 export interface HouseAdConfig {
   enabled: boolean;
   placements: Record<PlacementKey, HouseAdPlacement>;
   creatives: HouseAdCreative[];
+  campaigns: HouseAdCampaigns;
 }
 
 // ─── Defaultok (site-független) ─────────────────────────────
@@ -149,6 +159,7 @@ function resolveCreative(src: any, i: number): HouseAdCreative | null {
     id: str(src.id, `creative-${i}`),
     weight: Math.max(0, num(src.weight, 1)),
     href,
+    ...(typeof src.campaign === "string" && src.campaign ? { campaign: src.campaign } : {}),
     headline,
     subline: typeof src.subline === "string" ? src.subline : undefined,
     cta: str(src.cta, "Tovább"),
@@ -189,11 +200,23 @@ export function getHouseAdConfig(lang: SupportedLang = CURRENT_LANG): HouseAdCon
     ? site.creatives.map(resolveCreative).filter((c: HouseAdCreative | null): c is HouseAdCreative => c !== null)
     : [];
 
+  // Kampány-súlyok (opcionális). Default: minden a creatives-ben előforduló
+  // kampány súlya 1 → egyenlő (2 kampány = 50-50). A JSON felülírhat egy-egy súlyt.
+  const campaigns: HouseAdCampaigns = {};
+  for (const c of creatives) {
+    if (c.campaign && !(c.campaign in campaigns)) campaigns[c.campaign] = { weight: 1 };
+  }
+  const campSrc = site.campaigns && typeof site.campaigns === "object" ? site.campaigns : {};
+  for (const key of Object.keys(campaigns)) {
+    const w = (campSrc as any)[key]?.weight;
+    campaigns[key] = { weight: Math.max(0, num(w, 1)) };
+  }
+
   // A réteg csak akkor aktív, ha (1) a FŐKAPCSOLÓ env be van kapcsolva,
   // (2) az adott site JSON-ban engedélyezett, és (3) van legalább 1 érvényes kreatív.
   const enabled = ENV_ENABLED && bool(site.enabled, false) && creatives.length > 0;
 
-  return { enabled, placements, creatives };
+  return { enabled, placements, creatives, campaigns };
 }
 
 // A kliens-motornak inline átadott, minimalizált config (a docs `_`-kulcsok nélkül).
