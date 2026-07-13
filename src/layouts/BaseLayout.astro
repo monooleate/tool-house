@@ -30,8 +30,15 @@ const { siteName, siteUrl, siteNameShort, lang: htmlLang, locale } = CURRENT_CON
 //  - Klasszikus: <script defer data-domain="…" src="…/js/script.js"> (PUBLIC_PLAUSIBLE_DOMAIN kell)
 //  - Új (token a fájlnévben, …/js/pa-<token>.js) + inline plausible.init() — data-domain nélkül.
 // Ha egyik env sincs beállítva → semmi nem renderel (nincs console-hiba).
-const plausibleSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || '';
-const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || '';
+// FONTOS (2026-07-13): a Plausible token (PUBLIC_PLAUSIBLE_SRC) a default netlify.toml
+// [build.environment]-jében van, amit MINDKÉT Netlify-site (HU + RO) olvas → a HU token
+// „átcsordult" a RO buildbe, és a RO forgalom a konvertalo.hu dashboardjába folyt.
+// Ezért a Plausible-t nyelvhez kötjük: CSAK a HU site-on (konvertalo.hu) töltjük be.
+// A RO (instrumenteonline.ro) szándékosan nem használ Plausible-t. Ha később kell külön
+// RO analytics: állíts be RO-specifikus tokent és lazítsd ezt a gate-et.
+const plausibleAllowed = CURRENT_LANG === 'hu';
+const plausibleSrc = plausibleAllowed ? (import.meta.env.PUBLIC_PLAUSIBLE_SRC || '') : '';
+const plausibleDomain = plausibleAllowed ? (import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || '') : '';
 const plausibleIsNew = plausibleSrc.includes('/js/pa');
 const plausibleClassicSrc = plausibleSrc || 'https://plausible.io/js/script.js';
 // View Transitions kikapcsolva – link navigáció hibát okozott
