@@ -104,7 +104,27 @@
         "bgFrom": "#0b3d5c",
         "bgTo": "#c99a3f",
         "accent": "#f0c674",
-        "textOn": "#ffffff"
+        "textOn": "#ffffff",
+        "images": {
+          "leaderboard": {
+            "src": "/house-ads/erdeireka-ingatlan/a-leaderboard-728x90.svg",
+            "w": 728, "h": 90,
+            "mobileSrc": "/house-ads/erdeireka-ingatlan/a-mobile-320x100.svg",
+            "mw": 320, "mh": 100
+          },
+          "rectangle": {
+            "src": "/house-ads/erdeireka-ingatlan/a-largerect-336x280.svg",
+            "w": 336, "h": 280,
+            "mobileSrc": "/house-ads/erdeireka-ingatlan/a-rectangle-300x250.svg",
+            "mw": 300, "mh": 250
+          },
+          "billboard": {
+            "src": "/house-ads/erdeireka-ingatlan/a-billboard-970x250.svg",
+            "w": 970, "h": 250,
+            "mobileSrc": "/house-ads/erdeireka-ingatlan/a-rectangle-300x250.svg",
+            "mw": 300, "mh": 250
+          }
+        }
       }
     ],
     "campaigns": {
