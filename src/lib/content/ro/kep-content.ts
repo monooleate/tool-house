@@ -2193,4 +2193,338 @@ export const KEP_RO_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Generator imagine placeholder ──────────────────────────────────────────
+  "placeholder-kep": {
+    introText:
+      "Generatorul de imagini placeholder creează imagini de umplutură monocrome, cu text, în orice dimensiune – pentru design, mockup-uri și testare. Setează lățimea, înălțimea, culoarea de fundal și de text, opțional un text propriu, și descarcă PNG-ul gata făcut. Șabloanele de dimensiune (OG, Instagram, banner) grăbesc lucrul. Totul se creează în browserul tău, cu canvas – fără server sau serviciu extern de placeholder.",
+    guide: [
+      "1. Alege un șablon de dimensiune, sau setează lățimea și înălțimea.",
+      "2. Setează culoarea de fundal și de text.",
+      "3. Opțional, scrie un text propriu (gol = se afișează dimensiunea).",
+      "4. Descarcă imaginea PNG gata făcută.",
+    ],
+    faq: [
+      { q: "La ce folosește o imagine placeholder?", a: "În timpul designului și dezvoltării adesea e nevoie de o imagine pe loc, înainte ca cea finală să fie gata. Placeholder-ul umple spațiul la dimensiunea exactă, ca să se vadă aranjarea – fără a aștepta imaginea reală." },
+      { q: "Ce dimensiune pot da?", a: "Orice dimensiune între 1 și 4000 de pixeli, sau alege șabloanele gata făcute (OG 1200×630, Instagram 1080×1080, Story, Full HD, banner). Textul afișează implicit dimensiunea dată." },
+      { q: "De ce e mai bun decât un serviciu online?", a: "URL-urile clasice de placeholder depind de un server extern – dacă acesta cade, imaginea ta dispare. Acest instrument generează PNG-ul local, în browser, pe care îl descarci și îl pui în proiectul tău." },
+      { q: "Poate fi fundalul transparent?", a: "Acest generator lucrează cu fundal opac monocrom pentru vizibilitate bună. Dacă ai nevoie de o imagine circulară cu fundal transparent, folosește instrumentul de decupare circulară." },
+      { q: "Imaginea ajunge pe vreun server?", a: "Nu. Întreaga generare are loc în browserul tău, cu canvas – nimic nu este încărcat." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Dimensiune", description: "Alege un șablon sau setează lățimea și înălțimea." },
+        { title: "2. Culori", description: "Setează culoarea de fundal și de text." },
+        { title: "3. Text", description: "Scrie un text propriu sau lasă gol pentru dimensiune." },
+        { title: "4. Descărcare", description: "Descarcă imaginea PNG gata făcută." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Web design", description: "Umplerea aranjărilor cu locuri de imagine înainte de conținutul real." },
+        { icon: "🧑‍💻", title: "Dezvoltare", description: "Producerea rapidă de imagini de test la dimensiune exactă pentru UI." },
+        { icon: "📱", title: "Mockup", description: "Umplerea prototipurilor și prezentărilor cu imagini de dimensiune credibilă." },
+        { icon: "📐", title: "Test dimensiune", description: "Verificarea rapidă a aspectului unei dimensiuni de imagine în aranjare." },
+      ],
+      formatComparison: {
+        title: "Dimensiuni populare",
+        columns: ["Șablon", "Dimensiune"],
+        rows: [
+          { feature: "Open Graph", values: ["1200 × 630"] },
+          { feature: "Instagram", values: ["1080 × 1080"] },
+          { feature: "Story", values: ["1080 × 1920"] },
+          { feature: "Banner", values: ["300 × 250"] },
+        ],
+      },
+      aboutSection: {
+        title: "Rolul imaginilor placeholder",
+        paragraphs: [
+          "Designul și dezvoltarea rareori merg liniar: aranjarea e adesea gata înaintea imaginilor finale. Imaginea placeholder acoperă acest decalaj – umple locul imaginii la dimensiunea exactă, astfel încât machetarea, proporțiile și ritmul vizual să poată fi evaluate încă înaintea conținutului real.",
+          "Mulți folosesc pentru asta servicii externe de placeholder, dar acelea înseamnă o dependență de rețea: dacă serviciul e lent sau cade, mockup-ul se strică. Un PNG generat local, descărcat, e în schimb de încredere și funcționează și offline – de aceea e mai practic un placeholder propriu, creat în browser.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "Un placeholder apropiat de dimensiunea conținutului real dă cea mai credibilă imagine a aranjării." },
+        { icon: "🎨", tip: "Alege culori de fundal și text contrastante, ca dimensiunea să fie lizibilă." },
+        { icon: "🔗", tip: "Pentru testarea imaginii OG, șablonul 1200×630 e dimensiunea standard." },
+        { icon: "⚠️", tip: "Înainte de lansare, înlocuiește placeholder-ul cu imaginea reală – nu e pentru publicare." },
+      ],
+    },
+  },
+
+  // ─── Imagine → ASCII art ────────────────────────────────────────────────────
+  "kep-ascii": {
+    introText:
+      "Instrumentul imagine → ASCII art transformă imaginea încărcată în artă text (ASCII): pe baza luminozității pixelilor alege caractere, cu semne mai dese pentru zonele întunecate și mai rare pentru cele deschise. Reglează lățimea, alege setul de caractere și inversează după nevoie. Rezultatul îl poți copia sau descărca ca fișier text. Pentru atmosferă retro de terminal, semnătură de e-mail sau doar de distracție. Totul rulează în browserul tău, imaginea nu ajunge pe server.",
+    guide: [
+      "1. Încarcă o imagine (trage în câmp sau răsfoiește).",
+      "2. Setează lățimea (în caractere) cu glisorul.",
+      "3. Alege setul de caractere (dens, simplu, blocuri) și inversează după nevoie.",
+      "4. Copiază textul ASCII sau descarcă-l ca fișier .txt.",
+    ],
+    faq: [
+      { q: "Cum devine imaginea ASCII?", a: "Instrumentul micșorează imaginea la lățimea dată, apoi calculează luminozitatea fiecărui pixel și alege un caracter din set: pentru pixel întunecat un semn dens (ex. @), pentru deschis unul rar (ex. spațiu). Rezultatul, unit pe rânduri, dă imaginea ASCII." },
+      { q: "De ce arată bine cu font monospace?", a: "Arta ASCII trăiește din faptul că toate caracterele au aceeași lățime – astfel grila de caractere reproduce exact pixelii. Cu font non-monospace (proporțional) imaginea se distorsionează. Afișarea și textul descărcat sunt gândite pentru monospace." },
+      { q: "Ce face inversarea?", a: "Implicit, pixelului întunecat îi corespunde caracterul dens (arată bine pe fundal întunecat). Inversarea schimbă asta – pe fundal deschis, cu text întunecat, rezultatul va fi corect." },
+      { q: "Care e cea mai bună lățime?", a: "80–120 de caractere e de regulă un bun echilibru între detaliu și dimensiune. O lățime mai mare dă mai mult detaliu, dar e mai greu de încadrat; una mai mică dă un rezultat mai abstract, mai stilizat." },
+      { q: "Imaginea ajunge pe vreun server?", a: "Nu. Transformarea are loc în browserul tău, cu canvas – imaginea nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcare imagine", description: "Trage imaginea în câmp sau răsfoiește." },
+        { title: "2. Lățime", description: "Setează lățimea în caractere cu glisorul." },
+        { title: "3. Stil", description: "Alege setul de caractere și inversează după nevoie." },
+        { title: "4. Export", description: "Copiază sau descarcă rezultatul ASCII." },
+      ],
+      useCases: [
+        { icon: "🖥️", title: "Terminal retro", description: "Imagine text pentru terminal, README sau aplicație de consolă." },
+        { icon: "✉️", title: "Semnătură e-mail", description: "Logo sau imagine text unică într-o semnătură de e-mail." },
+        { icon: "🎨", title: "Proiect creativ", description: "Artă ASCII pentru postere, comentarii de cod, uz creativ." },
+        { icon: "😄", title: "Distracție", description: "Varianta text a imaginii preferate, de partajat sau de pus în chat." },
+      ],
+      formatComparison: {
+        title: "Seturi de caractere",
+        columns: ["Set", "Caracteristică"],
+        rows: [
+          { feature: "Dens (10 niveluri)", values: ["Cel mai detaliat, multe nuanțe"] },
+          { feature: "Simplu (5 niveluri)", values: ["Mai curat, mai contrastant"] },
+          { feature: "Blocuri", values: ["Caractere bloc Unicode, efect compact"] },
+        ],
+      },
+      aboutSection: {
+        title: "Scurtă istorie a artei ASCII",
+        paragraphs: [
+          "Arta ASCII urcă până în perioada de început a informaticii, când imprimantele și ecranele puteau afișa doar caractere, nu imagini. Utilizatorii ingenioși foloseau „densitatea” diferită a literelor și semnelor pentru a compune imagini recognoscibile – un semn @ pare mai întunecat decât un punct, un punct mai întunecat decât un spațiu.",
+          "Acest instrument automatizează același principiu: mapează luminozitatea fiecărei zone mici a imaginii pe un caracter de „densitate” potrivită. Deși azi putem afișa imagini reale, arta ASCII și-a păstrat farmecul – retro, text, dar expresivă, și funcționează acolo unde poate exista doar text simplu (cod, terminal, semnătură).",
+        ],
+      },
+      tips: [
+        { icon: "🔲", tip: "Din imaginile cu contrast mare iese cea mai bună artă ASCII – fundalul monocrom se pierde." },
+        { icon: "📏", tip: "Începe cu 90 de caractere lățime, apoi ajustează între detaliu și dimensiune." },
+        { icon: "🔤", tip: "Inserează rezultatul cu font monospace, altfel imaginea se distorsionează." },
+        { icon: "🌗", tip: "Pentru text destinat fundalului deschis, activează inversarea." },
+      ],
+    },
+  },
+
+  // ─── Generator de meme ──────────────────────────────────────────────────────
+  "mem-generator": {
+    introText:
+      "Generatorul de meme adaugă text imaginii tale în stilul clasic de meme de internet: text sus și jos, cu font Impact alb, gros, cu contur negru. Încarcă o imagine, scrie textele, reglează mărimea fontului și descarcă meme-ul gata făcut în PNG. Fără filigran, fără înregistrare, fără încărcare – totul se creează în browserul tău. Pentru social media, chat-uri de grup, reacții amuzante.",
+    guide: [
+      "1. Încarcă o imagine.",
+      "2. Scrie textul de sus și/sau de jos.",
+      "3. Reglează mărimea fontului cu glisorul.",
+      "4. Descarcă meme-ul gata făcut în PNG.",
+    ],
+    faq: [
+      { q: "De ce e textul cu majuscule?", a: "Stilul clasic de meme folosește fontul Impact gros, cu majuscule și contur negru – acesta a devenit marca vizuală a genului. Instrumentul pune automat textul cu majuscule pentru acest stil." },
+      { q: "Apare filigran pe meme?", a: "Nu. Multe generatoare online pun propriul logo pe imagine; acest instrument dă un PNG curat, fără filigran, fiindcă se creează local, în browserul tău." },
+      { q: "Orice imagine poate fi folosită?", a: "Da, poți adăuga text la imagini JPG, PNG și WebP. Mărimea textului se ajustează la înălțimea imaginii, ca să rămână proporțională." },
+      { q: "De ce e conturul negru?", a: "Textul alb cu contur negru rămâne lizibil pe orice fundal (și deschis, și întunecat) – e trucul consacrat al textelor de meme." },
+      { q: "Imaginea ajunge pe vreun server?", a: "Nu. Desenarea textului are loc în browserul tău, cu canvas – imaginea nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcare imagine", description: "Trage imaginea în câmp sau răsfoiește." },
+        { title: "2. Text", description: "Scrie textul de sus și/sau de jos." },
+        { title: "3. Mărime", description: "Reglează mărimea fontului cu glisorul." },
+        { title: "4. Descărcare", description: "Descarcă meme-ul gata făcut în PNG." },
+      ],
+      useCases: [
+        { icon: "😄", title: "Social media", description: "Crearea rapidă de meme-uri amuzante pentru postare sau story." },
+        { icon: "💬", title: "Chat de grup", description: "Meme-uri de reacție pentru grupuri de prieteni și de muncă." },
+        { icon: "📣", title: "Marketing", description: "Conținut lejer, tip meme, pentru comunicarea de brand." },
+        { icon: "🎓", title: "Educație", description: "Ilustrații atractive, cu umor, pentru prezentări." },
+      ],
+      formatComparison: {
+        title: "Caracteristicile textului de meme",
+        columns: ["Element", "Stil"],
+        rows: [
+          { feature: "Font", values: ["Impact (gros, condensat)"] },
+          { feature: "Culoare", values: ["Umplere albă, contur negru"] },
+          { feature: "Poziție", values: ["Sus și jos, centrat"] },
+          { feature: "Formă", values: ["Majuscule"] },
+        ],
+      },
+      aboutSection: {
+        title: "Meme-ul ca limbaj vizual",
+        paragraphs: [
+          "Meme-ul de internet a devenit un limbaj vizual de sine stătător: combinația dintre o imagine și un text concis, care transmite instant o emoție, o glumă sau o opinie. Formatul clasic – imagine cu text sus-jos, alb-negru – s-a înrădăcinat atât de mult în cultură, încât semnalează prin el însuși: acesta e un meme.",
+          "Acest instrument face accesibil exact acest format consacrat, rapid și curat. Nu e nevoie de editor de imagini sau de cont: încarci imaginea, scrii textul și meme-ul e gata de partajat. Deoarece totul se întâmplă local, poți crea meme-uri liniștit și din imagini private sau confidențiale, fără filigran și fără trimitere de date.",
+        ],
+      },
+      tips: [
+        { icon: "✍️", tip: "Textul scurt și tăios funcționează cel mai bine – meme-ul e despre concizie." },
+        { icon: "📏", tip: "Dacă textul e prea mare sau mic, ajustează-l la proporția imaginii cu glisorul." },
+        { icon: "🖼️", tip: "Alege o imagine puternică, recognoscibilă – meme-ul trăiește din interacțiunea imagine-text." },
+        { icon: "🔒", tip: "Poți crea meme-uri și din imagini private – totul rămâne în browserul tău." },
+      ],
+    },
+  },
+
+  // ─── Comparare imagini (diff) ───────────────────────────────────────────────
+  "kep-diff": {
+    introText:
+      "Instrumentul de comparare imagini confruntă două imagini pixel cu pixel și evidențiază cu roșu zonele diferite, plus arată ce procent din pixeli diferă. Încarcă o imagine „A” și una „B”, reglează pragul de sensibilitate și vezi imediat harta diferențelor. Util pentru compararea versiunilor, exporturilor, variantelor comprimate sau iterațiilor de design. Totul rulează în browserul tău, imaginile nu ajung pe server.",
+    guide: [
+      "1. Încarcă o primă imagine (A) și una a doua (B).",
+      "2. Reglează pragul de sensibilitate cu glisorul.",
+      "3. Citește harta diff roșie și procentul pixelilor diferiți.",
+      "4. Descarcă imaginea diff, dacă e nevoie.",
+    ],
+    faq: [
+      { q: "Cum compară?", a: "Instrumentul aduce ambele imagini la dimensiunea A, apoi compară la fiecare pixel valorile de culoare. Dacă diferența e peste prag, colorează pixelul cu roșu; altfel îl afișează estompat. La final calculează proporția pixelilor diferiți." },
+      { q: "La ce folosește pragul de sensibilitate?", a: "Pragul reglează cât de mare trebuie să fie o diferență ca să conteze drept „diferență”. Un prag mic semnalează și cele mai mici diferențe (ex. zgomot de compresie); unul mai mare evidențiază doar schimbările vizibile." },
+      { q: "Ce se întâmplă dacă cele două imagini au dimensiuni diferite?", a: "Instrumentul scalează a doua imagine la dimensiunea primei (A) înainte de comparare. Pentru cel mai precis rezultat, folosește imagini de aceeași dimensiune." },
+      { q: "Ce înseamnă procentul?", a: "Proporția pixelilor diferiți (peste prag) față de totalul pixelilor. 0% înseamnă imagini identice (peste prag); cu cât numărul e mai mare, cu atât sunt mai multe diferențe." },
+      { q: "Imaginile ajung pe vreun server?", a: "Nu. Întreaga comparare are loc în browserul tău, cu canvas – imaginile nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Două imagini", description: "Încarcă o imagine A și una B." },
+        { title: "2. Prag", description: "Reglează pragul de sensibilitate cu glisorul." },
+        { title: "3. Diff", description: "Citește harta roșie a diferențelor și procentul." },
+        { title: "4. Descărcare", description: "Descarcă imaginea diff, dacă e nevoie." },
+      ],
+      useCases: [
+        { icon: "🔍", title: "Verificare versiune", description: "Confruntarea a două variante ale unei imagini – ce s-a schimbat?" },
+        { icon: "🗜️", title: "Compresie", description: "Verificarea vizuală a diferenței dintre imaginea originală și cea comprimată." },
+        { icon: "🎨", title: "Design", description: "Trecerea rapidă în revistă a diferențelor dintre două iterații de design." },
+        { icon: "🧪", title: "Test de regresie", description: "Depistarea schimbării unui render sau screenshot între două stări." },
+      ],
+      formatComparison: {
+        title: "Notațiile diff-ului",
+        columns: ["Zonă", "Semnificație"],
+        rows: [
+          { feature: "Roșu", values: ["Pixel diferit (peste prag)"] },
+          { feature: "Estompat", values: ["Pixel identic (sau sub prag)"] },
+          { feature: "Procent", values: ["Proporția pixelilor diferiți"] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce e util diff-ul de imagini?",
+        paragraphs: [
+          "Între două imagini asemănătoare e greu de găsit cu ochiul liber diferențele mici – un element deplasat, o schimbare de nuanță sau un artefact de compresie scapă ușor atenției. Compararea la nivel de pixel face asta vizibil: arată exact unde și cât diferă cele două imagini.",
+          "Acest lucru e util atât în dezvoltare, cât și în design. Dezvoltatorii îl folosesc ca test de regresie (o modificare nu a stricat o afișare), designerii pentru compararea a două iterații, iar fotografii pentru verificarea efectului compresiei. Pragul de sensibilitate ajută la separarea schimbărilor importante de zgomotul nesemnificativ.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "Pentru cel mai precis rezultat, compară imagini de aceeași dimensiune." },
+        { icon: "🎚️", tip: "Pentru a filtra zgomotul de compresie, crește pragul; pentru diferențe mici, scade-l." },
+        { icon: "🔴", tip: "Densitatea petelor roșii arată imediat unde se concentrează schimbarea." },
+        { icon: "🔒", tip: "Poți compara liniștit și imagini confidențiale – totul rămâne local." },
+      ],
+    },
+  },
+
+  // ─── Cititor cod QR ─────────────────────────────────────────────────────────
+  "qr-olvaso": {
+    introText:
+      "Cititorul de cod QR extrage conținutul unui cod QR dintr-o imagine încărcată – fie că e URL, text, date wifi sau altceva. Trage imaginea sau captura de ecran cu codul QR, iar conținutul decodat apare imediat, copiabil cu un clic. Dacă e URL, din motive de siguranță nu îl deschidem automat – îl poți verifica întâi. Totul rulează în browserul tău, imaginea nu ajunge pe server. Perechea generatorului nostru de QR.",
+    guide: [
+      "1. Încarcă o imagine sau captură de ecran care conține un cod QR.",
+      "2. Conținutul decodat apare imediat.",
+      "3. Copiază conținutul cu un clic.",
+      "4. Dacă e URL, verifică-l înainte de a-l deschide.",
+    ],
+    faq: [
+      { q: "Ce cod QR citește?", a: "Codurile QR standard care conțin URL, text simplu, acces wifi, carte de vizită (vCard) sau alte date. Pentru cel mai bun rezultat, un QR clar, bine decupat, fotografiat din față sau salvat ca captură de ecran funcționează cel mai bine." },
+      { q: "De ce nu deschide automat URL-ul?", a: "Din motive de siguranță. Un cod QR poate indica orice adresă, chiar și una înșelătoare. Instrumentul îți arată conținutul, dar deschiderea e decizia ta – astfel eviți ca un QR rău intenționat să te ducă automat pe o pagină periculoasă." },
+      { q: "Ce fac dacă nu găsește codul?", a: "Încearcă o imagine mai clară, mai bine decupată, unde codul QR e mai mare și se vede clar. Codurile QR neclare, oblice sau foarte mici sunt mai greu de decodat. Ajută dacă în jurul codului e o margine albă." },
+      { q: "Funcționează și cu camera?", a: "Acest instrument citește dintr-o imagine încărcată (fișier sau captură de ecran). Dacă vrei să scanezi un QR fizic, fă-i o fotografie, apoi încarc-o." },
+      { q: "Imaginea ajunge pe vreun server?", a: "Nu. Decodarea are loc integral în browserul tău – imaginea și conținutul QR nu părăsesc dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcare imagine", description: "Trage imaginea sau captura cu codul QR." },
+        { title: "2. Decodare", description: "Conținutul apare imediat." },
+        { title: "3. Copiere", description: "Copiezi textul decodat cu un clic." },
+        { title: "4. Verificare", description: "La URL, verifică înainte de a-l deschide." },
+      ],
+      useCases: [
+        { icon: "🔗", title: "Extragere link", description: "Citirea URL-ului din spatele unui cod QR înainte de clic, în siguranță." },
+        { icon: "📶", title: "Date wifi", description: "Citirea conținutului unui QR wifi (rețea, parolă)." },
+        { icon: "🖼️", title: "Captură de ecran", description: "Scanarea rapidă a unui QR de pe o imagine sau afiș, dintr-o fotografie." },
+        { icon: "🛡️", title: "Siguranță", description: "Verificarea conținutului unui QR suspect fără deschidere automată." },
+      ],
+      formatComparison: {
+        title: "Tipuri de conținut QR",
+        columns: ["Tip", "Exemplu"],
+        rows: [
+          { feature: "URL", values: ["https://exemplu.ro"] },
+          { feature: "Text", values: ["Orice mesaj"] },
+          { feature: "Wifi", values: ["Nume rețea + parolă"] },
+          { feature: "vCard", values: ["Date de contact"] },
+        ],
+      },
+      aboutSection: {
+        title: "Codul QR și siguranța",
+        paragraphs: [
+          "Codul QR (Quick Response) este un cod de bare bidimensional care poate stoca date diverse: cel mai des URL, dar și text, acces wifi sau carte de vizită. Din cauza popularității, codurile QR reprezintă însă și un risc de securitate: un cod rău intenționat poate direcționa spre o pagină înșelătoare sau dăunătoare, iar cu ochiul liber nu se poate spune unde indică.",
+          "De aceea e important să vedem conținutul QR ÎNAINTE de deschidere. Acest instrument permite exact asta: citește și arată conținutul codului, dar la URL nu îl deschide automat – îți lasă ție decizia. Deoarece decodarea are loc local, în browser, datele citite rămân private, iar codurile QR confidențiale le poți verifica liniștit.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Un QR clar, cu contrast bun, fotografiat din față se decodează cel mai bine." },
+        { icon: "⚠️", tip: "Nu deschide niciodată un URL orbește – verifică întâi unde indică." },
+        { icon: "🖼️", tip: "Dacă nu reușește, decupează mai strâns codul QR, cu o mică margine albă." },
+        { icon: "🔗", tip: "Poți și genera coduri QR la noi – acest cititor e perechea lui." },
+      ],
+    },
+  },
+
+  // ─── Decupare circulară (avatar) ────────────────────────────────────────────
+  "kerek-vagas": {
+    introText:
+      "Decuparea circulară taie imaginea ta într-un cerc perfect – ideal pentru poză de profil și avatar. Rezultatul e un PNG cu fundal transparent, deci poate fi inserat oriunde fără colțuri albe. Încarcă o imagine, reglează dimensiunea și opțional un chenar, și descarc-o. Imaginea se decupează pătrat din centru, apoi în cerc. Totul rulează în browserul tău, fără încărcare.",
+    guide: [
+      "1. Încarcă o imagine.",
+      "2. Setează dimensiunea de ieșire (px).",
+      "3. Opțional, adaugă un chenar și alege-i culoarea.",
+      "4. Descarcă PNG-ul circular cu fundal transparent.",
+    ],
+    faq: [
+      { q: "De ce e fundalul transparent?", a: "Colțurile din jurul cercului sunt transparente (nu albe), astfel încât avatarul arată bine pe orice fundal colorat – nu iese un pătrat alb în jurul cercului. Acest lucru e posibil datorită formatului PNG, care suportă transparența." },
+      { q: "Cum decupează imaginea în cerc?", a: "Instrumentul taie mai întâi un pătrat din centrul imaginii (pe baza laturii mai scurte), apoi aplică o mască circulară pe acel pătrat. Astfel rămâne partea centrală a imaginii, în formă de cerc." },
+      { q: "Ce dimensiune să aleg?", a: "Majoritatea platformelor folosesc poze de profil între 200 și 500 de pixeli. 400 px e o alegere generală bună; dacă e nevoie de rezoluție mai mare, crește (max. 1024)." },
+      { q: "La ce folosește chenarul?", a: "Chenarul adaugă un inel colorat în jurul cercului – acesta scoate în evidență avatarul și dă un aspect unitar pozelor de profil ale unei echipe sau ale unui brand. Opțional, implicit fără chenar." },
+      { q: "Imaginea ajunge pe vreun server?", a: "Nu. Decuparea are loc în browserul tău, cu canvas – imaginea nu părăsește dispozitivul." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Încărcare imagine", description: "Trage imaginea în câmp sau răsfoiește." },
+        { title: "2. Dimensiune", description: "Setează dimensiunea de ieșire în pixeli." },
+        { title: "3. Chenar", description: "Opțional, adaugă un chenar colorat." },
+        { title: "4. Descărcare", description: "Descarcă avatarul PNG transparent." },
+      ],
+      useCases: [
+        { icon: "👤", title: "Poză de profil", description: "Avatar rotund pentru profiluri de social media și forum." },
+        { icon: "💬", title: "Chat / echipă", description: "Poze de profil circulare, unitare, pentru o echipă sau comunitate." },
+        { icon: "🌐", title: "Site web", description: "Avatare rotunde de autor sau de recenzie pe un site." },
+        { icon: "🎨", title: "Design", description: "Elemente de imagine circulare pentru prezentări și grafică." },
+      ],
+      formatComparison: {
+        title: "Caracteristicile rezultatului",
+        columns: ["Proprietate", "Valoare"],
+        rows: [
+          { feature: "Formă", values: ["Cerc perfect"] },
+          { feature: "Fundal", values: ["Transparent (PNG)"] },
+          { feature: "Decupare", values: ["Din centru, pătrat → cerc"] },
+          { feature: "Chenar", values: ["Opțional, colorat"] },
+        ],
+      },
+      aboutSection: {
+        title: "De ce e popular avatarul circular?",
+        paragraphs: [
+          "Poza de profil circulară e una dintre trăsăturile interfețelor moderne: marea majoritate a platformelor sociale, aplicațiilor de chat și site-urilor afișează avatarele în cerc. Cercul are un efect mai blând, mai prietenos decât imaginea pătrată, și se potrivește designului modern, curat.",
+          "Problema e că, dacă încărcăm o imagine pătrată acolo unde interfața o taie în cerc, detaliile din colțuri se pot pierde. Dacă în schimb creăm de la început un PNG circular, cu fundal transparent, avem control deplin asupra rezultatului – se vede exact ce vrem, fără colțuri albe. Acest instrument produce exact acest avatar circular, transparent, local și rapid.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Pentru cel mai bun rezultat, alege o imagine unde esențialul e în centru – marginile se taie." },
+        { icon: "🖼️", tip: "PNG-ul transparent arată bine pe orice fundal – nu-l converti în JPG, care pierde transparența." },
+        { icon: "⭕", tip: "Pentru avatare de echipă unitare, folosește aceeași dimensiune și culoare de chenar la toate." },
+        { icon: "🔒", tip: "Imaginea ta rămâne în browser – poți crea avatar și dintr-o fotografie privată." },
+      ],
+    },
+  },
 };

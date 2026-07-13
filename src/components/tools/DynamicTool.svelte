@@ -58,6 +58,13 @@
     SvgOptimalizalo:   () => import("../tools/kep/SvgOptimalizalo.svelte"),
     PngSvgTool:        () => import("../tools/kep/PngSvgTool.svelte"),
     FaviconCsomag:     () => import("../tools/kep/FaviconCsomag.svelte"),
+    // KÉP – Batch D (HU+RO)
+    PlaceholderKep:    () => import("../tools/kep/PlaceholderKep.svelte"),
+    KepAscii:          () => import("../tools/kep/KepAscii.svelte"),
+    MemGenerator:      () => import("../tools/kep/MemGenerator.svelte"),
+    KepDiff:           () => import("../tools/kep/KepDiff.svelte"),
+    QrOlvaso:          () => import("../tools/kep/QrOlvaso.svelte"),
+    KerekVagas:        () => import("../tools/kep/KerekVagas.svelte"),
     // PDF
     PdfMergeTool: () => import("../tools/pdf/PdfMergeTool.svelte"),
     PdfSplitTool: () => import("../tools/pdf/PdfSplitTool.svelte"),

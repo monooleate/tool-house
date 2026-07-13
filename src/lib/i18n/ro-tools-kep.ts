@@ -366,4 +366,52 @@ export const KEP_RO: Record<string, { slug: string; title: string; h1: string; d
     description: "Taie sprite sheet-ul în imagini individuale după dimensiunea celulei. Export ZIP în browser, fără server.",
     keywords: ["decupare sprite sheet", "sprite cutter online", "export frame sprite"],
   },
+
+  "placeholder-kep": {
+    slug: "generator-imagine-placeholder",
+    title: "Generator imagine placeholder online – imagine de umplutură | Gratuit",
+    h1: "Generator imagine placeholder",
+    description: "Generează o imagine placeholder cu orice dimensiune, text și culoare. Descărcare PNG, cu șabloane de dimensiune. În browser.",
+    keywords: ["imagine placeholder", "generator placeholder", "dummy image", "imagine de test", "imagine mockup", "placeholder online"],
+  },
+
+  "kep-ascii": {
+    slug: "imagine-ascii",
+    title: "Imagine → ASCII art online – imagine text | Gratuit",
+    h1: "Imagine → ASCII art",
+    description: "Transformă o imagine în artă ASCII (text) pe baza luminozității. Lățime reglabilă, set de caractere, inversare. Copiere și descărcare. În browser.",
+    keywords: ["ascii art", "imagine ascii", "image to ascii", "generator ascii", "imagine text", "convertor ascii"],
+  },
+
+  "mem-generator": {
+    slug: "generator-meme",
+    title: "Generator de meme online – text pe imagine | Gratuit",
+    h1: "Generator de meme",
+    description: "Adaugă text sus și jos pe o imagine, în stil Impact clasic. Reglare mărime font, descărcare PNG. În browser, fără încărcare.",
+    keywords: ["generator meme", "meme generator", "text pe imagine", "creare meme", "meme maker", "text impact imagine"],
+  },
+
+  "kep-diff": {
+    slug: "comparare-imagini",
+    title: "Comparare imagini online – diferența dintre două imagini | Gratuit",
+    h1: "Comparare imagini (diff)",
+    description: "Compară două imagini la nivel de pixel: diferențele evidențiate cu roșu, procentul pixelilor diferiți. Prag de sensibilitate. În browser, privat.",
+    keywords: ["comparare imagini", "image diff", "diferență imagini", "compară două imagini", "pixel diff", "image compare"],
+  },
+
+  "qr-olvaso": {
+    slug: "citire-qr",
+    title: "Cititor cod QR online – decodare QR din imagine | Gratuit",
+    h1: "Cititor cod QR",
+    description: "Decodează un cod QR dintr-o imagine încărcată – conținutul codului e imediat lizibil și copiabil. Rulează în browser, imaginea nu ajunge pe server.",
+    keywords: ["cititor qr", "citire cod qr", "qr decode", "scanner qr", "decodare qr", "qr reader online"],
+  },
+
+  "kerek-vagas": {
+    slug: "decupare-cerc",
+    title: "Decupare circulară online – avatar rotund | Gratuit",
+    h1: "Decupare circulară (avatar)",
+    description: "Decupează o imagine în cerc pentru poză de profil: PNG cu fundal transparent, dimensiune și chenar reglabile. În browser, fără încărcare.",
+    keywords: ["decupare cerc", "avatar rotund", "poză profil cerc", "imagine circulară", "generator avatar", "circle crop"],
+  },
 };

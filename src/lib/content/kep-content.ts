@@ -2193,4 +2193,338 @@ export const KEP_CONTENT: ContentMap = {
       ],
     },
   },
+
+  // ─── Placeholder kép generátor ──────────────────────────────────────────────
+  "placeholder-kep": {
+    introText:
+      "A placeholder kép generátor egyszínű, felirattal ellátott helykitöltő képeket készít tetszőleges méretben – tervezéshez, mockupokhoz és teszteléshez. Állítsd be a szélességet, magasságot, a háttér- és szövegszínt, opcionálisan egy saját feliratot, és töltsd le a kész PNG-t. Kész méret-sablonok (OG, Instagram, banner) gyorsítják a munkát. Minden a böngésződben, canvas-szal készül – nincs szükség szerverre vagy külső placeholder-szolgáltatásra.",
+    guide: [
+      "1. Válassz egy méret-sablont, vagy add meg a szélességet és magasságot.",
+      "2. Állítsd be a háttér- és szövegszínt.",
+      "3. Opcionálisan írj be saját feliratot (üresen a méret jelenik meg).",
+      "4. Töltsd le a kész PNG képet.",
+    ],
+    faq: [
+      { q: "Mire jó egy placeholder kép?", a: "Tervezés és fejlesztés közben gyakran kell kép a helyére, mielőtt a végleges elkészülne. A placeholder kitölti a helyet a pontos méretben, így látszik az elrendezés – anélkül, hogy a valódi képre kellene várni." },
+      { q: "Milyen méretet adhatok meg?", a: "Bármilyen egyénit 1 és 4000 pixel között, vagy válaszd a kész sablonokat (OG 1200×630, Instagram 1080×1080, Story, Full HD, banner). A felirat alapból a megadott méretet mutatja." },
+      { q: "Miért jobb, mint egy online placeholder-szolgáltatás?", a: "A klasszikus placeholder-URL-ek (pl. via.placeholder.com) külső szervertől függnek – ha az leáll, a képed eltűnik. Ez az eszköz helyben, a böngésződben generálja a PNG-t, amit letöltesz és a saját projektedbe teszel." },
+      { q: "Átlátszó lehet a háttér?", a: "Ez a generátor egyszínű, tömör háttérrel dolgozik a jó láthatóságért. Ha átlátszó, kör alakú képre van szükséged, használd a kör alakú kivágás eszközünket." },
+      { q: "A kép szerverre kerül?", a: "Nem. A teljes generálás a böngésződben, canvas-szal történik – semmi nem kerül feltöltésre." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Méret", description: "Válassz sablont, vagy add meg a szélességet és magasságot." },
+        { title: "2. Színek", description: "Állítsd be a háttér- és szövegszínt." },
+        { title: "3. Felirat", description: "Írj saját szöveget, vagy hagyd üresen a méret megjelenítéséhez." },
+        { title: "4. Letöltés", description: "Töltsd le a kész PNG képet." },
+      ],
+      useCases: [
+        { icon: "🎨", title: "Webdesign", description: "Elrendezések kitöltése kép-helyekkel a valódi tartalom előtt." },
+        { icon: "🧑‍💻", title: "Fejlesztés", description: "Pontos méretű teszt-képek gyors előállítása UI-fejlesztéshez." },
+        { icon: "📱", title: "Mockup", description: "Prototípusok és bemutatók feltöltése hihető méretű képekkel." },
+        { icon: "📐", title: "Méret-teszt", description: "Egy adott képméret megjelenésének gyors ellenőrzése az elrendezésben." },
+      ],
+      formatComparison: {
+        title: "Népszerű méretek",
+        columns: ["Sablon", "Méret"],
+        rows: [
+          { feature: "Open Graph", values: ["1200 × 630"] },
+          { feature: "Instagram", values: ["1080 × 1080"] },
+          { feature: "Story", values: ["1080 × 1920"] },
+          { feature: "Banner", values: ["300 × 250"] },
+        ],
+      },
+      aboutSection: {
+        title: "A placeholder képek szerepe",
+        paragraphs: [
+          "A tervezés és fejlesztés ritkán halad lineárisan: az elrendezés gyakran előbb készül el, mint a végleges képek. A placeholder kép áthidalja ezt – kitölti a kép helyét a pontos méretben, így a tördelés, az arányok és a vizuális ritmus már a valódi tartalom előtt értékelhető.",
+          "Sokan külső placeholder-szolgáltatásokat használnak erre, de azok hálózati függőséget jelentenek: ha a szolgáltatás lassú vagy leáll, a mockup széttörik. Egy helyben generált, letöltött PNG ezzel szemben megbízható és offline is működik – ezért praktikusabb a saját, böngészőben készült placeholder.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "A valódi tartalom méretéhez közeli placeholder adja a leghitelesebb elrendezés-képet." },
+        { icon: "🎨", tip: "Kontrasztos háttér- és szövegszínt válassz, hogy a méret jól olvasható legyen." },
+        { icon: "🔗", tip: "OG-kép teszteléséhez a 1200×630 sablon a szabvány méret." },
+        { icon: "⚠️", tip: "Élesítés előtt cseréld le a placeholdert valódi képre – a helykitöltő nem publikációra való." },
+      ],
+    },
+  },
+
+  // ─── Kép → ASCII art ────────────────────────────────────────────────────────
+  "kep-ascii": {
+    introText:
+      "A kép → ASCII art eszköz a feltöltött képet szöveges (ASCII) művészetté alakítja: a pixelek fényereje alapján karaktereket választ, a sötét területekre sűrűbb, a világosakra ritkább jeleket. Állítsd a szélességet, válassz karakterkészletet, és igény szerint invertálj. Az eredményt másolhatod vagy szövegfájlként letöltheted. Retro terminál-hangulathoz, e-mail-aláíráshoz vagy csak szórakozásból. Minden a böngésződben fut, a kép nem kerül szerverre.",
+    guide: [
+      "1. Tölts fel egy képet (húzd a mezőbe vagy tallózz).",
+      "2. Állítsd be a szélességet (karakterben) a csúszkával.",
+      "3. Válassz karakterkészletet (sűrű, egyszerű, blokkok) és igény szerint invertálj.",
+      "4. Másold ki az ASCII szöveget, vagy töltsd le .txt fájlként.",
+    ],
+    faq: [
+      { q: "Hogyan lesz a képből ASCII?", a: "Az eszköz a képet a megadott szélességre kicsinyíti, majd minden pixel fényerejét (luminanciáját) kiszámolja, és egy karaktert választ hozzá a készletből: sötét pixelhez sűrű jelet (pl. @), világoshoz ritkát (pl. szóköz). Az eredmény soronként összefűzve adja az ASCII képet." },
+      { q: "Miért monospace betűvel néz ki jól?", a: "Az ASCII art abból él, hogy minden karakter egyforma széles – így a karakterrács pontosan leképezi a pixeleket. Nem monospace (arányos) betűvel a kép torzul. A megjelenítés és a letöltött szöveg is monospace-re van szánva." },
+      { q: "Mit csinál az invertálás?", a: "Alapból a sötét pixelhez tartozik a sűrű karakter (sötét háttéren jól néz ki). Az invertálás megfordítja ezt – világos háttéren, sötét szövegnél lesz helyes az eredmény." },
+      { q: "Mekkora a legjobb szélesség?", a: "A 80–120 karakter általában jó egyensúly a részletesség és a méret között. Nagyobb szélesség több részletet ad, de nehezebben fér el; kisebb absztraktabb, stílusosabb eredményt hoz." },
+      { q: "A kép szerverre kerül?", a: "Nem. Az átalakítás a böngésződben, canvas-szal történik – a kép nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Húzd a képet a mezőbe vagy tallózz." },
+        { title: "2. Szélesség", description: "Állítsd be a karakterszélességet a csúszkával." },
+        { title: "3. Stílus", description: "Válassz karakterkészletet és igény szerint invertálj." },
+        { title: "4. Export", description: "Másold vagy töltsd le az ASCII eredményt." },
+      ],
+      useCases: [
+        { icon: "🖥️", title: "Retro terminál", description: "Szöveges kép terminálhoz, README-hez vagy konzol-alkalmazáshoz." },
+        { icon: "✉️", title: "E-mail aláírás", description: "Egyedi, szöveges logó vagy kép e-mail-aláírásba." },
+        { icon: "🎨", title: "Kreatív projekt", description: "ASCII art poszterekhez, kódkommentekhez, kreatív felhasználásra." },
+        { icon: "😄", title: "Szórakozás", description: "Kedvenc képed szöveges változata megosztásra vagy chatbe." },
+      ],
+      formatComparison: {
+        title: "Karakterkészletek",
+        columns: ["Készlet", "Jellemző"],
+        rows: [
+          { feature: "Sűrű (10 szint)", values: ["Legrészletesebb, sok árnyalat"] },
+          { feature: "Egyszerű (5 szint)", values: ["Tisztább, kontrasztosabb"] },
+          { feature: "Blokkok", values: ["Unicode blokk-karakterek, tömör hatás"] },
+        ],
+      },
+      aboutSection: {
+        title: "Az ASCII art rövid története",
+        paragraphs: [
+          "Az ASCII art a számítástechnika hőskorába nyúlik vissza, amikor a nyomtatók és a képernyők csak karaktereket tudtak megjeleníteni, képeket nem. A leleményes felhasználók a betűk és jelek eltérő „sűrűségét” használva raktak össze felismerhető képeket – egy @ jel sötétebbnek hat, mint egy pont, egy pont sötétebbnek, mint egy szóköz.",
+          "Ez az eszköz ugyanezt az elvet automatizálja: a kép minden apró területének fényerejét egy megfelelő „sűrűségű” karakterre képezi le. Bár ma már valódi képeket is meg tudunk jeleníteni, az ASCII art megőrizte a báját – retró, szöveges, mégis kifejező, és ott is működik, ahol csak sima szöveg lehet (kód, terminál, aláírás).",
+        ],
+      },
+      tips: [
+        { icon: "🔲", tip: "Nagy kontrasztú képekből lesz a legjobb ASCII – az egyszínű háttér elveszik." },
+        { icon: "📏", tip: "Kezdd 90 karakter szélességgel, majd finomíts a részletesség és méret között." },
+        { icon: "🔤", tip: "Az eredményt monospace betűvel illeszd be, különben torzul a kép." },
+        { icon: "🌗", tip: "Világos háttérre szánt szövegnél kapcsold be az invertálást." },
+      ],
+    },
+  },
+
+  // ─── Mémgenerátor ───────────────────────────────────────────────────────────
+  "mem-generator": {
+    introText:
+      "A mémgenerátor a klasszikus internetes mém-stílusban ad feliratot a képedhez: felső és alsó szöveg, vastag fehér Impact betűvel, fekete körvonallal. Tölts fel egy képet, írd be a szövegeket, állítsd a betűméretet, és töltsd le a kész mémet PNG-ben. Nincs vízjel, nincs regisztráció, nincs feltöltés – minden a böngésződben készül. Közösségi médiához, csoportos chatekhez, vicces reakciókhoz.",
+    guide: [
+      "1. Tölts fel egy képet.",
+      "2. Írd be a felső és/vagy alsó feliratot.",
+      "3. Állítsd be a betűméretet a csúszkával.",
+      "4. Töltsd le a kész mémet PNG-ben.",
+    ],
+    faq: [
+      { q: "Miért nagybetűs a felirat?", a: "A klasszikus mém-stílus a nagybetűs, vastag Impact betűtípust használja fekete körvonallal – ez lett a műfaj vizuális védjegye. Az eszköz automatikusan nagybetűsíti a szöveget ehhez a stílushoz." },
+      { q: "Kerül vízjel a mémre?", a: "Nem. Sok online mémgenerátor a saját logóját teszi a képre; ez az eszköz tiszta, vízjelmentes PNG-t ad, mert helyben, a böngésződben készül." },
+      { q: "Bármilyen kép használható?", a: "Igen, JPG, PNG és WebP képekhez is adhatsz feliratot. A szöveg mérete a kép magasságához igazodik, hogy arányos maradjon." },
+      { q: "Miért fekete a körvonal?", a: "A fehér betű fekete körvonallal bármilyen hátéren (világoson és sötéten is) olvasható marad – ez a mém-feliratok bevált trükkje." },
+      { q: "A kép szerverre kerül?", a: "Nem. A felirat rárajzolása a böngésződben, canvas-szal történik – a kép nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Húzd a képet a mezőbe vagy tallózz." },
+        { title: "2. Felirat", description: "Írd be a felső és/vagy alsó szöveget." },
+        { title: "3. Méret", description: "Állítsd be a betűméretet a csúszkával." },
+        { title: "4. Letöltés", description: "Töltsd le a kész mémet PNG-ben." },
+      ],
+      useCases: [
+        { icon: "😄", title: "Közösségi média", description: "Vicces mémek gyors készítése poszthoz vagy story-hoz." },
+        { icon: "💬", title: "Csoportos chat", description: "Reakció-mémek baráti és munkahelyi csoportokba." },
+        { icon: "📣", title: "Marketing", description: "Könnyed, mémes tartalom márkakommunikációhoz." },
+        { icon: "🎓", title: "Oktatás", description: "Figyelemfelkeltő, humoros illusztrációk prezentációkhoz." },
+      ],
+      formatComparison: {
+        title: "A mém-felirat jellemzői",
+        columns: ["Elem", "Stílus"],
+        rows: [
+          { feature: "Betűtípus", values: ["Impact (vastag, kondenzált)"] },
+          { feature: "Szín", values: ["Fehér kitöltés, fekete körvonal"] },
+          { feature: "Elhelyezés", values: ["Felül és alul, középre"] },
+          { feature: "Forma", values: ["Nagybetűs"] },
+        ],
+      },
+      aboutSection: {
+        title: "A mém mint vizuális nyelv",
+        paragraphs: [
+          "Az internetes mém önálló vizuális nyelvvé vált: egy kép és egy tömör felirat kombinációja, amely azonnal közvetít egy érzést, viccet vagy véleményt. A klasszikus formátum – kép felül-alul nagybetűs, fehér-fekete felirattal – annyira beépült a kultúrába, hogy önmagában is jelzi: ez egy mém.",
+          "Ez az eszköz pontosan ezt a bevált formátumot teszi elérhetővé, gyorsan és tisztán. Nincs szükség képszerkesztőre vagy fiókra: feltöltöd a képet, beírod a szöveget, és kész a megosztható mém. Mivel minden helyben történik, a bizalmas vagy privát képekből is nyugodtan készíthetsz mémet, vízjel és adatküldés nélkül.",
+        ],
+      },
+      tips: [
+        { icon: "✍️", tip: "A rövid, ütős felirat működik a legjobban – a mém a tömörségről szól." },
+        { icon: "📏", tip: "Ha a szöveg túl nagy vagy kicsi, a csúszkával igazítsd a kép arányához." },
+        { icon: "🖼️", tip: "Erős, felismerhető képet válassz – a mém a kép és a szöveg együtthatásából él." },
+        { icon: "🔒", tip: "Privát képből is nyugodtan készíthetsz mémet – minden a böngésződben marad." },
+      ],
+    },
+  },
+
+  // ─── Kép-összehasonlító (diff) ──────────────────────────────────────────────
+  "kep-diff": {
+    introText:
+      "A kép-összehasonlító két képet vet össze pixelről pixelre, és pirossal kiemeli az eltérő területeket, plus megmutatja, a pixelek hány százaléka különbözik. Tölts fel egy „A” és egy „B” képet, állítsd az érzékenységi küszöböt, és azonnal látod a különbség-térképet. Hasznos verziók, exportok, tömörített változatok vagy tervezési iterációk összevetéséhez. Minden a böngésződben fut, a képek nem kerülnek szerverre.",
+    guide: [
+      "1. Tölts fel egy első (A) és egy második (B) képet.",
+      "2. Állítsd az érzékenységi küszöböt a csúszkával.",
+      "3. Olvasd le a piros diff-térképet és az eltérő pixelek százalékát.",
+      "4. Töltsd le a diff-képet, ha szükséges.",
+    ],
+    faq: [
+      { q: "Hogyan hasonlít össze?", a: "Az eszköz mindkét képet az A méretére igazítja, majd minden pixelnél összeveti a szín-értékeket. Ha a különbség a küszöb felett van, a pixelt pirosra festi; egyébként halványítva mutatja. A végén kiszámolja az eltérő pixelek arányát." },
+      { q: "Mire jó az érzékenységi küszöb?", a: "A küszöb szabályozza, mekkora eltérés számítson már „különbségnek”. Alacsony küszöb a legapróbb eltéréseket is jelzi (pl. tömörítési zaj); magasabb küszöb csak a szembetűnő változásokat emeli ki." },
+      { q: "Mi van, ha a két kép mérete eltér?", a: "Az eszköz a második képet az első (A) méretére skálázza az összehasonlítás előtt. A legpontosabb eredményhez érdemes azonos méretű képeket használni." },
+      { q: "Mit jelent a százalék?", a: "Az eltérő (küszöb feletti) pixelek aránya az összes pixelhez képest. 0% azonos képeket jelent (a küszöb felett); minél nagyobb a szám, annál több a különbség." },
+      { q: "A képek szerverre kerülnek?", a: "Nem. A teljes összehasonlítás a böngésződben, canvas-szal történik – a képek nem hagyják el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Két kép", description: "Tölts fel egy A és egy B képet." },
+        { title: "2. Küszöb", description: "Állítsd az érzékenységi küszöböt a csúszkával." },
+        { title: "3. Diff", description: "Olvasd le a piros különbség-térképet és a százalékot." },
+        { title: "4. Letöltés", description: "Töltsd le a diff-képet, ha kell." },
+      ],
+      useCases: [
+        { icon: "🔍", title: "Verzió-ellenőrzés", description: "Egy kép két változatának összevetése – mi változott?" },
+        { icon: "🗜️", title: "Tömörítés", description: "Az eredeti és a tömörített kép közti eltérés vizuális ellenőrzése." },
+        { icon: "🎨", title: "Tervezés", description: "Két design-iteráció különbségeinek gyors áttekintése." },
+        { icon: "🧪", title: "Regressziós teszt", description: "Egy render vagy screenshot változásának kiszűrése két állapot között." },
+      ],
+      formatComparison: {
+        title: "A diff jelölései",
+        columns: ["Terület", "Jelentés"],
+        rows: [
+          { feature: "Piros", values: ["Eltérő pixel (küszöb felett)"] },
+          { feature: "Halvány", values: ["Azonos (vagy küszöb alatti) pixel"] },
+          { feature: "Százalék", values: ["Az eltérő pixelek aránya"] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért hasznos a kép-diff?",
+        paragraphs: [
+          "Két hasonló kép között szabad szemmel nehéz megtalálni az apró eltéréseket – egy elmozdult elem, egy színárnyalat-változás vagy egy tömörítési artefakt könnyen elkerüli a figyelmet. A pixel-szintű összehasonlítás ezt teszi láthatóvá: pontosan megmutatja, hol és mennyire tér el a két kép.",
+          "Ez a fejlesztésben és a tervezésben egyaránt hasznos. A fejlesztők regressziós tesztként használják (egy változtatás nem rontott-e el egy megjelenítést), a tervezők két iteráció összevetésére, a fotósok pedig a tömörítés hatásának ellenőrzésére. Az érzékenységi küszöb segít elválasztani a lényeges változásokat a jelentéktelen zajtól.",
+        ],
+      },
+      tips: [
+        { icon: "📐", tip: "A legpontosabb eredményhez azonos méretű képeket hasonlíts össze." },
+        { icon: "🎚️", tip: "Tömörítési zaj kiszűréséhez emeld a küszöböt; apró eltérésekhez csökkentsd." },
+        { icon: "🔴", tip: "A piros foltok sűrűsége azonnal jelzi, hol koncentrálódik a változás." },
+        { icon: "🔒", tip: "Bizalmas képeket is nyugodtan összevethetsz – minden helyben marad." },
+      ],
+    },
+  },
+
+  // ─── QR-kód olvasó ──────────────────────────────────────────────────────────
+  "qr-olvaso": {
+    introText:
+      "A QR-kód olvasó egy feltöltött képből kiolvassa a QR-kód tartalmát – legyen az URL, szöveg, wifi-adat vagy bármi más. Húzd be a QR-kódot tartalmazó képet vagy képernyőképet, és a dekódolt tartalom azonnal megjelenik, egy kattintással másolható. Ha a tartalom URL, biztonsági okból nem nyitjuk meg automatikusan – előbb ellenőrizheted. Minden a böngésződben fut, a kép nem kerül szerverre. A QR-generátorunk párja.",
+    guide: [
+      "1. Tölts fel egy QR-kódot tartalmazó képet vagy képernyőképet.",
+      "2. A dekódolt tartalom azonnal megjelenik.",
+      "3. Másold ki a tartalmat egy kattintással.",
+      "4. Ha URL, ellenőrizd, mielőtt megnyitod.",
+    ],
+    faq: [
+      { q: "Milyen QR-kódot olvas?", a: "A szabványos QR-kódokat, amelyek URL-t, sima szöveget, wifi-hozzáférést, névjegyet (vCard) vagy más adatot tartalmaznak. A legjobb eredményhez éles, jól kivágott, szemből fotózott vagy képernyőképként mentett QR működik." },
+      { q: "Miért nem nyitja meg automatikusan az URL-t?", a: "Biztonsági okból. Egy QR-kód bármilyen címre mutathat, akár megtévesztőre is. Az eszköz megmutatja a tartalmat, de a megnyitás a te döntésed – így elkerülhető, hogy egy rosszindulatú QR automatikusan veszélyes oldalra vigyen." },
+      { q: "Mit tegyek, ha nem találja a kódot?", a: "Próbálj élesebb, jobban kivágott képet, ahol a QR-kód nagyobb és tisztán látszik. A homályos, ferde vagy nagyon kicsi QR-kódokat nehezebb dekódolni. Segít, ha a kód körül van némi fehér margó." },
+      { q: "Kamerával is működik?", a: "Ez az eszköz feltöltött képből (fájlból vagy képernyőképből) olvas. Ha egy fizikai QR-t akarsz beolvasni, készíts róla fotót, majd töltsd fel." },
+      { q: "A kép szerverre kerül?", a: "Nem. A dekódolás teljesen a böngésződben történik – a kép és a QR tartalma nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Húzd be a QR-kódos képet vagy képernyőképet." },
+        { title: "2. Dekódolás", description: "A tartalom azonnal megjelenik." },
+        { title: "3. Másolás", description: "A dekódolt szöveget egy kattintással másolod." },
+        { title: "4. Ellenőrzés", description: "URL esetén nézd meg, mielőtt megnyitod." },
+      ],
+      useCases: [
+        { icon: "🔗", title: "Link kinyerése", description: "Egy QR-kód mögötti URL kiolvasása kattintás előtt, biztonságosan." },
+        { icon: "📶", title: "Wifi-adat", description: "Egy wifi-QR tartalmának (hálózat, jelszó) kiolvasása." },
+        { icon: "🖼️", title: "Képernyőkép", description: "Egy képen vagy plakáton lévő QR gyors beolvasása fotóból." },
+        { icon: "🛡️", title: "Biztonság", description: "Gyanús QR tartalmának ellenőrzése automatikus megnyitás nélkül." },
+      ],
+      formatComparison: {
+        title: "QR-tartalom típusok",
+        columns: ["Típus", "Példa"],
+        rows: [
+          { feature: "URL", values: ["https://pelda.hu"] },
+          { feature: "Szöveg", values: ["Tetszőleges üzenet"] },
+          { feature: "Wifi", values: ["Hálózatnév + jelszó"] },
+          { feature: "vCard", values: ["Névjegy-adatok"] },
+        ],
+      },
+      aboutSection: {
+        title: "A QR-kód és a biztonság",
+        paragraphs: [
+          "A QR-kód (Quick Response) egy kétdimenziós vonalkód, amely sokféle adatot tárolhat: leggyakrabban URL-t, de szöveget, wifi-hozzáférést vagy névjegyet is. A népszerűsége miatt a QR-kódok azonban biztonsági kockázatot is jelentenek: egy rosszindulatú kód megtévesztő vagy káros oldalra irányíthat, és szabad szemmel nem lehet megmondani, hová mutat.",
+          "Ezért fontos, hogy a QR tartalmát a megnyitás ELŐTT lássuk. Ez az eszköz pontosan ezt teszi lehetővé: kiolvassa és megmutatja a kód tartalmát, de URL esetén nem nyitja meg automatikusan – rád bízza a döntést. Mivel a dekódolás helyben, a böngésződben történik, a beolvasott adat privát marad, és a bizalmas QR-kódokat is nyugodtan ellenőrizheted.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "Éles, jó kontrasztú, szemből fotózott QR dekódolódik a legjobban." },
+        { icon: "⚠️", tip: "URL-t soha ne nyiss meg vakon – előbb nézd meg, hová mutat." },
+        { icon: "🖼️", tip: "Ha nem sikerül, vágd körbe szorosabban a QR-t, kis fehér margóval." },
+        { icon: "🔗", tip: "QR-kódot generálni is tudsz nálunk – ez az olvasó annak a párja." },
+      ],
+    },
+  },
+
+  // ─── Kör alakú kivágás (avatar) ─────────────────────────────────────────────
+  "kerek-vagas": {
+    introText:
+      "A kör alakú kivágás a képedet tökéletes körré vágja – ideális profilképhez és avatarhoz. Az eredmény átlátszó hátterű PNG, így bárhová beilleszthető anélkül, hogy fehér sarkok lógnának ki. Tölts fel egy képet, állítsd a méretet és opcionálisan egy keretet, és töltsd le. A kép középről négyzetre, majd körré vágódik. Minden a böngésződben fut, feltöltés nélkül.",
+    guide: [
+      "1. Tölts fel egy képet.",
+      "2. Állítsd be a kimeneti méretet (px).",
+      "3. Opcionálisan adj hozzá keretet és válaszd ki a színét.",
+      "4. Töltsd le az átlátszó hátterű, kör alakú PNG-t.",
+    ],
+    faq: [
+      { q: "Miért átlátszó a háttér?", a: "A kör körüli sarkok átlátszóak (nem fehérek), így az avatar bármilyen színű háttéren jól néz ki – nem lóg ki fehér négyzet a kör körül. Ezt PNG formátum teszi lehetővé, amely támogatja az átlátszóságot." },
+      { q: "Hogyan vágja körre a képet?", a: "Az eszköz először a kép közepéből egy négyzetet vág ki (a rövidebb oldal alapján), majd erre a négyzetre egy kör-maszkot alkalmaz. Így a kép középső része marad meg, kör alakban." },
+      { q: "Milyen méretet válasszak?", a: "A legtöbb platform 200–500 pixel közötti profilképet használ. A 400 px jó általános választás; ha nagyobb felbontás kell, állítsd feljebb (max. 1024)." },
+      { q: "Mire jó a keret?", a: "A keret egy színes gyűrűt tesz a kör köré – ez kiemeli az avatart, és egységes megjelenést ad egy csapat vagy márka profilképeinek. Opcionális, alapból nincs keret." },
+      { q: "A kép szerverre kerül?", a: "Nem. A kivágás a böngésződben, canvas-szal történik – a kép nem hagyja el a gépedet." },
+    ],
+    content: {
+      howToSteps: [
+        { title: "1. Kép feltöltése", description: "Húzd a képet a mezőbe vagy tallózz." },
+        { title: "2. Méret", description: "Állítsd be a kimeneti méretet pixelben." },
+        { title: "3. Keret", description: "Opcionálisan adj hozzá színes keretet." },
+        { title: "4. Letöltés", description: "Töltsd le az átlátszó PNG avatart." },
+      ],
+      useCases: [
+        { icon: "👤", title: "Profilkép", description: "Kerek avatar közösségi média és fórum profilokhoz." },
+        { icon: "💬", title: "Chat / csapat", description: "Egységes, kör alakú profilképek egy csapatnak vagy közösségnek." },
+        { icon: "🌐", title: "Weboldal", description: "Kerek szerző- vagy vélemény-avatarok egy weboldalon." },
+        { icon: "🎨", title: "Design", description: "Kör alakú képelemek prezentációkhoz és grafikákhoz." },
+      ],
+      formatComparison: {
+        title: "Az eredmény jellemzői",
+        columns: ["Tulajdonság", "Érték"],
+        rows: [
+          { feature: "Forma", values: ["Tökéletes kör"] },
+          { feature: "Háttér", values: ["Átlátszó (PNG)"] },
+          { feature: "Kivágás", values: ["Középről, négyzet → kör"] },
+          { feature: "Keret", values: ["Opcionális, színes"] },
+        ],
+      },
+      aboutSection: {
+        title: "Miért népszerű a kör alakú avatar?",
+        paragraphs: [
+          "A kör alakú profilkép a modern felületek egyik jellegzetessége: a közösségi platformok, chat-alkalmazások és weboldalak túlnyomó része körben jeleníti meg az avatarokat. A kör lágyabb, barátságosabb hatású, mint a szögletes kép, és jól illeszkedik a letisztult, modern designhoz.",
+          "A gond az, hogy ha egy négyzetes képet töltünk fel oda, ahol a felület körre vágja, a részletek a sarkokban elveszhetnek. Ha viszont eleve kör alakú, átlátszó hátterű PNG-t készítünk, teljes kontrollt kapunk az eredmény felett – pontosan az látszik, amit szeretnénk, fehér sarkok nélkül. Ez az eszköz ezt a kör alakú, átlátszó avatart állítja elő, helyben és gyorsan.",
+        ],
+      },
+      tips: [
+        { icon: "🎯", tip: "A legjobb eredményhez olyan képet válassz, ahol a lényeg középen van – a szélek levágódnak." },
+        { icon: "🖼️", tip: "Az átlátszó PNG bármilyen háttéren jól néz ki – ne alakítsd JPG-vé, mert az elveszti az átlátszóságot." },
+        { icon: "⭕", tip: "Egységes csapat-avatarokhoz használj azonos méretet és keretszínt mindegyiknél." },
+        { icon: "🔒", tip: "A képed a böngésződben marad – privát fotóból is nyugodtan készíthetsz avatart." },
+      ],
+    },
+  },
 };
