@@ -98,7 +98,13 @@ const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${SITE_URL.repla
 const hasLargeOgImage = ogImageWidth >= 300 && ogImageHeight >= 157;
 
 const canonicalUrl = buildCanonical(canonical ?? Astro.url.pathname);
-const resolvedTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+// Brand-suffix csak akkor, ha belefér (~60 kar a Google title-levágás). A longform
+// frontmatter title-ök gyakran önmagukban 50+ karakteresek és kulcsszó-gazdagok —
+// ezekhez NEM fűzünk „ | Brand"-et, különben a brand csúfan levágódna a SERP-ben.
+const TITLE_SUFFIX_MAX = 50;
+const resolvedTitle = (title.includes(SITE_NAME) || title.length >= TITLE_SUFFIX_MAX)
+  ? title
+  : `${title} | ${SITE_NAME}`;
 const activeCount = getActiveToolsCount();
 const totalCount = getTotalToolsCount();
 

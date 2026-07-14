@@ -18,7 +18,7 @@ export const FINANTE_RO: Record<string, { slug: string; title: string; h1: strin
     slug: "dobanda-compusa",
     title: "Calculator Dobândă Compusă – Depozit, Investiții | InstrumenteOnline",
     h1: "Calculator Dobândă Compusă",
-    description: "Calculator dobândă compusă cu compoundare lunară/anuală/zilnică, depuneri lunare opționale. Util pentru depozite, titluri Tezaur, ETF-uri.",
+    description: "Calculator dobândă compusă cu capitalizare lunară/anuală/zilnică, depuneri lunare opționale. Util pentru depozite, titluri Tezaur, ETF-uri.",
     keywords: ["dobanda compusa", "calculator dobanda", "compound interest", "depozit la termen", "titluri tezaur", "investitii", "ETF", "regula 72"],
   },
   "calculator-reducere": {

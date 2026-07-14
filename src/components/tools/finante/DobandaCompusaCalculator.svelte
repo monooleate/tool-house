@@ -210,7 +210,7 @@
 
   <div class="dob__formula">
     <strong>Formulă:</strong> A = P × (1 + r/n)<sup>n·t</sup> + depuneri lunare capitalizate &nbsp;|&nbsp;
-    n = {frecv} compoundări/an
+    n = {frecv} capitalizări/an
   </div>
 
   <p class="dob__note">

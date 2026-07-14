@@ -1,5 +1,5 @@
 ---
-title: "Cercul – arie, perimetru, sector circular și π"
+title: "Calculator cerc – arie, perimetru, rază și sector circular"
 description: "Formulele cercului: A = πr², P = 2πr, sector circular, segment de cerc. Exemple rezolvate și aplicații practice."
 toolSlug: "cerc-calculator"
 category: "geometrie"

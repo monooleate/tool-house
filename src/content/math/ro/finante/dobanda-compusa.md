@@ -29,7 +29,7 @@ softwareSchema:
   "name": "Calculator Dobândă Compusă"
   "applicationCategory": "FinanceApplication"
   "operatingSystem": "Web"
-  "description": "Calculator dobândă compusă cu compoundare lunară/anuală/zilnică și depuneri lunare opționale, util pentru depozite, titluri Tezaur și investiții ETF."
+  "description": "Calculator dobândă compusă cu capitalizare lunară/anuală/zilnică și depuneri lunare opționale, util pentru depozite, titluri Tezaur și investiții ETF."
   "featureList": "Formula compound interest; 5 frecvențe capitalizare; depuneri lunare opționale; presets RO 2026; randament total; gratuit complet."
   "url": "https://instrumenteonline.ro/finante/dobanda-compusa/"
   "inLanguage": "ro"

@@ -1,5 +1,5 @@
 ---
-title: "Medie aritmetică, mediană și mod – formule și calculator online"
+title: "Calculator medie aritmetică online – mediană, mod, abatere"
 description: "Cum se calculează media aritmetică, mediana, modul, abaterea standard și varianța. Cu formule, exemple și diferențele dintre ele."
 toolSlug: "medie-aritmetica"
 category: "calculator"

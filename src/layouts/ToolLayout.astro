@@ -96,6 +96,16 @@ if (supportsLongform && CURRENT_LANG === "ro") {
   }
 }
 
+// ─── SEO title/description: longform frontmatter előnyben ─────
+// A longform .md frontmatterében kulcsszó-gazdag, teljes hosszú title +
+// description van (pl. „Calculator procente – formule, exemple și 4 moduri…"),
+// míg a registry mezők csak rövid, belső címkék („Calculator Procente",
+// „Calculator procente: 4 moduri."). A <title>/<meta> a frontmatterből jön,
+// ha van longform — így az összes math/geometrie/finante/… oldal teljes,
+// vonzó meta-t kap. Fallback: registry (non-longform HU/fájl-eszközök).
+const seoTitle = mathEntry?.data?.title ?? tool.title;
+const seoDescription = mathEntry?.data?.description ?? tool.description;
+
 // ─── Egységes @graph node-ok összeállítása ──────────────────
 // Minden node OBJEKTUM (a base Org/WebSite/Person/WebPage-et a BaseLayout adja).
 // Math longform: a frontmatter schema-i (Article+Software+FAQ) render-időben
@@ -148,8 +158,8 @@ if (countdownEvent) {
 ---
 
 <BaseLayout
-  title={tool.title}
-  description={tool.description}
+  title={seoTitle}
+  description={seoDescription}
   canonical={toolUrl(rawTool)}
   hreflangPaths={{ hu: huHref, ro: roHref }}
   katex={needsKatex}
