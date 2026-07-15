@@ -50,6 +50,7 @@ import { CONVERSII_RO } from "./i18n/ro-tools-conversii.ts";
 import { FINANTE_RO } from "./i18n/ro-tools-finante.ts";
 import { SANATATE_RO } from "./i18n/ro-tools-sanatate.ts";
 import { TIMP_RO } from "./i18n/ro-tools-timp.ts";
+import { HU_TOOL_FAQ } from "./i18n/hu-tools-faq.ts";
 
 const RO_TRANSLATIONS: Record<string, Record<string, { slug: string; title: string; h1: string; description: string; keywords: string[] }>> = {
   kep: KEP_RO, pdf: PDF_RO, adat: ADAT_RO, szoveg: SZOVEG_RO,
@@ -1279,6 +1280,19 @@ for (const tool of rawTools) {
     tool.i18n.ro!.introText = roContent.introText;
     tool.i18n.ro!.guide = roContent.guide;
     tool.i18n.ro!.faq = roContent.faq;
+  }
+}
+
+// ─── Apply Hungarian FAQ to i18n.hu (NYELV-IZOLÁLT) ─────────
+// A magyar FAQ SZÁNDÉKOSAN az i18n.hu ágra megy, NEM a közös `faq` mezőbe:
+// a getLocalizedTool merge (`{ ...tool, ...tool.i18n[lang] }`) miatt a közös
+// `faq` átszivárogna minden olyan RO oldalra, aminek nincs RO-content-faq-ja.
+// Így a HU a saját FAQ-ját kapja, a RO pedig a sajátját (vagy semmit).
+for (const tool of rawTools) {
+  const huFaq = HU_TOOL_FAQ[tool.slug];
+  if (huFaq) {
+    tool.i18n = tool.i18n ?? {};
+    tool.i18n.hu = { ...(tool.i18n.hu ?? {}), faq: huFaq };
   }
 }
 

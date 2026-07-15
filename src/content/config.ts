@@ -1,6 +1,10 @@
 // ============================================================
 // Astro Content Collections konfiguráció (Astro 5 Content Layer API)
 // ─── math/ro/* : hosszú RO longform tartalmak matematikai témákban
+// ─── math/hu/* : HU longform (fájl-eszközök) – CSAK tartalom, a HU
+//                <title>/<meta> a registry-ből marad (lásd ToolLayout)
+// A `lang` mező izolálja a két nyelvet: a ToolLayout csak az aktuális
+// nyelvhez tartozó entry-t tölti be, így nincs HU/RO kereszt-szivárgás.
 // ============================================================
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
@@ -26,7 +30,12 @@ const mathCollection = defineCollection({
       "calculator", "geometrie", "conversii",
       "finante", "sanatate", "timp",
       "fejleszto", "szinek", "seo", "szoveg",
+      // HU longform (fájl-eszközök)
+      "kep", "pdf",
     ]),
+    /** Melyik nyelvű build töltse be ezt a longformot. A 192 meglévő RO
+     *  fájl `lang` nélkül van → a default("ro") miatt érintetlen marad. */
+    lang: z.enum(["hu", "ro"]).default("ro"),
     published_at: z.string(),
     refreshed_at: z.string().optional(),
     heroImage: z.string().optional(),
