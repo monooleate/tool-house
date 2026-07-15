@@ -65,6 +65,11 @@ export interface Props {
   orgFull?: boolean;                // bővített Organization (contactPoint) – főoldal/about
   includeSiblings?: boolean;        // testvér-brand node-ok – főoldal/about
   hreflangPaths?: { hu?: string | null; ro?: string | null };
+  /** Ha true, NEM fűzünk „ | Brand" suffixet a title-hez (hosszú, önmagában
+   *  teljes longform frontmatter title-öknél — a ToolLayout állítja RO math
+   *  oldalakon). A rövid registry-title-ök (HU + fájl-eszközök) így megtartják
+   *  a márka-suffixet, ahogy eddig — nincs HU branding-regresszió. */
+  suppressBrandSuffix?: boolean;
   noIndex?: boolean;
   publishedAt?: string;
   modifiedAt?: string;
@@ -89,6 +94,7 @@ const {
   orgFull        = false,
   includeSiblings = false,
   hreflangPaths,
+  suppressBrandSuffix = false,
   noIndex       = false,
   publishedAt,
   modifiedAt,
@@ -98,11 +104,11 @@ const ogImageAbsolute = ogImage.startsWith("http") ? ogImage : `${SITE_URL.repla
 const hasLargeOgImage = ogImageWidth >= 300 && ogImageHeight >= 157;
 
 const canonicalUrl = buildCanonical(canonical ?? Astro.url.pathname);
-// Brand-suffix csak akkor, ha belefér (~60 kar a Google title-levágás). A longform
-// frontmatter title-ök gyakran önmagukban 50+ karakteresek és kulcsszó-gazdagok —
-// ezekhez NEM fűzünk „ | Brand"-et, különben a brand csúfan levágódna a SERP-ben.
-const TITLE_SUFFIX_MAX = 50;
-const resolvedTitle = (title.includes(SITE_NAME) || title.length >= TITLE_SUFFIX_MAX)
+// Brand-suffix marad az alapértelmezett (rövid registry-title-ök, HU + fájl-eszközök).
+// A longform frontmatter title-ök (RO math, önmagukban 50+ kar, kulcsszó-gazdagok)
+// suppressBrandSuffix=true-t kapnak a ToolLayout-tól → nem fűzünk brandet, hogy ne
+// csúfan levágva jelenjen meg a SERP-ben. Így a HU/fájl-oldalak branding-je változatlan.
+const resolvedTitle = (title.includes(SITE_NAME) || suppressBrandSuffix)
   ? title
   : `${title} | ${SITE_NAME}`;
 const activeCount = getActiveToolsCount();
