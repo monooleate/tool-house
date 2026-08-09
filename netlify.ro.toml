@@ -12,13 +12,7 @@
   # kapcsolja BE (doksi: HOUSE-ADS.md). AdSense-től FÜGGETLEN. FONTOS: ha a RO Netlify
   # site a dashboard-env-et használja (nem ezt a fájlt), ott is állítsd be ugyanígy.
   PUBLIC_HOUSE_ADS_ENABLED = "false"
-  # Plausible analytics – SZÁNDÉKOSAN ÜRES az instrumenteonline.ro-n (nincs külön RO
-  # Plausible-site). Korábban ide a HU tokenje volt másolva → a RO forgalom a HU
-  # dashboardba folyt be (nem link-szivárgás, hanem közös Plausible-property). Üresen a
-  # BaseLayout NEM tölti be a Plausible-t. Ha később kell RO analytics, hozz létre saját
-  # site-ot és tedd ide a teljes src-t (https://plausible.io/js/pa-<RO-token>.js).
   # FONTOS: ha a RO Netlify a dashboard-env-et olvassa, ott is töröld ezt a változót.
-  PUBLIC_PLAUSIBLE_SRC = ""
 
 [[headers]]
   for = "/*"

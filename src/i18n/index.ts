@@ -59,6 +59,14 @@ export interface LangConfig {
   flag: string;           // Emoji zászló
   gtagId: string;         // Google Analytics 4 mérési ID (G-XXXXXXXXXX), "" = kikapcsolva
   gtmId: string;          // Google Tag Manager ID (GTM-XXXXXXX), "" = kikapcsolva
+  // Umami (cookieless, ÖNHOSZTOLT) website-ID — PIACONKÉNT KÜLÖN.
+  // ⚠️ SZÁNDÉKOSAN itt van, NEM env-ben: a korábbi Plausible-token a közös netlify.toml
+  //    [build.environment]-jéből "átcsordult" a RO buildbe, és a RO forgalom a HU dashboardba
+  //    folyt (2026-07-13). A nyelvhez kötött konstans ezt szerkezetileg kizárja.
+  umamiWebsiteId: string; // "" = az adott piacon nincs mérés
+  // A tracker CSAK ezeken a hostname-eken mér (PONTOS egyezés, nem suffix!).
+  // Az apex MELLE a www is kell, kulonben a www-n NEMAN nem mernenk.
+  umamiDomains: string;   // vesszős lista
 }
 
 // FONTOS: A siteUrl-ek hardcode-oltak, hogy a keresztlinkelés
@@ -77,6 +85,8 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     flag: "🇭🇺",
     gtagId: "",  // GA4 kikapcsolva – cookie consent nem szükséges
     gtmId: "",
+    umamiWebsiteId: "559ee921-bd01-4cd6-a786-3ce22d41f971", // konvertalo.hu
+    umamiDomains: "konvertalo.hu,www.konvertalo.hu",
   },
   ro: {
     lang: "ro",
@@ -89,6 +99,8 @@ export const LANG_CONFIG: Record<SupportedLang, LangConfig> = {
     flag: "🇷🇴",
     gtagId: "",  // GA4 kikapcsolva – cookie consent nem szükséges
     gtmId: "",
+    umamiWebsiteId: "50cfa11d-4964-42a6-ac6d-0c246a572ae7", // instrumenteonline.ro
+    umamiDomains: "instrumenteonline.ro,www.instrumenteonline.ro",
   },
 };
 
