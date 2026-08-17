@@ -14,6 +14,7 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
       { q: "Cum calculez 20% dintr-un număr?", a: "Înmulțești numărul cu 0,20 (sau cu 20 și împarți la 100). Exemplu: 20% din 250 = 250 × 0,20 = 50." },
       { q: "Ce reprezintă o creștere de 25%?", a: "Înmulțești valoarea inițială cu 1,25. Exemplu: 80 → 80 × 1,25 = 100." },
       { q: "Cum aflu ce procent este X din Y?", a: "Împarți X la Y și înmulțești cu 100. Exemplu: 30 din 200 = 30/200 × 100 = 15%." },
+      { q: "Cum aflu ce procent dintr-o sumă reprezintă o valoare?", a: "Împarți valoarea la sumă și înmulțești cu 100. Exemplu: cât la sută din suma de 2.500 lei reprezintă 375 lei? 375 / 2.500 × 100 = 15%." },
       { q: "Care este diferența între «creștere %» și «diferență %»?", a: "Creșterea folosește valoarea veche ca bază (asimetrică). Diferența procentuală folosește media celor două valori (simetrică, utilă în comparații științifice)." },
     ],
     content: {
@@ -118,6 +119,7 @@ export const CALCULATOR_RO_CONTENT: ContentMap = {
       { q: "Care este diferența între mediană și medie?", a: "Mediana este valoarea din mijlocul șirului ordonat. Spre deosebire de medie, mediana nu este influențată de valori extreme." },
       { q: "Ce este modul?", a: "Modul este valoarea care apare cel mai des. Un set poate avea un mod, mai multe (multimodal) sau niciun mod dacă toate valorile sunt unice." },
       { q: "Cum se calculează media ponderată a notelor?", a: "Înmulțești fiecare notă cu numărul de credite (greutatea), aduni produsele și împarți la suma greutăților. Mod «ponderat» face asta automat." },
+      { q: "Vreau media generală a notelor din școală — ce calculator folosesc?", a: "Pentru media notelor școlare (media pe materie, media generală anuală, cu rotunjire conform regulamentului) folosește Calculator Medie Note. Acest calculator este pentru statistici: medie aritmetică, mediană, mod, abatere standard și medie ponderată." },
       { q: "Ce este abaterea standard?", a: "Abaterea standard (σ) măsoară împrăștierea valorilor în jurul mediei. σ mică = valori apropiate de medie; σ mare = valori dispersate." },
     ],
     content: {

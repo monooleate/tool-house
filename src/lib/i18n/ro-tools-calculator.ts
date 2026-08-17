@@ -5,8 +5,8 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     slug: "procent-calculator",
     title: "Calculator Procente Online – 4 moduri (procent din, %, creștere, diferență)",
     h1: "Calculator Procente",
-    description: "Calculator procente online: procent dintr-un număr, ce procent reprezintă, creștere/scădere și diferență procentuală. Cu formule și pași.",
-    keywords: ["calculator procent", "calculator procente", "cat la suta", "procent online", "calcul procentual", "creștere procent"],
+    description: "Calculator procente online: procent dintr-un număr sau dintr-o sumă, ce procent reprezintă, creștere/scădere și diferență procentuală. Cu formule și pași.",
+    keywords: ["calculator procent", "calculator procente", "cat la suta", "cat la suta din", "procent din suma", "procent online", "calcul procentual", "calcule procente", "creștere procent"],
   },
   "ecuatie-grad-doi": {
     slug: "ecuatie-grad-doi",
@@ -27,7 +27,7 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     title: "Calculator Medie Aritmetică, Mediană și Mod – Statistici online",
     h1: "Calculator Medie Aritmetică & Statistici",
     description: "Calculează media aritmetică, mediana, modul, abaterea standard și varianța pentru un set de numere. Adaugă rânduri dinamic, mod ponderat opțional.",
-    keywords: ["calculator medie", "medie aritmetica", "mediana", "mod statistic", "abatere standard", "media note bacalaureat"],
+    keywords: ["medie aritmetica", "mediana", "mod statistic", "abatere standard", "varianta", "media ponderata", "calculator medie ponderata"],
   },
   "regula-de-trei-simpla": {
     slug: "regula-de-trei-simpla",
@@ -90,7 +90,7 @@ export const CALCULATOR_RO: Record<string, { slug: string; title: string; h1: st
     title: "Calculator Medie Note Școlare – Medie Generală | InstrumenteOnline",
     h1: "Calculator Medie Note Școlare",
     description: "Calculează media notelor la o materie și media generală. Adaugă oricâte note, vezi media cu 2 zecimale și varianta rotunjită conform regulamentului.",
-    keywords: ["calculator medie note", "calculator medie generala", "cum calculez media", "media notelor", "media scolara", "calcul medie note"],
+    keywords: ["calculator medie note", "calculator medie generala", "calculator medie", "calculator medii", "calculare medie generala", "cum calculez media", "media notelor", "media generala", "media scolara", "calcul medie note"],
   },
   "medie-bacalaureat": {
     slug: "medie-bacalaureat",

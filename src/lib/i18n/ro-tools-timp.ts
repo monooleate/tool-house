@@ -114,7 +114,7 @@ export const TIMP_RO: Record<string, { slug: string; title: string; h1: string; 
     title: "Generator Numărătoare Inversă – Eveniment Personalizat cu URL | InstrumenteOnline",
     h1: "Generator Numărătoare Inversă",
     description: "Creează propria numărătoare inversă pentru orice eveniment: nume + dată + emoji + link partajabil. URL encoded pentru distribuire.",
-    keywords: ["generator countdown", "numaratoare personalizata", "eveniment countdown", "share countdown link", "numaratoare custom"],
+    keywords: ["generator countdown", "numaratoare inversa", "numaratoare inversa online", "numaratoare personalizata", "eveniment countdown", "share countdown link", "numaratoare custom"],
   },
   "cate-zile-am": {
     slug: "cate-zile-am",
