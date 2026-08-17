@@ -67,7 +67,7 @@ export const PDF_CONTENT: ContentMap = {
   // ─── 2. PDF szétbontás ─────────────────────────────────────────────────────
   "szetbontas": {
     introText:
-      "Bontsd szét a nagy PDF dokumentumodat kisebb, önálló fájlokra oldalszám vagy oldaltartomány alapján. Az egész folyamat a böngésződben történik, szerverre semmi nem kerül.",
+      "Bontsd szét, válaszd szét vagy szedd szét a nagy PDF dokumentumodat kisebb, önálló fájlokra oldalszám vagy oldaltartomány alapján. Ez a PDF szétbontó (más néven szétválasztó vagy szétszedő) eszköz teljes egészében a böngésződben fut – szerverre semmi nem kerül.",
     guide: [
       "1. Töltsd be a szétbontandó PDF fájlt.",
       "2. Add meg az oldaltartományokat (pl. 1-3, 4-6, 7-10).",
@@ -75,6 +75,7 @@ export const PDF_CONTENT: ContentMap = {
     ],
     faq: [
       { q: "Mire jó a PDF szétbontás?", a: "Egy nagy PDF dokumentumot több kisebb, önálló fájlra bontásra szolgál oldalszám vagy tartomány alapján." },
+      { q: "Mi a különbség a PDF szétbontás, szétválasztás és szétszedés között?", a: "Nincs különbség: ugyanaz a művelet, amikor egy PDF-et több különálló fájlra osztunk oldalszám vagy tartomány szerint. A «szétbontó», «szétválasztó» és «szétszedő» ugyanezt az eszközt jelenti." },
       { q: "Biztonságos az adataim szempontjából?", a: "Igen, a fájlok kizárólag a böngésződben kerülnek feldolgozásra." },
       { q: "Hogyan adhatom meg az oldaltartományokat?", a: "Vesszővel elválasztva adj meg tartományokat, pl. «1-3, 4-6, 7» – minden tartomány külön PDF lesz." },
       { q: "Mi történik az eredeti fájllal?", a: "Az eredeti fájl változatlan marad, az eszköz új, különálló PDF-eket hoz létre." },
