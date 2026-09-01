@@ -1,10 +1,10 @@
 ---
-title: "Regula de trei simplă – proporție directă și inversă cu exemple"
+title: "Calculator Regula de Trei – Proporție Directă și Inversă"
 description: "Cum se aplică regula de trei: când este directă și când inversă. Formulă, exemple practice (cumpărături, rețete, muncă)."
 toolSlug: "regula-de-trei-simpla"
 category: "calculator"
 published_at: "2026-04-25T00:00:00.000Z"
-refreshed_at: "2026-04-25T00:00:00.000Z"
+refreshed_at: "2026-09-01T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"

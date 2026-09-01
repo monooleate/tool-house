@@ -1,10 +1,10 @@
 ---
-title: "Calculator Fracții – Adunare, Scădere, Înmulțire, Împărțire cu Pași"
-description: "Operații cu fracții: adunare, scădere, înmulțire, împărțire, cu aducere la numitor comun, simplificare (CMMDC), număr mixt și pași detaliați."
+title: "Calculator Fracții cu Pași – Adunare, Scădere, Înmulțire"
+description: "Calculează fracții: adunare, scădere, înmulțire, împărțire, cu aducere la numitor comun, simplificare (CMMDC), număr mixt și pași detaliați."
 toolSlug: "calculator-fractii"
 category: "calculator"
 published_at: "2026-05-31T00:00:00.000Z"
-refreshed_at: "2026-05-31T00:00:00.000Z"
+refreshed_at: "2026-09-01T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"

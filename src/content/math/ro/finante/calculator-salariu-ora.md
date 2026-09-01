@@ -1,10 +1,10 @@
 ---
-title: "Salariu lunar → orar – formulă, norma RO 168 h/lună și exemple"
-description: "Cum convertești salariul lunar brut în orar, zilnic, săptămânal. Norma legală RO, full-time vs part-time, salariu minim 2026."
+title: "Calculator Salariu pe Oră – din lunar în orar, norma RO 2026"
+description: "Calculează salariul pe oră din salariul lunar brut (și invers): orar, zilnic, săptămânal, anual. Norma RO 168 h/lună, salariu minim 2026."
 toolSlug: "calculator-salariu-ora"
 category: "finante"
 published_at: "2026-04-27T00:00:00.000Z"
-refreshed_at: "2026-04-27T00:00:00.000Z"
+refreshed_at: "2026-09-01T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
