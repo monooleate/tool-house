@@ -4,6 +4,7 @@ import svelte from "@astrojs/svelte";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { loadEnv } from "vite";
+import indexNow from "./src/integrations/indexnow.mjs";
 // pnpm add @astrojs/sitemap – ha külső sitemapet is akarsz (opcionális,
 // a src/pages/sitemap.xml.ts önmagában is elég)
 // import sitemap from "@astrojs/sitemap";
@@ -29,6 +30,9 @@ export default defineConfig({
 
   integrations: [
     svelte(),
+    // IndexNow build-idejű auto-submit (astro:build:done) — HU+RO, prod-only,
+    // git-diff alapú. Sosem töri el a buildet. Lásd src/integrations/indexnow.mjs.
+    indexNow(),
     // sitemap(),  // opcionális – ha az @astrojs/sitemap-et akarod
   ],
 
