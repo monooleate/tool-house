@@ -267,6 +267,8 @@
   "cat_meta.excel_desc": "Excel fájlok megtekintése, CSV-vé és JSON-né konvertálása – ingyenesen, böngészőben, Office nélkül.",
   "cat_meta.fajl_title": "Fájl eszközök online | ZIP, hash-ellenőrzés, fájl-információ",
   "cat_meta.fajl_desc": "ZIP tömörítés, hash ellenőrzés, fájl információk – ingyenes fájlkezelő eszközök böngészőben.",
+  "cat_meta.szinek_title": "Színkezelő eszközök | Konverter, kontraszt, gradiens",
+  "cat_meta.szinek_desc": "Ingyenes online színeszközök: HEX ↔ RGB ↔ HSL színkonverter, WCAG kontraszt-ellenőrző az akadálymentességhez és CSS gradiens generátor – mind a böngészőben.",
   "cat_meta.seo_title": "SEO eszközök online | Title, meta, UTM, robots.txt",
   "cat_meta.seo_desc": "SEO segédeszközök: title/meta hossz ellenőrzés, UTM paraméter építő, robots.txt tesztelő – ingyenesen, böngészőben.",
   "cat_meta.calculator_title": "Kalkulátorok",
