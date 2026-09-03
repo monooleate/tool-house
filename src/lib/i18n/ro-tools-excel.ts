@@ -29,7 +29,7 @@ export const EXCEL_RO: Record<
     title: "Convertor Excel (XLSX) in JSON online | Gratuit | InstrumenteOnline",
     h1: "Conversie Excel in JSON",
     description:
-      "Conversie fisier Excel in JSON cu optiuni foaie de lucru si antet. In browser, fara server.",
+      "Convertește fișiere Excel (XLSX) în JSON direct în browser, cu opțiuni pentru foaia de lucru și rândul de antet. Rapid și privat, fără încărcare pe server.",
     keywords: [
       "xlsx to json",
       "excel to json",
@@ -45,7 +45,7 @@ export const EXCEL_RO: Record<
     title: "Convertor CSV in Excel (XLSX) online | Gratuit | InstrumenteOnline",
     h1: "Conversie CSV in Excel",
     description:
-      "Conversie fisier CSV in format Excel XLSX in browser. Detectare automata delimitator, fara server.",
+      "Convertește fișiere CSV în format Excel (XLSX) direct în browser, cu detectare automată a delimitatorului (virgulă, punct și virgulă, tab). Privat, fără server.",
     keywords: [
       "csv to xlsx",
       "csv to excel",

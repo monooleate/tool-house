@@ -29,7 +29,7 @@ export const FAJL_RO: Record<
     title: "Extragere fisiere ZIP online | Unzip gratuit | InstrumenteOnline",
     h1: "Extragere arhiva ZIP",
     description:
-      "Extragere fisiere ZIP in browser cu previzualizare continut si descarcare individuala. Fara server.",
+      "Extrage conținutul arhivelor ZIP direct în browser: previzualizează fișierele incluse și descarcă-le individual sau pe toate. Privat, fără încărcare pe server.",
     keywords: [
       "unzip online",
       "extragere zip",
@@ -45,7 +45,7 @@ export const FAJL_RO: Record<
     title: "Verificare hash fisier | SHA-256, SHA-1 online | InstrumenteOnline",
     h1: "Verificare hash fisier",
     description:
-      "Calculare hash SHA-256 si SHA-1 pentru fisiere in browser cu SubtleCrypto API. Sigur, fara server.",
+      "Calculează hash-ul SHA-256 și SHA-1 al oricărui fișier direct în browser, cu API-ul SubtleCrypto. Verifică integritatea descărcărilor — sigur, fără server.",
     keywords: [
       "verificare hash",
       "sha256 checksum",
@@ -61,7 +61,7 @@ export const FAJL_RO: Record<
     title: "Informatii fisier online | MIME type | InstrumenteOnline",
     h1: "Informatii fisier",
     description:
-      "Nume, dimensiune, tip, MIME type si data modificarii fisierului – cu File API, in browser.",
+      "Află numele, dimensiunea, tipul, MIME type-ul și data modificării oricărui fișier, direct în browser cu File API. Rapid și privat, fără încărcare pe server.",
     keywords: [
       "informatii fisier",
       "file info",

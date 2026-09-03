@@ -1,6 +1,6 @@
 ---
 title: "Litri ↔ decilitri – formulă, tabel și rețete uzuale RO"
-description: "Cum convertești litri în decilitri și invers. Formula, exemple, cantități tipice rețete și băuturi."
+description: "Cum convertești litri în decilitri și invers (1 L = 10 dl). Formulă, tabel și exemple cu cantități tipice din rețete și băuturi — instant, direct în browser."
 toolSlug: "litri-decilitri"
 category: "conversii"
 subcategory: "volum"

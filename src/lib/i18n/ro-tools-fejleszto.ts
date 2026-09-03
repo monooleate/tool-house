@@ -44,7 +44,7 @@ export const FEJLESZTO_RO: Record<
     title: "Validator JSON online | Verificare sintaxa | InstrumenteOnline",
     h1: "Validare JSON",
     description:
-      "Validare sintaxa JSON cu raportare erori si indicare numar linie – in timp real, in browser.",
+      "Validează sintaxa JSON cu raportarea erorilor și numărul liniei, în timp real. Verifică rapid fișiere de configurare și răspunsuri API — în browser, privat.",
     keywords: [
       "validator json",
       "json validate online",
@@ -74,7 +74,7 @@ export const FEJLESZTO_RO: Record<
     title: "Formatare YAML online | Prettify | InstrumenteOnline",
     h1: "Formatare YAML",
     description:
-      "YAML prettify si normalizare cu indentare consistenta – bazat pe js-yaml. In browser, fara server.",
+      "Formatează și normalizează fișiere YAML cu indentare consistentă, bazat pe js-yaml. Ideal pentru configurări Docker, CI/CD și Kubernetes — direct în browser.",
     keywords: [
       "formatare yaml",
       "yaml prettify",
@@ -119,7 +119,7 @@ export const FEJLESZTO_RO: Record<
     title: "Validator XML online | Well-formedness | InstrumenteOnline",
     h1: "Validare XML",
     description:
-      "Validare sintaxa XML si verificare well-formedness cu DOMParser. In browser, fara server.",
+      "Validează sintaxa XML și verifică well-formedness-ul documentelor cu DOMParser, direct în browser. Raportează erorile de structură rapid și privat, fără server.",
     keywords: [
       "validator xml",
       "xml validate online",
@@ -179,7 +179,7 @@ export const FEJLESZTO_RO: Record<
     title: "Minificare CSS online | Comprimare | InstrumenteOnline",
     h1: "Minificare CSS",
     description:
-      "Eliminare spatii albe si comentarii din CSS, scurtari – dimensiune mai mica pentru productie.",
+      "Minifică fișierele CSS: elimină spațiile albe și comentariile și scurtează valorile pentru o dimensiune mai mică în producție. Rapid, în browser, fără server.",
     keywords: [
       "minificare css",
       "css minify",

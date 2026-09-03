@@ -1,6 +1,6 @@
 ---
 title: "1 tonă în kg | Răspuns: 1.000 kg"
-description: "1 tonă metrică = 1.000 kg. Unitate de bază în transport, agricultură și logistică RO."
+description: "1 tonă metrică = 1.000 kg. Convertește rapid tone în kilograme și invers, cu formulă, exemple și tabel. Unitate de bază în transport, agricultură și logistică."
 instantSlug: "1-tona-in-kg"
 subcategory: "masa"
 category: "conversii"

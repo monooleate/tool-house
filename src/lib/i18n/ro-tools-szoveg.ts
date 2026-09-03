@@ -78,7 +78,7 @@ export const SZOVEG_RO: Record<string, { slug: string; title: string; h1: string
     slug: "majuscule-minuscule",
     title: "Convertor majuscule/minuscule online | Case convert",
     h1: "Conversie majuscule/minuscule",
-    description: "Transformare text în MAJUSCULE, minuscule sau Prima Literă Mare – cu un singur clic, în browser.",
+    description: "Transformă textul în MAJUSCULE, minuscule, Prima Literă Mare sau tip propoziție, cu un singur clic. Cu suport pentru diacritice românești — în browser, privat.",
     keywords: ["majuscule minuscule", "case convert", "uppercase lowercase", "conversie majuscule", "convertor litere online"],
   },
   "case-konverter": {
