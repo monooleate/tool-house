@@ -17,8 +17,13 @@ import {
   SITE_NAME, SITE_URL,
 } from "../lib/seo.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
+import { HUB as PROBLEME_HUB, GRADES as PROBLEME_GRADES } from "../lib/content/ro/probleme-matematica.ts";
 
 // ─── Data ─────────────────────────────────────────────────────
+// ─── RO-only: „Probleme de matematică pe clase" hub linkek ───
+const showProblemeHub = CURRENT_LANG === "ro";
+const problemeHubPath = `/${PROBLEME_HUB.slug}/`;
+const problemeExCount = PROBLEME_GRADES.reduce((s, g) => s + g.exercises.length, 0);
 const localizedCategories = getLocalizedCategories(CURRENT_LANG);
 // Csak az aktuális nyelv (deploy) tooljai — az ItemList JSON-LD ne listázza a másik nyelv tooljait.
 const allTools    = getVisibleTools(CURRENT_LANG).map(t => getLocalizedTool(t, CURRENT_LANG));
@@ -270,6 +275,32 @@ if (faqN) graphNodes.push(faqN);
 
   <!-- Saját (house-ad) főoldali banner – a HouseAdEngine tölti fel, ha a homepage placement ON -->
   <aside class="ha-home container" data-ha-home aria-label="Hirdetés"></aside>
+
+  {showProblemeHub && (
+    <!-- ═══ PROBLEME DE MATEMATICĂ PE CLASE (RO-only hub) ═══════ -->
+    <section class="probleme-hub container" aria-labelledby="probleme-title">
+      <div class="section-header">
+        <h2 id="probleme-title" class="section-header__title">📐 Probleme de matematică pe clase</h2>
+        <p class="section-header__subtitle">
+          {problemeExCount} probleme rezolvate pas cu pas, de la clasa a V-a la a XII-a — pentru gimnaziu, liceu, Evaluarea Națională și Bacalaureat.
+        </p>
+      </div>
+      <ul class="probleme-grid" role="list">
+        {PROBLEME_GRADES.map((g) => (
+          <li>
+            <a href={`${problemeHubPath}${g.slug}/`} class="probleme-card">
+              <span class="probleme-card__icon" aria-hidden="true">{g.icon}</span>
+              <span class="probleme-card__label">{g.label}</span>
+              {g.examBadge && <span class="probleme-card__exam">{g.examBadge}</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a href={problemeHubPath} class="probleme-hub__cta">
+        Vezi toate clasele și problemele →
+      </a>
+    </section>
+  )}
 
   {newTools.length > 0 && (
     <!-- ═══ NOI: ÚJ ESZKÖZÖK (RO-only) ═══════════════════════ -->
@@ -991,6 +1022,57 @@ if (faqN) graphNodes.push(faqN);
   line-height: 1.6;
   max-width: none;
 }
+
+/* ═══ PROBLEME HUB (RO-only) ═════════════════════════════════ */
+.probleme-hub { margin-top: var(--sp-12); }
+.probleme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--sp-3);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp-5);
+}
+.probleme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  text-align: center;
+  transition: all var(--t-fast);
+}
+.probleme-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.probleme-card__icon { font-size: 1.5rem; line-height: 1; }
+.probleme-card__label { font-family: var(--font-mono); font-weight: 700; font-size: 0.9rem; color: var(--text); }
+.probleme-card__exam {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: var(--accent);
+  color: #fff;
+  padding: 1px 7px;
+  border-radius: var(--r-full);
+}
+.probleme-hub__cta {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+.probleme-hub__cta:hover { text-decoration: underline; }
 
 /* ═══ RESPONSIVE ═════════════════════════════════════════════ */
 @media (max-width: 640px) {

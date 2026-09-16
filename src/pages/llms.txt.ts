@@ -12,6 +12,7 @@ import {
 } from "../lib/tool-registry.ts";
 import { CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
+import { HUB as PROBLEME_HUB, GRADES as PROBLEME_GRADES } from "../lib/content/ro/probleme-matematica.ts";
 
 const SITE_TITLES: Record<"hu" | "ro", { title: string; tagline: string; intro: string }> = {
   hu: {
@@ -73,6 +74,22 @@ export const GET: APIRoute = ({ site }) => {
     sectionsBody.push(""); // blank between sections
   }
 
+  // ─── RO-only: Probleme de matematică pe clase (educational hub) ──
+  if (lang === "ro") {
+    sectionsBody.push(`## Probleme de matematică pe clase (${PROBLEME_GRADES.length})`);
+    sectionsBody.push(
+      "> Free step-by-step solved math problems for Romanian students, organized by school grade (clasa a V-a … a XII-a), aligned to the Romanian national curriculum. Covers gimnaziu (V–VIII, Evaluarea Națională) and liceu (IX–XII, Bacalaureat). Each grade page carries Course, Quiz (Practice Problems) and EducationalOrganization JSON-LD.",
+    );
+    sectionsBody.push(
+      `- [${escapeMd(PROBLEME_HUB.h1)}](${base}/${PROBLEME_HUB.slug}/): ${PROBLEME_HUB.metaDescription}`,
+    );
+    for (const g of PROBLEME_GRADES) {
+      const summary = g.metaDescription.replace(/\s+/g, " ").trim();
+      sectionsBody.push(`- [${escapeMd(`Probleme ${g.label}`)}](${base}/${PROBLEME_HUB.slug}/${g.slug}/): ${summary}`);
+    }
+    sectionsBody.push("");
+  }
+
   // About / static pages (staticUrl already returns "/path/" with leading + trailing slashes)
   const aboutLines: string[] = [];
   aboutLines.push("## About");
@@ -93,6 +110,7 @@ export const GET: APIRoute = ({ site }) => {
     notesLines.push(`- Romanian holiday calculations use the Meeus algorithm for Orthodox Easter (Julian calendar + 13 days for Gregorian).`);
     notesLines.push(`- QR code generator supports module styles (square/dots/rounded) with finder patterns always solid for scan reliability, ECC level H recommended with center icon.`);
     notesLines.push(`- Barcode generator validates GTIN check digit (modulo-10 weighted sum) for EAN-13, UPC-A, ITF-14.`);
+    notesLines.push(`- The "Probleme de matematică pe clase" hub (/${PROBLEME_HUB.slug}/) provides ${PROBLEME_GRADES.reduce((s, g) => s + g.exercises.length, 0)} solved problems across grades V–XII, each with EducationalOrganization + Course + Quiz (eduQuestionType Flashcard) structured data and educationalAlignment to the Romanian curriculum.`);
   }
   notesLines.push(`- Sitemap: ${base}/sitemap.xml`);
   notesLines.push(`- Robots: ${base}/robots.txt (AI crawlers GPTBot, ClaudeBot, PerplexityBot, Google-Extended explicitly allowed)`);

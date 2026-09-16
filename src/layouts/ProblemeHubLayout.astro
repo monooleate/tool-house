@@ -1,0 +1,309 @@
+---
+// ============================================================
+// ProblemeHubLayout.astro
+// Hub „Probleme de matematică pe clase" (RO-only)
+// URL: /probleme-matematica/
+// Model: ConversionHubLayout + educational schema (EducationalOrganization,
+// LearningResource, ItemList). Listează cele 8 clase (V–XII).
+// ============================================================
+import BaseLayout from "./BaseLayout.astro";
+import { HUB, GRADES, RELATED_TOOLS } from "../lib/content/ro/probleme-matematica.ts";
+import {
+  breadcrumbNode,
+  faqNode,
+  itemListNode,
+  educationalOrgNode,
+  learningResourceNode,
+  buildCanonical,
+  type BreadcrumbItem,
+} from "../lib/seo.ts";
+
+const hubPath = `/${HUB.slug}/`;
+const gradePath = (slug: string) => `/${HUB.slug}/${slug}/`;
+const pageUrl = buildCanonical(hubPath);
+
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: "Acasă", href: "/" },
+  { name: "Probleme de matematică", href: hubPath },
+];
+
+const gimnaziu = GRADES.filter((g) => g.cycle === "Gimnaziu");
+const liceu = GRADES.filter((g) => g.cycle === "Liceu");
+const totalExercises = GRADES.reduce((s, g) => s + g.exercises.length, 0);
+
+const listItems = GRADES.map((g) => ({
+  name: `Probleme de matematică ${g.label}`,
+  url: buildCanonical(gradePath(g.slug)),
+  description: g.metaDescription,
+}));
+
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, breadcrumbs),
+  educationalOrgNode(),
+  learningResourceNode({
+    pageUrl,
+    name: HUB.h1,
+    description: HUB.metaDescription,
+    levels: GRADES.map((g) => g.label),
+  }),
+  itemListNode(pageUrl, "Probleme de matematică pe clase", listItems),
+];
+const faq = faqNode(pageUrl, HUB.faq);
+if (faq) graphNodes.push(faq);
+---
+
+<BaseLayout
+  title={HUB.metaTitle}
+  description={HUB.metaDescription}
+  canonical={hubPath}
+  hreflangPaths={{ hu: null, ro: hubPath }}
+  katex={true}
+  ogType="website"
+  graphNodes={graphNodes}
+  graphPrimaryId="#learning"
+  graphPageType="CollectionPage"
+>
+  <div class="pm-page container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb__list" role="list">
+        {breadcrumbs.map((item, i) => (
+          <li class="breadcrumb__item">
+            {i < breadcrumbs.length - 1 ? (
+              <>
+                <a href={item.href} class="breadcrumb__link">{item.name}</a>
+                <span aria-hidden="true"> / </span>
+              </>
+            ) : (
+              <span aria-current="page">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="pm-header">
+      <div class="pm-header__icon" aria-hidden="true">📐</div>
+      <div class="pm-header__content">
+        <h1>{HUB.h1}</h1>
+        <p>{HUB.tagline}</p>
+        <div class="pm-header__stats">
+          <span class="stat-pill"><span class="stat-pill__num">8</span> clase</span>
+          <span class="stat-pill stat-pill--alt"><span class="stat-pill__num">{totalExercises}</span> probleme rezolvate</span>
+          <span class="stat-pill stat-pill--free">100% gratuit</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="pm-intro" aria-label="Despre culegere">
+      {HUB.intro.map((p) => <p class="pm-intro__para">{p}</p>)}
+    </section>
+
+    <!-- Difficulty legend -->
+    <div class="pm-legend" aria-label="Legendă dificultate">
+      <span class="pm-badge pm-badge--usor">Ușor</span>
+      <span class="pm-badge pm-badge--mediu">Mediu</span>
+      <span class="pm-badge pm-badge--dificil">Dificil</span>
+    </div>
+
+    <!-- Gimnaziu -->
+    <section aria-labelledby="gimnaziu-title" class="pm-cycle">
+      <h2 id="gimnaziu-title" class="section-label">🎒 Gimnaziu (clasele V–VIII)</h2>
+      <ul class="pm-grid" role="list">
+        {gimnaziu.map((g) => (
+          <li>
+            <a href={gradePath(g.slug)} class="pm-card">
+              <span class="pm-card__icon" aria-hidden="true">{g.icon}</span>
+              <span class="pm-card__title">{g.label}</span>
+              {g.examBadge && <span class="pm-card__exam">{g.examBadge}</span>}
+              <span class="pm-card__meta">{g.examContext}</span>
+              <span class="pm-card__cta">{g.exercises.length} probleme →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Liceu -->
+    <section aria-labelledby="liceu-title" class="pm-cycle">
+      <h2 id="liceu-title" class="section-label">🎓 Liceu (clasele IX–XII)</h2>
+      <ul class="pm-grid" role="list">
+        {liceu.map((g) => (
+          <li>
+            <a href={gradePath(g.slug)} class="pm-card">
+              <span class="pm-card__icon" aria-hidden="true">{g.icon}</span>
+              <span class="pm-card__title">{g.label}</span>
+              {g.examBadge && <span class="pm-card__exam">{g.examBadge}</span>}
+              <span class="pm-card__meta">{g.examContext}</span>
+              <span class="pm-card__cta">{g.exercises.length} probleme →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Related tools -->
+    <section aria-labelledby="tools-title" class="pm-cycle">
+      <h2 id="tools-title" class="section-label">🧮 Instrumente utile</h2>
+      <p class="section-lead">Calculatoare care te ajută la teme și la simulările de examen.</p>
+      <ul class="pm-tools" role="list">
+        {RELATED_TOOLS.map((t) => (
+          <li>
+            <a href={t.href} class="pm-tool">
+              <span aria-hidden="true">{t.icon}</span> {t.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="section-label">❓ Întrebări frecvente</h2>
+      <dl class="faq-list">
+        {HUB.faq.map((item, i) => (
+          <div class="faq-item">
+            <dt class="faq-item__q">
+              <button class="faq-toggle" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+                <span>{item.q}</span>
+                <svg class="faq-toggle__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </button>
+            </dt>
+            <dd class="faq-item__a" id={`faq-answer-${i}`} hidden>{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".faq-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const answerId = btn.getAttribute("aria-controls");
+      if (answerId) {
+        const ans = document.getElementById(answerId);
+        if (ans) ans.toggleAttribute("hidden", expanded);
+      }
+    });
+  });
+</script>
+
+<style>
+.pm-page { padding-top: var(--sp-6); padding-bottom: var(--sp-16); }
+
+/* Breadcrumb */
+.breadcrumb__list {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2);
+  list-style: none; padding: 0; margin: 0 0 var(--sp-5);
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+}
+.breadcrumb__link { color: var(--text-muted); text-decoration: none; }
+.breadcrumb__link:hover { color: var(--accent); }
+
+/* Header */
+.pm-header {
+  display: flex; gap: var(--sp-6); align-items: flex-start;
+  padding: var(--sp-8); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  margin-bottom: var(--sp-8); border-left: 4px solid var(--accent);
+}
+.pm-header__icon { font-size: 3rem; line-height: 1; flex-shrink: 0; }
+.pm-header__content h1 { margin-bottom: var(--sp-2); }
+.pm-header__content p { margin-bottom: var(--sp-4); max-width: 60ch; color: var(--text-muted); }
+.pm-header__stats { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.stat-pill {
+  display: inline-flex; align-items: center; gap: var(--sp-1);
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--r-full); padding: 2px 10px; color: var(--text-muted);
+}
+.stat-pill__num { color: var(--accent); }
+.stat-pill--alt .stat-pill__num { color: var(--accent); }
+.stat-pill--free { color: #16a34a; border-color: #16a34a55; }
+
+/* Intro */
+.pm-intro { margin-bottom: var(--sp-6); max-width: 75ch; }
+.pm-intro__para { font-size: 0.9375rem; line-height: 1.75; color: var(--text-muted); margin-bottom: var(--sp-3); }
+
+/* Legend */
+.pm-legend { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-10); flex-wrap: wrap; }
+.pm-badge {
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+  padding: 2px 10px; border-radius: var(--r-full); border: 1px solid transparent;
+}
+.pm-badge--usor    { background: #16a34a1a; color: #16a34a; border-color: #16a34a55; }
+.pm-badge--mediu   { background: #d977061a; color: #d97706; border-color: #d9770655; }
+.pm-badge--dificil { background: #dc26261a; color: #dc2626; border-color: #dc262655; }
+
+/* Section label */
+.section-label {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+  margin-bottom: var(--sp-4); padding-bottom: var(--sp-3); border-bottom: 1px solid var(--border);
+}
+.section-lead { margin-top: -0.25rem; margin-bottom: var(--sp-5); color: var(--text-muted); font-size: 0.9rem; }
+.pm-cycle { margin-bottom: var(--sp-10); }
+
+/* Grade grid */
+.pm-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-4); list-style: none; padding: 0; margin: 0;
+}
+.pm-card {
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  padding: var(--sp-5); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  text-decoration: none; transition: all var(--t-fast); height: 100%;
+}
+.pm-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.pm-card__icon { font-size: 1.75rem; line-height: 1; }
+.pm-card__title { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.pm-card__exam {
+  align-self: flex-start; font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700;
+  background: var(--accent); color: #fff; padding: 1px 8px; border-radius: var(--r-full);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.pm-card__meta { font-size: 0.8125rem; color: var(--text-muted); flex: 1; }
+.pm-card__cta { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-top: var(--sp-2); }
+
+/* Related tools */
+.pm-tools { display: flex; flex-wrap: wrap; gap: var(--sp-2); list-style: none; padding: 0; margin: 0; }
+.pm-tool {
+  display: inline-flex; align-items: center; gap: var(--sp-1);
+  font-size: 0.85rem; padding: var(--sp-2) var(--sp-4);
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--r-full); text-decoration: none; color: var(--text);
+  transition: all var(--t-fast);
+}
+.pm-tool:hover { border-color: var(--accent); color: var(--accent); }
+
+/* FAQ */
+.faq-section { margin-top: var(--sp-10); }
+.faq-list { margin: 0; padding: 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-toggle {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-4) 0; background: none; border: none;
+  font-family: inherit; font-size: 0.95rem; font-weight: 600; color: var(--text);
+  cursor: pointer; text-align: left;
+}
+.faq-toggle__icon { flex-shrink: 0; transition: transform 0.2s; }
+.faq-toggle[aria-expanded="true"] .faq-toggle__icon { transform: rotate(180deg); }
+.faq-item__a { padding: 0 0 var(--sp-4); color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; }
+.faq-item__a[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .pm-header { flex-direction: column; gap: var(--sp-4); padding: var(--sp-5); }
+}
+</style>

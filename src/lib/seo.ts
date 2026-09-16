@@ -461,6 +461,154 @@ export function eventNode(opts: {
   };
 }
 
+// ============================================================
+// EDUCATIONAL SCHEMA – „probleme de matematică pe clase" (RO-only)
+// Ez az „educational láb": EducationalOrganization + Course +
+// Quiz (Google Practice Problems) + educationalAlignment a román
+// programa școlară szerint. Csak a RO grade-oldalak (clasa V–XII)
+// használják. Minden node @id-alapon feloldódik a @graph-on belül.
+// ============================================================
+
+// EducationalOrganization @id – per-site, parent=ORG_ID
+export const EDU_ORG_ID = `${SITE_URL}/#eduorg`;
+
+// ─── EducationalOrganization – az oktatási forrás entitása ───
+export function educationalOrgNode(): Node {
+  return {
+    "@type": "EducationalOrganization",
+    "@id": EDU_ORG_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    description:
+      "Resurse educaționale gratuite de matematică pentru elevii din România: probleme rezolvate pas cu pas, organizate pe clase (V–XII), pentru Evaluarea Națională și Bacalaureat.",
+    parentOrganization: { "@id": ORG_ID },
+    founder: { "@id": PERSON_ID },
+    sameAs: [
+      "https://jmeszaros.dev",
+      "https://github.com/monooleate",
+    ],
+  };
+}
+
+// ─── educationalAlignment (subject + level) a programa școlară szerint ─
+function alignmentObjects(level: string, subject = "Matematică"): Node[] {
+  const framework = "Programa școlară – Ministerul Educației, România";
+  return [
+    {
+      "@type": "AlignmentObject",
+      alignmentType: "educationalSubject",
+      targetName: subject,
+      educationalFramework: framework,
+    },
+    {
+      "@type": "AlignmentObject",
+      alignmentType: "educationalLevel",
+      targetName: level,
+      educationalFramework: framework,
+    },
+  ];
+}
+
+// ─── Course node (@id=#course) – egy osztály matek „kurzusa" ─
+// Google Course rich-result kötelező mezői: name, description, provider.
+// A hasCourseInstance (courseMode + courseWorkload) és az ingyenes offers
+// megvan, hogy ne generáljon GSC „missing field" figyelmeztetést.
+export function courseNode(opts: {
+  pageUrl: string;
+  name: string;
+  description: string;
+  level: string;           // pl. "Clasa a VIII-a"
+  courseCode?: string;     // pl. "clasa-8"
+  teaches: string[];       // capitole (topics)
+}): Node {
+  return {
+    "@type": "Course",
+    "@id": `${opts.pageUrl}#course`,
+    name: opts.name,
+    description: opts.description,
+    url: opts.pageUrl,
+    inLanguage: "ro",
+    courseCode: opts.courseCode,
+    provider: { "@id": EDU_ORG_ID },
+    publisher: { "@id": ORG_ID },
+    educationalLevel: opts.level,
+    teaches: opts.teaches,
+    isAccessibleForFree: true,
+    educationalAlignment: alignmentObjects(opts.level),
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "Online",
+      courseWorkload: "PT2H",
+      instructor: { "@id": PERSON_ID },
+      location: {
+        "@type": "VirtualLocation",
+        url: opts.pageUrl,
+      },
+    },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "RON",
+      category: "Free",
+      availability: "https://schema.org/InStock",
+    },
+  };
+}
+
+// ─── Quiz node (@id=#quiz) – Google Practice Problems ────────
+// A grade-oldal feladatai (enunț → răspuns) Question-ökként.
+// eduQuestionType "Flashcard": kérdés → megoldás felfedés minta.
+export function quizNode(opts: {
+  pageUrl: string;
+  name: string;
+  level: string;
+  topicName: string;
+  questions: { text: string; answer: string }[];
+}): Node {
+  return {
+    "@type": "Quiz",
+    "@id": `${opts.pageUrl}#quiz`,
+    name: opts.name,
+    inLanguage: "ro",
+    about: { "@type": "Thing", name: opts.topicName },
+    educationalAlignment: alignmentObjects(opts.level),
+    isPartOf: { "@id": `${opts.pageUrl}#webpage` },
+    provider: { "@id": EDU_ORG_ID },
+    hasPart: opts.questions.map((q) => ({
+      "@type": "Question",
+      eduQuestionType: "Flashcard",
+      text: q.text,
+      acceptedAnswer: { "@type": "Answer", text: q.answer },
+    })),
+  };
+}
+
+// ─── LearningResource node (@id=#learning) – hub oldalhoz ────
+export function learningResourceNode(opts: {
+  pageUrl: string;
+  name: string;
+  description: string;
+  levels: string[];        // "Clasa a V-a" … "Clasa a XII-a"
+}): Node {
+  return {
+    "@type": "LearningResource",
+    "@id": `${opts.pageUrl}#learning`,
+    name: opts.name,
+    description: opts.description,
+    url: opts.pageUrl,
+    inLanguage: "ro",
+    learningResourceType: "Culegere de probleme rezolvate",
+    educationalUse: ["Practice", "Self study", "Assessment"],
+    isAccessibleForFree: true,
+    provider: { "@id": EDU_ORG_ID },
+    publisher: { "@id": ORG_ID },
+    author: { "@id": PERSON_ID },
+    educationalLevel: opts.levels,
+    educationalAlignment: alignmentObjects("Clasele V–XII (gimnaziu și liceu)"),
+    isPartOf: { "@id": `${opts.pageUrl}#webpage` },
+  };
+}
+
 // ─── Render-idejű frontmatter-normalizálás (NEM md-szerkesztés) ─
 // A math/instant oldalak frontmatter schema-objektumait graph-node-okká
 // alakítja: @context törlés, stabil @id, author→PERSON_ID, publisher→ORG_ID,

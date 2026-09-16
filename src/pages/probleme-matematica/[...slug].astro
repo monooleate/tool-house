@@ -1,0 +1,37 @@
+---
+// ============================================================
+// /probleme-matematica/[...slug]
+// Rută RO-only pentru culegerea de probleme pe clase.
+//   • slug = undefined  → hub-ul  /probleme-matematica/
+//   • slug = "clasa-8"  → pagina clasei /probleme-matematica/clasa-8/
+// Izolare de limbă: getStaticPaths întoarce [] pe build-ul HU, deci
+// aceste pagini NU apar pe konvertalo.hu (fără scurgere HU↔RO).
+// ============================================================
+import ProblemeHubLayout from "../../layouts/ProblemeHubLayout.astro";
+import ProblemeGradeLayout from "../../layouts/ProblemeGradeLayout.astro";
+import { GRADES } from "../../lib/content/ro/probleme-matematica.ts";
+import { CURRENT_LANG } from "../../i18n/index.ts";
+
+export function getStaticPaths() {
+  // Doar pe build-ul RO
+  if (CURRENT_LANG !== "ro") return [];
+
+  return [
+    // Hub (rădăcina directorului)
+    { params: { slug: undefined }, props: { kind: "hub" as const } },
+    // Câte o pagină per clasă
+    ...GRADES.map((g) => ({
+      params: { slug: g.slug },
+      props: { kind: "grade" as const, grade: g },
+    })),
+  ];
+}
+
+const props = Astro.props as
+  | { kind: "hub" }
+  | { kind: "grade"; grade: (typeof GRADES)[number] };
+---
+
+{props.kind === "hub"
+  ? <ProblemeHubLayout />
+  : <ProblemeGradeLayout grade={props.grade} />}

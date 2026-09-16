@@ -1,0 +1,329 @@
+---
+// ============================================================
+// ProblemeGradeLayout.astro
+// Pagină pe clasă: „Probleme de matematică – Clasa a ...-a" (RO-only)
+// URL: /probleme-matematica/{clasa-N}/
+// Educational schema: EducationalOrganization + Course + Quiz
+// (Google Practice Problems, hasPart → Question) + FAQ + Breadcrumb.
+// Fiecare problemă: enunț + dificultate + rezolvare pas cu pas (reveal).
+// ============================================================
+import BaseLayout from "./BaseLayout.astro";
+import {
+  HUB, GRADES, DIFFICULTY_LABEL, type GradeLevel,
+} from "../lib/content/ro/probleme-matematica.ts";
+import {
+  breadcrumbNode, faqNode, educationalOrgNode, courseNode, quizNode,
+  buildCanonical, type BreadcrumbItem,
+} from "../lib/seo.ts";
+import { renderMixed } from "../lib/katex.ts";
+
+export interface Props {
+  grade: GradeLevel;
+}
+const { grade } = Astro.props;
+
+const hubPath = `/${HUB.slug}/`;
+const gradePath = (slug: string) => `/${HUB.slug}/${slug}/`;
+const selfPath = gradePath(grade.slug);
+const pageUrl = buildCanonical(selfPath);
+
+const breadcrumbs: BreadcrumbItem[] = [
+  { name: "Acasă", href: "/" },
+  { name: "Probleme de matematică", href: hubPath },
+  { name: grade.label, href: selfPath },
+];
+
+// Navigare prev/next între clase
+const idx = GRADES.findIndex((g) => g.slug === grade.slug);
+const prev = idx > 0 ? GRADES[idx - 1] : null;
+const next = idx < GRADES.length - 1 ? GRADES[idx + 1] : null;
+
+// ─── Schema: educational leg ─────────────────────────────────
+const quizQuestions = grade.exercises.map((ex) => ({
+  text: ex.statement,
+  answer: `${ex.answer}. ${ex.steps.join(" ")}`,
+}));
+
+const graphNodes: Record<string, any>[] = [
+  breadcrumbNode(pageUrl, breadcrumbs),
+  educationalOrgNode(),
+  courseNode({
+    pageUrl,
+    name: `Matematică – ${grade.label}`,
+    description: grade.metaDescription,
+    level: grade.label,
+    courseCode: grade.slug,
+    teaches: grade.topics,
+  }),
+  quizNode({
+    pageUrl,
+    name: `Probleme de matematică – ${grade.label}`,
+    level: grade.label,
+    topicName: `Matematică ${grade.label} (${grade.cycle.toLowerCase()})`,
+    questions: quizQuestions,
+  }),
+];
+const faq = faqNode(pageUrl, grade.faq);
+if (faq) graphNodes.push(faq);
+
+// Numărul de ordine per dificultate pentru afișare
+const diffClass = (d: string) => `pm-badge--${d}`;
+---
+
+<BaseLayout
+  title={grade.metaTitle}
+  description={grade.metaDescription}
+  canonical={selfPath}
+  hreflangPaths={{ hu: null, ro: selfPath }}
+  katex={true}
+  ogType="article"
+  graphNodes={graphNodes}
+  graphPrimaryId="#course"
+  graphPageType="CollectionPage"
+>
+  <div class="pm-page container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb__list" role="list">
+        {breadcrumbs.map((item, i) => (
+          <li class="breadcrumb__item">
+            {i < breadcrumbs.length - 1 ? (
+              <>
+                <a href={item.href} class="breadcrumb__link">{item.name}</a>
+                <span aria-hidden="true"> / </span>
+              </>
+            ) : (
+              <span aria-current="page">{item.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="pm-header">
+      <div class="pm-header__icon" aria-hidden="true">{grade.icon}</div>
+      <div class="pm-header__content">
+        <h1>Probleme de matematică – {grade.label}</h1>
+        <p>{grade.examContext}</p>
+        <div class="pm-header__stats">
+          <span class="stat-pill">{grade.cycle}</span>
+          {grade.examBadge && <span class="stat-pill stat-pill--exam">{grade.examBadge}</span>}
+          <span class="stat-pill stat-pill--alt"><span class="stat-pill__num">{grade.exercises.length}</span> probleme rezolvate</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="pm-intro" aria-label="Introducere">
+      {grade.intro.map((p) => <p class="pm-intro__para">{p}</p>)}
+    </section>
+
+    <!-- Topics -->
+    <section class="pm-topics" aria-labelledby="topics-title">
+      <h2 id="topics-title" class="section-label">📚 Capitole ({grade.label})</h2>
+      <ul class="pm-topic-list" role="list">
+        {grade.topics.map((tp) => <li class="pm-topic">{tp}</li>)}
+      </ul>
+    </section>
+
+    <!-- Exercises -->
+    <section class="pm-exercises" aria-labelledby="ex-title">
+      <h2 id="ex-title" class="section-label">✏️ Probleme rezolvate</h2>
+      <ol class="pm-ex-list" role="list">
+        {grade.exercises.map((ex, i) => (
+          <li class="pm-ex" id={ex.id}>
+            <div class="pm-ex__head">
+              <span class="pm-ex__num" aria-hidden="true">{i + 1}</span>
+              <span class={`pm-ex__topic`}>{ex.topic}</span>
+              <span class={`pm-badge ${diffClass(ex.difficulty)}`}>{DIFFICULTY_LABEL[ex.difficulty]}</span>
+            </div>
+            <p class="pm-ex__statement" set:html={renderMixed(ex.statement)} />
+            <details class="pm-ex__solution">
+              <summary class="pm-ex__toggle">
+                <span>Vezi rezolvarea</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="pm-ex__body">
+                <ol class="pm-ex__steps">
+                  {ex.steps.map((st) => <li set:html={renderMixed(st)} />)}
+                </ol>
+                <p class="pm-ex__answer">
+                  <span class="pm-ex__answer-label">Răspuns:</span>
+                  <span set:html={renderMixed(ex.answer)} />
+                </p>
+              </div>
+            </details>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="section-label">❓ Întrebări frecvente – {grade.label}</h2>
+      <dl class="faq-list">
+        {grade.faq.map((item, i) => (
+          <div class="faq-item">
+            <dt class="faq-item__q">
+              <button class="faq-toggle" aria-expanded="false" aria-controls={`faq-answer-${i}`}>
+                <span>{item.q}</span>
+                <svg class="faq-toggle__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </dt>
+            <dd class="faq-item__a" id={`faq-answer-${i}`} hidden>{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- Prev/Next + back -->
+    <nav class="pm-nav" aria-label="Navigare între clase">
+      {prev
+        ? <a href={gradePath(prev.slug)} class="pm-nav__link pm-nav__link--prev">← {prev.label}</a>
+        : <span></span>}
+      <a href={hubPath} class="pm-nav__hub">Toate clasele</a>
+      {next
+        ? <a href={gradePath(next.slug)} class="pm-nav__link pm-nav__link--next">{next.label} →</a>
+        : <span></span>}
+    </nav>
+
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".faq-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const answerId = btn.getAttribute("aria-controls");
+      if (answerId) {
+        const ans = document.getElementById(answerId);
+        if (ans) ans.toggleAttribute("hidden", expanded);
+      }
+    });
+  });
+</script>
+
+<style>
+.pm-page { padding-top: var(--sp-6); padding-bottom: var(--sp-16); }
+
+.breadcrumb__list {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2);
+  list-style: none; padding: 0; margin: 0 0 var(--sp-5);
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);
+}
+.breadcrumb__link { color: var(--text-muted); text-decoration: none; }
+.breadcrumb__link:hover { color: var(--accent); }
+
+.pm-header {
+  display: flex; gap: var(--sp-6); align-items: flex-start;
+  padding: var(--sp-8); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  margin-bottom: var(--sp-8); border-left: 4px solid var(--accent);
+}
+.pm-header__icon { font-size: 3rem; line-height: 1; flex-shrink: 0; }
+.pm-header__content h1 { margin-bottom: var(--sp-2); }
+.pm-header__content p { margin-bottom: var(--sp-4); max-width: 60ch; color: var(--text-muted); }
+.pm-header__stats { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.stat-pill {
+  display: inline-flex; align-items: center; gap: var(--sp-1);
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--r-full); padding: 2px 10px; color: var(--text-muted);
+}
+.stat-pill__num { color: var(--accent); }
+.stat-pill--exam { background: var(--accent); color: #fff; border-color: transparent; }
+
+.pm-intro { margin-bottom: var(--sp-8); max-width: 75ch; }
+.pm-intro__para { font-size: 0.9375rem; line-height: 1.75; color: var(--text-muted); margin-bottom: var(--sp-3); }
+
+.section-label {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);
+  margin-bottom: var(--sp-4); padding-bottom: var(--sp-3); border-bottom: 1px solid var(--border);
+}
+
+/* Topics */
+.pm-topics { margin-bottom: var(--sp-10); }
+.pm-topic-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); list-style: none; padding: 0; margin: 0; }
+.pm-topic {
+  font-size: 0.85rem; padding: var(--sp-2) var(--sp-4);
+  background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: var(--r-full); color: var(--text-muted);
+}
+
+/* Exercises */
+.pm-exercises { margin-bottom: var(--sp-10); }
+.pm-ex-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
+.pm-ex {
+  padding: var(--sp-5); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+}
+.pm-ex__head { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); flex-wrap: wrap; }
+.pm-ex__num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.6rem; height: 1.6rem; flex-shrink: 0;
+  background: var(--accent); color: #fff; border-radius: var(--r-full);
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+}
+.pm-ex__topic { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; flex: 1; }
+.pm-badge { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--r-full); border: 1px solid transparent; }
+.pm-badge--usor    { background: #16a34a1a; color: #16a34a; border-color: #16a34a55; }
+.pm-badge--mediu   { background: #d977061a; color: #d97706; border-color: #d9770655; }
+.pm-badge--dificil { background: #dc26261a; color: #dc2626; border-color: #dc262655; }
+.pm-ex__statement { font-size: 1rem; line-height: 1.7; color: var(--text); margin: 0; }
+
+.pm-ex__solution { margin-top: var(--sp-3); border-top: 1px dashed var(--border); }
+.pm-ex__toggle {
+  display: flex; align-items: center; gap: var(--sp-2); cursor: pointer;
+  padding: var(--sp-3) 0 0; list-style: none;
+  font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--accent);
+}
+.pm-ex__toggle::-webkit-details-marker { display: none; }
+.pm-ex__toggle svg { transition: transform 0.2s; }
+.pm-ex__solution[open] .pm-ex__toggle svg { transform: rotate(180deg); }
+.pm-ex__body { padding-top: var(--sp-3); }
+.pm-ex__steps { margin: 0 0 var(--sp-3); padding-left: 1.4rem; display: flex; flex-direction: column; gap: var(--sp-2); }
+.pm-ex__steps li { font-size: 0.92rem; line-height: 1.7; color: var(--text-muted); }
+.pm-ex__answer {
+  margin: 0; padding: var(--sp-3) var(--sp-4);
+  background: #16a34a12; border: 1px solid #16a34a44; border-radius: var(--r-sm);
+  font-size: 0.95rem; color: var(--text);
+}
+.pm-ex__answer-label { font-family: var(--font-mono); font-weight: 700; color: #16a34a; margin-right: var(--sp-2); }
+
+/* FAQ */
+.faq-section { margin-top: var(--sp-10); }
+.faq-list { margin: 0; padding: 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-toggle {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-4) 0; background: none; border: none;
+  font-family: inherit; font-size: 0.95rem; font-weight: 600; color: var(--text); cursor: pointer; text-align: left;
+}
+.faq-toggle__icon { flex-shrink: 0; transition: transform 0.2s; }
+.faq-toggle[aria-expanded="true"] .faq-toggle__icon { transform: rotate(180deg); }
+.faq-item__a { padding: 0 0 var(--sp-4); color: var(--text-muted); font-size: 0.9rem; line-height: 1.65; }
+.faq-item__a[hidden] { display: none; }
+
+/* Prev/next nav */
+.pm-nav {
+  margin-top: var(--sp-10); display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-3); flex-wrap: wrap;
+}
+.pm-nav__link, .pm-nav__hub {
+  font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+  text-decoration: none; color: var(--text); padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border); border-radius: var(--r-md); transition: all var(--t-fast);
+}
+.pm-nav__link:hover, .pm-nav__hub:hover { border-color: var(--accent); color: var(--accent); }
+.pm-nav__hub { color: var(--text-muted); }
+
+@media (max-width: 640px) {
+  .pm-header { flex-direction: column; gap: var(--sp-4); padding: var(--sp-5); }
+}
+</style>

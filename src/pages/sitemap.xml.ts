@@ -13,6 +13,7 @@ import { CURRENT_LANG, CURRENT_CONFIG } from "../i18n/index.ts";
 import { toolUrl, categoryUrl, subcatUrl, instantAnswerUrl } from "../lib/url-utils.ts";
 import { getStaticUrl } from "../lib/url-map.ts";
 import { CONVERSII_HUBS } from "../lib/content/ro/conversii-hubs.ts";
+import { HUB as PROBLEME_HUB, GRADES as PROBLEME_GRADES } from "../lib/content/ro/probleme-matematica.ts";
 import { getCollection } from "astro:content";
 
 const PRIORITY: Record<CategoryId | "home" | "category" | "subhub" | "instant", string> = {
@@ -120,6 +121,12 @@ export const GET: APIRoute = async () => {
   if (CURRENT_LANG === "ro") {
     for (const hub of CONVERSII_HUBS) {
       urls.push(urlEntry(base, subcatUrl(hub.slug), PRIORITY.subhub, CHANGEFREQ.subhub, hub.updatedAt));
+    }
+
+    // ─── RO-only: Probleme de matematică pe clase (hub + 8 clase) ──
+    urls.push(urlEntry(base, `/${PROBLEME_HUB.slug}/`, "0.9", "weekly", PROBLEME_HUB.updatedAt));
+    for (const g of PROBLEME_GRADES) {
+      urls.push(urlEntry(base, `/${PROBLEME_HUB.slug}/${g.slug}/`, "0.85", "monthly", g.updatedAt));
     }
 
     // ─── RO-only: Instant-answer oldalak (programmatic SEO) ──
