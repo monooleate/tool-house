@@ -68,6 +68,22 @@ if (faq) graphNodes.push(faq);
 
 // Numărul de ordine per dificultate pentru afișare
 const diffClass = (d: string) => `pm-badge--${d}`;
+
+// ─── Grupare pe teme (capitole) — ordinea primei apariții ────
+// Ca la modelul MatekMegoldások: sub fiecare clasă, problemele sunt
+// împărțite pe teme (subcapitole), fiecare cu propriul titlu.
+type Grp = { topic: string; exercises: typeof grade.exercises };
+const topicGroups: Grp[] = [];
+for (const ex of grade.exercises) {
+  let g = topicGroups.find((x) => x.topic === ex.topic);
+  if (!g) { g = { topic: ex.topic, exercises: [] }; topicGroups.push(g); }
+  g.exercises.push(ex);
+}
+// Anchor-slug diacritice-safe pentru linkurile din lista de capitole
+const topicAnchor = (s: string) =>
+  "tema-" + s.toLowerCase()
+    .replace(/[ăâ]/g, "a").replace(/î/g, "i").replace(/ș|ş/g, "s").replace(/ț|ţ/g, "t")
+    .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 ---
 
 <BaseLayout
@@ -121,44 +137,57 @@ const diffClass = (d: string) => `pm-badge--${d}`;
       {grade.intro.map((p) => <p class="pm-intro__para">{p}</p>)}
     </section>
 
-    <!-- Topics -->
+    <!-- Topics (capitole) — cuprins cu linkuri către secțiuni -->
     <section class="pm-topics" aria-labelledby="topics-title">
-      <h2 id="topics-title" class="section-label">📚 Capitole ({grade.label})</h2>
+      <h2 id="topics-title" class="section-label">📚 Teme ({topicGroups.length}) · {grade.label}</h2>
       <ul class="pm-topic-list" role="list">
-        {grade.topics.map((tp) => <li class="pm-topic">{tp}</li>)}
+        {topicGroups.map((grp) => (
+          <li>
+            <a class="pm-topic" href={`#${topicAnchor(grp.topic)}`}>
+              {grp.topic} <span class="pm-topic__badge">{grp.exercises.length}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </section>
 
-    <!-- Exercises -->
+    <!-- Exercises — grupate pe teme (subcapitole) -->
     <section class="pm-exercises" aria-labelledby="ex-title">
-      <h2 id="ex-title" class="section-label">✏️ Probleme rezolvate</h2>
-      <ol class="pm-ex-list" role="list">
-        {grade.exercises.map((ex, i) => (
-          <li class="pm-ex" id={ex.id}>
-            <div class="pm-ex__head">
-              <span class="pm-ex__num" aria-hidden="true">{i + 1}</span>
-              <span class={`pm-ex__topic`}>{ex.topic}</span>
-              <span class={`pm-badge ${diffClass(ex.difficulty)}`}>{DIFFICULTY_LABEL[ex.difficulty]}</span>
-            </div>
-            <p class="pm-ex__statement" set:html={renderMixed(ex.statement)} />
-            <details class="pm-ex__solution">
-              <summary class="pm-ex__toggle">
-                <span>Vezi rezolvarea</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-              </summary>
-              <div class="pm-ex__body">
-                <ol class="pm-ex__steps">
-                  {ex.steps.map((st) => <li set:html={renderMixed(st)} />)}
-                </ol>
-                <p class="pm-ex__answer">
-                  <span class="pm-ex__answer-label">Răspuns:</span>
-                  <span set:html={renderMixed(ex.answer)} />
-                </p>
-              </div>
-            </details>
-          </li>
-        ))}
-      </ol>
+      <h2 id="ex-title" class="section-label">✏️ Probleme rezolvate pe teme</h2>
+      {topicGroups.map((grp) => (
+        <div class="pm-topic-group" id={topicAnchor(grp.topic)}>
+          <h3 class="pm-topic-heading">
+            <span>{grp.topic}</span>
+            <span class="pm-topic-heading__count">{grp.exercises.length} {grp.exercises.length === 1 ? "problemă" : "probleme"}</span>
+          </h3>
+          <ol class="pm-ex-list" role="list">
+            {grp.exercises.map((ex, i) => (
+              <li class="pm-ex" id={ex.id}>
+                <div class="pm-ex__head">
+                  <span class="pm-ex__num" aria-hidden="true">{i + 1}</span>
+                  <span class={`pm-badge ${diffClass(ex.difficulty)}`}>{DIFFICULTY_LABEL[ex.difficulty]}</span>
+                </div>
+                <p class="pm-ex__statement" set:html={renderMixed(ex.statement)} />
+                <details class="pm-ex__solution">
+                  <summary class="pm-ex__toggle">
+                    <span>Vezi rezolvarea</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                  </summary>
+                  <div class="pm-ex__body">
+                    <ol class="pm-ex__steps">
+                      {ex.steps.map((st) => <li set:html={renderMixed(st)} />)}
+                    </ol>
+                    <p class="pm-ex__answer">
+                      <span class="pm-ex__answer-label">Răspuns:</span>
+                      <span set:html={renderMixed(ex.answer)} />
+                    </p>
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
     </section>
 
     <!-- FAQ -->
@@ -247,17 +276,32 @@ const diffClass = (d: string) => `pm-badge--${d}`;
   margin-bottom: var(--sp-4); padding-bottom: var(--sp-3); border-bottom: 1px solid var(--border);
 }
 
-/* Topics */
+/* Topics (cuprins cu linkuri) */
 .pm-topics { margin-bottom: var(--sp-10); }
 .pm-topic-list { display: flex; flex-wrap: wrap; gap: var(--sp-2); list-style: none; padding: 0; margin: 0; }
 .pm-topic {
-  font-size: 0.85rem; padding: var(--sp-2) var(--sp-4);
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-size: 0.85rem; padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-4);
   background: var(--bg-input); border: 1px solid var(--border);
-  border-radius: var(--r-full); color: var(--text-muted);
+  border-radius: var(--r-full); color: var(--text); text-decoration: none;
+  transition: all var(--t-fast);
+}
+.pm-topic:hover { border-color: var(--accent); color: var(--accent); }
+.pm-topic__badge {
+  font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--r-full); padding: 0 8px; color: var(--text-muted);
 }
 
-/* Exercises */
+/* Exercises grupate pe teme */
 .pm-exercises { margin-bottom: var(--sp-10); }
+.pm-topic-group { margin-bottom: var(--sp-8); scroll-margin-top: 80px; }
+.pm-topic-heading {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3);
+  font-size: 1.15rem; margin: 0 0 var(--sp-4);
+  padding-bottom: var(--sp-2); border-bottom: 2px solid var(--accent);
+}
+.pm-topic-heading__count { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
 .pm-ex-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
 .pm-ex {
   padding: var(--sp-5); background: var(--bg-card);
