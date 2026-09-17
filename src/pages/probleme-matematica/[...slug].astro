@@ -2,36 +2,51 @@
 // ============================================================
 // /probleme-matematica/[...slug]
 // Rută RO-only pentru culegerea de probleme pe clase.
-//   • slug = undefined  → hub-ul  /probleme-matematica/
-//   • slug = "clasa-8"  → pagina clasei /probleme-matematica/clasa-8/
+//   • slug = undefined         → hub  /probleme-matematica/
+//   • slug = "clasa-8"         → pagina clasei  /probleme-matematica/clasa-8/
+//   • slug = "clasa-8/geometrie-in-spatiu" → pagina temei (2 segmente)
 // Izolare de limbă: getStaticPaths întoarce [] pe build-ul HU, deci
 // aceste pagini NU apar pe konvertalo.hu (fără scurgere HU↔RO).
 // ============================================================
 import ProblemeHubLayout from "../../layouts/ProblemeHubLayout.astro";
 import ProblemeGradeLayout from "../../layouts/ProblemeGradeLayout.astro";
-import { GRADES } from "../../lib/content/ro/probleme-matematica.ts";
+import ProblemeTopicLayout from "../../layouts/ProblemeTopicLayout.astro";
+import { GRADES, getTopicGroups } from "../../lib/content/ro/probleme-matematica.ts";
 import { CURRENT_LANG } from "../../i18n/index.ts";
 
 export function getStaticPaths() {
   // Doar pe build-ul RO
   if (CURRENT_LANG !== "ro") return [];
 
-  return [
+  const paths: any[] = [
     // Hub (rădăcina directorului)
     { params: { slug: undefined }, props: { kind: "hub" as const } },
-    // Câte o pagină per clasă
-    ...GRADES.map((g) => ({
-      params: { slug: g.slug },
-      props: { kind: "grade" as const, grade: g },
-    })),
   ];
+
+  for (const g of GRADES) {
+    // Pagina clasei
+    paths.push({ params: { slug: g.slug }, props: { kind: "grade" as const, grade: g } });
+    // Pagini dedicate pe teme (2 segmente)
+    const groups = getTopicGroups(g);
+    for (const group of groups) {
+      paths.push({
+        params: { slug: `${g.slug}/${group.slug}` },
+        props: { kind: "topic" as const, grade: g, group, siblings: groups },
+      });
+    }
+  }
+
+  return paths;
 }
 
 const props = Astro.props as
   | { kind: "hub" }
-  | { kind: "grade"; grade: (typeof GRADES)[number] };
+  | { kind: "grade"; grade: (typeof GRADES)[number] }
+  | { kind: "topic"; grade: (typeof GRADES)[number]; group: any; siblings: any[] };
 ---
 
-{props.kind === "hub"
-  ? <ProblemeHubLayout />
-  : <ProblemeGradeLayout grade={props.grade} />}
+{props.kind === "hub" && <ProblemeHubLayout />}
+{props.kind === "grade" && <ProblemeGradeLayout grade={props.grade} />}
+{props.kind === "topic" && (
+  <ProblemeTopicLayout grade={props.grade} group={props.group} siblings={props.siblings} />
+)}

@@ -1702,3 +1702,147 @@ export const DIFFICULTY_LABEL: Record<Difficulty, string> = {
   mediu: "Mediu",
   dificil: "Dificil",
 };
+
+// ─── Slug diacritice-safe pentru teme (segment URL) ──────────
+export function topicSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[ăâ]/g, "a")
+    .replace(/î/g, "i")
+    .replace(/ș|ş/g, "s")
+    .replace(/ț|ţ/g, "t")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+// ─── Grupare pe teme (ordinea primei apariții) ───────────────
+export interface TopicGroup {
+  topic: string;
+  slug: string;
+  exercises: Exercise[];
+}
+export function getTopicGroups(grade: GradeLevel): TopicGroup[] {
+  const groups: TopicGroup[] = [];
+  for (const ex of grade.exercises) {
+    let g = groups.find((x) => x.topic === ex.topic);
+    if (!g) {
+      g = { topic: ex.topic, slug: topicSlug(ex.topic), exercises: [] };
+      groups.push(g);
+    }
+    g.exercises.push(ex);
+  }
+  return groups;
+}
+
+// ============================================================
+// TEORIE PE TEME – notă concisă „Ce trebuie să reții" pe fiecare
+// pagină dedicată unei teme (/probleme-matematica/{clasa}/{tema}/).
+// Cheia este numele exact al temei (reutilizat între clase).
+// Text lizibil + formule KaTeX ($…$), redate de renderMixed.
+// ============================================================
+export const TOPIC_THEORY: Record<string, string> = {
+  "Ordinea operațiilor":
+    "Într-un calcul se efectuează întâi parantezele, apoi puterile, apoi înmulțirile și împărțirile (de la stânga la dreapta), iar la final adunările și scăderile.",
+  "Puteri":
+    "O putere înseamnă înmulțire repetată. Reguli utile: $a^m\\cdot a^n=a^{m+n}$, $\\dfrac{a^m}{a^n}=a^{m-n}$ și $(a^m)^n=a^{m\\cdot n}$.",
+  "Numere naturale":
+    "Numerele naturale sunt 0, 1, 2, 3, … Problemele folosesc operații, comparări și metode aritmetice (suma și diferența, metoda mersului invers).",
+  "Divizibilitate":
+    "Un număr se divide cu altul dacă restul împărțirii este 0. Criterii: cu 2 (cifra unităților pară), cu 3 și 9 (suma cifrelor divizibilă), cu 5 (ultima cifră 0 sau 5), cu 10 (ultima cifră 0).",
+  "Fracții ordinare":
+    "La adunare/scădere aducem fracțiile la același numitor (c.m.m.m.c.); la înmulțire: $\\dfrac{a}{b}\\cdot\\dfrac{c}{d}=\\dfrac{ac}{bd}$; la împărțire înmulțim cu inversa.",
+  "Fracții zecimale":
+    "La adunare/scădere aliniem virgulele; la înmulțire înmulțim fără virgulă, apoi punem atâtea zecimale câte au împreună factorii.",
+  "Unități de măsură":
+    "Transformările se fac cu puteri ale lui 10: 1 m = 100 cm = 1000 mm, 1 km = 1000 m, 1 kg = 1000 g, 1 l = 1000 ml.",
+  "Unghiuri":
+    "Unghiuri complementare: suma 90°. Unghiuri suplementare: suma 180°. Suma unghiurilor unui triunghi este 180°.",
+  "Metoda mersului invers":
+    "Pornim de la rezultatul final și anulăm pe rând operațiile (scădere ↔ adunare, împărțire ↔ înmulțire) până ajungem la necunoscută.",
+  "c.m.m.d.c. și c.m.m.m.c.":
+    "Din descompunerea în factori primi: c.m.m.d.c. = factorii comuni la puterea cea mai mică; c.m.m.m.c. = toți factorii la puterea cea mai mare. În plus, $a\\cdot b=\\text{c.m.m.d.c.}(a,b)\\cdot\\text{c.m.m.m.c.}(a,b)$.",
+  "Proporții":
+    "Într-o proporție $\\dfrac{a}{b}=\\dfrac{c}{d}$, produsul extremilor este egal cu produsul mezilor: $a\\cdot d=b\\cdot c$. Este baza regulii de trei simple.",
+  "Procente":
+    "$p\\%$ dintr-un număr $N$ se calculează ca $\\dfrac{p}{100}\\cdot N$. Pentru a afla întregul dintr-un procent cunoscut, împărțim valoarea la $\\dfrac{p}{100}$.",
+  "Numere întregi":
+    "Numere de același semn: se adună valorile și se păstrează semnul. Numere de semne diferite: se scad valorile absolute și se ia semnul celui mai mare. Scăderea unui negativ = adunarea opusului.",
+  "Triunghiul":
+    "Suma unghiurilor este 180°. În triunghiul isoscel unghiurile de la bază sunt egale; în cel echilateral toate au 60°.",
+  "Rapoarte":
+    "Un raport compară două mărimi ($a:b$). Dacă sunt în raportul $m:n$, le notăm $mk$ și $nk$ și folosim o condiție (sumă sau diferență) pentru a afla $k$.",
+  "Numere raționale":
+    "Un număr rațional se scrie ca fracție $\\dfrac{a}{b}$ cu $b\\neq 0$. Operațiile respectă regulile fracțiilor și ale semnelor.",
+  "Proporționalitate inversă":
+    "Două mărimi sunt invers proporționale dacă produsul lor este constant: $x\\cdot y=k$. Când una crește, cealaltă scade proporțional.",
+  "Ecuații de gradul I":
+    "$ax+b=0$ (cu $a\\neq 0$) are soluția $x=-\\dfrac{b}{a}$. Izolăm necunoscuta trecând termenii dintr-o parte în alta cu semn schimbat.",
+  "Radicali":
+    "$\\sqrt{a}$ este numărul pozitiv al cărui pătrat este $a$. Scoatem factorii de sub radical: $\\sqrt{a^2 b}=a\\sqrt{b}$; înmulțire: $\\sqrt{a}\\cdot\\sqrt{b}=\\sqrt{ab}$.",
+  "Produse remarcabile":
+    "Formulele de bază: $(a+b)^2=a^2+2ab+b^2$, $(a-b)^2=a^2-2ab+b^2$ și $a^2-b^2=(a-b)(a+b)$.",
+  "Teorema lui Pitagora":
+    "În triunghiul dreptunghic, ipotenuza la pătrat este egală cu suma pătratelor catetelor. Se folosește pentru a afla o latură când celelalte două sunt cunoscute.",
+  "Asemănare (Thales)":
+    "O paralelă la o latură a triunghiului determină pe celelalte laturi segmente proporționale (teorema lui Thales), stând la baza asemănării triunghiurilor.",
+  "Arii":
+    "Dreptunghi: $A=L\\cdot l$. Pătrat: $A=l^2$. Triunghi: $A=\\dfrac{b\\cdot h}{2}$. Paralelogram: $A=b\\cdot h$.",
+  "Sisteme de ecuații":
+    "Un sistem de două ecuații cu două necunoscute se rezolvă prin metoda reducerii sau a substituției, eliminând o necunoscută pentru a o afla pe cealaltă.",
+  "Funcția de gradul I":
+    "$f(x)=ax+b$ are graficul o dreaptă. Dacă $a>0$ este crescătoare, dacă $a<0$ descrescătoare; taie axa Ox unde $f(x)=0$.",
+  "Geometrie în spațiu":
+    "Volume ($A_b$ = aria bazei): cub $V=l^3$; paralelipiped $V=L\\cdot l\\cdot h$; prismă/cilindru $V=A_b\\cdot h$; piramidă/con $V=\\dfrac{A_b\\cdot h}{3}$; sferă $V=\\dfrac{4}{3}\\pi R^3$.",
+  "Descompuneri în factori":
+    "Metode: factor comun, produse remarcabile ($a^2-b^2$, pătratul sumei/diferenței) și, pentru trinomul $x^2+sx+p$, două numere cu suma $s$ și produsul $p$.",
+  "Inecuații":
+    "Se rezolvă ca ecuațiile, dar la înmulțirea sau împărțirea cu un număr negativ sensul inegalității se schimbă. Soluția este un interval.",
+  "Numere reale":
+    "Mulțimea numerelor reale $\\mathbb{R}$ include numerele raționale și iraționale (de exemplu $\\sqrt{2}$, $\\pi$). Operațiile cu radicali respectă regulile puterilor.",
+  "Funcția de gradul II":
+    "$f(x)=ax^2+bx+c$ are graficul o parabolă. Vârful: $x_V=-\\dfrac{b}{2a}$, $y_V=-\\dfrac{\\Delta}{4a}$. Deschiderea este în sus dacă $a>0$.",
+  "Ecuația de gradul II":
+    "$ax^2+bx+c=0$ se rezolvă cu $\\Delta=b^2-4ac$ și $x_{1,2}=\\dfrac{-b\\pm\\sqrt{\\Delta}}{2a}$. Numărul soluțiilor reale depinde de semnul lui $\\Delta$.",
+  "Trigonometrie":
+    "În triunghiul dreptunghic: $\\sin=\\dfrac{\\text{cateta opusă}}{\\text{ipotenuza}}$, $\\cos=\\dfrac{\\text{cateta alăturată}}{\\text{ipotenuza}}$, $\\operatorname{tg}=\\dfrac{\\text{opusă}}{\\text{alăturată}}$.",
+  "Vectori":
+    "Operații pe componente: $\\vec u+\\vec v=(x_1+x_2,\\,y_1+y_2)$; înmulțire cu scalar: $k\\vec u=(kx,\\,ky)$; modulul: $|\\vec u|=\\sqrt{x^2+y^2}$.",
+  "Geometrie analitică":
+    "Mijloc: $M\\left(\\dfrac{x_A+x_B}{2},\\dfrac{y_A+y_B}{2}\\right)$; distanță: $\\sqrt{(x_B-x_A)^2+(y_B-y_A)^2}$; panta dreptei: $m=\\dfrac{y_B-y_A}{x_B-x_A}$.",
+  "Inecuații de gradul II":
+    "Aflăm rădăcinile trinomului, apoi folosim semnul: $ax^2+bx+c$ are semnul lui $a$ în afara rădăcinilor și semn opus între ele.",
+  "Mulțimi și funcții":
+    "Intersecția $A\\cap B$ = elementele comune; reuniunea $A\\cup B$ = toate elementele. O funcție asociază fiecărui element din domeniu exact o valoare.",
+  "Ecuații exponențiale":
+    "Dacă bazele sunt egale, egalăm exponenții: $a^{f(x)}=a^{g(x)}\\Rightarrow f(x)=g(x)$. Aducem ambii membri la aceeași bază.",
+  "Logaritmi":
+    "$\\log_a b=c\\Leftrightarrow a^c=b$ (cu $a>0$, $a\\neq1$, $b>0$). Proprietăți: $\\log(xy)=\\log x+\\log y$ și $\\log x^n=n\\log x$.",
+  "Combinatorică":
+    "Permutări: $P_n=n!$. Aranjamente (contează ordinea): $A_n^k=\\dfrac{n!}{(n-k)!}$. Combinări (nu contează ordinea): $C_n^k=\\dfrac{n!}{k!\\,(n-k)!}$.",
+  "Probabilități":
+    "$P=\\dfrac{\\text{cazuri favorabile}}{\\text{cazuri posibile}}$, cu valori între 0 și 1. Evenimentul sigur are $P=1$, cel imposibil $P=0$.",
+  "Numere complexe":
+    "$z=a+bi$ cu $i^2=-1$. Modulul: $|z|=\\sqrt{a^2+b^2}$; conjugatul: $\\bar z=a-bi$. Se adună și se înmulțesc ca binoamele, folosind $i^2=-1$.",
+  "Determinanți":
+    "Ordinul 2: $\\begin{vmatrix}a&b\\\\c&d\\end{vmatrix}=ad-bc$. Ordinul 3 se calculează cu regula lui Sarrus.",
+  "Matrici":
+    "Se adună/scad element cu element (aceleași dimensiuni). Înmulțirea cu scalar multiplică fiecare element. Produsul a două matrici se face linie × coloană.",
+  "Limite":
+    "Pentru nedeterminarea $\\dfrac{0}{0}$ factorizăm și simplificăm. La $x\\to\\infty$ pentru funcții raționale contează gradul dominant (împărțim la puterea cea mai mare).",
+  "Derivate":
+    "$(x^n)'=n\\,x^{n-1}$, $(c)'=0$, iar derivata sumei este suma derivatelor. Derivata măsoară panta tangentei la grafic.",
+  "Studiul funcțiilor":
+    "Semnul derivatei întâi dă monotonia (crescătoare unde $f'>0$, descrescătoare unde $f'<0$); $f'=0$ dă punctele de extrem, iar $f''$ dă convexitatea.",
+  "Sisteme (Cramer)":
+    "Cu determinanți: $x=\\dfrac{\\Delta_x}{\\Delta}$, $y=\\dfrac{\\Delta_y}{\\Delta}$, unde $\\Delta$ este determinantul sistemului, iar $\\Delta_x,\\Delta_y$ se obțin înlocuind coloana respectivă cu termenii liberi.",
+  "Primitive":
+    "O primitivă $F$ satisface $F'=f$. Regula de bază: $\\int x^n\\,dx=\\dfrac{x^{n+1}}{n+1}+C$ (pentru $n\\neq-1$). Nu uita constanta $C$.",
+  "Integrala definită":
+    "Formula Leibniz–Newton: $\\int_a^b f(x)\\,dx=F(b)-F(a)$, unde $F$ este o primitivă a lui $f$.",
+  "Aria subgraficului":
+    "Aria dintre graficul unei funcții pozitive și axa Ox, pe intervalul $[a,b]$, este $A=\\int_a^b f(x)\\,dx$.",
+  "Structuri algebrice":
+    "Elementul neutru $e$ satisface $x*e=x$; simetricul $x'$ satisface $x*x'=e$. O lege este comutativă dacă $x*y=y*x$ și asociativă dacă $(x*y)*z=x*(y*z)$.",
+  "Polinoame":
+    "Teorema restului: restul împărțirii lui $P$ la $(x-a)$ este $P(a)$. Dacă $P(a)=0$, atunci $a$ este rădăcină și $(x-a)$ divide $P$.",
+};

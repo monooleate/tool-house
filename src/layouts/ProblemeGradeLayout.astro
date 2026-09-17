@@ -9,7 +9,7 @@
 // ============================================================
 import BaseLayout from "./BaseLayout.astro";
 import {
-  HUB, GRADES, DIFFICULTY_LABEL, type GradeLevel,
+  HUB, GRADES, DIFFICULTY_LABEL, getTopicGroups, type GradeLevel,
 } from "../lib/content/ro/probleme-matematica.ts";
 import {
   breadcrumbNode, faqNode, educationalOrgNode, courseNode, quizNode,
@@ -71,19 +71,9 @@ const diffClass = (d: string) => `pm-badge--${d}`;
 
 // ─── Grupare pe teme (capitole) — ordinea primei apariții ────
 // Ca la modelul MatekMegoldások: sub fiecare clasă, problemele sunt
-// împărțite pe teme (subcapitole), fiecare cu propriul titlu.
-type Grp = { topic: string; exercises: typeof grade.exercises };
-const topicGroups: Grp[] = [];
-for (const ex of grade.exercises) {
-  let g = topicGroups.find((x) => x.topic === ex.topic);
-  if (!g) { g = { topic: ex.topic, exercises: [] }; topicGroups.push(g); }
-  g.exercises.push(ex);
-}
-// Anchor-slug diacritice-safe pentru linkurile din lista de capitole
-const topicAnchor = (s: string) =>
-  "tema-" + s.toLowerCase()
-    .replace(/[ăâ]/g, "a").replace(/î/g, "i").replace(/ș|ş/g, "s").replace(/ț|ţ/g, "t")
-    .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+// împărțite pe teme, fiecare cu titlu și cu o pagină dedicată.
+const topicGroups = getTopicGroups(grade);
+const topicAnchor = (slug: string) => `tema-${slug}`;
 ---
 
 <BaseLayout
@@ -143,7 +133,7 @@ const topicAnchor = (s: string) =>
       <ul class="pm-topic-list" role="list">
         {topicGroups.map((grp) => (
           <li>
-            <a class="pm-topic" href={`#${topicAnchor(grp.topic)}`}>
+            <a class="pm-topic" href={`#${topicAnchor(grp.slug)}`}>
               {grp.topic} <span class="pm-topic__badge">{grp.exercises.length}</span>
             </a>
           </li>
@@ -155,10 +145,12 @@ const topicAnchor = (s: string) =>
     <section class="pm-exercises" aria-labelledby="ex-title">
       <h2 id="ex-title" class="section-label">✏️ Probleme rezolvate pe teme</h2>
       {topicGroups.map((grp) => (
-        <div class="pm-topic-group" id={topicAnchor(grp.topic)}>
+        <div class="pm-topic-group" id={topicAnchor(grp.slug)}>
           <h3 class="pm-topic-heading">
-            <span>{grp.topic}</span>
-            <span class="pm-topic-heading__count">{grp.exercises.length} {grp.exercises.length === 1 ? "problemă" : "probleme"}</span>
+            <a class="pm-topic-heading__link" href={`${selfPath}${grp.slug}/`}>{grp.topic}</a>
+            <a class="pm-topic-heading__count" href={`${selfPath}${grp.slug}/`}>
+              {grp.exercises.length} {grp.exercises.length === 1 ? "problemă" : "probleme"} →
+            </a>
           </h3>
           <ol class="pm-ex-list" role="list">
             {grp.exercises.map((ex, i) => (
@@ -301,7 +293,13 @@ const topicAnchor = (s: string) =>
   font-size: 1.15rem; margin: 0 0 var(--sp-4);
   padding-bottom: var(--sp-2); border-bottom: 2px solid var(--accent);
 }
-.pm-topic-heading__count { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+.pm-topic-heading__link { color: var(--text); text-decoration: none; }
+.pm-topic-heading__link:hover { color: var(--accent); }
+.pm-topic-heading__count {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+  color: var(--accent); white-space: nowrap; text-decoration: none;
+}
+.pm-topic-heading__count:hover { text-decoration: underline; }
 .pm-ex-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
 .pm-ex {
   padding: var(--sp-5); background: var(--bg-card);
