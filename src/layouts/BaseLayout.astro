@@ -9,6 +9,7 @@ import HouseAdEngine from "../components/HouseAdEngine.astro";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, buildCanonical, buildPageGraph, serializeGraph } from "../lib/seo.ts";
 import { CATEGORIES, getActiveToolsCount, getTotalToolsCount, getToolsByCategory, getVisibleCategories, getLocalizedCategory, getLocalizedTool } from "../lib/tool-registry.ts";
 import { toolUrl, categoryUrl, staticUrl } from "../lib/url-utils.ts";
+import { HUB as PROBLEME_HUB } from "../lib/content/ro/probleme-matematica.ts";
 import { GOOGLE_TAG_ID, GTM_ID, CONSENT_MODE_ENABLED, hasGoogleTag, hasGTM } from "../lib/analytics.ts";
 import { t, tpl, CURRENT_CONFIG, CURRENT_LANG, LANG_CONFIG } from "../i18n/index.ts";
 import type { SupportedLang } from "../i18n/index.ts";
@@ -431,6 +432,18 @@ const serializedGraph = graphNodes
               </ul>
             </section>
           )}
+
+          {/* Probleme de matematică pe clase (RO-only) – link kiemelt a mega-menüben */}
+          {CURRENT_LANG === "ro" && (
+            <a href={`/${PROBLEME_HUB.slug}/`} class="nav-megafeature" role="menuitem">
+              <span class="nav-megafeature__icon" aria-hidden="true">📐</span>
+              <span class="nav-megafeature__text">
+                <strong>Probleme de matematică pe clase</strong>
+                <small>Exerciții rezolvate pas cu pas · clasele V–XII</small>
+              </span>
+              <span class="nav-megafeature__arrow" aria-hidden="true">→</span>
+            </a>
+          )}
         </div>
       </div>
 
@@ -508,6 +521,13 @@ const serializedGraph = graphNodes
             </a>
           </div>
         ))}
+        {CURRENT_LANG === "ro" && (
+          <div class="footer-cat">
+            <a href={`/${PROBLEME_HUB.slug}/`} class="footer-cat__title">
+              📐 Probleme de matematică
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* Cross-language links – dinamikusan a LANG_CONFIG-ból */}
@@ -731,6 +751,29 @@ const serializedGraph = graphNodes
   letter-spacing: 0.08em;
   margin: 0 0 var(--sp-3) 0;
 }
+
+/* Kiemelt link a mega-menüben (RO: Probleme de matematică pe clase) */
+.nav-megafeature {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg-card));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+.nav-megafeature:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-card));
+}
+.nav-megafeature__icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.nav-megafeature__text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.nav-megafeature__text strong { font-size: 0.9rem; color: var(--text); }
+.nav-megafeature__text small { font-size: 0.75rem; color: var(--text-muted); }
+.nav-megafeature__arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; }
 
 /* Grid: kategória kártyák — auto-fill, jó kontraszttal dark/light-on */
 .nav-megagrid {
