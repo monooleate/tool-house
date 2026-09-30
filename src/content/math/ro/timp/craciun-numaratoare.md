@@ -1,6 +1,6 @@
 ---
-title: "Numărătoare Inversă Crăciun – Cu Animație de Ninsoare Live"
-description: "Numărătoare inversă live până la Crăciun (25 decembrie). Zile, ore, minute, secunde — cu animație discretă de ninsoare, butoane de partajare și auto-avansare la următorul Crăciun."
+title: "Câte zile mai sunt până la Crăciun 2026? Numărătoare inversă live"
+description: "Câte zile mai sunt până la Crăciun 2026 (vineri, 25 decembrie)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de ninsoare și auto-avansare la Crăciun 2027."
 toolSlug: "craciun-numaratoare"
 category: "timp"
 published_at: "2026-04-28T00:00:00.000Z"
@@ -8,8 +8,8 @@ refreshed_at: "2026-04-28T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Numărătoare Inversă Crăciun – Cu Animație de Ninsoare Live"
-  "description": "Numărătoare inversă live până la Crăciun (25 decembrie). Zile, ore, minute, secunde — cu animație discretă de ninsoare, butoane de partajare și auto-avansare la următorul Crăciun."
+  "headline": "Câte zile mai sunt până la Crăciun 2026? Numărătoare inversă live"
+  "description": "Câte zile mai sunt până la Crăciun 2026 (vineri, 25 decembrie)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de ninsoare și auto-avansare la Crăciun 2027."
   "datePublished": "2026-04-28T00:00:00.000Z"
   "dateModified": "2026-04-28T00:00:00.000Z"
   "inLanguage": "ro"
@@ -88,6 +88,10 @@ faqPageSchema:
 ---
 
 **Crăciunul** este una dintre cele mai importante sărbători din calendarul ortodox român, prăznuind nașterea lui Iisus Hristos pe **25 decembrie**. În România, este sărbătoare legală împreună cu **26 decembrie** (a doua zi de Crăciun), oferind cel puțin 2 zile consecutive libere conform Codului Muncii.
+
+## Câte zile mai sunt până la Crăciun 2026 și 2027?
+
+Crăciunul din **2026** cade **vineri, 25 decembrie**, iar a doua zi de Crăciun (26 decembrie) este sâmbătă. În **2027**, 25 decembrie este **sâmbătă** și 26 decembrie **duminică**, deci ambele zile de sărbătoare cad în weekend. Numărătoarea de mai sus îți arată automat câte zile, ore, minute și secunde mai sunt până la următorul Crăciun, așa că după 25 decembrie 2026 trece singură la Crăciunul din 2027.
 
 ## Cum funcționează numărătoarea
 

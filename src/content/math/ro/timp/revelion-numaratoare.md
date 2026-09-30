@@ -1,6 +1,6 @@
 ---
-title: "Numărătoare Inversă Revelion – La Mulți Ani! Cu Animație Artificii"
-description: "Numărătoare inversă live până la 1 ianuarie ora 00:00. Zile, ore, minute, secunde — cu animație de artificii, mesaj «La mulți ani!» și auto-avansare la următorul Revelion."
+title: "Câte zile mai sunt până la Revelion? Numărătoare inversă live"
+description: "Câte zile mai sunt până la Revelion (1 ianuarie 2027, ora 00:00)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
 toolSlug: "revelion-numaratoare"
 category: "timp"
 published_at: "2026-04-28T00:00:00.000Z"
@@ -8,8 +8,8 @@ refreshed_at: "2026-04-28T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Numărătoare Inversă Revelion – La Mulți Ani! Cu Animație Artificii"
-  "description": "Numărătoare inversă live până la 1 ianuarie ora 00:00. Zile, ore, minute, secunde — cu animație de artificii, mesaj «La mulți ani!» și auto-avansare la următorul Revelion."
+  "headline": "Câte zile mai sunt până la Revelion? Numărătoare inversă live"
+  "description": "Câte zile mai sunt până la Revelion (1 ianuarie 2027, ora 00:00)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
   "datePublished": "2026-04-28T00:00:00.000Z"
   "dateModified": "2026-04-28T00:00:00.000Z"
   "inLanguage": "ro"
@@ -88,6 +88,10 @@ faqPageSchema:
 ---
 
 **Revelionul** (din franc. *réveillon* = trezirea) este sărbătoarea trecerii în Anul Nou, una dintre cele mai populare nopți festive ale anului. În România, **31 decembrie** (după-amiază liber) + **1 și 2 ianuarie** (sărbători legale) formează un mini-vacanțe garantat de **3+ zile**.
+
+## Câte zile mai sunt până la Revelion?
+
+Următorul Revelion este în noaptea de **31 decembrie 2026 (joi) spre 1 ianuarie 2027 (vineri)**. Numărătoarea de mai sus calculează exact câte zile, ore, minute și secunde mai sunt până la **1 ianuarie, ora 00:00**, iar după miezul nopții trece automat la Revelionul următor. Atât 1, cât și 2 ianuarie sunt zile libere legale în România.
 
 ## Cum funcționează numărătoarea
 

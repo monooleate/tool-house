@@ -2,7 +2,7 @@
   // ============================================================
   // CateZileAmCalculator.svelte — Câte zile am trăit?
   // Port: math reference VissszaszamlaEletkor.tsx, RO-localizat.
-  // Birth date input → live „ai trăit X zile, Y ore..." + mérföldkövek
+  // Birth date input → live „ai trăit X zile, Y ore..." + repere
   // (10 000 zile, 1 milliard secunde, 1 milion de minute etc.)
   // ============================================================
   import { onMount, onDestroy } from "svelte";
@@ -106,7 +106,7 @@
     <span class="cza__icon" aria-hidden="true">{varsta ? emoji(varsta.totalZile) : "📅"}</span>
     <div>
       <h2 class="cza__title">Câte zile am trăit?</h2>
-      <p class="cza__sub">Ceasul live al vieții tale: zile, ore, minute, secunde + mérföldkövek</p>
+      <p class="cza__sub">Ceasul live al vieții tale: zile, ore, minute, secunde + repere</p>
     </div>
   </div>
 
@@ -158,9 +158,9 @@
       <div class="cza__cell"><span class="cza__cell-num">{fmt(varsta.luni, 1)}</span><span class="cza__cell-lbl">luni</span></div>
     </div>
 
-    <!-- Mérföldkövek -->
+    <!-- Repere -->
     <div class="cza__milestones">
-      <span class="cza__milestones-lbl">🎯 Mérföldkövek</span>
+      <span class="cza__milestones-lbl">🎯 Repere</span>
       <div class="cza__milestones-list">
         {#each milestonesData as m}
           <div class="cza__milestone" class:is-reached={m.reached}>

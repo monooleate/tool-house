@@ -1,6 +1,6 @@
 ---
-title: "Conversie mile ↔ km – formulă și tabel (1 milă = 1,609 km)"
-description: "Cum convertești mile în kilometri și invers. Formula (1 milă = 1,609344 km), tabel de referință și distanțe uzuale."
+title: "Mile în km – câți km are o milă terestră (1 milă = 1,609 km)"
+description: "Câți kilometri are o milă terestră? 1 milă = 1,609344 km. Convertește mile în km și invers, cu formulă, tabel de referință și diferența față de mila marină."
 toolSlug: "mile-kilometri"
 category: "conversii"
 subcategory: "lungime"
@@ -9,8 +9,8 @@ refreshed_at: "2026-05-31T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Conversie mile ↔ km – formulă și tabel (1 milă = 1,609 km)"
-  "description": "Cum convertești mile în kilometri și invers. Formula (1 milă = 1,609344 km), tabel de referință și distanțe uzuale."
+  "headline": "Mile în km – câți km are o milă terestră (1 milă = 1,609 km)"
+  "description": "Câți kilometri are o milă terestră? 1 milă = 1,609344 km. Convertește mile în km și invers, cu formulă, tabel de referință și diferența față de mila marină."
   "datePublished": "2026-05-31T00:00:00.000Z"
   "dateModified": "2026-05-31T00:00:00.000Z"
   "inLanguage": "ro"
@@ -85,7 +85,7 @@ faqPageSchema:
 
 **Conversia mile ↔ kilometri** este una dintre cele mai căutate transformări, mai ales pentru distanțe rutiere din SUA și Regatul Unit, aplicații de fitness și aviație. **1 milă internațională = 1,609344 km.**
 
-## Hány kilométer egy mérföld? Formula de conversie
+## Câți kilometri are o milă terestră? Formula de conversie
 
 Mila internațională (terestră) este definită exact ca **1.609,344 metri**, adică **1,609344 km**:
 

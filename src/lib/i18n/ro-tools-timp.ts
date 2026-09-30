@@ -118,9 +118,9 @@ export const TIMP_RO: Record<string, { slug: string; title: string; h1: string; 
   },
   "cate-zile-am": {
     slug: "cate-zile-am",
-    title: "Câte Zile Am Trăit – Calculator Vârstă Live cu Mérföldkövek | InstrumenteOnline",
+    title: "Câte Zile Am Trăit – Calculator Vârstă Live cu Repere | InstrumenteOnline",
     h1: "Câte Zile Am Trăit?",
-    description: "Calculator de vârstă live: vezi câte zile, ore, minute și secunde ai trăit. Mérföldkövek: 10 000 zile, 1 miliard secunde, 1 milion minute.",
+    description: "Calculator de vârstă live: vezi câte zile, ore, minute și secunde ai trăit. Repere: 10 000 zile, 1 miliard secunde, 1 milion minute.",
     keywords: ["cate zile am trait", "calculator varsta", "varsta in zile", "varsta secunde", "milestones varsta", "live age clock"],
   },
   "bacalaureat-numaratoare": {

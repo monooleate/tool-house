@@ -1,6 +1,6 @@
 ---
-title: "Câte Zile Am Trăit – Calculator Vârstă Live cu Mérföldkövek (10 000 zile, 1 miliard secunde)"
-description: "Calculator de vârstă în timp real: câte zile, ore, minute și secunde ai trăit. Mérföldkövek: 10 000 zile, 1 milion minute, 1 miliard secunde."
+title: "Câte Zile Am Trăit – Calculator Vârstă Live cu Repere (10 000 zile, 1 miliard secunde)"
+description: "Calculator de vârstă în timp real: câte zile, ore, minute și secunde ai trăit. Repere: 10 000 zile, 1 milion minute, 1 miliard secunde."
 toolSlug: "cate-zile-am"
 category: "timp"
 published_at: "2026-04-28T00:00:00.000Z"
@@ -8,8 +8,8 @@ refreshed_at: "2026-04-28T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Câte Zile Am Trăit – Calculator Vârstă Live cu Mérföldkövek (10 000 zile, 1 miliard secunde)"
-  "description": "Calculator de vârstă în timp real: câte zile, ore, minute și secunde ai trăit. Mérföldkövek: 10 000 zile, 1 milion minute, 1 miliard secunde."
+  "headline": "Câte Zile Am Trăit – Calculator Vârstă Live cu Repere (10 000 zile, 1 miliard secunde)"
+  "description": "Calculator de vârstă în timp real: câte zile, ore, minute și secunde ai trăit. Repere: 10 000 zile, 1 milion minute, 1 miliard secunde."
   "datePublished": "2026-04-28T00:00:00.000Z"
   "dateModified": "2026-04-28T00:00:00.000Z"
   "inLanguage": "ro"
@@ -29,8 +29,8 @@ softwareSchema:
   "name": "Calculator Câte Zile Am Trăit"
   "applicationCategory": "LifestyleApplication"
   "operatingSystem": "Web"
-  "description": "Calculator de vârstă live cu mérföldkövek-uri matematice. Vârsta în zile, ore, minute, secunde — actualizat la fiecare secundă."
-  "featureList": "Date-picker pentru data nașterii; ceas live cu update la fiecare secundă; vârsta exactă (ani/luni/zile) + total zile/ore/min/sec; 8 mérföldkövek (1k, 5k, 10k, 18k, 25k, 30k zile + 1M min + 1B sec); client-side; gratuit."
+  "description": "Calculator de vârstă live cu repere matematice. Vârsta în zile, ore, minute, secunde — actualizat la fiecare secundă."
+  "featureList": "Date-picker pentru data nașterii; ceas live cu update la fiecare secundă; vârsta exactă (ani/luni/zile) + total zile/ore/min/sec; 8 repere (1k, 5k, 10k, 18k, 25k, 30k zile + 1M min + 1B sec); client-side; gratuit."
   "url": "https://instrumenteonline.ro/timp/cate-zile-am/"
   "inLanguage": "ro"
   "isAccessibleForFree": true
@@ -58,7 +58,7 @@ softwareSchema:
       "author":
         "@type": "Person"
         "name": "Florin G."
-      "reviewBody": "Am descoperit că am trăit deja peste 1 miliard de secunde — un mérföldkő interesant pe care voi să-l sărbătoresc."
+      "reviewBody": "Am descoperit că am trăit deja peste 1 miliard de secunde — un reper interesant pe care voi să-l sărbătoresc."
       "datePublished": "2026-04-26"
 faqPageSchema:
   "@context": "https://schema.org"
@@ -73,12 +73,12 @@ faqPageSchema:
       "name": "Ce înseamnă „1 miliard de secunde”?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Aproximativ 31,7 ani — un mérföldkő interesant dacă te apropii de 30. Concret: 1 000 000 000 / (60 × 60 × 24 × 365,25) = 31,69 ani. Sărbătoarea acestui prag este o tradiție tot mai populară în mediul online."
+        "text": "Aproximativ 31,7 ani — un reper interesant dacă te apropii de 30. Concret: 1 000 000 000 / (60 × 60 × 24 × 365,25) = 31,69 ani. Sărbătoarea acestui prag este o tradiție tot mai populară în mediul online."
     - "@type": "Question"
       "name": "De ce 10 000 de zile?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "10 000 zile = 27,38 ani — un mérföldkő mai puțin folosit dar foarte concret. Persoane care au împlinit 10 000 zile au o conștiință acută a faptului că timpul este limitat și concret măsurabil. Există chiar comunități online dedicate sărbătoririi acestei zile."
+        "text": "10 000 zile = 27,38 ani — un reper mai puțin folosit dar foarte concret. Persoane care au împlinit 10 000 zile au o conștiință acută a faptului că timpul este limitat și concret măsurabil. Există chiar comunități online dedicate sărbătoririi acestei zile."
     - "@type": "Question"
       "name": "Datele mele sunt private?"
       "acceptedAnswer":
@@ -87,7 +87,7 @@ faqPageSchema:
 
 ---
 
-**„Câte zile am trăit?”** este o întrebare aparent simplă, dar răspunsul exact dezvăluie ceva profund: timpul ca resursă concretă, măsurabilă, limitată. Calculatorul nostru afișează vârsta ta în 6 unități paralele (zile, ore, minute, secunde, săptămâni, luni) plus 8 mérföldkövek matematice — actualizat la fiecare secundă.
+**„Câte zile am trăit?”** este o întrebare aparent simplă, dar răspunsul exact dezvăluie ceva profund: timpul ca resursă concretă, măsurabilă, limitată. Calculatorul nostru afișează vârsta ta în 6 unități paralele (zile, ore, minute, secunde, săptămâni, luni) plus 8 repere matematice — actualizat la fiecare secundă.
 
 ## Formula matematică
 
@@ -143,9 +143,9 @@ $$
 | Luni | 433,3 |
 | Ani | 36,1 |
 
-## Mérföldkövek matematice
+## Repere matematice
 
-| Mérföldkő | Echivalent în ani | Atins la vârsta de |
+| Reper | Echivalent în ani | Atins la vârsta de |
 |-----------|------------------:|---------------------|
 | 1 000 zile | ~2,7 ani | 2 ani 9 luni |
 | 5 000 zile | ~13,7 ani | 13 ani 8 luni |
@@ -253,7 +253,7 @@ JavaScript folosește `Date.now()` care e precis la **milisecundă**. Update-ul 
 1. **Confundarea zilelor cu vârsta** — vârsta este în ani; zile / 365,25 ≈ ani.
 2. **Anul bisect = +1 zi** — peste decade, contribuie ~1% la totalul zilelor.
 3. **Ora nașterii** — calculatorul presupune **ora 00:00 la data nașterii**. Dacă te-ai născut la ora 22:00, nu ai trăit chiar 1 zi întreagă încă.
-4. **Confuzia „mérföldkő” vs aniversare** — mérföldkövek-ul de 10 000 zile nu coincide cu o aniversare clasică (e între 27 și 28 ani).
+4. **Confuzia „reper” vs aniversare** — reperul de 10 000 zile nu coincide cu o aniversare clasică (e între 27 și 28 ani).
 
 ## Referințe
 

@@ -511,23 +511,23 @@ export const TIMP_RO_CONTENT: ContentMap = {
 
   "cate-zile-am": {
     introText:
-      "Calculator de vârstă în timp real: introduci data nașterii și vezi exact câte zile, ore, minute și secunde ai trăit. Ceasul se actualizează la fiecare secundă (no refresh necesar). Plus: mérföldkövek matematice — 10 000 zile (~27,4 ani), 1 milion de minute (~1,9 ani), 1 miliard de secunde (~31,7 ani). Ceasul perfect pentru reflecție personală sau prezentări creative.",
+      "Calculator de vârstă în timp real: introduci data nașterii și vezi exact câte zile, ore, minute și secunde ai trăit. Ceasul se actualizează la fiecare secundă (no refresh necesar). Plus: repere matematice — 10 000 zile (~27,4 ani), 1 milion de minute (~1,9 ani), 1 miliard de secunde (~31,7 ani). Ceasul perfect pentru reflecție personală sau prezentări creative.",
     guide: [
       "1. Introdu data ta de naștere (calendar/picker).",
       "2. Vezi vârsta exactă: ani împliniți, luni și zile + totalul în secunde / minute / ore / zile.",
-      "3. Verifică mérföldkövek-ul: când vei împlini 10 000 zile, 1 miliard de secunde etc.",
+      "3. Verifică reperul: când vei împlini 10 000 zile, 1 miliard de secunde etc.",
     ],
     faq: [
       { q: "Cum se calculează exact vârsta în zile?", a: "Calculatorul scade momentul nașterii (data + ora 00:00:00) din momentul curent (preluat din ceasul browserului). Diferența în milisecunde se împarte pe (1000 × 60 × 60 × 24) pentru a obține zile întregi. Restul devine ore, minute, secunde." },
-      { q: "Ce înseamnă „1 miliard de secunde”?", a: "Aproximativ 31,7 ani — un mérföldkő interesant dacă te apropii de 30. Concret: 1 000 000 000 / (60 × 60 × 24 × 365,25) = 31,69 ani. Sărbătoarea acestui prag este o tradiție tot mai populară în mediul online." },
-      { q: "De ce 10 000 de zile?", a: "10 000 zile = 27,38 ani — un mérföldkő mai puțin folosit dar foarte concret. Persoane care au împlinit 10 000 zile au o conștiință acută a faptului că timpul este limitat și concret măsurabil. Există chiar comunități online dedicate sărbătoririi acestei zile." },
+      { q: "Ce înseamnă „1 miliard de secunde”?", a: "Aproximativ 31,7 ani — un reper interesant dacă te apropii de 30. Concret: 1 000 000 000 / (60 × 60 × 24 × 365,25) = 31,69 ani. Sărbătoarea acestui prag este o tradiție tot mai populară în mediul online." },
+      { q: "De ce 10 000 de zile?", a: "10 000 zile = 27,38 ani — un reper mai puțin folosit dar foarte concret. Persoane care au împlinit 10 000 zile au o conștiință acută a faptului că timpul este limitat și concret măsurabil. Există chiar comunități online dedicate sărbătoririi acestei zile." },
       { q: "Datele mele sunt private?", a: "Da. Calculatorul rulează 100% client-side în browserul tău. Data nașterii nu se trimite niciodată la server, nu există tracking, nu există cookies legate de această dată. Dacă vrei să partajezi linkul cu data ta, poți folosi parametrul ?data=YYYY-MM-DD în URL." },
     ],
     content: {
       howToSteps: [
         { title: "1. Date-picker", description: "Introdu data nașterii (zi/lună/an)." },
         { title: "2. Ceas live", description: "Zile/ore/minute/secunde — actualizat la fiecare secundă." },
-        { title: "3. Mérföldkövek", description: "Vezi care sunt atinse și câte mai lipsesc până la următorul." },
+        { title: "3. Repere", description: "Vezi care sunt atinse și câte mai lipsesc până la următorul." },
       ],
       useCases: [
         { icon: "🎂", title: "Aniversări speciale", description: "Sărbătorește 10 000 zile, 1 miliard de secunde — alternative la aniversările obișnuite." },
@@ -539,7 +539,7 @@ export const TIMP_RO_CONTENT: ContentMap = {
         title: "Despre măsurarea timpului trăit",
         paragraphs: [
           "Conceptul de „câte zile am trăit” are rădăcini în filozofia stoică (Seneca, Marcus Aurelius) — conștientizarea finitudinii vieții ca motivator pentru a trăi conștient și cu sens. „Memento mori” („amintește-ți că ești muritor”) este o tradiție meditativă veche de 2000 de ani.",
-          "În epoca modernă, mérföldkövek-ul „10 000 de zile” a fost popularizat în comunitățile online de productivitate și self-improvement. Tim Urban (Wait But Why) a publicat infografice virale despre numărul aproximativ de săptămâni dintr-o viață medie (~4000), făcând conceptul vizibil și emoțional.",
+          "În epoca modernă, reperul „10 000 de zile” a fost popularizat în comunitățile online de productivitate și self-improvement. Tim Urban (Wait But Why) a publicat infografice virale despre numărul aproximativ de săptămâni dintr-o viață medie (~4000), făcând conceptul vizibil și emoțional.",
           "Speranța de viață medie în România (2024 INS) este 76,4 ani (78,6 femei, 73,8 bărbați) — aproximativ 27 800 zile. Deci un bărbat de 30 ani are deja la jumătate trăit. Reflecția este personală, dar matematica este obiectivă.",
         ],
       },

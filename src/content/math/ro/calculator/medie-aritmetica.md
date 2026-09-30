@@ -94,6 +94,8 @@ faqPageSchema:
 
 Statisticile descriptive sunt instrumentele de bază pentru a rezuma un set de date. Cele 3 cele mai folosite sunt **media**, **mediana** și **modul** (măsuri de tendință centrală), iar pentru împrăștiere folosim **varianța** și **abaterea standard**.
 
+> Cauți **media generală a notelor** de la școală (cu rotunjire)? Folosește [calculatorul de medie generală pe note școlare](/calculator/calculator-medii-note/); pagina de față este pentru statistică (medie, mediană, mod, abatere standard).
+
 ## Media aritmetică
 
 $$
