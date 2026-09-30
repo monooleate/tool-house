@@ -7,6 +7,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Heti újrabuild: a countdown oldalak (Crăciun, Revelion, Paști, stb.) title/meta-ja
+  # build-időben számolódik (src/lib/timp-years.ts) — enélkül az ünnep után az év
+  # elavulna a SERP-ben. Hétfő 04:00 UTC.
+  schedule:
+    - cron: "0 4 * * 1"
 
 jobs:
   deploy-hu:

@@ -104,6 +104,8 @@ export const ZIUA_NATIONALA_DATE_RO = `1 decembrie ${_ziuaNationalaDate.getFullY
 // Ziua săptămânii pentru SEO ("1 decembrie cade într-o zi de ...")
 const RO_WEEKDAYS = ["duminică", "luni", "marți", "miercuri", "joi", "vineri", "sâmbătă"];
 export const ZIUA_NATIONALA_WEEKDAY_RO = RO_WEEKDAYS[_ziuaNationalaDate.getDay()];
+export const CRACIUN_WEEKDAY_RO = RO_WEEKDAYS[_craciunDate.getDay()];
+export const REVELION_WEEKDAY_RO = RO_WEEKDAYS[_revelionDate.getDay()];
 // ISO date pentru Event schema (startDate)
 export const ZIUA_NATIONALA_ISO = `${_ziuaNationalaDate.getFullYear()}-12-01`;
 
@@ -266,3 +268,15 @@ export const COUNTDOWN_EVENTS: Record<string, CountdownEvent> = {
 // ─── Anul curent (sărbători legale RO) ───────────────────────
 // Pentru diferenta-date: ne referim la anul calendaristic curent
 export const CURRENT_YEAR = Y;
+
+// ─── Token-feloldás a longform frontmatter SEO title/description-ben ─────
+// A countdown .md frontmatter title/description statikus; a {{TOKEN}}-ek build
+// idején a következő apariție évére/dátumára oldódnak fel (ToolLayout hívja),
+// így nem kell évenként kézzel átírni.
+const YEAR_TOKENS: Record<string, string | number> = {
+  CRACIUN_YEAR, CRACIUN_DATE_RO, CRACIUN_WEEKDAY_RO,
+  REVELION_YEAR, REVELION_DATE_RO, REVELION_WEEKDAY_RO,
+};
+export function resolveYearTokens(text: string): string {
+  return text.replace(/\{\{([A-Z_]+)\}\}/g, (m, k) => (k in YEAR_TOKENS ? String(YEAR_TOKENS[k]) : m));
+}

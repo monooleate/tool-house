@@ -25,7 +25,7 @@ import {
   toolBreadcrumbs,
   buildCanonical,
 } from "../lib/seo.ts";
-import { COUNTDOWN_EVENTS } from "../lib/timp-years.ts";
+import { COUNTDOWN_EVENTS, resolveYearTokens } from "../lib/timp-years.ts";
 import { getCollection, render } from "astro:content";
 import { getSubcatForTool, getConversionSubcat } from "../lib/content/ro/conversii-hubs.ts";
 
@@ -108,8 +108,8 @@ if (supportsLongform) {
 // longform SZÁNDÉKOSAN csak tartalmat ad — a <title>/<meta> változatlan marad
 // (nulla SERP-kockázat). A HU frontmatter title csak a longform szekció H2-je.
 const useLongformMeta = !!mathEntry && CURRENT_LANG === "ro";
-const seoTitle = useLongformMeta ? mathEntry.data.title : tool.title;
-const seoDescription = useLongformMeta ? mathEntry.data.description : tool.description;
+const seoTitle = resolveYearTokens(useLongformMeta ? mathEntry.data.title : tool.title);
+const seoDescription = resolveYearTokens(useLongformMeta ? mathEntry.data.description : tool.description);
 
 // ─── Egységes @graph node-ok összeállítása ──────────────────
 // Minden node OBJEKTUM (a base Org/WebSite/Person/WebPage-et a BaseLayout adja).
@@ -298,7 +298,7 @@ if (countdownEvent) {
     <!-- Math longform tartalom (Astro Content Collection) -->
     {MathContent && (
       <section class="math-longform" aria-labelledby="math-longform-title">
-        <h2 id="math-longform-title" class="section-title">{mathEntry.data.title}</h2>
+        <h2 id="math-longform-title" class="section-title">{resolveYearTokens(mathEntry.data.title)}</h2>
         <article class="math-longform__content">
           <MathContent />
         </article>

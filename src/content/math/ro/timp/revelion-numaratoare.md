@@ -1,6 +1,6 @@
 ---
 title: "Câte zile mai sunt până la Revelion? Numărătoare inversă live"
-description: "Câte zile mai sunt până la Revelion (1 ianuarie 2027, ora 00:00)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
+description: "Câte zile mai sunt până la Revelion ({{REVELION_DATE_RO}}, ora 00:00)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
 toolSlug: "revelion-numaratoare"
 category: "timp"
 published_at: "2026-04-28T00:00:00.000Z"
@@ -9,7 +9,7 @@ articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
   "headline": "Câte zile mai sunt până la Revelion? Numărătoare inversă live"
-  "description": "Câte zile mai sunt până la Revelion (1 ianuarie 2027, ora 00:00)? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
+  "description": "Câte zile mai sunt până la Revelion? Numărătoare inversă live: zile, ore, minute, secunde, cu animație de artificii și mesaj «La mulți ani!»."
   "datePublished": "2026-04-28T00:00:00.000Z"
   "dateModified": "2026-04-28T00:00:00.000Z"
   "inLanguage": "ro"
