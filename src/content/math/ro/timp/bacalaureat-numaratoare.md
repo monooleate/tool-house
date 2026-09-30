@@ -1,6 +1,6 @@
 ---
-title: "Numărătoare Inversă Bacalaureat – Sesiunea de Vară cu Plan Studiu"
-description: "Numărătoare inversă live până la BAC sesiunea de vară (a 3-a luni din iunie). Mesaje motivaționale + plan studiu (4 ore/zi sustenabil) + ore efective de pregătire, cu auto-avansare la BAC anul școlar următor."
+title: "Câte zile mai sunt până la BAC {{BAC_YEAR}}? Numărătoare inversă Bacalaureat"
+description: "Câte zile mai sunt până la BAC {{BAC_YEAR}}? Numărătoare inversă live până la sesiunea de vară (a 3-a luni din iunie). Mesaje motivaționale + plan studiu (4 ore/zi sustenabil) + ore efective de pregătire, cu auto-avansare la BAC anul școlar următor."
 toolSlug: "bacalaureat-numaratoare"
 category: "timp"
 published_at: "2026-04-28T00:00:00.000Z"
@@ -8,7 +8,7 @@ refreshed_at: "2026-04-28T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Numărătoare Inversă Bacalaureat – Sesiunea de Vară cu Plan Studiu"
+  "headline": "Câte zile mai sunt până la BAC? Numărătoare inversă Bacalaureat"
   "description": "Numărătoare inversă live până la BAC sesiunea de vară (a 3-a luni din iunie). Mesaje motivaționale + plan studiu (4 ore/zi sustenabil) + ore efective de pregătire, cu auto-avansare la BAC anul școlar următor."
   "datePublished": "2026-04-28T00:00:00.000Z"
   "dateModified": "2026-04-28T00:00:00.000Z"

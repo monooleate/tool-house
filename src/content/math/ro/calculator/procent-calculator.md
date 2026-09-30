@@ -161,10 +161,10 @@ $$
 250 \times \frac{20}{100} = 250 \times 0{,}2 = 50
 $$
 
-**Exemplu RO – TVA 19%:** Un produs are preț net 320 lei. Cât este TVA-ul?
+**Exemplu RO – TVA 21%:** Un produs are preț net 320 lei. Cât este TVA-ul?
 
 $$
-\text{TVA} = 320 \times \frac{19}{100} = 60{,}80 \text{ lei}
+\text{TVA} = 320 \times \frac{21}{100} = 67{,}20 \text{ lei}
 $$
 
 ### 2. Cât la sută reprezintă X din Y (calcul invers — rată)
@@ -314,9 +314,8 @@ $$
 
 ### TVA în România — calcul net ↔ brut
 
-În România, cota standard de TVA este **19%** (de la 2017). Există și două cote reduse:
-- **9%** — alimente, băuturi nealcoolice, servicii hoteliere, cărți, ziare.
-- **5%** — locuințe sociale, manuale școlare, servicii sportive.
+În România, din **1 august 2025** (Legea 141/2025), cota standard de TVA este **21%** (era 19%). Există și o singură cotă redusă:
+- **11%** — alimente, medicamente, servicii hoteliere, cărți, restaurante și catering (a înlocuit vechile cote de 9% și 5%).
 
 **Brut → net (extragere TVA):**
 
@@ -324,9 +323,9 @@ $$
 \text{Net} = \frac{\text{Brut}}{1 + p/100}
 $$
 
-Pentru TVA 19%: $\text{Net} = \text{Brut} / 1{,}19$.
+Pentru TVA 21%: $\text{Net} = \text{Brut} / 1{,}21$.
 
-**Exemplu:** factura de 595 RON (cu TVA 19%) → net = $595 / 1{,}19 = 500$ RON; TVA = 95 RON.
+**Exemplu:** factura de 605 RON (cu TVA 21%) → net = $605 / 1{,}21 = 500$ RON; TVA = 105 RON.
 
 **Net → brut (adăugare TVA):**
 
@@ -334,9 +333,9 @@ $$
 \text{Brut} = \text{Net} \times (1 + p/100)
 $$
 
-Pentru TVA 19%: 500 RON net × 1,19 = 595 RON brut.
+Pentru TVA 21%: 500 RON net × 1,21 = 605 RON brut.
 
-> Vezi și [Calculatorul TVA RO](/finante/calculator-tva/) pentru toate cele 3 cote și calcul în ambele direcții.
+> Vezi și [Calculatorul TVA RO](/finante/calculator-tva/) pentru cotele 21% și 11% (plus cele vechi, pentru facturi anterioare) și calcul în ambele direcții.
 
 ### Salariu majorat — brut vs. net
 
@@ -434,12 +433,12 @@ $$
 NU este același lucru cu $B \times (1 + p_1 + p_2)$.
 
 **Exemplu RO – preț cu TVA + comision:**
-Un produs are preț net 200 RON. Adaugi TVA 19%, apoi comision distribuitor 8%.
+Un produs are preț net 200 RON. Adaugi TVA 21%, apoi comision distribuitor 8%.
 
-- Cu TVA: $200 \times 1{,}19 = 238$ RON
-- Cu comision: $238 \times 1{,}08 = 257{,}04$ RON
+- Cu TVA: $200 \times 1{,}21 = 242$ RON
+- Cu comision: $242 \times 1{,}08 = 261{,}36$ RON
 
-Total: 257,04 RON. NU 200 × 1,27 = 254 RON.
+Total: 261,36 RON. NU 200 × 1,29 = 258 RON.
 
 ## Procent mediu — simplu vs. ponderat
 
@@ -518,9 +517,9 @@ $$
 | 50%     | împarte la 2                                  | 480 → 240           |
 | 75%     | scade 25% din total (480 − 120)               | 480 → 360           |
 
-**Truc de cumpărători:** „17% TVA pe scurt”. Pentru a estima rapid TVA-ul de 19% mintal:
-- Calculează 20% (împărțire la 5) și apoi scade ~5% din rezultat.
-- Exemplu: 250 RON × 19% ≈ 250/5 = 50; 50 − 5% = 50 − 2,5 = 47,5 RON. (Real: 47,5 — exact!)
+**Truc de cumpărători:** TVA de 21% pe scurt. Pentru a estima rapid TVA-ul de 21% mintal:
+- Calculează 20% (împărțire la 5) și apoi adaugă ~5% din rezultat.
+- Exemplu: 250 RON × 21% ≈ 250/5 = 50; 50 + 5% = 50 + 2,5 = 52,5 RON. (Real: 52,5 — exact!)
 
 **Truc de bacșiș:** „bacșiș 10% prin mutarea virgulei”. La o nota de 87,50 lei, 10% = 8,75 lei → rotunjit 9–10 lei. Pentru 15% bacșiș: 10% + jumătate = 8,75 + 4,38 ≈ 13 lei.
 
@@ -536,11 +535,11 @@ $$
 
 ### Exemplul 2 — TVA inversă din factură
 
-> Pe o factură scrie „Total: 952 RON (cu TVA 19% inclus)”. Care e prețul fără TVA?
+> Pe o factură scrie „Total: 968 RON (cu TVA 21% inclus)”. Care e prețul fără TVA?
 
-1. Aplică formula brut → net: $952 / 1{,}19 = 800$ RON.
-2. TVA: $952 - 800 = 152$ RON (sau $800 \times 0{,}19 = 152$).
-3. **Răspuns: net = 800 RON, TVA = 152 RON.**
+1. Aplică formula brut → net: $968 / 1{,}21 = 800$ RON.
+2. TVA: $968 - 800 = 168$ RON (sau $800 \times 0{,}21 = 168$).
+3. **Răspuns: net = 800 RON, TVA = 168 RON.**
 
 ### Exemplul 3 — Salariu mărit + impozit
 
@@ -576,7 +575,7 @@ Pe orice calculator de buzunar (Casio, Citizen, telefon Android/iPhone) butonul 
 | Operație            | Tastare           | Rezultat   | Interpretare              |
 |:--------------------|:------------------|:-----------|:--------------------------|
 | 20% din 300         | `300 × 20 %`      | 60         | Valoarea procentuală       |
-| 300 + 19% (TVA)     | `300 + 19 %`      | 357        | Brut din net               |
+| 300 + 21% (TVA)     | `300 + 21 %`      | 363        | Brut din net               |
 | 500 − 30% (reducere)| `500 − 30 %`      | 350        | Preț redus                 |
 | 60 / 25 % (raport)  | `60 ÷ 25 %`       | 240        | Calcul invers (60 = 25%× ?) |
 
@@ -589,7 +588,7 @@ Pe orice calculator de buzunar (Casio, Citizen, telefon Android/iPhone) butonul 
 3. **Confundarea procent / punct procentual** — „dobânda a crescut cu 2%” vs. „cu 2 puncte procentuale”. Diferență mare.
 4. **Procente peste 100%** — sunt valide. „150% creștere” înseamnă V_nou = 2,5 × V_vechi. Doar o reducere NU poate depăși 100% (n-ai cum să scazi mai mult decât totalul).
 5. **Aplicare la baze diferite** — la medii ponderate, NU media simplă a procentelor (vezi exemplul eMAG).
-6. **Rotunjiri prea agresive** — 19,9% ≠ 20% în calcule de TVA pe sume mari (la 100 000 RON, eroarea e 100 RON).
+6. **Rotunjiri prea agresive** — 20,9% ≠ 21% în calcule de TVA pe sume mari (la 100 000 RON, eroarea e 100 RON).
 
 ## Procente speciale — peste 100% și sub 0%
 
@@ -637,7 +636,7 @@ Sau, prin ecuație: $x + 0{,}20x \cdot \text{(ceva?)}$ — atenție la formulare
 
 ## Surse și referințe
 
-- [ANAF – cotele de TVA în România](https://www.anaf.ro) — cota standard 19%, redusă 9% și 5%.
+- [ANAF – cotele de TVA în România](https://www.anaf.ro) — cota standard 21% și redusă 11% (din 1 august 2025).
 - [INS – Institutul Național de Statistică](https://insse.ro) — date inflație, salariu mediu, indice prețuri consum.
 - [BNR – dobânda de politică monetară](https://www.bnro.ro) — istoric dobânzi cheie BNR.
 
@@ -645,6 +644,6 @@ Sau, prin ecuație: $x + 0{,}20x \cdot \text{(ceva?)}$ — atenție la formulare
 
 - [Regula de trei simplă](/calculator/regula-de-trei-simpla/) — proporții directe și inverse, baza calculelor procentuale.
 - [Calculator medie aritmetică](/calculator/medie-aritmetica/) — medie simplă, ponderată, geometrică.
-- [Calculator TVA RO](/finante/calculator-tva/) — toate cele 3 cote (5%, 9%, 19%), brut ↔ net.
+- [Calculator TVA RO](/finante/calculator-tva/) — cotele 21% și 11% (plus cele vechi), brut ↔ net.
 - [Calculator dobândă compusă](/finante/dobanda-compusa/) — pentru investiții și depozite bancare.
 - [Calculator credit ipotecar](/finante/calculator-credit/) — rata lunară, dobândă totală, DAE.

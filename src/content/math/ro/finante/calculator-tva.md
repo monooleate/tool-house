@@ -1,6 +1,6 @@
 ---
-title: "Calculator TVA România – cote 19%, 9%, 5% și formule de calcul"
-description: "Calculator TVA cu toate cotele oficiale RO (19%, 9%, 5%) — formule, exemple net→brut, brut→net și extragere TVA dintr-o sumă."
+title: "Calculator TVA 21%: adaugă sau scoate TVA (cote 21% și 11%)"
+description: "Calculator TVA România: adaugă TVA sau scoate TVA dintr-o sumă cu cotele în vigoare din 1 august 2025 (21% și 11%). Formule, exemple net→brut, brut→net și extragere TVA."
 toolSlug: "calculator-tva"
 category: "finante"
 published_at: "2026-04-27T00:00:00.000Z"
@@ -8,8 +8,8 @@ refreshed_at: "2026-04-27T00:00:00.000Z"
 articleSchema:
   "@context": "https://schema.org"
   "@type": "Article"
-  "headline": "Calculator TVA România – cote 19%, 9%, 5% și formule de calcul"
-  "description": "Calculator TVA cu toate cotele oficiale RO (19%, 9%, 5%) — formule, exemple net→brut, brut→net și extragere TVA dintr-o sumă."
+  "headline": "Calculator TVA 21%: adaugă sau scoate TVA (cote 21% și 11%)"
+  "description": "Calculator TVA România: adaugă TVA sau scoate TVA dintr-o sumă cu cotele în vigoare din 1 august 2025 (21% și 11%). Formule, exemple net→brut, brut→net și extragere TVA."
   "datePublished": "2026-04-27T00:00:00.000Z"
   "dateModified": "2026-04-27T00:00:00.000Z"
   "inLanguage": "ro"
@@ -29,8 +29,8 @@ softwareSchema:
   "name": "Calculator TVA România"
   "applicationCategory": "FinanceApplication"
   "operatingSystem": "Web"
-  "description": "Calculator TVA cu cotele oficiale 19%/9%/5% și 3 moduri de calcul: net→brut, brut→net, extragere TVA dintr-o sumă brută."
-  "featureList": "3 cote TVA RO (19%, 9%, 5%); 3 moduri (net→brut, brut→net, extragere); formule afișate live; sume frecvente preset; conform Codului fiscal 2026; gratuit complet."
+  "description": "Calculator TVA cu cotele oficiale 21% și 11% (din 1 august 2025), plus cotele vechi 19% și 9% pentru facturi anterioare, cu 3 moduri de calcul: net→brut, brut→net, extragere TVA dintr-o sumă brută."
+  "featureList": "cote TVA RO (21%, 11% + cote vechi 19%, 9%); 3 moduri (net→brut, brut→net, extragere); formule afișate live; sume frecvente preset; conform Legii 141/2025; gratuit complet."
   "url": "https://instrumenteonline.ro/finante/calculator-tva/"
   "inLanguage": "ro"
   "isAccessibleForFree": true
@@ -58,7 +58,7 @@ softwareSchema:
       "author":
         "@type": "Person"
         "name": "Bogdan A."
-      "reviewBody": "Util pentru calculul rapid al facturilor cu TVA 9% și 19%, mi-a salvat timpul în contabilitate."
+      "reviewBody": "Util pentru calculul rapid al facturilor cu TVA 11% și 21%, mi-a salvat timpul în contabilitate."
       "datePublished": "2026-04-18"
 faqPageSchema:
   "@context": "https://schema.org"
@@ -68,22 +68,22 @@ faqPageSchema:
       "name": "Care sunt cotele de TVA în România?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Cota standard este 19% (majoritatea bunurilor și serviciilor). Cota redusă 9% se aplică la alimente, medicamente, cazare hoteluri și cărți. Cota super-redusă 5% se aplică la locuințe sociale, manuale școlare și lemne de foc."
+        "text": "De la 1 august 2025 (Legea 141/2025), cota standard de TVA este 21% (majoritatea bunurilor și serviciilor), iar cotele reduse de 9% și 5% au fost comasate într-o singură cotă redusă de 11% (alimente, medicamente, cazare, cărți, restaurante și catering, cu excepția băuturilor alcoolice și a sucurilor). Excepție: cota de 9% pentru locuințe a rămas aplicabilă până la 30 septembrie 2026."
     - "@type": "Question"
       "name": "Cum scot TVA dintr-o sumă cu TVA inclus?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Pentru cota 19%: TVA = brut × 0,1597 (sau brut × 19/119). Pentru 9%: TVA = brut × 0,0826. Pentru 5%: TVA = brut × 0,0476. Bază impozabilă = brut − TVA."
+        "text": "Pentru cota 21%: TVA = brut × 0,1736 (sau brut × 21/121). Pentru 11%: TVA = brut × 0,0991 (11/111). Baza impozabilă = brut − TVA. Pentru facturi vechi, cota 19% = brut × 0,1597."
     - "@type": "Question"
-      "name": "Cât face TVA 19% la 1000 lei net?"
+      "name": "Cât face TVA 21% la 1000 lei net?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "TVA = 1000 × 0,19 = 190 lei. Total brut = 1190 lei."
+        "text": "TVA = 1000 × 0,21 = 210 lei. Total brut = 1210 lei."
     - "@type": "Question"
-      "name": "Ce se schimbă cu reforma fiscală 2026?"
+      "name": "Ce s-a schimbat la TVA în 2025?"
       "acceptedAnswer":
         "@type": "Answer"
-        "text": "Există în discuție unificarea cotelor reduse (9% și 5%) într-o cotă unică, posibil 11%, dar până la publicarea în Monitorul Oficial cotele rămân 19%/9%/5%. Verifică anaf.ro înainte de facturile importante."
+        "text": "Legea 141/2025 a majorat de la 1 august 2025 cota standard de la 19% la 21% și a comasat cotele reduse de 9% și 5% în 11%. De la 1 septembrie 2025, plafonul de scutire de TVA a crescut de la 300.000 la 395.000 lei (OUG 22/2025). Verifică anaf.ro pentru încadrarea exactă a bunurilor și serviciilor."
 
 ---
 
@@ -91,15 +91,15 @@ faqPageSchema:
 
 ## Cotele TVA în România 2026
 
-România aplică un sistem cu **trei cote** distincte:
+Din **1 august 2025** (Legea 141/2025), România aplică două cote: cota standard de **21%** și o singură cotă redusă de **11%**. Înainte de această dată se aplicau 19%, 9% și 5%.
 
 | Cotă | Aplicabil la |
 |-----:|---------------|
-| **19%** | Cota standard – toate bunurile și serviciile care nu intră în categoriile reduse |
-| **9%**  | Alimente (cu excepția băuturilor alcoolice), medicamente, cazare hoteluri, cărți, ziare, manuale care nu intră în 5% |
-| **5%**  | Locuințe sociale (sub 450.000 lei), manuale școlare, lemne de foc, livrarea apei pentru irigații |
+| **21%** | Cota standard – toate bunurile și serviciile care nu intră în categoriile reduse, inclusiv băuturile alcoolice și sucurile |
+| **11%** | Cota redusă unică – alimente, medicamente, cazare, cărți și manuale, lemne de foc, restaurante și catering (fără băuturi alcoolice și sucuri) |
+| 19%, 9%, 5% | Cote vechi, valabile doar pentru operațiuni până la 31 iulie 2025 (9% pentru locuințe, în condiții speciale, până la 30 septembrie 2026) |
 
-Pragul de înregistrare ca **plătitor de TVA** este **300.000 lei** cifră de afaceri pe 12 luni consecutive (Codul fiscal art. 310). Sub acest plafon, firmele pot opta pentru regimul de neplătitor de TVA.
+Plafonul de scutire pentru înregistrarea ca **plătitor de TVA** este **395.000 lei** cifră de afaceri anuală, de la 1 septembrie 2025 (era 300.000 lei; OUG 22/2025). Sub acest plafon, firmele pot opta pentru regimul de neplătitor de TVA.
 
 ## Formule de calcul
 
@@ -129,63 +129,64 @@ $$
 \text{TVA} = \text{brut} \times \frac{\text{cotă}}{100 + \text{cotă}}
 $$
 
-Pentru cele 3 cote RO, factorii de extragere sunt:
+Pentru cotele RO, factorii de extragere sunt:
 
 | Cotă | Factor extragere | Aproximat |
 |-----:|------------------:|----------:|
-| 19%  | 19/119            | **0,1597** |
-| 9%   | 9/109             | **0,0826** |
-| 5%   | 5/105             | **0,0476** |
+| 21%  | 21/121            | **0,1736** |
+| 11%  | 11/111            | **0,0991** |
+| 19% (veche) | 19/119     | 0,1597 |
+| 9% (veche)  | 9/109      | 0,0826 |
 
 ## Exemple rezolvate
 
-### Exemplu 1: Factură B2B la 19%
+### Exemplu 1: Factură B2B la 21%
 
 Servicii consultanță: **1.000 lei** net (fără TVA).
 
 $$
-\text{TVA} = 1\,000 \times 0{,}19 = 190 \text{ lei}
+\text{TVA} = 1\,000 \times 0{,}21 = 210 \text{ lei}
 $$
 
 $$
-\text{Total factură} = 1\,000 + 190 = 1\,190 \text{ lei}
+\text{Total factură} = 1\,000 + 210 = 1\,210 \text{ lei}
 $$
 
-### Exemplu 2: Bon fiscal la 9% (alimente)
+### Exemplu 2: Bon fiscal la 11% (alimente)
 
-Bon de cumpărături la **109 lei** (cu TVA inclus 9%).
-
-$$
-\text{net} = \frac{109}{1{,}09} = 100 \text{ lei}
-$$
+Bon de cumpărături la **111 lei** (cu TVA inclus 11%).
 
 $$
-\text{TVA} = 109 - 100 = 9 \text{ lei}
-$$
-
-### Exemplu 3: Apartament cu TVA 5%
-
-Cumpărare locuință socială (sub 450.000 lei): preț afișat **210.000 lei** cu TVA.
-
-$$
-\text{net} = \frac{210\,000}{1{,}05} = 200\,000 \text{ lei}
+\text{net} = \frac{111}{1{,}11} = 100 \text{ lei}
 $$
 
 $$
-\text{TVA} = 210\,000 - 200\,000 = 10\,000 \text{ lei}
+\text{TVA} = 111 - 100 = 11 \text{ lei}
+$$
+
+### Exemplu 3: Locuință cu cota veche de 9% (excepție până la 30.09.2026)
+
+Pentru o locuință care a beneficiat de excepția cotei de 9%, prețul afișat este **218.000 lei** cu TVA.
+
+$$
+\text{net} = \frac{218\,000}{1{,}09} = 200\,000 \text{ lei}
+$$
+
+$$
+\text{TVA} = 218\,000 - 200\,000 = 18\,000 \text{ lei}
 $$
 
 ## Tabel rapid de conversie
 
-| Net (lei) | TVA 19% (lei) | Brut (lei) |
+| Net (lei) | TVA 21% (lei) | Brut (lei) |
 |----------:|--------------:|-----------:|
-| 100       | 19            | 119        |
-| 500       | 95            | 595        |
-| 1.000     | 190           | 1.190      |
-| 2.500     | 475           | 2.975      |
-| 5.000     | 950           | 5.950      |
-| 10.000    | 1.900         | 11.900     |
-| 50.000    | 9.500         | 59.500     |
+| 100       | 21            | 121        |
+| 500       | 105           | 605        |
+| 1.000     | 210           | 1.210      |
+| 2.500     | 525           | 3.025      |
+| 5.000     | 1.050         | 6.050      |
+| 10.000    | 2.100         | 12.100     |
+| 50.000    | 10.500        | 60.500     |
 
 ## Aplicații practice
 
@@ -202,24 +203,27 @@ Bonurile fiscale RO afișează **TVA-ul total inclus**, dar nu suma netă. Pentr
 Pornind de la costul de achiziție net + adaos comercial → preț de raft **cu TVA inclus**:
 
 $$
-\text{preț raft} = (\text{cost} + \text{adaos}) \times 1{,}19
+\text{preț raft} = (\text{cost} + \text{adaos}) \times 1{,}21
 $$
 
 ## Greșeli frecvente
 
 1. **Confuzie net vs brut** — la facturare B2C (consumator final), prețul afișat trebuie să fie cu TVA inclus (Legea 363/2007). Afișarea netă induce în eroare.
-2. **Aplicare cotă greșită** — alimentele în restaurant nu intră la 9%, ci la 19% (serviciu de alimentație publică, nu vânzare aliment).
-3. **Calcul invers cu factor incorect** — `brut × 0,19` NU este TVA-ul conținut în brut. Corect: `brut × 0,1597` (sau `brut × 19/119`).
+2. **Aplicare cotă greșită** — cota depinde de natura bunului sau serviciului: în restaurant, mâncarea intră la 11%, dar băuturile alcoolice și sucurile rămân la 21%.
+3. **Folosirea cotei vechi** — 19% nu se mai aplică operațiunilor de după 31 iulie 2025; pentru facturi emise înainte de această dată folosește cotele vechi din calculator.
+4. **Calcul invers cu factor incorect** — `brut × 0,21` NU este TVA-ul conținut în brut. Corect: `brut × 0,1736` (sau `brut × 21/121`).
 
 ## Referințe legale
 
 - **Legea 227/2015** (Codul fiscal) — Titlul VII
-- **OG 7/2025** — clarificări regim TVA
+- **Legea 141/2025** — cota standard 21% și cota redusă unică 11%, din 1 august 2025
+- **OUG 22/2025** — plafonul de scutire de TVA de 395.000 lei
 - **Directiva UE 2006/112/CE** — armonizare europeană
 - ANAF [www.anaf.ro](https://www.anaf.ro) — actualizări permanente
 
 ## Calculatoare înrudite
 
 - [Calculator reducere](/finante/calculator-reducere/) — pentru oferte comerciale
+- [Calculator procente](/calculator/procent-calculator/) — procent din sumă, cât la sută
 - [Marjă vs adaos](/finante/marja-adaos/) — pentru pricing
 - [Calculator credit](/finante/calculator-credit/) — pentru ipotecar

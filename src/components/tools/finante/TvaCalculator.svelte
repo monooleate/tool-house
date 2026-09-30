@@ -1,16 +1,17 @@
 <script lang="ts">
   // ============================================================
   // TvaCalculator.svelte – Calculator TVA RO
-  // Cotele TVA în România 2026 (înainte de reforma fiscală):
-  //   • 19% – cotă standard (majoritatea bunurilor și serviciilor)
-  //   •  9% – alimente, medicamente, cazare hoteluri, cărți
-  //   •  5% – locuințe sociale, manuale școlare, lemne foc
+  // Cotele TVA în România din 1 august 2025 (Legea 141/2025):
+  //   • 21% – cotă standard (majoritatea bunurilor și serviciilor)
+  //   • 11% – cotă redusă unică (alimente, medicamente, cazare, cărți, restaurante)
+  // Cote vechi (operațiuni până la 31.07.2025), păstrate pentru facturi anterioare:
+  //   • 19% – fosta cotă standard
+  //   •  9% – fosta cotă redusă (și locuințe, excepție până la 30.09.2026)
   // 3 moduri: Net → Brut, Brut → Net, Extragere TVA dintr-o sumă
-  // Notă: din 2026 se discută unificarea cotelor (vezi specificație ANAF).
   // ============================================================
 
   type Mode = "net2brut" | "brut2net" | "extract";
-  type Cota = 19 | 9 | 5;
+  type Cota = 21 | 11 | 19 | 9;
 
   const MODES: { key: Mode; icon: string; label: string; desc: string }[] = [
     { key: "net2brut", icon: "➕", label: "Net → Brut",   desc: "Adaugă TVA la prețul fără TVA" },
@@ -19,17 +20,18 @@
   ];
 
   const COTE: { value: Cota; label: string; desc: string }[] = [
-    { value: 19, label: "19%", desc: "Cotă standard – majoritatea bunurilor" },
-    { value: 9,  label: "9%",  desc: "Alimente, medicamente, hoteluri, cărți" },
-    { value: 5,  label: "5%",  desc: "Locuințe sociale, manuale, lemne foc" },
+    { value: 21, label: "21%", desc: "Cotă standard – majoritatea bunurilor" },
+    { value: 11, label: "11%", desc: "Redusă: alimente, medicamente, hoteluri, cărți" },
+    { value: 19, label: "19%", desc: "Cotă veche – facturi până la 31.07.2025" },
+    { value: 9,  label: "9%",  desc: "Cotă veche / locuințe (până la 30.09.2026)" },
   ];
 
   let mode: Mode = $state("net2brut");
-  let cota: Cota = $state(19);
+  let cota: Cota = $state(21);
 
   let netRaw = $state("1000");
-  let brutRaw = $state("1190");
-  let extractRaw = $state("1190");
+  let brutRaw = $state("1210");
+  let extractRaw = $state("1210");
 
   function parse(v: string): number {
     const cleaned = v.replace(/\s/g, "").replace(/\./g, "").replace(",", ".");
@@ -75,7 +77,7 @@
   function selectCota(c: Cota) { cota = c; }
 
   const PRESETS_NET = [100, 500, 1000, 5000, 10000];
-  const PRESETS_BRUT = [119, 595, 1190, 5950, 11900];
+  const PRESETS_BRUT = [121, 605, 1210, 6050, 12100];
 </script>
 
 <div class="tva">
@@ -83,7 +85,7 @@
     <span class="tva__icon" aria-hidden="true">🇷🇴</span>
     <div>
       <h2 class="tva__title">Calculator TVA România</h2>
-      <p class="tva__sub">Cote oficiale: 19% standard · 9% alimente / hoteluri · 5% locuințe / manuale</p>
+      <p class="tva__sub">Cote în vigoare din 1 august 2025: 21% standard · 11% redusă (alimente, hoteluri, cărți)</p>
     </div>
   </div>
 
@@ -187,7 +189,7 @@
             inputmode="decimal"
             value={brutRaw}
             oninput={(e) => (brutRaw = (e.target as HTMLInputElement).value)}
-            placeholder="ex. 1190"
+            placeholder="ex. 1210"
             class="tva__input"
           />
           <span class="tva__suffix">lei</span>
@@ -232,7 +234,7 @@
             inputmode="decimal"
             value={extractRaw}
             oninput={(e) => (extractRaw = (e.target as HTMLInputElement).value)}
-            placeholder="ex. 1190"
+            placeholder="ex. 1210"
             class="tva__input"
           />
           <span class="tva__suffix">lei</span>
@@ -290,9 +292,10 @@
   }
 
   .tva__cote {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-2);
   }
-  @media (max-width: 640px) { .tva__cote { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .tva__cote { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .tva__cote { grid-template-columns: 1fr; } }
   .tva__cota {
     display: flex; flex-direction: column; gap: 2px;
     padding: var(--sp-3); cursor: pointer; text-align: left;

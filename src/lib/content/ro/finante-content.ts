@@ -7,21 +7,21 @@ import type { ContentMap } from "../types.ts";
 export const FINANTE_RO_CONTENT: ContentMap = {
   "calculator-tva": {
     introText:
-      "Calculatorul de TVA acoperă toate cele 3 cote oficiale din România (19% standard, 9% pentru alimente, medicamente, hoteluri și cărți, 5% pentru locuințe sociale, manuale și lemne) și 3 moduri de calcul: net→brut, brut→net și extragere TVA dintr-o sumă. Util pentru facturare, contabilitate și verificarea bonurilor fiscale.",
+      "Calculatorul de TVA folosește cotele în vigoare din România din 1 august 2025 (21% standard și 11% redusă pentru alimente, medicamente, cazare, cărți, restaurante și catering), plus cotele vechi 19% și 9% pentru facturi anterioare, și are 3 moduri de calcul: net→brut (adaugă TVA), brut→net (scoate TVA) și extragere TVA dintr-o sumă. Util pentru facturare, contabilitate și verificarea bonurilor fiscale.",
     guide: [
-      "1. Alege cota TVA aplicabilă (19%, 9% sau 5%).",
+      "1. Alege cota TVA aplicabilă (21%, 11% sau cotele vechi 19% / 9% pentru facturi anterioare).",
       "2. Selectează modul: Net→Brut (adaugi TVA), Brut→Net (scoți TVA) sau Extragere TVA dintr-o sumă brută.",
       "3. Introdu suma în lei — rezultatul apare instant.",
     ],
     faq: [
-      { q: "Care sunt cotele de TVA în România?", a: "Cota standard este 19% (majoritatea bunurilor și serviciilor). Cota redusă 9% se aplică la alimente, medicamente, cazare hoteluri și cărți. Cota super-redusă 5% se aplică la locuințe sociale, manuale școlare și lemne de foc." },
-      { q: "Cum scot TVA dintr-o sumă cu TVA inclus?", a: "Pentru cota 19%: TVA = brut × 0,1597 (sau brut × 19/119). Pentru 9%: TVA = brut × 0,0826. Pentru 5%: TVA = brut × 0,0476. Bază impozabilă = brut − TVA." },
-      { q: "Cât face TVA 19% la 1000 lei net?", a: "TVA = 1000 × 0,19 = 190 lei. Total brut = 1190 lei." },
-      { q: "Ce se schimbă cu reforma fiscală 2026?", a: "Există în discuție unificarea cotelor reduse (9% și 5%) într-o cotă unică, posibil 11%, dar până la publicarea în Monitorul Oficial cotele rămân 19%/9%/5%. Verifică anaf.ro înainte de facturile importante." },
+      { q: "Care sunt cotele de TVA în România?", a: "De la 1 august 2025 (Legea 141/2025), cota standard de TVA este 21% (majoritatea bunurilor și serviciilor), iar cotele reduse de 9% și 5% au fost comasate într-o singură cotă redusă de 11% (alimente, medicamente, cazare, cărți, restaurante și catering, cu excepția băuturilor alcoolice și a sucurilor). Excepție: cota de 9% pentru locuințe a rămas aplicabilă până la 30 septembrie 2026." },
+      { q: "Cum scot TVA dintr-o sumă cu TVA inclus?", a: "Pentru cota 21%: TVA = brut × 0,1736 (sau brut × 21/121). Pentru 11%: TVA = brut × 0,0991 (11/111). Baza impozabilă = brut − TVA. Pentru facturi vechi, cota 19% = brut × 0,1597." },
+      { q: "Cât face TVA 21% la 1000 lei net?", a: "TVA = 1000 × 0,21 = 210 lei. Total brut = 1210 lei." },
+      { q: "Ce s-a schimbat la TVA în 2025?", a: "Legea 141/2025 a majorat de la 1 august 2025 cota standard de la 19% la 21% și a comasat cotele reduse de 9% și 5% în 11%. De la 1 septembrie 2025, plafonul de scutire de TVA a crescut de la 300.000 la 395.000 lei (OUG 22/2025). Verifică anaf.ro pentru încadrarea exactă a bunurilor și serviciilor." },
     ],
     content: {
       howToSteps: [
-        { title: "1. Alege cota", description: "Cele 3 cote RO: 19% standard, 9% redusă, 5% super-redusă." },
+        { title: "1. Alege cota", description: "Cotele RO din 1 august 2025: 21% standard și 11% redusă (plus cotele vechi 19% și 9% pentru facturi anterioare)." },
         { title: "2. Alege modul", description: "Net→Brut, Brut→Net sau Extragere TVA dintr-o sumă cu TVA inclus." },
         { title: "3. Introdu suma", description: "Rezultatul (TVA, net, brut) apare instant cu formula afișată." },
       ],
@@ -34,7 +34,7 @@ export const FINANTE_RO_CONTENT: ContentMap = {
       aboutSection: {
         title: "Despre TVA în România",
         paragraphs: [
-          "Taxa pe Valoarea Adăugată (TVA) este reglementată prin Legea 227/2015 (Codul fiscal) și directiva europeană 2006/112/CE. România aplică un sistem cu trei cote: cota standard de 19% (introdusă în 2017, după reducerea de la 24%), cota redusă de 9% pentru produse esențiale și cota super-redusă de 5% pentru categoriile sociale.",
+          "Taxa pe Valoarea Adăugată (TVA) este reglementată prin Legea 227/2015 (Codul fiscal) și directiva europeană 2006/112/CE. Din 1 august 2025 (Legea 141/2025), România aplică cota standard de 21% (majorată de la 19%, nivel introdus în 2017 după reducerea de la 24%) și o singură cotă redusă de 11%, rezultată din comasarea cotelor de 9% și 5%.",
           "Pragul de înregistrare ca plătitor de TVA în România este de 300.000 lei cifră de afaceri pe 12 luni consecutive. Sub acest plafon, firmele sunt neplătitoare de TVA și nu colectează/deduc TVA. Reforma fiscală în discuție pentru 2026 ar putea modifica atât cotele cât și pragul de înregistrare — verifică ANAF pentru actualizări.",
         ],
       },
@@ -181,7 +181,7 @@ export const FINANTE_RO_CONTENT: ContentMap = {
         paragraphs: [
           "Confuzia între marjă și adaos este una dintre cele mai costisitoare erori în pricing. Un comerciant care își propune o marjă de 30% dar aplică adaos 30% va avea de fapt o marjă de doar 23,1% — pierderi importante la volume mari.",
           "Adaosul are sens când perspectiva este «cât adaug peste cost» (perspectivă de cumpărător/comerciant la achiziție). Marja are sens când perspectiva este «ce procent din cifra de afaceri este profit» (perspectivă financiară). Cele două sunt egale doar când profitul este zero.",
-          "În e-commerce-ul românesc, calculul se complică cu TVA (19% standard) și taxa pe profit (16%). Marjă brută înainte de TVA = 30% poate să devină marjă netă după impozite ≈ 17–20%, în funcție de cheltuielile de operare.",
+          "În e-commerce-ul românesc, calculul se complică cu TVA (21% standard) și taxa pe profit (16%). Marjă brută înainte de TVA = 30% poate să devină marjă netă după impozite ≈ 17–20%, în funcție de cheltuielile de operare.",
         ],
       },
     },

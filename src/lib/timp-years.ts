@@ -276,6 +276,7 @@ export const CURRENT_YEAR = Y;
 const YEAR_TOKENS: Record<string, string | number> = {
   CRACIUN_YEAR, CRACIUN_DATE_RO, CRACIUN_WEEKDAY_RO,
   REVELION_YEAR, REVELION_DATE_RO, REVELION_WEEKDAY_RO,
+  BAC_YEAR,
 };
 export function resolveYearTokens(text: string): string {
   return text.replace(/\{\{([A-Z_]+)\}\}/g, (m, k) => (k in YEAR_TOKENS ? String(YEAR_TOKENS[k]) : m));

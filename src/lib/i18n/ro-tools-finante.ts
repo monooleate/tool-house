@@ -2,10 +2,10 @@
 export const FINANTE_RO: Record<string, { slug: string; title: string; h1: string; description: string; keywords: string[] }> = {
   "calculator-tva": {
     slug: "calculator-tva",
-    title: "Calculator TVA România – 19%, 9%, 5% | InstrumenteOnline",
+    title: "Calculator TVA 21% – adaugă sau scoate TVA (21%, 11%) | InstrumenteOnline",
     h1: "Calculator TVA România",
-    description: "Calculator TVA cu cotele oficiale RO (19%, 9%, 5%) și 3 moduri: net→brut, brut→net, extragere TVA. Util pentru facturi și verificare bonuri.",
-    keywords: ["calculator tva", "tva 19%", "tva 9%", "tva 5%", "calculator tva romania", "extrage tva", "net brut tva", "anaf"],
+    description: "Calculator TVA cu cotele oficiale RO din 1 august 2025 (21%, 11%) și 3 moduri: net→brut, brut→net, extragere TVA. Util pentru facturi și verificare bonuri.",
+    keywords: ["calculator tva", "tva 21%", "tva 11%", "adauga tva", "scoate tva", "calculator tva romania", "extrage tva", "net brut tva", "anaf"],
   },
   "calculator-credit": {
     slug: "calculator-credit",
